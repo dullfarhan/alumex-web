@@ -1,0 +1,61 @@
+@import 'tailwindcss';
+
+:root {
+	/* Brand */
+	--primary: #1f4e8c;
+	--primary-dark: #122b4d;
+	--accent: #2fa8e2;
+	--silver: #d9e0e8;
+
+	/* Backgrounds */
+	--background: #ffffff;
+	--background-alt: #f7f9fc;
+	--card: #ffffff;
+
+	/* Typography */
+	--heading: #14243c;
+	--text: #475569;
+	--muted: #64748b;
+
+	/* Borders */
+	--border: #e5e7eb;
+	--border-light: #eef2f6;
+
+	/* States */
+	--success: #22c55e;
+	--warning: #f59e0b;
+	--error: #dc2626;
+
+	/* Hero accents, CTA buttons, subtle highlights only */
+	--brand-gradient: linear-gradient(135deg, #122b4d 0%, #1f4e8c 55%, #2fa8e2 100%);
+}
+
+@theme inline {
+	--color-primary: var(--primary);
+	--color-primary-dark: var(--primary-dark);
+	--color-accent: var(--accent);
+	--color-silver: var(--silver);
+
+	--color-background: var(--background);
+	--color-background-alt: var(--background-alt);
+	--color-card: var(--card);
+
+	--color-heading: var(--heading);
+	--color-text: var(--text);
+	--color-muted: var(--muted);
+
+	--color-border: var(--border);
+	--color-border-light: var(--border-light);
+
+	--color-success: var(--success);
+	--color-warning: var(--warning);
+	--color-error: var(--error);
+
+	--background-image-brand-gradient: var(--brand-gradient);
+}
+
+@layer base {
+	body {
+		@apply bg-background text-text;
+	}
+}
