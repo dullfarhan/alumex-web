@@ -1,0 +1,61 @@
+---
+import { footer } from '../../config/footer';
+import { site } from '../../config/site';
+import Container from './Container.astro';
+---
+
+<footer class="border-t border-silver/40 bg-primary-dark text-white">
+	<Container class="py-16 md:py-20">
+		<div class="grid gap-12 md:grid-cols-12">
+			<div class="md:col-span-5">
+				<a href="/" class="mb-4 inline-flex items-center gap-3">
+					<img src={site.logo} alt={`${site.name} logo`} width="40" height="40" class="h-10 w-10 rounded-full object-cover" />
+					<span class="font-display text-lg font-bold tracking-tight">{site.name}</span>
+				</a>
+				<p class="mb-6 max-w-sm text-sm leading-relaxed text-white/70">{site.tagline}</p>
+				<div class="space-y-2 text-sm text-white/70">
+					<p>{site.address}</p>
+					<a href={`mailto:${site.email}`} class="block transition-colors hover:text-white">{site.email}</a>
+					<a href={`tel:${site.phone.replace(/\s/g, '')}`} class="block transition-colors hover:text-white">
+						{site.phone}
+					</a>
+				</div>
+			</div>
+
+			{
+				footer.columns.map((column) => (
+					<div class="md:col-span-2">
+						<h3 class="mb-4 text-xs font-medium tracking-[0.08em] text-white/50 uppercase">{column.title}</h3>
+						<ul class="space-y-3">
+							{column.links.map((link) => (
+								<li>
+									<a href={link.href} class="text-sm text-white/80 transition-colors hover:text-white">
+										{link.label}
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				))
+			}
+
+			<div class="md:col-span-3">
+				<h3 class="mb-4 text-xs font-medium tracking-[0.08em] text-white/50 uppercase">Get in touch</h3>
+				<p class="mb-4 text-sm leading-relaxed text-white/70">
+					Need a quote or technical guidance for your next project?
+				</p>
+				<a
+					href="/contact"
+					class="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-medium transition-colors hover:bg-white/15"
+				>
+					Request Quote
+				</a>
+			</div>
+		</div>
+
+		<div class="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
+			<p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+			<p>Premium Architectural Aluminium</p>
+		</div>
+	</Container>
+</footer>

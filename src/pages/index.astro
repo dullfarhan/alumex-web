@@ -1,9 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/sections/Hero.astro';
+import Partners from '../components/sections/Partners.astro';
+import HomeSections from '../components/sections/HomeSections.astro';
+import Products from '../components/sections/Products.astro';
+import Projects from '../components/sections/Projects.astro';
+import Eco from '../components/sections/Eco.astro';
+import Map from '../components/sections/Map.astro';
 ---
 
 <Layout>
-	<main class="flex min-h-screen items-center justify-center">
-		<h1 class="text-3xl font-bold">Alumex</h1>
-	</main>
+	<Hero />
+	<Partners />
+	<HomeSections />
+	<Products />
+	<Projects />
+	<Eco />
+	<Map />
 </Layout>

@@ -1,0 +1,35 @@
+---
+import { partners } from '../../config/partners';
+import Container from '../layout/Container.astro';
+---
+
+<section class="border-y border-silver/40 bg-background py-16 md:py-20">
+	<Container>
+		<div class="mb-10 text-center md:mb-12">
+			<span class="mb-3 block text-xs font-medium tracking-[0.08em] text-primary uppercase">
+				{partners.label}
+			</span>
+			<h2 class="font-display text-2xl font-bold text-heading md:text-3xl">{partners.title}</h2>
+		</div>
+
+		<ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-6 md:gap-8">
+			{
+				partners.items.map((partner) => (
+					<li class="flex items-center justify-center">
+						{partner.logo ? (
+							<img
+								src={partner.logo}
+								alt={partner.name}
+								class="h-8 w-auto max-w-full object-contain opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-10"
+							/>
+						) : (
+							<span class="font-display text-sm font-semibold tracking-tight text-muted transition-colors duration-300 hover:text-heading md:text-base">
+								{partner.name}
+							</span>
+						)}
+					</li>
+				))
+			}
+		</ul>
+	</Container>
+</section>

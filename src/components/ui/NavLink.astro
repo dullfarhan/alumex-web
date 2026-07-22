@@ -1,0 +1,22 @@
+---
+interface Props {
+	href: string;
+	active?: boolean;
+	mobile?: boolean;
+}
+
+const { href, active = false, mobile = false } = Astro.props;
+---
+
+<a
+	href={href}
+	class:list={[
+		'relative text-sm font-medium transition-colors duration-300',
+		'after:absolute after:-bottom-1.5 after:left-0 after:h-px after:bg-primary after:transition-[width] after:duration-300 after:ease-out',
+		mobile ? 'block py-3' : '',
+		active ? 'text-primary after:w-full' : 'text-heading after:w-0 hover:text-primary hover:after:w-full',
+	]}
+	aria-current={active ? 'page' : undefined}
+>
+	<slot />
+</a>

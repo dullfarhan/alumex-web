@@ -1,11 +1,14 @@
 ---
 import '../styles/global.css';
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
+import { site } from '../config/site';
 
 interface Props {
 	title?: string;
 }
 
-const { title = 'Alumex' } = Astro.props;
+const { title = site.title } = Astro.props;
 ---
 
 <!doctype html>
@@ -15,10 +18,18 @@ const { title = 'Alumex' } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
+			rel="stylesheet"
+		/>
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="min-h-screen antialiased">
+	<body class="min-h-screen">
+		<Navbar />
 		<slot />
+		<Footer />
 	</body>
 </html>

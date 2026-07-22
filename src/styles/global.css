@@ -31,6 +31,9 @@
 }
 
 @theme inline {
+	--font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+	--font-display: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+
 	--color-primary: var(--primary);
 	--color-primary-dark: var(--primary-dark);
 	--color-accent: var(--accent);
@@ -56,6 +59,6 @@
 
 @layer base {
 	body {
-		@apply bg-background text-text;
+		@apply bg-background-alt font-sans text-text antialiased;
 	}
 }

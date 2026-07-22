@@ -1,0 +1,42 @@
+---
+import { hero } from '../../config/hero';
+import ArrowRight from '../icons/ArrowRight.astro';
+import Container from '../layout/Container.astro';
+import Button from '../ui/Button.astro';
+---
+
+<section class="relative flex h-[calc(100vh-80px)] items-center overflow-hidden">
+	<Container class="relative w-full">
+		<div class="relative z-10 max-w-xl">
+			<span class="mb-6 block text-xs font-medium tracking-[0.08em] text-primary uppercase">
+				{hero.label}
+			</span>
+			<h1
+				class="mb-8 font-display text-5xl leading-[1.1] font-bold tracking-tight text-heading md:text-6xl lg:text-5xl"
+			>
+				{hero.title}
+			</h1>
+			<p class="mb-10 max-w-md text-lg leading-relaxed text-muted">
+				{hero.description}
+			</p>
+			<div class="flex flex-wrap gap-4">
+				<Button href={hero.primaryCta.href}>
+					{hero.primaryCta.label}
+					<ArrowRight class="h-4 w-4" />
+				</Button>
+				<Button href={hero.secondaryCta.href} variant="secondary">
+					{hero.secondaryCta.label}
+				</Button>
+			</div>
+		</div>
+	</Container>
+
+	<div class="absolute top-0 right-0 hidden h-full w-[50%] overflow-hidden shadow-2xl md:block">
+		<div
+			class="absolute inset-0 bg-cover bg-center"
+			style={`background-image: url('${hero.image}')`}
+		>
+		</div>
+		<div class="absolute inset-0 bg-linear-to-t from-primary-dark/20 to-transparent"></div>
+	</div>
+</section>

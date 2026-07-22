@@ -1,0 +1,28 @@
+---
+import { site } from '../../config/site';
+import Container from '../layout/Container.astro';
+---
+
+<section id="map" class="border-t border-silver/40 bg-background-alt py-24 md:py-32">
+	<Container>
+		<div class="mb-10 max-w-2xl">
+			<span class="mb-4 block text-xs font-medium tracking-[0.08em] text-primary uppercase">Visit Us</span>
+			<h2 class="mb-4 font-display text-4xl leading-[1.1] font-bold tracking-tight text-heading md:text-5xl">
+				Find our facility
+			</h2>
+			<p class="text-lg leading-relaxed text-muted">{site.address}</p>
+		</div>
+
+		<div class="overflow-hidden rounded-xl border border-silver/40 bg-background shadow-sm">
+			<iframe
+				title={`${site.name} location map`}
+				src={site.mapEmbedUrl}
+				class="h-[360px] w-full border-0 md:h-[480px]"
+				loading="lazy"
+				referrerpolicy="no-referrer-when-downgrade"
+				allowfullscreen
+			>
+			</iframe>
+		</div>
+	</Container>
+</section>

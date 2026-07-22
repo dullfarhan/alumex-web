@@ -1,0 +1,39 @@
+---
+import { products } from '../../config/products';
+import ArrowRight from '../icons/ArrowRight.astro';
+import Container from '../layout/Container.astro';
+---
+
+<section id="products" class="bg-background py-24 md:py-32">
+	<Container>
+		<div class="mb-14 max-w-2xl">
+			<span class="mb-4 block text-xs font-medium tracking-[0.08em] text-primary uppercase">{products.label}</span>
+			<h2 class="mb-4 font-display text-4xl leading-[1.1] font-bold tracking-tight text-heading md:text-5xl">
+				{products.title}
+			</h2>
+			<p class="text-lg leading-relaxed text-muted">{products.description}</p>
+		</div>
+
+		<div class="grid gap-8 md:grid-cols-3">
+			{
+				products.items.map((item) => (
+					<a href={item.href} class="group block">
+						<div class="mb-5 overflow-hidden rounded-xl">
+							<img
+								src={item.image}
+								alt={item.title}
+								class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+							/>
+						</div>
+						<h3 class="mb-2 font-display text-xl font-bold text-heading">{item.title}</h3>
+						<p class="mb-4 text-sm leading-relaxed text-muted">{item.description}</p>
+						<span class="inline-flex items-center gap-2 text-sm font-medium text-heading">
+							View product
+							<ArrowRight class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+						</span>
+					</a>
+				))
+			}
+		</div>
+	</Container>
+</section>
