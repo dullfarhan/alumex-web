@@ -2,17 +2,24 @@
 import { Image } from 'astro:assets';
 import logo from '../../assets/logo.png';
 import { navCta, navLinks } from '../../config/navigation';
-import { projectsMega } from '../../config/nav-mega';
+import { productsMega, projectsMega } from '../../config/nav-mega';
 import { site } from '../../config/site';
 import ArrowRight from '../icons/ArrowRight.astro';
+import ChevronDown from '../icons/ChevronDown.astro';
 import Button from '../ui/Button.astro';
 import NavLink from '../ui/NavLink.astro';
 import Container from './Container.astro';
+import MobileProductsAccordion from './nav/MobileProductsAccordion.astro';
 import MobileProjectsAccordion from './nav/MobileProjectsAccordion.astro';
+import ProductsMegaMenu from './nav/ProductsMegaMenu.astro';
 import ProjectsMegaMenu from './nav/ProjectsMegaMenu.astro';
 
 const currentPath = Astro.url.pathname;
-const simpleLinks = navLinks.filter((link) => link.label !== 'Projects');
+const megaLabels = new Set(['Products', 'Projects']);
+const simpleLinks = navLinks.filter((link) => !megaLabels.has(link.label));
+
+const triggerClass =
+	'group relative inline-flex items-center gap-1.5 text-sm font-medium text-heading transition-colors duration-300 hover:text-primary after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-[width] after:duration-300 after:ease-out hover:after:w-full aria-expanded:text-primary aria-expanded:after:w-full';
 ---
 
 <header id="site-header" class="sticky top-0 z-50 border-b border-silver/40 bg-background/95 backdrop-blur-sm">
@@ -34,36 +41,50 @@ const simpleLinks = navLinks.filter((link) => link.label !== 'Projects');
 
 		<ul class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex lg:gap-10">
 			{
-				simpleLinks.map(({ href, label }) => (
-					<li>
-						<NavLink href={href} active={currentPath === href}>
-							{label}
-						</NavLink>
-					</li>
-				))
+				navLinks.map(({ href, label }) => {
+					if (label === 'Products') {
+						return (
+							<li class="relative" data-mega-wrap="products">
+								<button
+									id="products-mega-trigger"
+									type="button"
+									class={triggerClass}
+									aria-expanded="false"
+									aria-controls="products-mega"
+									aria-haspopup="true"
+								>
+									{productsMega.trigger.label}
+									<ChevronDown class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180" />
+								</button>
+							</li>
+						);
+					}
+					if (label === 'Projects') {
+						return (
+							<li class="relative" data-mega-wrap="projects">
+								<button
+									id="projects-mega-trigger"
+									type="button"
+									class={triggerClass}
+									aria-expanded="false"
+									aria-controls="projects-mega"
+									aria-haspopup="true"
+								>
+									{projectsMega.trigger.label}
+									<ChevronDown class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180" />
+								</button>
+							</li>
+						);
+					}
+					return (
+						<li>
+							<NavLink href={href} active={currentPath === href}>
+								{label}
+							</NavLink>
+						</li>
+					);
+				})
 			}
-			<li class="relative" data-projects-trigger-wrap>
-				<button
-					id="projects-mega-trigger"
-					type="button"
-					class="group relative inline-flex items-center gap-1.5 text-sm font-medium text-heading transition-colors duration-300 hover:text-primary after:absolute after:-bottom-1.5 after:left-0 after:h-px after:bg-primary after:transition-[width] after:duration-300 after:ease-out after:w-0 hover:after:w-full aria-expanded:text-primary aria-expanded:after:w-full"
-					aria-expanded="false"
-					aria-controls="projects-mega"
-					aria-haspopup="true"
-				>
-					{projectsMega.trigger.label}
-					<svg
-						class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						aria-hidden="true"
-					>
-						<path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
-					</svg>
-				</button>
-			</li>
 		</ul>
 
 		<div class="z-10 flex items-center gap-3">
@@ -87,9 +108,9 @@ const simpleLinks = navLinks.filter((link) => link.label !== 'Projects');
 		</div>
 	</nav>
 
+	<ProductsMegaMenu />
 	<ProjectsMegaMenu />
 
-	<!-- Absolute overlay under header — covers content, no page shift / no scroll lock -->
 	<div
 		id="mobile-nav"
 		class="absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-8rem)] overflow-y-auto border-b border-border-light bg-background shadow-lg md:hidden"
@@ -106,6 +127,7 @@ const simpleLinks = navLinks.filter((link) => link.label !== 'Projects');
 						</li>
 					))
 				}
+				<MobileProductsAccordion />
 				<MobileProjectsAccordion />
 			</ul>
 			<Button href={navCta.href} class="mt-4 mb-4 w-full justify-center sm:hidden">
@@ -120,33 +142,68 @@ const simpleLinks = navLinks.filter((link) => link.label !== 'Projects');
 	const header = document.getElementById('site-header');
 	const mobileToggle = document.getElementById('nav-toggle');
 	const mobileMenu = document.getElementById('mobile-nav');
-	const megaTrigger = document.getElementById('projects-mega-trigger');
-	const megaPanel = document.getElementById('projects-mega');
-	const mobileProjectsToggle = document.getElementById('mobile-projects-toggle');
-	const mobileProjectsPanel = document.getElementById('mobile-projects-panel');
+
+	type MegaKey = 'products' | 'projects';
+
+	const megas: Record<MegaKey, { trigger: HTMLElement | null; panel: HTMLElement | null }> = {
+		products: {
+			trigger: document.getElementById('products-mega-trigger'),
+			panel: document.getElementById('products-mega'),
+		},
+		projects: {
+			trigger: document.getElementById('projects-mega-trigger'),
+			panel: document.getElementById('projects-mega'),
+		},
+	};
+
+	const mobileAccordions = [
+		{
+			toggle: document.getElementById('mobile-products-toggle'),
+			panel: document.getElementById('mobile-products-panel'),
+		},
+		{
+			toggle: document.getElementById('mobile-projects-toggle'),
+			panel: document.getElementById('mobile-projects-panel'),
+		},
+	];
+
+	const closeMobileAccordions = () => {
+		mobileAccordions.forEach(({ toggle, panel }) => {
+			toggle?.setAttribute('aria-expanded', 'false');
+			if (panel) panel.hidden = true;
+		});
+	};
 
 	const setMobileOpen = (open: boolean) => {
 		if (!mobileToggle || !mobileMenu) return;
 		mobileToggle.setAttribute('aria-expanded', String(open));
 		mobileToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
 		mobileMenu.hidden = !open;
-		if (!open && mobileProjectsToggle && mobileProjectsPanel) {
-			mobileProjectsToggle.setAttribute('aria-expanded', 'false');
-			mobileProjectsPanel.hidden = true;
+		if (!open) closeMobileAccordions();
+	};
+
+	const setMegaOpen = (key: MegaKey, open: boolean) => {
+		const mega = megas[key];
+		if (!mega.trigger || !mega.panel) return;
+		mega.trigger.setAttribute('aria-expanded', String(open));
+		mega.panel.hidden = !open;
+		if (open) {
+			(Object.keys(megas) as MegaKey[]).forEach((other) => {
+				if (other !== key) setMegaOpen(other, false);
+			});
+			setMobileOpen(false);
 		}
 	};
 
-	const setMegaOpen = (open: boolean) => {
-		if (!megaTrigger || !megaPanel) return;
-		megaTrigger.setAttribute('aria-expanded', String(open));
-		megaPanel.hidden = !open;
+	const closeAllMegas = () => {
+		(Object.keys(megas) as MegaKey[]).forEach((key) => setMegaOpen(key, false));
 	};
 
 	if (mobileToggle && mobileMenu) {
 		mobileToggle.addEventListener('click', () => {
 			const open = mobileToggle.getAttribute('aria-expanded') === 'true';
 			setMobileOpen(!open);
-			setMegaOpen(false);
+			closeAllMegas();
 		});
 
 		mobileMenu.querySelectorAll('a').forEach((link) => {
@@ -154,58 +211,67 @@ const simpleLinks = navLinks.filter((link) => link.label !== 'Projects');
 		});
 	}
 
-	if (mobileProjectsToggle && mobileProjectsPanel) {
-		mobileProjectsToggle.addEventListener('click', () => {
-			const open = mobileProjectsToggle.getAttribute('aria-expanded') === 'true';
-			mobileProjectsToggle.setAttribute('aria-expanded', String(!open));
-			mobileProjectsPanel.hidden = open;
+	mobileAccordions.forEach(({ toggle, panel }) => {
+		if (!toggle || !panel) return;
+		toggle.addEventListener('click', () => {
+			const open = toggle.getAttribute('aria-expanded') === 'true';
+			mobileAccordions.forEach(({ toggle: t, panel: p }) => {
+				if (t !== toggle) {
+					t?.setAttribute('aria-expanded', 'false');
+					if (p) p.hidden = true;
+				}
+			});
+			toggle.setAttribute('aria-expanded', String(!open));
+			panel.hidden = open;
 		});
-	}
+	});
 
-	if (megaTrigger && megaPanel && header) {
+	(Object.keys(megas) as MegaKey[]).forEach((key) => {
+		const { trigger, panel } = megas[key];
+		if (!trigger || !panel || !header) return;
+
 		let closeTimer: ReturnType<typeof setTimeout> | undefined;
 
 		const openMega = () => {
 			clearTimeout(closeTimer);
-			setMegaOpen(true);
-			setMobileOpen(false);
+			setMegaOpen(key, true);
 		};
 
 		const scheduleClose = () => {
 			clearTimeout(closeTimer);
-			closeTimer = setTimeout(() => setMegaOpen(false), 120);
+			closeTimer = setTimeout(() => setMegaOpen(key, false), 120);
 		};
 
-		const wrap = megaTrigger.closest('[data-projects-trigger-wrap]');
+		const wrap = header.querySelector(`[data-mega-wrap="${key}"]`);
 		wrap?.addEventListener('mouseenter', openMega);
 		wrap?.addEventListener('mouseleave', scheduleClose);
-		megaPanel.addEventListener('mouseenter', openMega);
-		megaPanel.addEventListener('mouseleave', scheduleClose);
+		panel.addEventListener('mouseenter', openMega);
+		panel.addEventListener('mouseleave', scheduleClose);
 
-		megaTrigger.addEventListener('click', (e) => {
+		trigger.addEventListener('click', (e) => {
 			e.preventDefault();
-			const open = megaTrigger.getAttribute('aria-expanded') === 'true';
-			setMegaOpen(!open);
+			const open = trigger.getAttribute('aria-expanded') === 'true';
+			setMegaOpen(key, !open);
 		});
 
-		megaTrigger.addEventListener('focus', openMega);
+		trigger.addEventListener('focus', openMega);
 
-		document.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape') setMegaOpen(false);
+		panel.querySelectorAll('a').forEach((link) => {
+			link.addEventListener('click', () => setMegaOpen(key, false));
 		});
+	});
 
-		document.addEventListener('click', (e) => {
-			const target = e.target as Node;
-			if (!header.contains(target)) setMegaOpen(false);
-		});
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape') closeAllMegas();
+	});
 
-		megaPanel.querySelectorAll('a').forEach((link) => {
-			link.addEventListener('click', () => setMegaOpen(false));
-		});
-	}
+	document.addEventListener('click', (e) => {
+		const target = e.target as Node;
+		if (header && !header.contains(target)) closeAllMegas();
+	});
 
 	window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
 		if (e.matches) setMobileOpen(false);
-		else setMegaOpen(false);
+		else closeAllMegas();
 	});
 </script>

@@ -1,0 +1,55 @@
+---
+import { productsMega } from '../../../config/nav-mega';
+import ChevronDown from '../../icons/ChevronDown.astro';
+import ChevronRight from '../../icons/ChevronRight.astro';
+---
+
+<li class="border-b border-border-light">
+	<button
+		id="mobile-products-toggle"
+		type="button"
+		class="group flex w-full items-center justify-between py-3 text-left text-sm font-medium text-heading"
+		aria-expanded="false"
+		aria-controls="mobile-products-panel"
+	>
+		<span>{productsMega.trigger.label}</span>
+		<ChevronDown class="h-4 w-4 text-muted transition-transform duration-300 group-aria-expanded:rotate-180" />
+	</button>
+
+	<div id="mobile-products-panel" class="space-y-5 pb-4" hidden>
+		<ul class="space-y-1">
+			{
+				productsMega.categories.map((category) => (
+					<li>
+						<a
+							href={category.href}
+							class="flex items-center justify-between gap-3 py-2 text-sm text-heading/80 transition-colors hover:text-primary"
+						>
+							{category.title}
+							<ChevronRight class="h-3.5 w-3.5 text-muted" />
+						</a>
+					</li>
+				))
+			}
+		</ul>
+		<a
+			href={productsMega.viewAll.href}
+			class="inline-flex items-center gap-1 border-b border-primary pb-0.5 text-sm font-medium text-primary"
+		>
+			{productsMega.viewAll.label}
+			<ChevronRight class="h-3.5 w-3.5" />
+		</a>
+		<ul class="space-y-3 border-t border-border-light pt-4">
+			{
+				productsMega.footerTiles.map((tile) => (
+					<li>
+						<a href={tile.href} class="block">
+							<p class="text-sm font-medium text-heading">{tile.title}</p>
+							<p class="text-xs leading-relaxed text-muted">{tile.description}</p>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</li>

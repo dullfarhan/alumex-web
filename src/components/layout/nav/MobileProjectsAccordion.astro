@@ -1,5 +1,6 @@
 ---
 import { projectsMega } from '../../../config/nav-mega';
+import ChevronDown from '../../icons/ChevronDown.astro';
 import MegaMenuColumn from './MegaMenuColumn.astro';
 ---
 
@@ -12,16 +13,7 @@ import MegaMenuColumn from './MegaMenuColumn.astro';
 		aria-controls="mobile-projects-panel"
 	>
 		<span>{projectsMega.trigger.label}</span>
-		<svg
-			class="h-4 w-4 text-muted transition-transform duration-300 group-aria-expanded:rotate-180"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			aria-hidden="true"
-		>
-			<path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
-		</svg>
+		<ChevronDown class="h-4 w-4 text-muted transition-transform duration-300 group-aria-expanded:rotate-180" />
 	</button>
 
 	<div id="mobile-projects-panel" class="space-y-8 pb-4" hidden>
