@@ -6,37 +6,42 @@ import Container from '../layout/Container.astro';
 ---
 
 <section id="products" class="bg-background">
-	<Container>
-		<div class="mb-14 max-w-2xl">
-			<span class="mb-4 block text-xs font-medium tracking-[0.08em] text-primary uppercase">{products.label}</span>
-			<h2 class="mb-4 font-display text-4xl leading-[1.1] font-bold tracking-tight text-heading md:text-5xl">
-				{products.title}
-			</h2>
-			<p class="text-lg leading-relaxed text-muted">{products.description}</p>
-		</div>
+	<Container class="!px-0 sm:!px-12 md:py-16">
+		<span class="mb-10 block text-md font-medium tracking-[0.08em] text-primary uppercase text-center">
+			{products.label}
+		</span>
 
-		<div class="grid gap-8 md:grid-cols-3">
-			{
-				products.items.map((item) => (
-					<a href={item.href} class="group block">
-						<div class="mb-5 overflow-hidden rounded-2xl">
-							<Image
-								src={item.image}
-								alt={item.title}
-								widths={[400, 600, 800]}
-								sizes="(max-width: 768px) 100vw, 33vw"
-								class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-							/>
-						</div>
-						<h3 class="mb-2 font-display text-xl font-bold text-heading">{item.title}</h3>
-						<p class="mb-4 text-sm leading-relaxed text-muted">{item.description}</p>
-						<span class="inline-flex items-center gap-2 text-sm font-medium text-heading">
-							View product
-							<ArrowRight class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-						</span>
-					</a>
-				))
-			}
+		<div class="sm:rounded-3xl bg-[#e8f1fa] px-6 py-10 sm:px-8 md:px-12 md:py-14 text-center">
+			<div class="mb-12 w-full">
+				<h2 class="mb-4 font-display text-[1.7rem] sm:text-3xl lg:text-[3.1rem] leading-[1.1] font-bold tracking-tight text-heading">
+					{products.title}
+				</h2>
+				<p class="text-base leading-relaxed text-muted md:text-lg">{products.description}</p>
+			</div>
+
+			<div class="grid gap-8 md:grid-cols-3">
+				{
+					products.items.map((item) => (
+						<a href={item.href} class="group block">
+							<div class="mb-5 overflow-hidden rounded-2xl">
+								<Image
+									src={item.image}
+									alt={item.title}
+									widths={[400, 600, 800]}
+									sizes="(max-width: 768px) 100vw, 33vw"
+									class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+								/>
+							</div>
+							<h3 class="mb-2 font-display text-xl font-bold text-heading">{item.title}</h3>
+							<p class="mb-4 text-sm leading-relaxed text-muted">{item.description}</p>
+							<span class="inline-flex items-center gap-2 text-sm font-medium text-heading">
+								View product
+								<ArrowRight class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+							</span>
+						</a>
+					))
+				}
+			</div>
 		</div>
 	</Container>
 </section>
