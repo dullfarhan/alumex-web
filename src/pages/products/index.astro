@@ -1,8 +1,12 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
+import CtaBanner from '../../components/ui/CtaBanner.astro';
 import ProductsToolbar from '../../components/sections/products/ProductsToolbar.astro';
 import ProductsCatalog from '../../components/sections/products/ProductsCatalog.astro';
+import Finishes from '../../components/sections/Finishes.astro';
+import Projects from '../../components/sections/Projects.astro';
+import { about } from '../../config/about';
 import { products } from '../../config/products';
 ---
 
@@ -10,6 +14,14 @@ import { products } from '../../config/products';
 	<PageHero label={products.label} title={products.title} description={products.description} />
 	<ProductsToolbar />
 	<ProductsCatalog />
+	<Finishes />
+	<Projects />
+	<CtaBanner
+		title={about.cta.title}
+		description={about.cta.description}
+		href={about.cta.href}
+		label={about.cta.label}
+	/>
 </Layout>
 
 <script>
