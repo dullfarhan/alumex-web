@@ -21,7 +21,7 @@ import Container from '../layout/Container.astro';
 				<p class="mx-auto max-w-2xl text-base leading-relaxed text-muted md:text-lg">{products.description}</p>
 			</div>
 
-			<div class="grid gap-6 text-left md:grid-cols-3 md:gap-8">
+			<div class="grid grid-cols-1 gap-6 text-left lg:grid-cols-3 lg:gap-8">
 				{
 					products.items.map((item) => (
 						<a
@@ -34,7 +34,7 @@ import Container from '../layout/Container.astro';
 										src={item.image}
 										alt={item.title}
 										widths={[400, 600, 800]}
-										sizes="(max-width: 768px) 100vw, 33vw"
+										sizes="(max-width: 1024px) 100vw, 33vw"
 										class="aspect-[5/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
 									/>
 								</div>
