@@ -1,0 +1,26 @@
+---
+import type { Product } from '../../../config/products';
+import Container from '../../layout/Container.astro';
+import ProductCard from './ProductCard.astro';
+
+interface Props {
+	products: Product[];
+}
+
+const { products: related } = Astro.props;
+---
+
+{
+	related.length > 0 && (
+		<section class="border-t border-silver/40 bg-background-alt">
+			<Container>
+				<h2 class="mb-8 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">Related systems</h2>
+				<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
+					{related.map((product) => (
+						<ProductCard product={product} />
+					))}
+				</div>
+			</Container>
+		</section>
+	)
+}

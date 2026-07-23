@@ -1,0 +1,16 @@
+---
+import { productItems } from '../../../config/products';
+import Container from '../../layout/Container.astro';
+import ProductCard from './ProductCard.astro';
+---
+
+<section class="bg-background">
+	<Container>
+		<div id="products-grid" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+			{productItems.map((product) => <ProductCard product={product} />)}
+		</div>
+		<p id="products-empty" class="hidden py-16 text-center text-muted" hidden>
+			No systems match your search. Try another keyword or category.
+		</p>
+	</Container>
+</section>

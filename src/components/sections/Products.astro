@@ -2,7 +2,10 @@
 import { Image } from 'astro:assets';
 import { products } from '../../config/products';
 import ArrowRight from '../icons/ArrowRight.astro';
+import Button from '../ui/Button.astro';
 import Container from '../layout/Container.astro';
+
+const featuredProducts = products.items.slice(0, 3);
 ---
 
 <section id="products" class="bg-background">
@@ -23,7 +26,7 @@ import Container from '../layout/Container.astro';
 
 			<div class="grid grid-cols-1 gap-6 text-left lg:grid-cols-3 lg:gap-8">
 				{
-					products.items.map((item) => (
+					featuredProducts.map((item) => (
 						<a
 							href={item.href}
 							class="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgba(18,43,77,0.08)] transition-shadow duration-300 hover:shadow-[0_12px_36px_rgba(18,43,77,0.12)]"
@@ -42,7 +45,7 @@ import Container from '../layout/Container.astro';
 
 							<div class="flex flex-1 flex-col px-5 py-6">
 								<h3 class="mb-2 font-display text-xl font-bold text-heading">{item.title}</h3>
-								<p class="mb-5 flex-1 text-sm leading-relaxed text-muted">{item.description}</p>
+								<p class="mb-5 flex-1 text-sm leading-relaxed text-muted">{item.shortDescription}</p>
 								<span class="inline-flex items-center gap-2 text-sm font-medium text-primary">
 									Explore System
 									<ArrowRight class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
@@ -52,6 +55,11 @@ import Container from '../layout/Container.astro';
 					))
 				}
 			</div>
+
+			<Button href="/products" class="mt-10">
+				View all systems
+				<ArrowRight class="h-3.5 w-3.5" />
+			</Button>
 		</div>
 	</Container>
 </section>

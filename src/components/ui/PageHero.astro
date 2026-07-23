@@ -1,0 +1,24 @@
+---
+import Container from '../layout/Container.astro';
+
+interface Props {
+	label: string;
+	title: string;
+	description: string;
+	class?: string;
+}
+
+const { label, title, description, class: className } = Astro.props;
+---
+
+<section class:list={['border-b border-silver/40 bg-background-alt', className]}>
+	<Container>
+		<div class="w-full text-center">
+			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{label}</span>
+			<h1 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[3.1rem]">
+				{title}
+			</h1>
+			<p class="text-base leading-relaxed text-muted md:text-lg">{description}</p>
+		</div>
+	</Container>
+</section>

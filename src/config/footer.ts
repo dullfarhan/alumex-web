@@ -16,10 +16,10 @@ export const footer = {
 		{
 			title: 'Products',
 			links: [
-				{ href: '/products', label: 'Curtain Walls' },
-				{ href: '/products', label: 'Windows & Doors' },
-				{ href: '/products', label: 'Sliding Systems' },
-				{ href: '/products', label: 'Architectural Profiles' },
+				{ href: '/products/curtain-wall-systems', label: 'Curtain Walls' },
+				{ href: '/products/windows-and-doors', label: 'Windows & Doors' },
+				{ href: '/products/sliding-systems', label: 'Sliding Systems' },
+				{ href: '/products/custom-architectural-profiles', label: 'Architectural Profiles' },
 			],
 		},
 		{

@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ContactHero from '../components/sections/contact/ContactHero.astro';
+import PageHero from '../components/ui/PageHero.astro';
 import ContactInquiry from '../components/sections/contact/ContactInquiry.astro';
 import Map from '../components/sections/Map.astro';
 import { contact } from '../config/contact';
@@ -31,7 +31,7 @@ const jsonLd = {
 	canonical="/contact"
 	jsonLd={jsonLd}
 >
-	<ContactHero />
+	<PageHero label={contact.label} title={contact.title} description={contact.description} />
 	<ContactInquiry />
 	<Map />
 </Layout>

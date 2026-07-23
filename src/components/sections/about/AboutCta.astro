@@ -1,23 +1,6 @@
 ---
 import { about } from '../../../config/about';
-import ArrowRight from '../../icons/ArrowRight.astro';
-import Container from '../../layout/Container.astro';
+import CtaBanner from '../../ui/CtaBanner.astro';
 ---
 
-<section>
-	<Container>
-		<div class="w-full text-center">
-			<h2 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[2.5rem]">
-				{about.cta.title}
-			</h2>
-			<p class="mb-8 text-base leading-relaxed text-muted md:text-lg">{about.cta.description}</p>
-			<a
-				href={about.cta.href}
-				class="inline-flex items-center gap-2 rounded-lg border border-primary-dark bg-primary-dark px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-transparent hover:text-heading"
-			>
-				{about.cta.label}
-				<ArrowRight class="h-3.5 w-3.5" />
-			</a>
-		</div>
-	</Container>
-</section>
+<CtaBanner title={about.cta.title} description={about.cta.description} href={about.cta.href} label={about.cta.label} />

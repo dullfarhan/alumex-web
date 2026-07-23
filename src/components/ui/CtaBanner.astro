@@ -1,0 +1,36 @@
+---
+import ArrowRight from '../icons/ArrowRight.astro';
+import Button from './Button.astro';
+import Container from '../layout/Container.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	href?: string;
+	label?: string;
+	class?: string;
+}
+
+const {
+	title,
+	description,
+	href = '/contact',
+	label = 'Request Quote',
+	class: className,
+} = Astro.props;
+---
+
+<section class:list={['border-t border-silver/40 bg-background-alt', className]}>
+	<Container>
+		<div class="w-full text-center">
+			<h2 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[2.5rem]">
+				{title}
+			</h2>
+			<p class="mb-8 text-base leading-relaxed text-muted md:text-lg">{description}</p>
+			<Button href={href}>
+				{label}
+				<ArrowRight class="h-3.5 w-3.5" />
+			</Button>
+		</div>
+	</Container>
+</section>

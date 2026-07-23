@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import AboutHero from '../components/sections/about/AboutHero.astro';
+import PageHero from '../components/ui/PageHero.astro';
 import AboutStory from '../components/sections/about/AboutStory.astro';
 import AboutStats from '../components/sections/about/AboutStats.astro';
 import AboutProcess from '../components/sections/about/AboutProcess.astro';
@@ -33,7 +33,7 @@ const jsonLd = {
 	canonical="/about"
 	jsonLd={jsonLd}
 >
-	<AboutHero />
+	<PageHero label={about.label} title={about.title} description={about.description} />
 	<AboutStory />
 	<AboutStats />
 	<AboutProcess />
