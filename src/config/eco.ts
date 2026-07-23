@@ -1,9 +1,11 @@
+import ecoImage from '../assets/eco/eco-friendly.jpg';
+
 export const eco = {
 	label: 'Eco Friendly',
 	title: 'Aluminium that supports a cleaner build.',
 	description:
 		'Our production approach prioritizes recyclable materials, efficient finishes, and systems that improve building energy performance.',
-	image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1200&auto=format&fit=crop',
+	image: ecoImage,
 	points: [
 		{
 			title: 'Fully Recyclable',
