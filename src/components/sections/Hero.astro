@@ -7,45 +7,47 @@ import Button from '../ui/Button.astro';
 ---
 
 <section class="relative min-h-[calc(100vh-5rem)] overflow-hidden bg-background">
-	<!-- Dot grid texture (fades toward the image) -->
+	<!-- Image: full-bleed behind content on mobile, diagonal cut on desktop -->
 	<div
-		class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,rgba(20,36,60,0.08)_1px,transparent_1px)] bg-size-[16px_16px] [mask-image:radial-gradient(ellipse_at_bottom_left,black_20%,transparent_65%)]"
-		aria-hidden="true"
-	>
-	</div>
-
-	<!-- Desktop image: right side with diagonal cut -->
-	<div
-		class="absolute inset-y-0 right-0 hidden w-full md:block"
-		style="clip-path: polygon(54% 0%, 100% 0%, 100% 100%, 45% 100%)"
+		class="absolute inset-0 md:[clip-path:polygon(54%_0%,100%_0%,100%_100%,45%_100%)]"
 		aria-hidden="true"
 	>
 		<Image
 			src={heroImage}
 			alt=""
-			widths={[900, 1400, 2000]}
-			sizes="60vw"
+			widths={[640, 960, 1400, 2000]}
+			sizes="(max-width: 767px) 100vw, 60vw"
 			class="absolute inset-0 h-full w-full object-cover"
 			loading="eager"
 			fetchpriority="high"
 		/>
-		<div class="absolute inset-0 bg-linear-to-l from-transparent via-transparent to-background/10"></div>
+		<!-- Mobile: wash over full photo for readable text -->
+		<div class="absolute inset-0 bg-background/70 md:hidden"></div>
+		<!-- Desktop: soft edge into the white content area -->
+		<div class="absolute inset-0 hidden bg-linear-to-l from-transparent via-transparent to-background/10 md:block"></div>
 	</div>
 
-	<!-- Content: centered in the left area -->
+	<!-- Dot grid (desktop left area) -->
 	<div
-		class="relative z-10 flex min-h-[calc(100vh-5rem)] w-full flex-col items-center justify-center px-6 py-14 md:w-[44%] md:px-8 md:py-16 lg:py-20"
+		class="pointer-events-none absolute inset-0 hidden bg-[radial-gradient(circle,rgba(20,36,60,0.08)_1px,transparent_1px)] bg-size-[16px_16px] [mask-image:radial-gradient(ellipse_at_bottom_left,black_20%,transparent_65%)] md:block"
+		aria-hidden="true"
 	>
-		<div class="flex w-full max-w-xl flex-col">
-			<div class="mb-5 flex gap-3 items-center">
-				<span class="h-px w-8 shrink-0 bg-primary"></span>
+	</div>
+
+	<!-- Content: centered on mobile (over overlay), left on desktop -->
+	<div
+		class="relative z-10 flex min-h-[calc(100vh-5rem)] w-full flex-col items-center justify-center px-8 py-14 text-center md:w-[44%] md:items-start md:px-12 md:py-16 md:text-left lg:py-20"
+	>
+		<div class="flex w-full max-w-xl flex-col items-center md:items-start">
+			<div class="mb-5 flex items-center justify-center gap-3 md:justify-start">
+				<span class="hidden md:block h-px w-8 shrink-0 bg-primary"></span>
 				<span class="text-[11px] font-medium tracking-[0.12em] text-primary uppercase sm:text-xs">
 					{hero.label}
 				</span>
 			</div>
 
 			<h1
-				class="mb-5 font-display text-[2.35rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-5xl lg:text-[3.1rem] lg:leading-[1.08]"
+				class="mb-5 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-5xl lg:text-[3.1rem] lg:leading-[1.08]"
 			>
 				{hero.title}
 			</h1>
@@ -54,7 +56,7 @@ import Button from '../ui/Button.astro';
 				{hero.description}
 			</p>
 
-			<div class="flex flex-wrap items-center gap-3 sm:gap-4">
+			<div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:justify-start">
 				<Button href={hero.primaryCta.href}>
 					{hero.primaryCta.label}
 					<ArrowRight class="h-4 w-4" />
@@ -65,24 +67,13 @@ import Button from '../ui/Button.astro';
 			</div>
 		</div>
 
-		<!-- Mobile image -->
-		<div class="my-10 w-full overflow-hidden rounded-2xl md:hidden">
-			<Image
-				src={heroImage}
-				alt="Modern architectural aluminium facade"
-				widths={[640, 960]}
-				sizes="100vw"
-				class="aspect-[16/10] w-full object-cover"
-			/>
-		</div>
-
 		<ul class="mt-12 grid w-full max-w-xl grid-cols-2 gap-x-5 gap-y-6 border-t border-border-light pt-8 sm:grid-cols-4">
 			{
 				hero.stats.map((stat) => (
-					<li class="flex flex-col items-center gap-2 text-center sm:items-start sm:text-left">
+					<li class="flex flex-col items-center gap-2 text-center md:items-start md:text-left">
 						<img src={stat.icon} alt="" class="h-9 w-9 shrink-0" width="40" height="40" aria-hidden="true" />
 						<span>
-							<span class="block font-display text-lg font-bold text-heading text-primary">{stat.value}</span>
+							<span class="block font-display text-lg font-bold text-primary">{stat.value}</span>
 							<span class="block text-xs leading-snug text-muted">{stat.label}</span>
 						</span>
 					</li>
