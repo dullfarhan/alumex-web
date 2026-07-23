@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import { finishes } from '../../config/finishes';
+import Container from '../layout/Container.astro';
+---
+
+<section id="finishes" class="bg-background">
+	<Container>
+		<div class="mb-12 text-center md:mb-14">
+			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{finishes.label}</span>
+			<h2 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[3.1rem]">
+				{finishes.title}
+			</h2>
+			<p class="mx-auto max-w-2xl text-base leading-relaxed text-muted md:text-lg">{finishes.description}</p>
+		</div>
+	
+
+	<!-- Slanted finish cards — full-bleed row -->
+	<div class=" px-2 sm:px-4">
+		<ul class="flex gap-1 overflow-x-auto pb-2 md:grid md:grid-cols-6 md:gap-1 md:overflow-visible md:pb-0">
+			{
+				finishes.items.map((item) => (
+					<li class="group relative h-72 w-[46vw] shrink-0 overflow-hidden sm:h-80 sm:w-48 md:h-[420px] md:w-auto md:shrink md:[clip-path:polygon(8%_0,100%_0,92%_100%,0_100%)]">
+						<Image
+							src={item.image}
+							alt={item.title}
+							widths={[320, 480, 640]}
+							sizes="(max-width: 768px) 42vw, 16vw"
+							class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+						/>
+						<div class="absolute inset-0 bg-primary-dark/45 transition-colors duration-300 group-hover:bg-primary-dark/55"></div>
+						<div class="absolute inset-x-0 bottom-0 bg-linear-to-t from-primary-dark/80 to-transparent px-3 pt-16 pb-6 text-center md:px-4 md:pb-8">
+							<h3 class="font-display text-sm font-bold text-white sm:text-base md:text-lg">{item.title}</h3>
+						</div>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</Container>
+</section>
