@@ -58,6 +58,9 @@
 }
 
 @layer base {
+	html {
+		@apply bg-background scroll-smooth;
+	}
 	body {
 		@apply bg-background-alt font-sans text-text antialiased;
 	}

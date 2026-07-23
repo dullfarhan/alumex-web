@@ -1,10 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import { products } from '../../config/products';
 import ArrowRight from '../icons/ArrowRight.astro';
 import Container from '../layout/Container.astro';
 ---
 
-<section id="products" class="bg-background py-24 md:py-32">
+<section id="products" class="bg-background">
 	<Container>
 		<div class="mb-14 max-w-2xl">
 			<span class="mb-4 block text-xs font-medium tracking-[0.08em] text-primary uppercase">{products.label}</span>
@@ -18,10 +19,12 @@ import Container from '../layout/Container.astro';
 			{
 				products.items.map((item) => (
 					<a href={item.href} class="group block">
-						<div class="mb-5 overflow-hidden rounded-xl">
-							<img
+						<div class="mb-5 overflow-hidden rounded-2xl">
+							<Image
 								src={item.image}
 								alt={item.title}
+								widths={[400, 600, 800]}
+								sizes="(max-width: 768px) 100vw, 33vw"
 								class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
 							/>
 						</div>
