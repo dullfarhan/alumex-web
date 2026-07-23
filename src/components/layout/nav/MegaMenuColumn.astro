@@ -1,0 +1,60 @@
+---
+interface Link {
+	label: string;
+	href: string;
+}
+
+interface Props {
+	title: string;
+	links: readonly Link[];
+	footer?: Link;
+	variant?: 'dark' | 'light';
+}
+
+const { title, links, footer, variant = 'dark' } = Astro.props;
+const isDark = variant === 'dark';
+---
+
+<div>
+	<h3
+		class:list={[
+			'mb-4 text-xs font-medium tracking-[0.08em] uppercase',
+			isDark ? 'text-accent' : 'text-primary',
+		]}
+	>
+		{title}
+	</h3>
+	<ul class="space-y-3">
+		{
+			links.map((link) => (
+				<li>
+					<a
+						href={link.href}
+						class:list={[
+							'text-sm transition-colors',
+							isDark ? 'text-white/70 hover:text-white' : 'text-heading/80 hover:text-primary',
+						]}
+					>
+						{link.label}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+	{
+		footer && (
+			<a
+				href={footer.href}
+				class:list={[
+					'mt-5 inline-flex items-center gap-1 border-b pb-0.5 text-sm font-medium transition-colors',
+					isDark
+						? 'border-accent text-accent hover:text-white hover:border-white'
+						: 'border-primary text-primary hover:text-primary-dark',
+				]}
+			>
+				{footer.label}
+				<span aria-hidden="true">→</span>
+			</a>
+		)
+	}
+</div>

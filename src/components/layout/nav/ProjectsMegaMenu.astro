@@ -1,0 +1,33 @@
+---
+import { projectsMega } from '../../../config/nav-mega';
+import MegaMenuColumn from './MegaMenuColumn.astro';
+import MegaMenuFeatured from './MegaMenuFeatured.astro';
+---
+
+<div
+	id="projects-mega"
+	class="absolute inset-x-0 top-full z-40 border-t border-white/10 bg-primary-dark shadow-xl max-md:hidden"
+	hidden
+	data-projects-mega
+>
+	<div class="mx-auto grid max-w-[1980px] gap-10 px-6 py-10 sm:px-12 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/10 lg:py-12">
+		{
+			projectsMega.columns.map((column) => (
+				<div class="lg:px-8 first:lg:pl-0 last:lg:pr-0">
+					<MegaMenuColumn title={column.title} links={column.links} footer={'footer' in column ? column.footer : undefined} />
+				</div>
+			))
+		}
+		<div class="lg:px-8 lg:pr-0">
+			<MegaMenuFeatured
+				label={projectsMega.featured.label}
+				title={projectsMega.featured.title}
+				description={projectsMega.featured.description}
+				href={projectsMega.featured.href}
+				cta={projectsMega.featured.cta}
+				image={projectsMega.featured.image}
+				imageAlt={projectsMega.featured.imageAlt}
+			/>
+		</div>
+	</div>
+</div>

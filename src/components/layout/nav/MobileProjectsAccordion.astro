@@ -1,0 +1,42 @@
+---
+import { projectsMega } from '../../../config/nav-mega';
+import MegaMenuColumn from './MegaMenuColumn.astro';
+---
+
+<li class="border-b border-border-light last:border-b-0">
+	<button
+		id="mobile-projects-toggle"
+		type="button"
+		class="group flex w-full items-center justify-between py-3 text-left text-sm font-medium text-heading"
+		aria-expanded="false"
+		aria-controls="mobile-projects-panel"
+	>
+		<span>{projectsMega.trigger.label}</span>
+		<svg
+			class="h-4 w-4 text-muted transition-transform duration-300 group-aria-expanded:rotate-180"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			aria-hidden="true"
+		>
+			<path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+		</svg>
+	</button>
+
+	<div id="mobile-projects-panel" class="space-y-8 pb-4" hidden>
+		{
+			projectsMega.columns.map((column) => (
+				<MegaMenuColumn
+					title={column.title}
+					links={column.links}
+					footer={'footer' in column ? column.footer : undefined}
+					variant="light"
+				/>
+			))
+		}
+		<a href={projectsMega.trigger.href} class="inline-flex text-sm font-medium text-primary">
+			{projectsMega.featured.cta} →
+		</a>
+	</div>
+</li>

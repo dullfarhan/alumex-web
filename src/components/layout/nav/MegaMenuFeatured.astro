@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import ArrowRight from '../../icons/ArrowRight.astro';
+
+interface Props {
+	label: string;
+	title: string;
+	description: string;
+	href: string;
+	cta: string;
+	image: ImageMetadata;
+	imageAlt: string;
+}
+
+const { label, title, description, href, cta, image, imageAlt } = Astro.props;
+---
+
+<div>
+	<h3 class="mb-4 text-xs font-medium tracking-[0.08em] text-accent uppercase">{label}</h3>
+	<a href={href} class="group block">
+		<div class="mb-4 overflow-hidden rounded-lg bg-white/5">
+			<Image
+				src={image}
+				alt={imageAlt}
+				widths={[320, 480, 640]}
+				sizes="(max-width: 1024px) 40vw, 280px"
+				class="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+			/>
+		</div>
+		<p class="mb-2 font-display text-base font-bold text-white">{title}</p>
+		<p class="mb-4 text-sm leading-relaxed text-white/65">{description}</p>
+		<span class="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors group-hover:text-white">
+			{cta}
+			<ArrowRight class="h-3.5 w-3.5" />
+		</span>
+	</a>
+</div>

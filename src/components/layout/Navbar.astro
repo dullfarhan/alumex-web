@@ -2,16 +2,20 @@
 import { Image } from 'astro:assets';
 import logo from '../../assets/logo.png';
 import { navCta, navLinks } from '../../config/navigation';
+import { projectsMega } from '../../config/nav-mega';
 import { site } from '../../config/site';
 import ArrowRight from '../icons/ArrowRight.astro';
 import Button from '../ui/Button.astro';
 import NavLink from '../ui/NavLink.astro';
 import Container from './Container.astro';
+import MobileProjectsAccordion from './nav/MobileProjectsAccordion.astro';
+import ProjectsMegaMenu from './nav/ProjectsMegaMenu.astro';
 
 const currentPath = Astro.url.pathname;
+const simpleLinks = navLinks.filter((link) => link.label !== 'Projects');
 ---
 
-<header class="sticky top-0 z-50 border-b border-silver/40 bg-background/95 backdrop-blur-sm">
+<header id="site-header" class="sticky top-0 z-50 border-b border-silver/40 bg-background/95 backdrop-blur-sm">
 	<nav
 		class="relative flex h-16 w-full items-center justify-between px-6 sm:px-12 md:h-20"
 		aria-label="Main navigation"
@@ -25,12 +29,12 @@ const currentPath = Astro.url.pathname;
 				densities={[1, 2]}
 				class="h-11 w-11 rounded-full object-cover sm:h-13 sm:w-13"
 			/>
-			<span class="font-display text-lg font-bold tracking-tight text-heading block">{site.name}</span>
+			<span class="font-display block text-lg font-bold tracking-tight text-heading">{site.name}</span>
 		</a>
 
 		<ul class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex lg:gap-10">
 			{
-				navLinks.map(({ href, label }) => (
+				simpleLinks.map(({ href, label }) => (
 					<li>
 						<NavLink href={href} active={currentPath === href}>
 							{label}
@@ -38,6 +42,28 @@ const currentPath = Astro.url.pathname;
 					</li>
 				))
 			}
+			<li class="relative" data-projects-trigger-wrap>
+				<button
+					id="projects-mega-trigger"
+					type="button"
+					class="group relative inline-flex items-center gap-1.5 text-sm font-medium text-heading transition-colors duration-300 hover:text-primary after:absolute after:-bottom-1.5 after:left-0 after:h-px after:bg-primary after:transition-[width] after:duration-300 after:ease-out after:w-0 hover:after:w-full aria-expanded:text-primary aria-expanded:after:w-full"
+					aria-expanded="false"
+					aria-controls="projects-mega"
+					aria-haspopup="true"
+				>
+					{projectsMega.trigger.label}
+					<svg
+						class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						aria-hidden="true"
+					>
+						<path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+					</svg>
+				</button>
+			</li>
 		</ul>
 
 		<div class="z-10 flex items-center gap-3">
@@ -61,6 +87,8 @@ const currentPath = Astro.url.pathname;
 		</div>
 	</nav>
 
+	<ProjectsMegaMenu />
+
 	<!-- Absolute overlay under header — covers content, no page shift / no scroll lock -->
 	<div
 		id="mobile-nav"
@@ -68,16 +96,17 @@ const currentPath = Astro.url.pathname;
 		hidden
 	>
 		<Container class="!py-2">
-			<ul class="flex flex-col gap-1">
+			<ul class="flex flex-col">
 				{
-					navLinks.map(({ href, label }) => (
-						<li>
+					simpleLinks.map(({ href, label }) => (
+						<li class="border-b border-border-light">
 							<NavLink href={href} active={currentPath === href} mobile>
 								{label}
 							</NavLink>
 						</li>
 					))
 				}
+				<MobileProjectsAccordion />
 			</ul>
 			<Button href={navCta.href} class="mt-4 mb-4 w-full justify-center sm:hidden">
 				{navCta.label}
@@ -88,29 +117,95 @@ const currentPath = Astro.url.pathname;
 </header>
 
 <script>
-	const toggle = document.getElementById('nav-toggle');
-	const menu = document.getElementById('mobile-nav');
+	const header = document.getElementById('site-header');
+	const mobileToggle = document.getElementById('nav-toggle');
+	const mobileMenu = document.getElementById('mobile-nav');
+	const megaTrigger = document.getElementById('projects-mega-trigger');
+	const megaPanel = document.getElementById('projects-mega');
+	const mobileProjectsToggle = document.getElementById('mobile-projects-toggle');
+	const mobileProjectsPanel = document.getElementById('mobile-projects-panel');
 
-	const setOpen = (open: boolean) => {
-		if (!toggle || !menu) return;
-		toggle.setAttribute('aria-expanded', String(open));
-		toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-		menu.hidden = !open;
+	const setMobileOpen = (open: boolean) => {
+		if (!mobileToggle || !mobileMenu) return;
+		mobileToggle.setAttribute('aria-expanded', String(open));
+		mobileToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+		mobileMenu.hidden = !open;
+		if (!open && mobileProjectsToggle && mobileProjectsPanel) {
+			mobileProjectsToggle.setAttribute('aria-expanded', 'false');
+			mobileProjectsPanel.hidden = true;
+		}
 	};
 
-	if (toggle && menu) {
-		toggle.addEventListener('click', () => {
-			const open = toggle.getAttribute('aria-expanded') === 'true';
-			setOpen(!open);
+	const setMegaOpen = (open: boolean) => {
+		if (!megaTrigger || !megaPanel) return;
+		megaTrigger.setAttribute('aria-expanded', String(open));
+		megaPanel.hidden = !open;
+	};
+
+	if (mobileToggle && mobileMenu) {
+		mobileToggle.addEventListener('click', () => {
+			const open = mobileToggle.getAttribute('aria-expanded') === 'true';
+			setMobileOpen(!open);
+			setMegaOpen(false);
 		});
 
-		menu.querySelectorAll('a').forEach((link) => {
-			link.addEventListener('click', () => setOpen(false));
-		});
-
-		// Close if viewport grows to desktop
-		window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
-			if (e.matches) setOpen(false);
+		mobileMenu.querySelectorAll('a').forEach((link) => {
+			link.addEventListener('click', () => setMobileOpen(false));
 		});
 	}
+
+	if (mobileProjectsToggle && mobileProjectsPanel) {
+		mobileProjectsToggle.addEventListener('click', () => {
+			const open = mobileProjectsToggle.getAttribute('aria-expanded') === 'true';
+			mobileProjectsToggle.setAttribute('aria-expanded', String(!open));
+			mobileProjectsPanel.hidden = open;
+		});
+	}
+
+	if (megaTrigger && megaPanel && header) {
+		let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+		const openMega = () => {
+			clearTimeout(closeTimer);
+			setMegaOpen(true);
+			setMobileOpen(false);
+		};
+
+		const scheduleClose = () => {
+			clearTimeout(closeTimer);
+			closeTimer = setTimeout(() => setMegaOpen(false), 120);
+		};
+
+		const wrap = megaTrigger.closest('[data-projects-trigger-wrap]');
+		wrap?.addEventListener('mouseenter', openMega);
+		wrap?.addEventListener('mouseleave', scheduleClose);
+		megaPanel.addEventListener('mouseenter', openMega);
+		megaPanel.addEventListener('mouseleave', scheduleClose);
+
+		megaTrigger.addEventListener('click', (e) => {
+			e.preventDefault();
+			const open = megaTrigger.getAttribute('aria-expanded') === 'true';
+			setMegaOpen(!open);
+		});
+
+		megaTrigger.addEventListener('focus', openMega);
+
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') setMegaOpen(false);
+		});
+
+		document.addEventListener('click', (e) => {
+			const target = e.target as Node;
+			if (!header.contains(target)) setMegaOpen(false);
+		});
+
+		megaPanel.querySelectorAll('a').forEach((link) => {
+			link.addEventListener('click', () => setMegaOpen(false));
+		});
+	}
+
+	window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+		if (e.matches) setMobileOpen(false);
+		else setMegaOpen(false);
+	});
 </script>
