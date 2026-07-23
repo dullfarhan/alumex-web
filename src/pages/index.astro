@@ -1,17 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/sections/Hero.astro';
-import Partners from '../components/sections/Partners.astro';
 import Products from '../components/sections/Products.astro';
 import Finishes from '../components/sections/Finishes.astro';
 import Projects from '../components/sections/Projects.astro';
 import Eco from '../components/sections/Eco.astro';
 import Map from '../components/sections/Map.astro';
+import { site } from '../config/site';
 ---
 
-<Layout>
+<Layout title={site.title} description={site.description} canonical="/">
 	<Hero />
-	<Partners />
 	<Products />
 	<Finishes />
 	<Projects />

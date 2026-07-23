@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactHero from '../components/sections/contact/ContactHero.astro';
+import ContactInquiry from '../components/sections/contact/ContactInquiry.astro';
+import Map from '../components/sections/Map.astro';
+import { contact } from '../config/contact';
+import { site } from '../config/site';
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'LocalBusiness',
+	name: site.name,
+	description: site.description,
+	url: `${site.url}/contact`,
+	image: `${site.url}${site.logo}`,
+	email: site.email,
+	telephone: site.phone,
+	address: {
+		'@type': 'PostalAddress',
+		streetAddress: site.address,
+		addressLocality: 'Lahore',
+		addressCountry: 'PK',
+	},
+	openingHours: 'Mo-Sa 09:00-18:00',
+};
+---
+
+<Layout
+	title={contact.seoTitle}
+	description={contact.seoDescription}
+	canonical="/contact"
+	jsonLd={jsonLd}
+>
+	<ContactHero />
+	<ContactInquiry />
+	<Map />
+</Layout>

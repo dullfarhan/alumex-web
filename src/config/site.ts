@@ -1,6 +1,9 @@
 export const site = {
 	name: 'Pak Alumex',
 	title: 'Pak Alumex Aluminium Industries',
+	description:
+		'Premium architectural aluminium systems for modern buildings — extrusion, finishes, and facade solutions from Lahore, Pakistan.',
+	url: 'https://pakalumex.com',
 	logo: '/logo/logo.png',
 	tagline: 'Premium architectural aluminium systems.',
 	email: 'info@pakalumex.com',

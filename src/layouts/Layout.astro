@@ -6,9 +6,24 @@ import { site } from '../config/site';
 
 interface Props {
 	title?: string;
+	description?: string;
+	canonical?: string;
+	ogType?: string;
+	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title = site.title } = Astro.props;
+const {
+	title = site.title,
+	description = site.description,
+	canonical = '/',
+	ogType = 'website',
+	jsonLd,
+} = Astro.props;
+
+const origin = Astro.site?.href.replace(/\/$/, '') ?? site.url;
+const canonicalUrl = new URL(canonical, `${origin}/`).href;
+const ogImage = new URL(site.logo, `${origin}/`).href;
+const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
 <!doctype html>
@@ -26,8 +41,28 @@ const { title = site.title } = Astro.props;
 		/>
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
+
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:site_name" content={site.name} />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+
+		{
+			jsonLdItems.map((item) => (
+				<script type="application/ld+json" set:html={JSON.stringify(item)} />
+			))
+		}
 	</head>
-	<body class="min-h-screen max-w-[1980px] mx-auto">
+	<body class="mx-auto min-h-screen max-w-[1980px]">
 		<Navbar />
 		<slot />
 		<Footer />
