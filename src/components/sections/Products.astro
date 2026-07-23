@@ -7,37 +7,47 @@ import Container from '../layout/Container.astro';
 
 <section id="products" class="bg-background">
 	<Container class="!px-0 sm:!px-12 md:py-16">
-		<span class="mb-10 block text-md font-medium tracking-[0.08em] text-primary uppercase text-center">
+		<span class="mb-12 block text-center text-sm font-medium tracking-[0.08em] text-primary uppercase">
 			{products.label}
 		</span>
 
-		<div class="sm:rounded-3xl bg-[#e8f1fa] px-6 py-10 sm:px-8 md:px-12 md:py-14 text-center">
+		<div class="bg-[#e8f1fa] px-6 py-10 text-center sm:rounded-3xl sm:px-8 md:px-12 md:py-14">
 			<div class="mb-12 w-full">
-				<h2 class="mb-4 font-display text-[1.7rem] sm:text-3xl lg:text-[3.1rem] leading-[1.1] font-bold tracking-tight text-heading">
+				<h2
+					class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl lg:text-[3.1rem]"
+				>
 					{products.title}
 				</h2>
-				<p class="text-base leading-relaxed text-muted md:text-lg">{products.description}</p>
+				<p class="mx-auto max-w-2xl text-base leading-relaxed text-muted md:text-lg">{products.description}</p>
 			</div>
 
-			<div class="grid gap-8 md:grid-cols-3">
+			<div class="grid gap-6 text-left md:grid-cols-3 md:gap-8">
 				{
 					products.items.map((item) => (
-						<a href={item.href} class="group block">
-							<div class="mb-5 overflow-hidden rounded-2xl">
-								<Image
-									src={item.image}
-									alt={item.title}
-									widths={[400, 600, 800]}
-									sizes="(max-width: 768px) 100vw, 33vw"
-									class="aspect-[4/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-								/>
+						<a
+							href={item.href}
+							class="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgba(18,43,77,0.08)] transition-shadow duration-300 hover:shadow-[0_12px_36px_rgba(18,43,77,0.12)]"
+						>
+							<div class="relative">
+								<div class="overflow-hidden">
+									<Image
+										src={item.image}
+										alt={item.title}
+										widths={[400, 600, 800]}
+										sizes="(max-width: 768px) 100vw, 33vw"
+										class="aspect-[5/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+									/>
+								</div>
 							</div>
-							<h3 class="mb-2 font-display text-xl font-bold text-heading">{item.title}</h3>
-							<p class="mb-4 text-sm leading-relaxed text-muted">{item.description}</p>
-							<span class="inline-flex items-center gap-2 text-sm font-medium text-heading">
-								View product
-								<ArrowRight class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-							</span>
+
+							<div class="flex flex-1 flex-col px-5 py-6">
+								<h3 class="mb-2 font-display text-xl font-bold text-heading">{item.title}</h3>
+								<p class="mb-5 flex-1 text-sm leading-relaxed text-muted">{item.description}</p>
+								<span class="inline-flex items-center gap-2 text-sm font-medium text-primary">
+									Explore System
+									<ArrowRight class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+								</span>
+							</div>
 						</a>
 					))
 				}

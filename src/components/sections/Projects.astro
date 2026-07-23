@@ -3,11 +3,11 @@ import { projects } from '../../config/projects';
 import Container from '../layout/Container.astro';
 ---
 
-<section id="projects" class="border-t border-silver/40 bg-background-alt py-24 md:py-32">
+<section id="projects" class="border-t border-silver/40 bg-background-alt">
 	<Container>
-		<div class="mb-14 max-w-2xl">
-			<span class="mb-4 block text-xs font-medium tracking-[0.08em] text-primary uppercase">{projects.label}</span>
-			<h2 class="mb-4 font-display text-4xl leading-[1.1] font-bold tracking-tight text-heading md:text-5xl">
+		<div class="mb-14 text-center">
+			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{projects.label}</span>
+			<h2 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[3.1rem]">
 				{projects.title}
 			</h2>
 			<p class="text-lg leading-relaxed text-muted">{projects.description}</p>
