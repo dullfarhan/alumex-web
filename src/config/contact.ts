@@ -8,7 +8,7 @@ export const contact = {
 		'Tell us about your project and our team will help with systems, finishes, and delivery timelines.',
 	seoTitle: `Contact | ${site.name}`,
 	seoDescription:
-		'Contact Pak Alumex for aluminium extrusion quotes, facade systems, finishes, and technical support. Plant in Lahore, Pakistan.',
+		'Contact Pak Alumex Industries for aluminium system quotes, facade solutions, finishes, and technical support. Based in Faisalabad, Pakistan.',
 	/** Paste your Formspree (or similar) endpoint here */
 	formAction: 'https://formspree.io/f/your-form-id',
 	hours: footer.hours,

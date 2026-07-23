@@ -1,0 +1,50 @@
+---
+import { about } from '../../../config/about';
+import Container from '../../layout/Container.astro';
+---
+
+<section class="border-t border-silver/40 bg-background-alt">
+	<Container>
+		<div class="mb-12 w-full md:mb-14 text-center">
+			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.quality.label}</span>
+			<h2 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[2.75rem]">
+				{about.quality.title}
+			</h2>
+			<p class="text-base leading-relaxed text-muted md:text-lg">{about.quality.intro}</p>
+		</div>
+
+		<ul class="mb-14 grid gap-6 border-y border-silver/40 py-8 sm:grid-cols-3">
+			{
+				about.quality.specs.map((spec) => (
+					<li>
+						<span class="mb-1.5 block text-xs font-medium tracking-[0.08em] text-muted uppercase">{spec.label}</span>
+						<p class="font-display text-lg font-bold text-heading md:text-xl">{spec.value}</p>
+					</li>
+				))
+			}
+		</ul>
+
+		<div class="mb-14 grid gap-10 md:grid-cols-2 md:gap-14">
+			<div class="border-t border-silver/60 pt-6">
+				<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.mission.label}</span>
+				<p class="text-base leading-relaxed text-heading md:text-lg">{about.mission.text}</p>
+			</div>
+			<div class="border-t border-silver/60 pt-6">
+				<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.vision.label}</span>
+				<p class="text-base leading-relaxed text-heading md:text-lg">{about.vision.text}</p>
+			</div>
+		</div>
+
+		<div>
+			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.values.label}</span>
+			<h3 class="mb-8 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">{about.values.title}</h3>
+			<ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{
+					about.values.items.map((item) => (
+						<li class="border-t border-silver/60 pt-4 font-display text-sm font-semibold text-heading">{item}</li>
+					))
+				}
+			</ul>
+		</div>
+	</Container>
+</section>

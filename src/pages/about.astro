@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AboutHero from '../components/sections/about/AboutHero.astro';
+import AboutStory from '../components/sections/about/AboutStory.astro';
+import AboutStats from '../components/sections/about/AboutStats.astro';
+import AboutProcess from '../components/sections/about/AboutProcess.astro';
+import AboutQuality from '../components/sections/about/AboutQuality.astro';
+import AboutCta from '../components/sections/about/AboutCta.astro';
+import { about } from '../config/about';
+import { site } from '../config/site';
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	name: site.name,
+	description: about.seoDescription,
+	url: `${site.url}/about`,
+	image: `${site.url}${site.logo}`,
+	email: site.email,
+	telephone: site.phone,
+	address: {
+		'@type': 'PostalAddress',
+		streetAddress: site.address,
+		addressLocality: 'Faisalabad',
+		addressCountry: 'PK',
+	},
+};
+---
+
+<Layout
+	title={about.seoTitle}
+	description={about.seoDescription}
+	canonical="/about"
+	jsonLd={jsonLd}
+>
+	<AboutHero />
+	<AboutStory />
+	<AboutStats />
+	<AboutProcess />
+	<AboutQuality />
+	<AboutCta />
+</Layout>
