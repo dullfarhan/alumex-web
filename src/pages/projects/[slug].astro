@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectDetailHero from '../../components/sections/projects/ProjectDetailHero.astro';
+import ProjectDetailBody from '../../components/sections/projects/ProjectDetailBody.astro';
+import ProjectRelated from '../../components/sections/projects/ProjectRelated.astro';
+import CtaBanner from '../../components/ui/CtaBanner.astro';
+import { getProjectBySlug, getRelatedProjects, projectItems } from '../../config/projects';
+import { site } from '../../config/site';
+
+export function getStaticPaths() {
+	return projectItems.map((project) => ({
+		params: { slug: project.slug },
+	}));
+}
+
+const { slug } = Astro.params;
+const project = getProjectBySlug(slug as string)!;
+const related = getRelatedProjects(project.slug);
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'CreativeWork',
+	name: project.title,
+	description: project.description,
+	image: new URL(project.image.src, site.url).href,
+	url: `${site.url}${project.href}`,
+	creator: {
+		'@type': 'Organization',
+		name: site.name,
+	},
+	contentLocation: project.location,
+	dateCreated: project.year,
+};
+---
+
+<Layout
+	title={`${project.title} | ${site.name}`}
+	description={project.shortDescription}
+	canonical={project.href}
+	jsonLd={jsonLd}
+>
+	<ProjectDetailHero project={project} />
+	<ProjectDetailBody project={project} />
+	<ProjectRelated projects={related} />
+	<CtaBanner
+		title="Planning a similar project?"
+		description="Share drawings or elevation details and our team will help with systems, finishes, and timelines."
+		href="/contact"
+		label="Request Quote"
+	/>
+</Layout>

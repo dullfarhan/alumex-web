@@ -1,25 +1,25 @@
 import { finishes } from './finishes';
 import { systems } from './home';
 import { productItems } from './products';
-import { projects } from './projects';
+import { projectItems } from './projects';
 
-const uniqueCategories = [...new Set(projects.items.map((item) => item.category))];
-const featuredProject = projects.items[0];
+const uniqueCategories = [...new Set(projectItems.map((item) => item.category))];
+const featuredProject = projectItems[0];
 
 export const projectsMega = {
-	trigger: { label: 'Projects', href: '/#projects' },
+	trigger: { label: 'Projects', href: '/projects' },
 	columns: [
 		{
 			title: 'Project category',
 			links: uniqueCategories.map((category) => ({
 				label: category,
-				href: '/#projects',
+				href: '/projects',
 			})),
-			footer: { label: 'View all projects', href: '/#projects' },
+			footer: { label: 'View all projects', href: '/projects' },
 		},
 		{
-			title: 'Product systems',
-			links: productItems.slice(0, 3).map((item) => ({
+			title: 'Featured projects',
+			links: projectItems.slice(0, 4).map((item) => ({
 				label: item.title,
 				href: item.href,
 			})),
@@ -35,9 +35,9 @@ export const projectsMega = {
 	featured: {
 		label: 'From vision to reality',
 		title: featuredProject.title,
-		description: projects.description,
-		href: '/#projects',
-		cta: 'View projects',
+		description: featuredProject.shortDescription,
+		href: featuredProject.href,
+		cta: 'View project',
 		image: featuredProject.image,
 		imageAlt: `${featuredProject.title} — ${featuredProject.category}`,
 	},

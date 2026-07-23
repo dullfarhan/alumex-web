@@ -2,10 +2,9 @@ import type { ImageMetadata } from 'astro';
 import curtainWall from '../assets/products/curtain-wall-systems.jpg';
 import windowsAndDoors from '../assets/products/windows-and-doors.jpg';
 import slidingSystems from '../assets/products/sliding-systems.jpg';
-import anodizing from '../assets/finishes/anodizing.jpg';
-import powderCoating from '../assets/finishes/powder-coating.jpg';
-import woodFinish from '../assets/finishes/wood-finish.jpg';
-import satinFinish from '../assets/finishes/satin-finish.jpg';
+import officePartitions from '../assets/products/office-partitions.jpg';
+import structuralGlazing from '../assets/products/structural-glazing.jpg';
+import customProfiles from '../assets/products/custom-architectural-profiles.jpg';
 import { site } from './site';
 
 export type ProductCategory = 'Facades' | 'Openings' | 'Interiors' | 'Custom';
@@ -39,7 +38,7 @@ export const productItems: Product[] = [
 		description:
 			'Engineered curtain wall systems designed for commercial towers and modern facades. Profiles support glazing packages with strength, weather performance, and clean architectural lines.',
 		image: curtainWall,
-		gallery: [curtainWall, anodizing, powderCoating],
+		gallery: [curtainWall, structuralGlazing, customProfiles],
 		features: [
 			'Stick and unitized-ready profile options',
 			'Designed for high-rise wind and weather loads',
@@ -59,7 +58,7 @@ export const productItems: Product[] = [
 		description:
 			'Window and door systems built for thermal comfort, weather sealing, and long service life. Suitable for residential and commercial openings where performance and finish quality matter.',
 		image: windowsAndDoors,
-		gallery: [windowsAndDoors, woodFinish, powderCoating],
+		gallery: [windowsAndDoors, slidingSystems, officePartitions],
 		features: [
 			'Thermal-break options for energy efficiency',
 			'Reliable sealing for weather resistance',
@@ -79,7 +78,7 @@ export const productItems: Product[] = [
 		description:
 			'Large-span sliding systems for wide openings and indoor-outdoor living. Profiles are engineered for smooth travel, structural stability, and premium finishes.',
 		image: slidingSystems,
-		gallery: [slidingSystems, anodizing, woodFinish],
+		gallery: [slidingSystems, windowsAndDoors, customProfiles],
 		features: [
 			'Large glazed openings with stable tracks',
 			'Smooth operation for daily use',
@@ -98,8 +97,8 @@ export const productItems: Product[] = [
 		shortDescription: 'Aluminium partition systems for flexible, refined workplace interiors.',
 		description:
 			'Interior aluminium partition systems for offices and commercial interiors. Designed for clean detailing, glazing options, and adaptable workplace layouts.',
-		image: satinFinish,
-		gallery: [satinFinish, windowsAndDoors, anodizing],
+		image: officePartitions,
+		gallery: [officePartitions, windowsAndDoors, slidingSystems],
 		features: [
 			'Modular layouts for workplace planning',
 			'Compatible with glazed and solid infills',
@@ -118,8 +117,8 @@ export const productItems: Product[] = [
 		shortDescription: 'Structural glazing profiles for seamless glass facade expression.',
 		description:
 			'Structural glazing solutions for seamless glass elevations. Profiles support high visual continuity while meeting performance needs for modern commercial architecture.',
-		image: powderCoating,
-		gallery: [powderCoating, curtainWall, anodizing],
+		image: structuralGlazing,
+		gallery: [structuralGlazing, curtainWall, customProfiles],
 		features: [
 			'Minimal sightline facade expression',
 			'Designed for glass-forward elevations',
@@ -138,8 +137,8 @@ export const productItems: Product[] = [
 		shortDescription: 'Bespoke extruded profiles tailored to project drawings and specifications.',
 		description:
 			'Custom architectural aluminium profiles for unique project requirements. From consultation through extrusion and finishing, we support architects and fabricators with purpose-built sections.',
-		image: woodFinish,
-		gallery: [woodFinish, slidingSystems, powderCoating],
+		image: customProfiles,
+		gallery: [customProfiles, slidingSystems, curtainWall],
 		features: [
 			'Profiles developed from project drawings',
 			'Extrusion and finishing under one roof',

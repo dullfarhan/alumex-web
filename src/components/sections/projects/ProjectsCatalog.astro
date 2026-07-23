@@ -1,0 +1,23 @@
+---
+import { projectItems } from '../../../config/projects';
+import Container from '../../layout/Container.astro';
+import ProjectCard from './ProjectCard.astro';
+---
+
+<section class="border-b border-silver/40 bg-background">
+	<Container>
+		<div id="projects-grid" class="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+			{
+				projectItems.map((project, index) => (
+					<ProjectCard
+						project={project}
+						featured={index === 0 || index === projectItems.length - 1}
+					/>
+				))
+			}
+		</div>
+		<p id="projects-empty" class="hidden py-16 text-center text-muted" hidden>
+			No projects match your search. Try another keyword or sector.
+		</p>
+	</Container>
+</section>

@@ -1,0 +1,79 @@
+---
+import { Image } from 'astro:assets';
+import type { Project } from '../../../config/projects';
+import Container from '../../layout/Container.astro';
+
+interface Props {
+	project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<section class="border-b border-silver/40 bg-background">
+	<Container>
+		<div class="grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.8fr)] lg:gap-16">
+			<div>
+				<h2 class="mb-5 font-display text-2xl font-bold tracking-tight text-heading md:text-3xl">Project story</h2>
+				<p class="mb-8 text-base leading-relaxed text-muted md:text-lg">{project.description}</p>
+
+				<h3 class="mb-4 font-display text-lg font-bold text-heading">Scope of supply</h3>
+				<ul class="space-y-3">
+					{
+						project.scope.map((item) => (
+							<li class="border-t border-silver/60 pt-3 text-base leading-relaxed text-muted">{item}</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<aside class="lg:pt-1">
+				<dl class="space-y-6 border border-silver/50 bg-background-alt p-6 sm:p-8">
+					<div>
+						<dt class="mb-1 text-xs font-medium tracking-[0.08em] text-primary uppercase">Location</dt>
+						<dd class="font-display text-lg font-semibold text-heading">{project.location}</dd>
+					</div>
+					<div>
+						<dt class="mb-1 text-xs font-medium tracking-[0.08em] text-primary uppercase">Year</dt>
+						<dd class="font-display text-lg font-semibold text-heading">{project.year}</dd>
+					</div>
+					<div>
+						<dt class="mb-1 text-xs font-medium tracking-[0.08em] text-primary uppercase">Category</dt>
+						<dd class="font-display text-lg font-semibold text-heading">{project.category}</dd>
+					</div>
+					<div>
+						<dt class="mb-3 text-xs font-medium tracking-[0.08em] text-primary uppercase">Systems</dt>
+						<dd class="flex flex-col gap-2">
+							{
+								project.systems.map((system) => (
+									<a href={system.href} class="text-sm font-medium text-heading transition-colors hover:text-primary">
+										{system.label} →
+									</a>
+								))
+							}
+						</dd>
+					</div>
+				</dl>
+			</aside>
+		</div>
+
+		{
+			project.gallery.length > 0 && (
+				<div class="mt-14 border-t border-silver/40 pt-14 md:mt-16 md:pt-16">
+					<h2 class="mb-8 font-display text-2xl font-bold tracking-tight text-heading md:text-3xl">Gallery</h2>
+					<div class="flex gap-4 overflow-x-auto pb-2">
+						{project.gallery.map((image, index) => (
+							<Image
+								src={image}
+								alt={`${project.title} gallery ${index + 1}`}
+								widths={[400, 640, 900]}
+								sizes="(max-width: 768px) 80vw, 28vw"
+								class="aspect-[4/3] h-56 w-auto shrink-0 object-cover md:h-72"
+							/>
+						))}
+					</div>
+				</div>
+			)
+		}
+	</Container>
+</section>
