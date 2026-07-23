@@ -1,0 +1,45 @@
+---
+import Container from '../layout/Container.astro';
+
+export interface LegalSection {
+	heading: string;
+	paragraphs?: readonly string[];
+	list?: readonly string[];
+}
+
+interface Props {
+	sections: readonly LegalSection[];
+	contactNote?: string;
+}
+
+const { sections, contactNote } = Astro.props;
+---
+
+<section class="border-b border-silver/40 bg-background">
+	<Container>
+		<article class="mx-auto max-w-3xl">
+			{
+				sections.map((section) => (
+					<div class="mb-10 last:mb-0">
+						<h2 class="mb-4 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">{section.heading}</h2>
+						{section.paragraphs?.map((paragraph) => (
+							<p class="mb-4 text-base leading-relaxed text-muted last:mb-0">{paragraph}</p>
+						))}
+						{section.list && (
+							<ul class="mt-2 list-disc space-y-2 pl-5 text-base leading-relaxed text-muted">
+								{section.list.map((item) => (
+									<li>{item}</li>
+								))}
+							</ul>
+						)}
+					</div>
+				))
+			}
+			{
+				contactNote && (
+					<p class="mt-12 border-t border-silver/40 pt-8 text-base leading-relaxed text-muted">{contactNote}</p>
+				)
+			}
+		</article>
+	</Container>
+</section>
