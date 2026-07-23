@@ -38,7 +38,7 @@ export const productItems: Product[] = [
 		description:
 			'Engineered curtain wall systems designed for commercial towers and modern facades. Profiles support glazing packages with strength, weather performance, and clean architectural lines.',
 		image: curtainWall,
-		gallery: [curtainWall, structuralGlazing, customProfiles],
+		gallery: [curtainWall, structuralGlazing, customProfiles, officePartitions],
 		features: [
 			'Stick and unitized-ready profile options',
 			'Designed for high-rise wind and weather loads',
@@ -58,7 +58,7 @@ export const productItems: Product[] = [
 		description:
 			'Window and door systems built for thermal comfort, weather sealing, and long service life. Suitable for residential and commercial openings where performance and finish quality matter.',
 		image: windowsAndDoors,
-		gallery: [windowsAndDoors, slidingSystems, officePartitions],
+		gallery: [windowsAndDoors, slidingSystems, officePartitions, customProfiles],
 		features: [
 			'Thermal-break options for energy efficiency',
 			'Reliable sealing for weather resistance',
@@ -78,7 +78,7 @@ export const productItems: Product[] = [
 		description:
 			'Large-span sliding systems for wide openings and indoor-outdoor living. Profiles are engineered for smooth travel, structural stability, and premium finishes.',
 		image: slidingSystems,
-		gallery: [slidingSystems, windowsAndDoors, customProfiles],
+		gallery: [slidingSystems, windowsAndDoors, customProfiles, structuralGlazing],
 		features: [
 			'Large glazed openings with stable tracks',
 			'Smooth operation for daily use',
@@ -98,7 +98,7 @@ export const productItems: Product[] = [
 		description:
 			'Interior aluminium partition systems for offices and commercial interiors. Designed for clean detailing, glazing options, and adaptable workplace layouts.',
 		image: officePartitions,
-		gallery: [officePartitions, windowsAndDoors, slidingSystems],
+		gallery: [officePartitions, windowsAndDoors, slidingSystems, curtainWall],
 		features: [
 			'Modular layouts for workplace planning',
 			'Compatible with glazed and solid infills',
@@ -118,7 +118,7 @@ export const productItems: Product[] = [
 		description:
 			'Structural glazing solutions for seamless glass elevations. Profiles support high visual continuity while meeting performance needs for modern commercial architecture.',
 		image: structuralGlazing,
-		gallery: [structuralGlazing, curtainWall, customProfiles],
+		gallery: [structuralGlazing, curtainWall, customProfiles, slidingSystems],
 		features: [
 			'Minimal sightline facade expression',
 			'Designed for glass-forward elevations',
@@ -138,7 +138,7 @@ export const productItems: Product[] = [
 		description:
 			'Custom architectural aluminium profiles for unique project requirements. From consultation through extrusion and finishing, we support architects and fabricators with purpose-built sections.',
 		image: customProfiles,
-		gallery: [customProfiles, slidingSystems, curtainWall],
+		gallery: [customProfiles, slidingSystems, curtainWall, windowsAndDoors],
 		features: [
 			'Profiles developed from project drawings',
 			'Extrusion and finishing under one roof',

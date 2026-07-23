@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import type { Product } from '../../../config/products';
 import Container from '../../layout/Container.astro';
 
@@ -10,24 +9,26 @@ interface Props {
 const { product } = Astro.props;
 ---
 
-<section class="bg-background">
+<section class="border-b border-silver/40 bg-background">
 	<Container>
-		<div class="grid gap-12 lg:grid-cols-12 lg:gap-14">
-			<div class="lg:col-span-7">
+		<div class="grid gap-12 md:grid-cols-2 md:gap-16">
+			<div>
 				<h2 class="mb-5 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">Key features</h2>
-				<ul class="mb-12 space-y-3">
+				<ul class="space-y-3">
 					{
 						product.features.map((feature) => (
-							<li class="flex gap-3 text-sm leading-relaxed text-heading md:text-base">
+							<li class="flex gap-3 border-t border-silver/60 pt-3 text-sm leading-relaxed text-heading md:text-base">
 								<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"></span>
 								{feature}
 							</li>
 						))
 					}
 				</ul>
+			</div>
 
+			<div>
 				<h2 class="mb-5 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">Applications</h2>
-				<ul class="mb-12 flex flex-wrap gap-2">
+				<ul class="mb-8 flex flex-wrap gap-2">
 					{
 						product.applications.map((item) => (
 							<li class="rounded-full border border-silver/60 px-3.5 py-1.5 text-sm text-heading">{item}</li>
@@ -36,58 +37,25 @@ const { product } = Astro.props;
 				</ul>
 
 				{
-					product.gallery.length > 1 && (
-						<div>
-							<h2 class="mb-5 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">Gallery</h2>
-							<ul class="grid grid-cols-3 gap-3">
-								{product.gallery.map((image) => (
-									<li class="overflow-hidden rounded-lg">
-										<Image
-											src={image}
-											alt={`${product.title} detail`}
-											widths={[240, 400]}
-											sizes="30vw"
-											class="aspect-square w-full object-cover"
-										/>
+					product.finishes.length > 0 && (
+						<>
+							<h2 class="mb-4 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">Finishes</h2>
+							<ul class="flex flex-wrap gap-2">
+								{product.finishes.map((finish) => (
+									<li>
+										<a
+											href="/#finishes"
+											class="inline-block rounded-full border border-border bg-background-alt px-3 py-1.5 text-xs font-medium text-heading transition-colors hover:border-primary hover:text-primary"
+										>
+											{finish}
+										</a>
 									</li>
 								))}
 							</ul>
-						</div>
+						</>
 					)
 				}
 			</div>
-
-			<aside class="lg:col-span-5">
-				<div class="border border-silver/50 bg-background-alt p-6 sm:p-8">
-					<h2 class="mb-5 font-display text-lg font-bold text-heading">Specifications</h2>
-					<ul class="mb-8 space-y-3 border-t border-silver/50">
-						{
-							product.specs.map((spec) => (
-								<li class="flex justify-between gap-4 border-b border-silver/50 py-3 text-sm">
-									<span class="text-muted">{spec.label}</span>
-									<span class="text-right font-medium text-heading">{spec.value}</span>
-								</li>
-							))
-						}
-					</ul>
-
-					<h2 class="mb-4 font-display text-lg font-bold text-heading">Available finishes</h2>
-					<ul class="flex flex-wrap gap-2">
-						{
-							product.finishes.map((finish) => (
-								<li>
-									<a
-										href="/#finishes"
-										class="inline-block rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-heading transition-colors hover:border-primary hover:text-primary"
-									>
-										{finish}
-									</a>
-								</li>
-							))
-						}
-					</ul>
-				</div>
-			</aside>
 		</div>
 	</Container>
 </section>
