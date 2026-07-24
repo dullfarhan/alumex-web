@@ -18,7 +18,7 @@ const featuredProducts = products.items.slice(0, 3);
 		<div class="bg-[#e8f1fa] px-6 py-10 text-center sm:rounded-3xl sm:px-8 md:px-12 md:py-14">
 			<SectionHeader title={products.title} description={products.description} class="mb-12" />
 
-			<div class="grid grid-cols-1 gap-6 text-left lg:grid-cols-3 lg:gap-8">
+			<div class="grid grid-cols-1 gap-6 text-left xl:grid-cols-3 lg:gap-8">
 				{featuredProducts.map((item, index) => <ProductCard product={item} index={index} />)}
 			</div>
 

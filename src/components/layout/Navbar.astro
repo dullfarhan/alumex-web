@@ -39,7 +39,7 @@ const triggerClass =
 			<span class="font-display block text-lg font-bold tracking-tight text-heading">{site.name}</span>
 		</a>
 
-		<ul class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex lg:gap-10">
+		<ul class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex lg:gap-10">
 			{
 				navLinks.map(({ href, label }) => {
 					if (label === 'Products') {
@@ -88,7 +88,7 @@ const triggerClass =
 		</ul>
 
 		<div class="z-10 flex items-center gap-3">
-			<Button href={navCta.href} size="sm" class="!hidden sm:!inline-flex">
+			<Button href={navCta.href} size="sm" class="!hidden md:!inline-flex">
 				{navCta.label}
 				<ArrowRight class="h-3.5 w-3.5" />
 			</Button>
@@ -96,7 +96,7 @@ const triggerClass =
 			<button
 				id="nav-toggle"
 				type="button"
-				class="group flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-lg border border-border-light bg-background md:hidden"
+				class="group flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-lg border border-border-light bg-background lg:hidden"
 				aria-expanded="false"
 				aria-controls="mobile-nav"
 				aria-label="Open menu"
@@ -113,7 +113,7 @@ const triggerClass =
 
 	<div
 		id="mobile-nav"
-		class="absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-8rem)] overflow-y-auto border-b border-border-light bg-background shadow-lg md:hidden"
+		class="absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-8rem)] overflow-y-auto border-b border-border-light bg-background shadow-lg lg:hidden"
 		hidden
 	>
 		<Container class="!py-2">
@@ -130,7 +130,7 @@ const triggerClass =
 				<MobileProductsAccordion />
 				<MobileProjectsAccordion />
 			</ul>
-			<Button href={navCta.href} class="mt-4 mb-4 w-full justify-center sm:hidden">
+			<Button href={navCta.href} class="mt-4 mb-4 w-full justify-center md:hidden">
 				{navCta.label}
 				<ArrowRight class="h-3.5 w-3.5" />
 			</Button>
