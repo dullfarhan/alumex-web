@@ -1,0 +1,25 @@
+---
+import SearchIcon from '../icons/SearchIcon.astro';
+
+interface Props {
+	id: string;
+	label: string;
+	placeholder: string;
+	class?: string;
+}
+
+const { id, label, placeholder, class: className } = Astro.props;
+---
+
+<label class:list={['relative block w-full max-w-md', className]}>
+	<span class="sr-only">{label}</span>
+	<span class="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-muted">
+		<SearchIcon class="h-4 w-4" />
+	</span>
+	<input
+		id={id}
+		type="search"
+		placeholder={placeholder}
+		class="w-full rounded-lg border border-border bg-background py-2.5 pr-4 pl-10 text-sm text-heading outline-none transition-colors placeholder:text-muted/70 focus:border-primary"
+	/>
+</label>
