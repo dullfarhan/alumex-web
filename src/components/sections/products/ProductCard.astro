@@ -5,35 +5,54 @@ import ArrowRight from '../../icons/ArrowRight.astro';
 
 interface Props {
 	product: Product;
+	index: number;
 }
 
-const { product } = Astro.props;
+const { product, index } = Astro.props;
+const listingNumber = String(index + 1).padStart(2, '0');
 ---
 
 <a
 	href={product.href}
 	data-product-card
+	data-listing-number={listingNumber}
 	data-title={product.title}
 	data-category={product.category}
 	data-description={`${product.shortDescription} ${product.description}`}
-	class="group flex flex-col overflow-hidden rounded-2xl border border-silver/50 bg-background transition-shadow duration-300 hover:shadow-[0_12px_36px_rgba(18,43,77,0.1)]"
+	class="group relative block aspect-square overflow-hidden rounded-2xl border border-silver/50 bg-white shadow-[0_8px_30px_rgba(18,43,77,0.08)] transition-shadow duration-300 hover:shadow-[0_12px_36px_rgba(18,43,77,0.12)]"
 >
-	<div class="overflow-hidden">
+	<div class="absolute inset-0 [clip-path:polygon(58%_0,100%_0,100%_100%,38%_100%)]" aria-hidden="true">
 		<Image
 			src={product.image}
-			alt={product.title}
+			alt=""
 			widths={[400, 600, 800]}
 			sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-			class="aspect-[5/3] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+			class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
 		/>
 	</div>
-	<div class="flex flex-1 flex-col px-5 py-6">
-		<span class="mb-2 text-xs font-medium tracking-[0.08em] text-primary uppercase">{product.category}</span>
-		<h2 class="mb-2 font-display text-xl font-bold text-heading">{product.title}</h2>
-		<p class="mb-5 flex-1 text-sm leading-relaxed text-muted">{product.shortDescription}</p>
-		<span class="inline-flex items-center gap-2 text-sm font-medium text-primary">
-			View details
-			<ArrowRight class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+
+	<div class="relative z-10 flex h-full w-[52%] flex-col justify-between p-5 sm:p-6 md:w-[48%]">
+		<div>
+			<div class="relative mb-4 inline-block pl-2 pt-2 sm:mb-5">
+				<span class="absolute top-0 left-0 h-3.5 w-3.5 border-t-2 border-l-2 border-primary" aria-hidden="true"
+				></span>
+				<span data-listing-label class="font-display text-3xl font-medium tracking-tight text-primary sm:text-4xl"
+					>{listingNumber}</span
+				>
+			</div>
+
+			<h2 class="mb-3 font-display text-lg leading-tight font-bold text-heading sm:mb-4 sm:text-xl md:text-[1.4rem]">
+				{product.title}
+			</h2>
+			<span class="mb-3 block h-0.5 w-10 bg-primary sm:mb-4" aria-hidden="true"></span>
+			<p class="text-sm leading-relaxed text-muted">{product.shortDescription}</p>
+		</div>
+
+		<span
+			class="mt-4 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-silver bg-white text-primary shadow-[0_4px_14px_rgba(18,43,77,0.1)] transition-transform duration-300 group-hover:translate-x-0.5 sm:h-12 sm:w-12"
+			aria-hidden="true"
+		>
+			<ArrowRight class="h-4 w-4" />
 		</span>
 	</div>
 </a>

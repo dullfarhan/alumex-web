@@ -46,7 +46,13 @@ import { products } from '../../config/products';
 			const show = matchesCategory && matchesQuery;
 			card.hidden = !show;
 			card.classList.toggle('hidden', !show);
-			if (show) visible += 1;
+			if (show) {
+				visible += 1;
+				const listingNumber = String(visible).padStart(2, '0');
+				card.dataset.listingNumber = listingNumber;
+				const label = card.querySelector<HTMLElement>('[data-listing-label]');
+				if (label) label.textContent = listingNumber;
+			}
 		});
 
 		if (countEl) countEl.textContent = String(visible);
