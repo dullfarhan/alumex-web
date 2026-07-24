@@ -1,46 +1,25 @@
 ---
-import { Image } from 'astro:assets';
 import { projects } from '../../config/projects';
 import ArrowRight from '../icons/ArrowRight.astro';
 import Container from '../layout/Container.astro';
 import Button from '../ui/Button.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import ProjectCard from './projects/ProjectCard.astro';
 
 const featured = projects.items.slice(0, 3);
 ---
 
 <section id="projects" class="border-t border-silver/40 bg-background-alt">
 	<Container>
-		<div class="mb-14 text-center">
-			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{projects.label}</span>
-			<h2 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[3.1rem]">
-				{projects.title}
-			</h2>
-			<p class="mx-auto max-w-2xl text-lg leading-relaxed text-muted">{projects.description}</p>
-		</div>
+		<SectionHeader
+			label={projects.label}
+			title={projects.title}
+			description={projects.description}
+			class="mb-14"
+		/>
 
 		<div class="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
-			{
-				featured.map((item) => (
-					<a href={item.href} class="group relative block overflow-hidden rounded-2xl">
-						<Image
-							src={item.image}
-							alt={item.title}
-							widths={[400, 600, 900]}
-							sizes="(max-width: 1024px) 100vw, 33vw"
-							class="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-						/>
-
-						<div class="pointer-events-none absolute inset-0 bg-linear-to-t from-primary-dark/85 via-primary-dark/25 to-transparent"></div>
-
-						<div class="absolute inset-x-0 bottom-0 p-5 md:p-6">
-							<span class="mb-1.5 block text-xs font-medium tracking-[0.08em] text-white/75 uppercase">
-								{item.category} · {item.location}
-							</span>
-							<h3 class="font-display text-xl font-bold text-white drop-shadow-sm md:text-2xl">{item.title}</h3>
-						</div>
-					</a>
-				))
-			}
+			{featured.map((item) => <ProjectCard project={item} class="rounded-2xl" />)}
 		</div>
 
 		<div class="mt-12 flex justify-center">

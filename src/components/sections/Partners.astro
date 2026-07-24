@@ -2,16 +2,12 @@
 import { Image } from 'astro:assets';
 import { partners } from '../../config/partners';
 import Container from '../layout/Container.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
 ---
 
 <section class="border-y border-silver/40 bg-background">
 	<Container>
-		<div class="mb-10 text-center md:mb-12">
-			<span class="mb-6 block text-sm font-medium tracking-[0.08em] text-primary uppercase">
-				{partners.label}
-			</span>
-			<h2 class="font-display text-[1.7rem] sm:text-3xl font-bold text-heading md:text-[3.1rem]">{partners.title}</h2>
-		</div>
+		<SectionHeader label={partners.label} title={partners.title} class="mb-10 md:mb-12" />
 
 		<ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-6 md:gap-8">
 			{

@@ -2,17 +2,17 @@
 import { Image } from 'astro:assets';
 import { finishes } from '../../config/finishes';
 import Container from '../layout/Container.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
 ---
 
 <section id="finishes" class="overflow-x-clip bg-background">
 	<Container>
-		<div class="mb-12 text-center md:mb-14">
-			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{finishes.label}</span>
-			<h2 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[3.1rem]">
-				{finishes.title}
-			</h2>
-			<p class="mx-auto max-w-2xl text-base leading-relaxed text-muted md:text-lg">{finishes.description}</p>
-		</div>
+		<SectionHeader
+			label={finishes.label}
+			title={finishes.title}
+			description={finishes.description}
+			class="mb-12 md:mb-14"
+		/>
 
 		<ul class="grid grid-cols-2 gap-4 pb-2 md:grid-cols-3 md:gap-5 lg:grid-cols-6">
 			{

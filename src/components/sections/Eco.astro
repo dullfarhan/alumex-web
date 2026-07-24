@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { eco } from '../../config/eco';
 import Container from '../layout/Container.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
 ---
 
 <section id="eco" class="bg-background">
@@ -18,13 +19,15 @@ import Container from '../layout/Container.astro';
 			</div>
 
 			<div>
-				<span class="mb-6 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{eco.label}</span>
-				<h2 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl lg:text-[3.1rem]">
-					{eco.title}
-				</h2>
-				<p class="mb-4 text-lg leading-relaxed text-muted">{eco.description}</p>
+				<SectionHeader
+					label={eco.label}
+					title={eco.title}
+					description={eco.description}
+					align="start"
+					class="mb-4"
+				/>
 
-				<ul class="space-y-6">
+				<ul class="mt-6 space-y-6">
 					{
 						eco.points.map((point) => (
 							<li class="border-t border-silver/60 pt-6">

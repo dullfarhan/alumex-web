@@ -1,0 +1,28 @@
+---
+interface Props {
+	items: readonly string[];
+	label: string;
+}
+
+const { items, label } = Astro.props;
+---
+
+<div class="flex flex-wrap items-center gap-2" role="group" aria-label={label}>
+	{
+		items.map((item, index) => (
+			<button
+				type="button"
+				data-category-filter={item}
+				aria-pressed={index === 0 ? 'true' : 'false'}
+				class:list={[
+					'rounded-full border px-3.5 py-1.5 text-xs font-medium tracking-wide transition-colors',
+					index === 0
+						? 'border-primary-dark bg-primary-dark text-white'
+						: 'border-border text-heading hover:border-primary hover:text-primary',
+				]}
+			>
+				{item}
+			</button>
+		))
+	}
+</div>

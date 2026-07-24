@@ -1,17 +1,12 @@
 ---
 import { site } from '../../config/site';
 import Container from '../layout/Container.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
 ---
 
 <section id="map" class="border-t border-silver/40 bg-background-alt">
 	<Container class="!px-0 md:py-16">
-		<div class="mb-10 text-center">
-			<span class="mb-6 block text-sm font-medium tracking-[0.08em] text-primary uppercase">Visit Us</span>
-			<h2 class="mb-4 font-display text-[1.7rem] sm:text-3xl lg:text-[3.1rem] leading-[1.1] font-bold tracking-tight text-heading">
-				Find our facility
-			</h2>
-			<p class="text-lg leading-relaxed text-muted">{site.address}</p>
-		</div>
+		<SectionHeader label="Visit Us" title="Find our facility" description={site.address} class="mb-10" />
 
 		<div class="overflow-hidden rounded-xl border border-silver/40 bg-background shadow-sm">
 			<iframe

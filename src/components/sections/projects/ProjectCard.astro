@@ -5,9 +5,10 @@ import type { Project } from '../../../config/projects';
 interface Props {
 	project: Project;
 	featured?: boolean;
+	class?: string;
 }
 
-const { project, featured = false } = Astro.props;
+const { project, featured = false, class: className } = Astro.props;
 ---
 
 <a
@@ -18,7 +19,7 @@ const { project, featured = false } = Astro.props;
 	data-location={project.location}
 	data-description={`${project.shortDescription} ${project.description}`}
 	data-featured={featured ? 'true' : 'false'}
-	class:list={['group relative block overflow-hidden', featured && 'col-span-full']}
+	class:list={['group relative block overflow-hidden', featured && 'col-span-full', className]}
 >
 	<Image
 		src={project.image}
