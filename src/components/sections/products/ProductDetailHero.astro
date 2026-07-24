@@ -2,6 +2,8 @@
 import { Image } from 'astro:assets';
 import type { Product } from '../../../config/products';
 import ArrowRight from '../../icons/ArrowRight.astro';
+import DownloadIcon from '../../icons/DownloadIcon.astro';
+import HighlightIcon from '../../icons/HighlightIcon.astro';
 import Button from '../../ui/Button.astro';
 import Container from '../../layout/Container.astro';
 
@@ -10,127 +12,65 @@ interface Props {
 }
 
 const { product } = Astro.props;
-
-const collage = [...new Map([product.image, ...product.gallery].map((img) => [img.src, img])).values()].slice(0, 4);
-const [imgA, imgB, imgC, imgD] = collage;
 ---
 
-<section class="border-b border-silver/40 bg-background">
-	<Container>
+<section class="relative overflow-hidden border-b border-silver/40 bg-background">
+	<!-- Diagonal hero image: full behind content on mobile, clipped on desktop -->
+	<div
+		class="relative h-64 overflow-hidden sm:h-80 md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-[56%] md:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%)]"
+		aria-hidden="true"
+	>
+		<Image
+			src={product.image}
+			alt=""
+			widths={[640, 960, 1400]}
+			sizes="(max-width: 767px) 100vw, 56vw"
+			class="absolute inset-0 h-full w-full object-cover"
+			priority
+		/>
+		<div class="absolute inset-0 bg-primary-dark/20 md:bg-transparent"></div>
+	</div>
+
+	<Container class="relative z-10">
 		<nav class="mb-8 text-sm text-muted" aria-label="Breadcrumb">
 			<ol class="flex flex-wrap items-center gap-2">
+				<li><a href="/" class="transition-colors hover:text-primary">Home</a></li>
+				<li aria-hidden="true">/</li>
 				<li><a href="/products" class="transition-colors hover:text-primary">Products</a></li>
+				<li aria-hidden="true">/</li>
+				<li><a href="/products" class="transition-colors hover:text-primary">{product.category}</a></li>
 				<li aria-hidden="true">/</li>
 				<li class="text-heading">{product.title}</li>
 			</ol>
 		</nav>
 
-		<div class="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
-			<div class="overflow-hidden rounded-xl bg-background-alt">
-				<Image
-					src={product.image}
-					alt={product.title}
-					widths={[640, 960, 1400]}
-					sizes="(max-width: 1024px) 100vw, 50vw"
-					class="h-full min-h-[22rem] w-full object-cover lg:min-h-[36rem]"
-					priority
-				/>
-			</div>
+		<div class="max-w-xl pb-4 md:min-h-[28rem] md:pb-10 lg:min-h-[32rem]">
+			<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{product.category}</span>
+			<h1 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[2.75rem]">
+				{product.title}
+			</h1>
+			<span class="mb-5 block h-0.5 w-12 bg-primary" aria-hidden="true"></span>
+			<p class="mb-8 text-base leading-relaxed text-muted md:text-lg">{product.description}</p>
 
-			<div class="flex flex-col gap-8">
-				<div>
-					<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{product.category}</span>
-					<h1 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[2.75rem]">
-						{product.title}
-					</h1>
-					<p class="mb-8 text-base leading-relaxed text-muted md:text-lg">{product.description}</p>
-					<Button href="/contact">
-						Request Quote
-						<ArrowRight class="h-3.5 w-3.5" />
-					</Button>
-				</div>
-
-				<div class="grid flex-1 gap-4 sm:grid-cols-2 sm:gap-5">
-					<div class="flex flex-col justify-between border border-silver/50 bg-background-alt p-5 sm:p-6">
-						<div>
-							<h2 class="mb-4 font-display text-base font-bold text-heading">Specifications</h2>
-							<ul class="space-y-0 border-t border-silver/50">
-								{
-									product.specs.map((spec) => (
-										<li class="flex justify-between gap-3 border-b border-silver/50 py-2.5 text-sm">
-											<span class="text-muted">{spec.label}</span>
-											<span class="text-right font-medium text-heading">{spec.value}</span>
-										</li>
-									))
-								}
-							</ul>
-						</div>
-						{
-							product.finishes.length > 0 && (
-								<div class="mt-5 border-t border-silver/50 pt-4">
-									<p class="mb-2 text-xs font-medium tracking-[0.08em] text-primary uppercase">Finishes</p>
-									<ul class="flex flex-wrap gap-1.5">
-										{product.finishes.slice(0, 4).map((finish) => (
-											<li class="rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-medium text-heading">
-												{finish}
-											</li>
-										))}
-									</ul>
-								</div>
-							)
-						}
-					</div>
-
-					{
-						collage.length === 4 && (
-							<div class="flex aspect-[5/6] gap-2 self-stretch sm:aspect-[4/5]">
-								{/* Left: tall top + short bottom — shares sum to same column height as right */}
-								<div class="flex min-w-0 flex-1 flex-col gap-2">
-									<figure class="group min-h-0 flex-[1.35] overflow-hidden rounded-sm bg-background-alt">
-										<Image
-											src={imgA}
-											alt={`${product.title} view 1`}
-											widths={[200, 360]}
-											sizes="(max-width: 1024px) 25vw, 12vw"
-											class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-										/>
-									</figure>
-									<figure class="group min-h-0 flex-[0.65] overflow-hidden rounded-sm bg-background-alt">
-										<Image
-											src={imgB}
-											alt={`${product.title} view 2`}
-											widths={[200, 360]}
-											sizes="(max-width: 1024px) 25vw, 12vw"
-											class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-										/>
-									</figure>
-								</div>
-								{/* Right: short top + tall bottom — different split so middle seam zigzags */}
-								<div class="flex min-w-0 flex-1 flex-col gap-2">
-									<figure class="group min-h-0 flex-[0.8] overflow-hidden rounded-sm bg-background-alt">
-										<Image
-											src={imgC}
-											alt={`${product.title} view 3`}
-											widths={[200, 360]}
-											sizes="(max-width: 1024px) 25vw, 12vw"
-											class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-										/>
-									</figure>
-									<figure class="group min-h-0 flex-[1.2] overflow-hidden rounded-sm bg-background-alt">
-										<Image
-											src={imgD}
-											alt={`${product.title} view 4`}
-											widths={[200, 360]}
-											sizes="(max-width: 1024px) 25vw, 12vw"
-											class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-										/>
-									</figure>
-								</div>
-							</div>
-						)
-					}
-				</div>
+			<div class="flex flex-wrap items-center gap-4">
+				<Button href="/contact">
+					Request Quote
+					<ArrowRight class="h-3.5 w-3.5" />
+				</Button>
 			</div>
 		</div>
+
+		<ul class="grid grid-cols-2 gap-6 border-t border-silver/50 py-8 sm:grid-cols-4 md:max-w-xl md:gap-5 lg:gap-8">
+			{
+				product.highlights.map((item) => (
+					<li class="flex flex-col items-start gap-2">
+						<span class="flex h-10 w-10 items-center justify-center rounded-full border border-silver/60 bg-background-alt text-primary">
+							<HighlightIcon name={item.icon} class="h-5 w-5" />
+						</span>
+						<span class="text-xs leading-snug font-medium text-heading sm:text-sm">{item.label}</span>
+					</li>
+				))
+			}
+		</ul>
 	</Container>
 </section>

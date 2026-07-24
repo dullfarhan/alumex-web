@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ProductDetailHero from '../../components/sections/products/ProductDetailHero.astro';
+import ProductDetailSpecs from '../../components/sections/products/ProductDetailSpecs.astro';
+import ProductDetailFinishes from '../../components/sections/products/ProductDetailFinishes.astro';
 import ProductDetailBody from '../../components/sections/products/ProductDetailBody.astro';
 import ProductRelated from '../../components/sections/products/ProductRelated.astro';
 import CtaBanner from '../../components/ui/CtaBanner.astro';
@@ -39,6 +41,8 @@ const jsonLd = {
 	jsonLd={jsonLd}
 >
 	<ProductDetailHero product={product} />
+	<ProductDetailSpecs product={product} />
+	<ProductDetailFinishes product={product} />
 	<ProductDetailBody product={product} />
 	<ProductRelated products={related} />
 	<CtaBanner

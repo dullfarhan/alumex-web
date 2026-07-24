@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import type { Product } from '../../../config/products';
+import CheckIcon from '../../icons/CheckIcon.astro';
 import Container from '../../layout/Container.astro';
 
 interface Props {
@@ -7,19 +9,63 @@ interface Props {
 }
 
 const { product } = Astro.props;
+
+const axes = product.performance.axes;
+const cx = 100;
+const cy = 100;
+const maxR = 72;
+const levels = [0.25, 0.5, 0.75, 1];
+
+function polar(index: number, total: number, radius: number) {
+	const angle = -Math.PI / 2 + (index / total) * Math.PI * 2;
+	return {
+		x: cx + Math.cos(angle) * radius,
+		y: cy + Math.sin(angle) * radius,
+	};
+}
+
+const gridPolygons = levels.map((level) =>
+	axes
+		.map((_, i) => {
+			const p = polar(i, axes.length, maxR * level);
+			return `${p.x},${p.y}`;
+		})
+		.join(' '),
+);
+
+const valuePolygon = axes
+	.map((axis, i) => {
+		const p = polar(i, axes.length, maxR * (axis.value / 100));
+		return `${p.x},${p.y}`;
+	})
+	.join(' ');
+
+const axisLines = axes.map((_, i) => polar(i, axes.length, maxR));
+
+const labelPoints = axes.map((axis, i) => {
+	const p = polar(i, axes.length, maxR + 18);
+	return { ...axis, ...p };
+});
 ---
 
 <section class="border-b border-silver/40 bg-background">
 	<Container>
-		<div class="grid gap-12 md:grid-cols-2 md:gap-16">
+		<div class="grid gap-12 lg:grid-cols-3 lg:gap-10">
 			<div>
-				<h2 class="mb-5 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">Key features</h2>
-				<ul class="space-y-3">
+				<h2 class="mb-6 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">Key Features</h2>
+				<ul class="space-y-5">
 					{
 						product.features.map((feature) => (
-							<li class="flex gap-3 border-t border-silver/60 pt-3 text-sm leading-relaxed text-heading md:text-base">
-								<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"></span>
-								{feature}
+							<li class="flex gap-4">
+								<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-dark text-white">
+									<CheckIcon class="h-4 w-4" />
+								</span>
+								<div>
+									<p class="font-display text-sm font-bold text-heading md:text-base">{feature}</p>
+									<p class="mt-1 text-sm leading-relaxed text-muted">
+										Engineered into the system for reliable on-site performance.
+									</p>
+								</div>
 							</li>
 						))
 					}
@@ -27,34 +73,74 @@ const { product } = Astro.props;
 			</div>
 
 			<div>
-				<h2 class="mb-5 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">Applications</h2>
-				<ul class="mb-8 flex flex-wrap gap-2">
+				<h2 class="mb-6 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">Applications</h2>
+				<ul class="space-y-4">
 					{
 						product.applications.map((item) => (
-							<li class="rounded-full border border-silver/60 px-3.5 py-1.5 text-sm text-heading">{item}</li>
+							<li class="flex gap-4 rounded-xl border border-silver/50 bg-background-alt/60 p-3">
+								<div class="h-16 w-16 shrink-0 overflow-hidden rounded-lg">
+									<Image
+										src={item.image}
+										alt=""
+										widths={[96, 128]}
+										sizes="64px"
+										class="h-full w-full object-cover"
+									/>
+								</div>
+								<div class="min-w-0 self-center">
+									<h3 class="font-display text-sm font-bold text-heading">{item.title}</h3>
+									<p class="mt-1 text-xs leading-relaxed text-muted">{item.description}</p>
+								</div>
+							</li>
 						))
 					}
 				</ul>
+			</div>
 
-				{
-					product.finishes.length > 0 && (
-						<>
-							<h2 class="mb-4 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">Finishes</h2>
-							<ul class="flex flex-wrap gap-2">
-								{product.finishes.map((finish) => (
-									<li>
-										<a
-											href="/#finishes"
-											class="inline-block rounded-full border border-border bg-background-alt px-3 py-1.5 text-xs font-medium text-heading transition-colors hover:border-primary hover:text-primary"
-										>
-											{finish}
-										</a>
-									</li>
-								))}
-							</ul>
-						</>
-					)
-				}
+			<div class="rounded-2xl bg-primary-dark p-6 text-white sm:p-8">
+				<h2 class="mb-6 font-display text-xl font-bold tracking-tight md:text-2xl">Technical Performance</h2>
+
+				<div class="mx-auto mb-8 max-w-[240px]">
+					<svg viewBox="0 0 200 200" class="h-auto w-full" role="img" aria-label="Performance radar chart">
+						{
+							gridPolygons.map((points) => (
+								<polygon points={points} fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"></polygon>
+							))
+						}
+						{
+							axisLines.map((point) => (
+								<line x1={cx} y1={cy} x2={point.x} y2={point.y} stroke="rgba(255,255,255,0.2)" stroke-width="1"></line>
+							))
+						}
+						<polygon points={valuePolygon} fill="rgba(47,168,226,0.35)" stroke="#2fa8e2" stroke-width="2"></polygon>
+						{
+							labelPoints.map((point) => (
+								<text
+									x={point.x}
+									y={point.y}
+									text-anchor="middle"
+									dominant-baseline="middle"
+									fill="rgba(255,255,255,0.75)"
+									font-size="7"
+									font-family="system-ui, sans-serif"
+								>
+									{point.label.split(' ')[0]}
+								</text>
+							))
+						}
+					</svg>
+				</div>
+
+				<ul class="grid gap-4 border-t border-white/15 pt-5 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+					{
+						product.performance.metrics.map((metric) => (
+							<li class="text-center lg:text-left xl:text-center">
+								<span class="block font-display text-sm font-bold text-accent">{metric.value}</span>
+								<span class="mt-1 block text-[11px] leading-snug text-white/70">{metric.label}</span>
+							</li>
+						))
+					}
+				</ul>
 			</div>
 		</div>
 	</Container>

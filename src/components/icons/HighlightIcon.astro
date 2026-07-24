@@ -1,0 +1,26 @@
+---
+import type { ProductHighlightIcon } from '../../config/products';
+import AestheticsIcon from './AestheticsIcon.astro';
+import PrecisionIcon from './PrecisionIcon.astro';
+import ShieldIcon from './ShieldIcon.astro';
+import WeatherIcon from './WeatherIcon.astro';
+
+interface Props {
+	name: ProductHighlightIcon;
+	class?: string;
+}
+
+const { name, class: className = 'h-5 w-5' } = Astro.props;
+---
+
+{
+	name === 'strength' ? (
+		<ShieldIcon class={className} />
+	) : name === 'weather' ? (
+		<WeatherIcon class={className} />
+	) : name === 'precision' ? (
+		<PrecisionIcon class={className} />
+	) : (
+		<AestheticsIcon class={className} />
+	)
+}

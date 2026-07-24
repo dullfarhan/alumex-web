@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets';
+import type { Product } from '../../../config/products';
+import BlueprintSchematic from '../../icons/BlueprintSchematic.astro';
+import CheckIcon from '../../icons/CheckIcon.astro';
+import Container from '../../layout/Container.astro';
+
+interface Props {
+	product: Product;
+}
+
+const { product } = Astro.props;
+
+const collage = [...new Map([product.image, ...product.gallery].map((img) => [img.src, img])).values()].slice(0, 4);
+const [imgA, imgB, imgC, imgD] = collage;
+---
+
+<section class="border-b border-silver/40 bg-background">
+	<Container>
+		<div class="grid items-stretch gap-8 lg:grid-cols-[0.85fr_1.1fr_1fr] lg:gap-10">
+			<div class="flex min-h-[18rem] items-center justify-center rounded-2xl bg-primary-dark p-8 text-white/85 sm:min-h-[22rem] lg:min-h-0">
+				<BlueprintSchematic class="h-full max-h-[22rem] w-auto" />
+			</div>
+
+			<div>
+				<h2 class="mb-6 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">Specifications</h2>
+				<ul class="space-y-0 border-t border-silver/50">
+					{
+						product.specs.map((spec) => (
+							<li class="flex items-start gap-3 border-b border-silver/50 py-3.5">
+								<span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+									<CheckIcon class="h-3.5 w-3.5" />
+								</span>
+								<span class="min-w-0 flex-1">
+									<span class="block text-xs font-medium tracking-wide text-muted uppercase">{spec.label}</span>
+									<span class="mt-0.5 block text-sm font-medium text-heading">{spec.value}</span>
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			{
+				collage.length === 4 && (
+					<div class="flex aspect-[5/6] gap-2 self-stretch sm:aspect-[4/5] lg:aspect-auto lg:min-h-[22rem]">
+						<div class="flex min-w-0 flex-1 flex-col gap-2">
+							<figure class="group min-h-0 flex-[1.35] overflow-hidden rounded-lg bg-background-alt">
+								<Image
+									src={imgA}
+									alt={`${product.title} view 1`}
+									widths={[200, 360, 480]}
+									sizes="(max-width: 1024px) 25vw, 12vw"
+									class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								/>
+							</figure>
+							<figure class="group min-h-0 flex-[0.65] overflow-hidden rounded-lg bg-background-alt">
+								<Image
+									src={imgB}
+									alt={`${product.title} view 2`}
+									widths={[200, 360, 480]}
+									sizes="(max-width: 1024px) 25vw, 12vw"
+									class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								/>
+							</figure>
+						</div>
+						<div class="flex min-w-0 flex-1 flex-col gap-2">
+							<figure class="group min-h-0 flex-[0.8] overflow-hidden rounded-lg bg-background-alt">
+								<Image
+									src={imgC}
+									alt={`${product.title} view 3`}
+									widths={[200, 360, 480]}
+									sizes="(max-width: 1024px) 25vw, 12vw"
+									class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								/>
+							</figure>
+							<figure class="group min-h-0 flex-[1.2] overflow-hidden rounded-lg bg-background-alt">
+								<Image
+									src={imgD}
+									alt={`${product.title} view 4`}
+									widths={[200, 360, 480]}
+									sizes="(max-width: 1024px) 25vw, 12vw"
+									class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+								/>
+							</figure>
+						</div>
+					</div>
+				)
+			}
+		</div>
+	</Container>
+</section>
