@@ -18,7 +18,10 @@ const featuredProducts = products.items.slice(0, 3);
 		<div class="bg-[#e8f1fa] px-6 py-10 text-center sm:rounded-3xl sm:px-8 md:px-12 md:py-14">
 			<SectionHeader title={products.title} description={products.description} class="mb-12" />
 
-			<div class="grid grid-cols-1 gap-6 text-left xl:grid-cols-3 lg:gap-8">
+			{/* 1 col until lg — 2-up is too tight from ~768–1024 for this card design */}
+			<div
+				class="grid min-w-0 w-full grid-cols-1 gap-6 text-left lg:grid-cols-2 lg:gap-7 lg:[&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:mx-auto lg:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.875rem)] 2xl:grid-cols-3 2xl:gap-8 2xl:[&>*:last-child:nth-child(odd)]:col-span-1 2xl:[&>*:last-child:nth-child(odd)]:max-w-none"
+			>
 				{featuredProducts.map((item, index) => <ProductCard product={item} index={index} />)}
 			</div>
 

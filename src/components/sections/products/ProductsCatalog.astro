@@ -6,7 +6,7 @@ import ProductCard from './ProductCard.astro';
 
 <section class="border-b border-silver/40 bg-background">
 	<Container>
-		<div id="products-grid" class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 lg:gap-8">
+		<div id="products-grid" class="grid min-w-0 grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-7 xl:grid-cols-3 xl:gap-8">
 			{productItems.map((product, index) => <ProductCard product={product} index={index} />)}
 		</div>
 		<p id="products-empty" class="hidden py-16 text-center text-muted" hidden>
