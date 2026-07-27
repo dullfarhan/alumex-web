@@ -19,15 +19,17 @@ const megaLabels = new Set(['Products', 'Projects']);
 const simpleLinks = navLinks.filter((link) => !megaLabels.has(link.label));
 
 const triggerClass =
-	'group relative inline-flex items-center gap-1.5 text-sm font-medium text-heading transition-colors duration-300 hover:text-primary after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-[width] after:duration-300 after:ease-out hover:after:w-full aria-expanded:text-primary aria-expanded:after:w-full';
+	'group flex h-full items-center gap-1.5 px-1 text-sm font-medium text-heading transition-colors duration-300 hover:text-primary aria-expanded:text-primary';
+const triggerLabelClass =
+	'relative inline-flex items-center gap-1.5 pb-1 after:absolute after:right-0 after:bottom-0 after:left-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 after:ease-out group-hover:after:scale-x-100 group-aria-expanded:after:scale-x-100';
 ---
 
 <header id="site-header" class="sticky top-0 z-50 border-b border-silver/40 bg-background/95 backdrop-blur-sm">
 	<nav
-		class="relative mx-auto flex h-16 w-full max-w-[1440px] items-center justify-between px-6 sm:px-12 md:h-20"
+		class="relative mx-auto grid h-16 w-full max-w-[1440px] grid-cols-[1fr_auto_1fr] items-stretch px-6 sm:px-12 md:h-20"
 		aria-label="Main navigation"
 	>
-		<a href="/" class="z-10 flex items-center gap-3">
+		<a href="/" class="z-10 flex items-center gap-3 justify-self-start">
 			<Image
 				src={logo}
 				alt={`${site.name} logo`}
@@ -39,12 +41,12 @@ const triggerClass =
 			<span class="font-display block text-lg font-bold tracking-tight text-heading">{site.name}</span>
 		</a>
 
-		<ul class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex lg:gap-10">
+		<ul class="hidden h-full items-stretch gap-6 justify-self-center lg:flex lg:gap-8">
 			{
 				navLinks.map(({ href, label }) => {
 					if (label === 'Products') {
 						return (
-							<li class="relative" data-mega-wrap="products">
+							<li class="h-full" data-mega-wrap="products">
 								<button
 									id="products-mega-trigger"
 									type="button"
@@ -53,15 +55,17 @@ const triggerClass =
 									aria-controls="products-mega"
 									aria-haspopup="true"
 								>
-									{productsMega.trigger.label}
-									<ChevronDown class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180" />
+									<span class={triggerLabelClass}>
+										{productsMega.trigger.label}
+										<ChevronDown class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180" />
+									</span>
 								</button>
 							</li>
 						);
 					}
 					if (label === 'Projects') {
 						return (
-							<li class="relative" data-mega-wrap="projects">
+							<li class="h-full" data-mega-wrap="projects">
 								<button
 									id="projects-mega-trigger"
 									type="button"
@@ -70,14 +74,16 @@ const triggerClass =
 									aria-controls="projects-mega"
 									aria-haspopup="true"
 								>
-									{projectsMega.trigger.label}
-									<ChevronDown class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180" />
+									<span class={triggerLabelClass}>
+										{projectsMega.trigger.label}
+										<ChevronDown class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180" />
+									</span>
 								</button>
 							</li>
 						);
 					}
 					return (
-						<li>
+						<li class="h-full">
 							<NavLink href={href} active={currentPath === href}>
 								{label}
 							</NavLink>
@@ -87,7 +93,7 @@ const triggerClass =
 			}
 		</ul>
 
-		<div class="z-10 flex items-center gap-3">
+		<div class="z-10 flex items-center gap-3 justify-self-end">
 			<Button href={navCta.href} size="sm" class="!hidden md:!inline-flex">
 				{navCta.label}
 				<ArrowRight class="h-3.5 w-3.5" />
@@ -239,7 +245,7 @@ const triggerClass =
 
 		const scheduleClose = () => {
 			clearTimeout(closeTimer);
-			closeTimer = setTimeout(() => setMegaOpen(key, false), 120);
+			closeTimer = setTimeout(() => setMegaOpen(key, false), 200);
 		};
 
 		const wrap = header.querySelector(`[data-mega-wrap="${key}"]`);

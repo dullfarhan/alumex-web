@@ -13,11 +13,11 @@ import SectionHeader from '../ui/SectionHeader.astro';
 			class="mb-12 md:mb-14"
 		/>
 
-		<ul class="grid grid-cols-2 gap-4 pb-2 md:grid-cols-3 md:gap-5 lg:grid-cols-6">
+		<ul class="grid grid-cols-2 gap-6 pb-2 md:grid-cols-3 md:gap-8 lg:gap-5 lg:grid-cols-6">
 			{
 				finishes.items.map((item) => (
 					<li class="min-w-0">
-						<div class="group relative h-64 w-full origin-center overflow-hidden shadow-[8px_16px_32px_rgba(18,43,77,0.28)] transition-transform duration-500 ease-out [transform:perspective(900px)_rotateY(-16deg)] hover:z-10 hover:[transform:perspective(900px)_rotateY(-16deg)_scale(1.08)] sm:h-72 md:h-80 lg:h-[400px]">
+						<div class="group relative h-64 w-full origin-center overflow-hidden shadow-[8px_16px_32px_rgba(18,43,77,0.28)] transition-transform duration-500 ease-out [transform:perspective(900px)_rotateY(-16deg)] hover:z-10 hover:[transform:perspective(900px)_rotateY(-16deg)_scale(1.08)] sm:h-[460px] lg:h-[400px]">
 							<Image
 								src={item.image}
 								alt={item.title}
