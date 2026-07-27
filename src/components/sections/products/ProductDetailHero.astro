@@ -45,7 +45,7 @@ const { product } = Astro.props;
 					loading="eager"
 					fetchpriority="high"
 				/>
-				<div class="absolute inset-0 bg-[#e8f1fa]/70 md:hidden"></div>
+				<div class="absolute inset-0 bg-[#e8f1fa]/88 backdrop-blur-[1px] md:hidden"></div>
 				<div class="absolute inset-0 hidden bg-linear-to-l from-transparent via-transparent to-[#e8f1fa]/10 md:block"></div>
 			</div>
 
@@ -72,7 +72,7 @@ const { product } = Astro.props;
 						{product.title}
 					</h1>
 
-					<p class="mb-8 max-w-md text-base leading-relaxed text-muted sm:text-lg">
+					<p class="mb-8 max-w-md text-base leading-relaxed text-heading/75 sm:text-lg md:text-muted">
 						{product.description}
 					</p>
 

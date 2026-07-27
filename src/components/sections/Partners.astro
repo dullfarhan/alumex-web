@@ -9,20 +9,76 @@ import SectionHeader from '../ui/SectionHeader.astro';
 	<Container>
 		<SectionHeader title={partners.title} class="mb-10 md:mb-12" />
 
-		<ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-6 md:gap-8">
-			{
-				partners.items.map((partner) => (
-					<li class="flex items-center justify-center">
-						<Image
-							src={partner.logo}
-							alt={partner.name}
-							widths={[160, 240, 320]}
-							sizes="(max-width: 768px) 40vw, 12vw"
-							class="h-8 w-auto max-w-[120px] object-contain opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-10"
-						/>
-					</li>
-				))
-			}
-		</ul>
+		<div class="partners-viewport" aria-label="Industry partners">
+			<div class="partners-track">
+				{
+					[false, true].map((duplicate) => (
+						<ul class="partners-group" aria-hidden={duplicate ? 'true' : undefined}>
+							{partners.items.map((partner) => (
+								<li>
+									<Image
+										src={partner.logo}
+										alt={partner.name}
+										widths={[160, 240, 320]}
+										sizes="(max-width: 768px) 40vw, 12vw"
+										class="h-8 w-auto max-w-[120px] object-contain opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-10"
+									/>
+								</li>
+							))}
+						</ul>
+					))
+				}
+			</div>
+		</div>
 	</Container>
 </section>
+
+<style>
+	.partners-viewport {
+		overflow: hidden;
+		mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+	}
+
+	.partners-track {
+		display: flex;
+		width: max-content;
+		animation: partners-scroll 24s linear infinite;
+		will-change: transform;
+	}
+
+	.partners-group {
+		display: flex;
+		flex-shrink: 0;
+		gap: 2rem;
+		padding-right: 2rem;
+	}
+
+	.partners-group li {
+		display: flex;
+		width: clamp(8rem, 18vw, 12rem);
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+	}
+
+	@keyframes partners-scroll {
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.partners-viewport {
+			overflow-x: auto;
+			mask-image: none;
+		}
+
+		.partners-track {
+			animation: none;
+		}
+
+		.partners-group[aria-hidden='true'] {
+			display: none;
+		}
+	}
+</style>

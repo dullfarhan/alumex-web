@@ -3,9 +3,15 @@ import { projects } from '../../config/projects';
 import ArrowRight from '../icons/ArrowRight.astro';
 import Container from '../layout/Container.astro';
 import Button from '../ui/Button.astro';
+import MobileCarousel from '../ui/MobileCarousel.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import ProjectCard from './projects/ProjectCard.astro';
 
+interface Props {
+	mobileCarousel?: boolean;
+}
+
+const { mobileCarousel = false } = Astro.props;
 const featured = projects.items.slice(0, 3);
 ---
 
@@ -17,11 +23,20 @@ const featured = projects.items.slice(0, 3);
 			class="mb-14"
 		/>
 
-		<div
-			class="grid grid-cols-1 gap-6 [&>*]:w-full sm:grid-cols-2 sm:gap-7 sm:[&>*:last-child:nth-child(odd)]:col-span-2 sm:[&>*:last-child:nth-child(odd)]:mx-auto sm:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.875rem)] lg:grid-cols-3 lg:gap-8 lg:[&>*:last-child:nth-child(odd)]:col-span-1 lg:[&>*:last-child:nth-child(odd)]:max-w-none"
-		>
-			{featured.map((item) => <ProjectCard project={item} class="rounded-2xl" />)}
-		</div>
+		{
+			mobileCarousel ? (
+				<MobileCarousel
+					label="Featured projects"
+					desktopClass="sm:grid sm:gap-6 sm:[&>*]:w-full sm:grid-cols-2 sm:gap-7 sm:[&>*:last-child:nth-child(odd)]:col-span-2 sm:[&>*:last-child:nth-child(odd)]:mx-auto sm:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.875rem)] lg:grid-cols-3 lg:gap-8 lg:[&>*:last-child:nth-child(odd)]:col-span-1 lg:[&>*:last-child:nth-child(odd)]:max-w-none"
+				>
+					{featured.map((item) => <ProjectCard project={item} class="rounded-2xl" />)}
+				</MobileCarousel>
+			) : (
+				<div class="grid grid-cols-1 gap-6 [&>*]:w-full sm:grid-cols-2 sm:gap-7 sm:[&>*:last-child:nth-child(odd)]:col-span-2 sm:[&>*:last-child:nth-child(odd)]:mx-auto sm:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.875rem)] lg:grid-cols-3 lg:gap-8 lg:[&>*:last-child:nth-child(odd)]:col-span-1 lg:[&>*:last-child:nth-child(odd)]:max-w-none">
+					{featured.map((item) => <ProjectCard project={item} class="rounded-2xl" />)}
+				</div>
+			)
+		}
 
 		<div class="mt-12 flex justify-center">
 			<Button href="/projects" variant="secondary">
