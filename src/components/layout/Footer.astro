@@ -8,28 +8,38 @@ import Container from './Container.astro';
 ---
 
 <footer class="bg-primary-dark text-white">
-	<Container class="!py-6 md:!py-10 md:!pb-8 flex flex-col gap-6">
-		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
-			<!-- Brand + plant info -->
-			<div>
-				<a href="/" class="inline-flex items-center gap-3">
+	<Container class="flex flex-col gap-6 !py-8 md:!py-10 md:!pb-8">
+		<div class="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
+			<div class="col-span-2 flex justify-center sm:col-span-1 sm:justify-start lg:col-span-1">
+				<a href="/" class="inline-flex items-center">
 					<Image
 						src={logo}
 						alt={`${site.name} logo`}
 						width={192}
 						height={192}
 						densities={[1, 2, 3]}
-						sizes="(max-width: 640px) 7rem, 11.5rem"
-						class="h-28 w-28 shrink-0 rounded-full object-contain sm:h-46 sm:w-46"
+						sizes="(max-width: 640px) 6rem, 11.5rem"
+						class="h-24 w-24 shrink-0 rounded-full object-contain sm:h-46 sm:w-46"
 					/>
 				</a>
 			</div>
 
 			{
-				footer.columns.map((column) => (
-					<nav aria-label={column.title}>
-						<h3 class="mb-4 font-display text-sm font-semibold tracking-wide text-white">{column.title}</h3>
-						<ul class="space-y-3">
+				footer.columns.map((column, index) => (
+					<nav
+						aria-label={column.title}
+						class:list={[index === 2 && 'col-span-2 sm:col-span-1']}
+					>
+						<h3 class="mb-3 font-display text-sm font-semibold tracking-wide text-white sm:mb-4">
+							{column.title}
+						</h3>
+						<ul
+							class:list={[
+								index === 2
+									? 'flex flex-wrap gap-x-4 gap-y-2 sm:flex-col sm:gap-x-0 sm:gap-y-3'
+									: 'space-y-2.5 sm:space-y-3',
+							]}
+						>
 							{column.links.map((link) => (
 								<li>
 									<a
@@ -48,19 +58,18 @@ import Container from './Container.astro';
 				))
 			}
 
-			<!-- Hours + quote CTA -->
-			<div class="flex flex-col gap-5">
+			<div class="col-span-2 flex flex-col gap-5 border-t border-white/10 pt-6 sm:col-span-1 sm:border-t-0 sm:pt-0 lg:col-span-1">
 				<div>
-				<p class="mb-5 text-sm text-white/65">{footer.hours}</p>
-				<a
-					href="/contact"
-					class="inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-medium text-primary-dark transition-colors hover:bg-accent hover:text-white"
-				>
-					Contact Us
-					<ArrowRight class="h-3.5 w-3.5" />
-				</a>
-			</div>
-				<ul class="space-y-2.5 text-sm text-white/75">
+					<p class="mb-4 text-sm text-white/65 sm:mb-5">{footer.hours}</p>
+					<a
+						href="/contact"
+						class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-medium text-primary-dark transition-colors hover:bg-accent hover:text-white sm:w-auto sm:justify-start"
+					>
+						Contact Us
+						<ArrowRight class="h-3.5 w-3.5" />
+					</a>
+				</div>
+				<ul class="space-y-2 text-sm text-white/75">
 					<li>{site.address}</li>
 					<li>
 						<a href={`mailto:${site.email}`} class="transition-colors hover:text-white">{site.email}</a>
@@ -74,7 +83,7 @@ import Container from './Container.astro';
 			</div>
 		</div>
 
-		<div class="flex flex-col items-center justify-center gap-3 text-center text-xs text-white/45">
+		<div class="flex flex-col items-center justify-center gap-3 border-t border-white/10 pt-6 text-center text-xs text-white/45 sm:border-t-0 sm:pt-0">
 			<p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
 		</div>
 	</Container>
