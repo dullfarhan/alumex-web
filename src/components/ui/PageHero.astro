@@ -11,10 +11,9 @@ interface Props {
 const { label, title, description, class: className } = Astro.props;
 ---
 
-<section class:list={['border-b border-silver/40 bg-background-alt', className]}>
+<section class:list={['rounded-b-3xl bg-background-alt sm:rounded-b-4xl', className]}>
 	<Container>
 		<div class="w-full text-center">
-			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{label}</span>
 			<h1 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[3.1rem]">
 				{title}
 			</h1>
