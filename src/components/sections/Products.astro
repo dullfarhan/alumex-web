@@ -11,11 +11,8 @@ const featuredProducts = products.items.slice(0, 3);
 
 <section id="products" class="bg-background">
 	<Container class="!px-0 sm:!px-12 md:py-16">
-		<span class="mb-12 block text-center text-sm font-medium tracking-[0.08em] text-primary uppercase">
-			{products.label}
-		</span>
 
-		<div class="bg-[#e8f1fa] px-6 py-10 text-center sm:rounded-3xl sm:px-8 md:px-12 md:py-14">
+		<div class="bg-[#e8f1fa] px-6 py-10 text-center sm:rounded-4xl sm:px-8 md:px-12 md:py-14">
 			<SectionHeader title={products.title} description={products.description} class="mb-12" />
 
 			{/* 1 col until lg — 2-up is too tight from ~768–1024 for this card design */}
