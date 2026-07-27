@@ -11,12 +11,19 @@ const { href, active = false, mobile = false } = Astro.props;
 <a
 	href={href}
 	class:list={[
-		'relative text-sm font-medium transition-colors duration-300',
-		'after:absolute after:-bottom-1.5 after:left-0 after:h-px after:bg-primary after:transition-[width] after:duration-300 after:ease-out',
-		mobile ? 'block py-3' : '',
-		active ? 'text-primary after:w-full' : 'text-heading after:w-0 hover:text-primary hover:after:w-full',
+		'text-sm font-medium transition-colors duration-300',
+		mobile ? 'block py-3' : 'flex h-full items-center px-1',
+		active ? 'text-primary' : 'text-heading hover:text-primary',
 	]}
 	aria-current={active ? 'page' : undefined}
 >
-	<slot />
+	<span
+		class:list={[
+			'relative inline-block after:absolute after:right-0 after:bottom-0 after:left-0 after:h-0.5 after:origin-left after:bg-primary after:transition-transform after:duration-300 after:ease-out',
+			mobile ? '' : 'pb-1',
+			active ? 'after:scale-x-100' : 'after:scale-x-0 group-hover:after:scale-x-100 hover:after:scale-x-100',
+		]}
+	>
+		<slot />
+	</span>
 </a>

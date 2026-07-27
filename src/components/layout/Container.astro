@@ -7,7 +7,7 @@ interface Props {
 const { class: className, tag: Tag = 'div' } = Astro.props;
 ---
 
-<Tag class:list={['mx-auto w-full px-6 sm:px-12 py-12 md:py-16', className]}>
+<Tag class:list={['mx-auto w-full max-w-[1440px] px-6 sm:px-12 py-12 md:py-16', className]}>
 	<slot />
 </Tag>
  

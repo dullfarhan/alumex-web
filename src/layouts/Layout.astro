@@ -62,9 +62,11 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 			))
 		}
 	</head>
-	<body class="mx-auto min-h-screen max-w-[1980px]">
+	<body class="min-h-screen bg-background">
 		<Navbar />
-		<slot />
+		<main class="mx-auto w-full max-w-[1440px]">
+			<slot />
+		</main>
 		<Footer />
 	</body>
 </html>

@@ -8,11 +8,11 @@ const categories = productsMega.categories;
 
 <div
 	id="products-mega"
-	class="absolute inset-x-0 top-full z-40 border-t border-white/10 bg-primary-dark text-white shadow-xl max-md:hidden"
+	class="absolute inset-x-0 top-full z-40 border-t border-white/10 bg-primary-dark text-white shadow-xl max-md:hidden before:absolute before:inset-x-0 before:-top-5 before:h-5 before:content-['']"
 	hidden
 	data-products-mega
 >
-	<div class="mx-auto max-w-[1980px]">
+	<div class="mx-auto max-w-[1440px]">
 		<div class="grid lg:grid-cols-12">
 			<!-- Category sidebar -->
 			<aside class="border-b border-white/10 bg-black/20 lg:col-span-3 lg:border-r lg:border-b-0">
@@ -30,7 +30,7 @@ const categories = productsMega.categories;
 									class:list={[
 										'group flex w-full items-center justify-between gap-3 px-6 py-3.5 text-left text-sm transition-colors sm:px-8',
 										index === 0
-											? 'bg-white text-heading'
+											? 'bg-white/10 text-white'
 											: 'text-white/75 hover:bg-white/5 hover:text-white',
 									]}
 								>
@@ -38,7 +38,7 @@ const categories = productsMega.categories;
 									<ChevronRight
 										class:list={[
 											'h-3.5 w-3.5 shrink-0',
-											index === 0 ? 'text-primary' : 'text-white/40 group-hover:text-white/70',
+											index === 0 ? 'text-accent' : 'text-white/40 group-hover:text-white/70',
 										]}
 									/>
 								</a>
@@ -168,12 +168,12 @@ const categories = productsMega.categories;
 			tabs.forEach((tab) => {
 				const active = tab.dataset.productsTab === id;
 				tab.setAttribute('aria-selected', String(active));
-				tab.classList.toggle('bg-white', active);
-				tab.classList.toggle('text-heading', active);
+				tab.classList.toggle('bg-white/10', active);
+				tab.classList.toggle('text-white', active);
 				tab.classList.toggle('text-white/75', !active);
 				const icon = tab.querySelector('svg');
 				if (icon) {
-					icon.classList.toggle('text-primary', active);
+					icon.classList.toggle('text-accent', active);
 					icon.classList.toggle('text-white/40', !active);
 				}
 			});

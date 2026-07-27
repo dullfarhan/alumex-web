@@ -9,11 +9,11 @@ const [categoryColumn, featuredColumn, finishesColumn] = projectsMega.columns;
 
 <div
 	id="projects-mega"
-	class="absolute inset-x-0 top-full z-40 border-t border-white/10 bg-primary-dark shadow-xl max-md:hidden"
+	class="absolute inset-x-0 top-full z-40 border-t border-white/10 bg-primary-dark shadow-xl max-md:hidden before:absolute before:inset-x-0 before:-top-5 before:h-5 before:content-['']"
 	hidden
 	data-projects-mega
 >
-	<div class="mx-auto grid max-w-[1980px] gap-10 px-6 py-10 sm:px-12 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/10 lg:py-12">
+	<div class="mx-auto grid max-w-[1440px] gap-10 px-6 py-10 sm:px-12 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/10 lg:py-12">
 		<div class="lg:px-8 first:lg:pl-0">
 			<MegaMenuColumn
 				title={categoryColumn.title}

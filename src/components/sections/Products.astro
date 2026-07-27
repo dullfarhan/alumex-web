@@ -3,27 +3,39 @@ import { products } from '../../config/products';
 import ArrowRight from '../icons/ArrowRight.astro';
 import Button from '../ui/Button.astro';
 import Container from '../layout/Container.astro';
+import MobileCarousel from '../ui/MobileCarousel.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 import ProductCard from './products/ProductCard.astro';
 
+interface Props {
+	mobileCarousel?: boolean;
+}
+
+const { mobileCarousel = false } = Astro.props;
 const featuredProducts = products.items.slice(0, 3);
 ---
 
 <section id="products" class="bg-background">
 	<Container class="!px-0 sm:!px-12 md:py-16">
-		<span class="mb-12 block text-center text-sm font-medium tracking-[0.08em] text-primary uppercase">
-			{products.label}
-		</span>
 
-		<div class="bg-[#e8f1fa] px-6 py-10 text-center sm:rounded-3xl sm:px-8 md:px-12 md:py-14">
+		<div class="bg-[#e8f1fa] px-6 py-10 text-center sm:rounded-4xl sm:px-8 md:px-12 md:py-14">
 			<SectionHeader title={products.title} description={products.description} class="mb-12" />
 
-			{/* 1 col until lg — 2-up is too tight from ~768–1024 for this card design */}
-			<div
-				class="grid min-w-0 w-full grid-cols-1 gap-6 text-left lg:grid-cols-2 lg:gap-7 lg:[&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:mx-auto lg:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.875rem)] 2xl:grid-cols-3 2xl:gap-8 2xl:[&>*:last-child:nth-child(odd)]:col-span-1 2xl:[&>*:last-child:nth-child(odd)]:max-w-none"
-			>
-				{featuredProducts.map((item, index) => <ProductCard product={item} index={index} />)}
-			</div>
+			{
+				mobileCarousel ? (
+					<MobileCarousel
+						label="Featured products"
+						controlsPosition="bottom-right"
+						desktopClass="min-w-0 w-full text-left sm:grid sm:grid-cols-1 sm:gap-6 lg:grid-cols-2 lg:gap-7 lg:[&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:mx-auto lg:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.875rem)] 2xl:grid-cols-3 2xl:gap-8 2xl:[&>*:last-child:nth-child(odd)]:col-span-1 2xl:[&>*:last-child:nth-child(odd)]:max-w-none"
+					>
+						{featuredProducts.map((item, index) => <ProductCard product={item} index={index} />)}
+					</MobileCarousel>
+				) : (
+					<div class="grid min-w-0 w-full grid-cols-1 gap-6 text-left lg:grid-cols-2 lg:gap-7 lg:[&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:mx-auto lg:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.875rem)] 2xl:grid-cols-3 2xl:gap-8 2xl:[&>*:last-child:nth-child(odd)]:col-span-1 2xl:[&>*:last-child:nth-child(odd)]:max-w-none">
+						{featuredProducts.map((item, index) => <ProductCard product={item} index={index} />)}
+					</div>
+				)
+			}
 
 			<Button href="/products" class="mt-10">
 				View all systems
