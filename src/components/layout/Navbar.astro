@@ -29,7 +29,7 @@ const triggerLabelClass =
 		class="relative mx-auto grid h-16 w-full max-w-[1440px] grid-cols-[1fr_auto_1fr] items-stretch px-6 sm:px-12 md:h-20"
 		aria-label="Main navigation"
 	>
-		<a href="/" class="z-10 flex items-center gap-3 justify-self-start">
+		<a href="/" class="z-10 col-start-1 flex items-center gap-3 justify-self-start">
 			<Image
 				src={logo}
 				alt={`${site.name} logo`}
@@ -41,7 +41,7 @@ const triggerLabelClass =
 			<span class="font-display block text-lg font-bold tracking-tight text-heading">{site.name}</span>
 		</a>
 
-		<ul class="hidden h-full items-stretch gap-6 justify-self-center lg:flex lg:gap-8">
+		<ul class="col-start-2 hidden h-full items-stretch gap-6 justify-self-center lg:flex lg:gap-8">
 			{
 				navLinks.map(({ href, label }) => {
 					if (label === 'Products') {
@@ -93,7 +93,7 @@ const triggerLabelClass =
 			}
 		</ul>
 
-		<div class="z-10 flex items-center gap-3 justify-self-end">
+		<div class="z-10 col-start-3 flex items-center gap-3 justify-self-end">
 			<Button href={navCta.href} size="sm" class="!hidden md:!inline-flex">
 				{navCta.label}
 				<ArrowRight class="h-3.5 w-3.5" />
