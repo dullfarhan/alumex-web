@@ -17,7 +17,9 @@ const featured = projects.items.slice(0, 3);
 			class="mb-14"
 		/>
 
-		<div class="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
+		<div
+			class="grid grid-cols-1 gap-6 [&>*]:w-full sm:grid-cols-2 sm:gap-7 sm:[&>*:last-child:nth-child(odd)]:col-span-2 sm:[&>*:last-child:nth-child(odd)]:mx-auto sm:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.875rem)] lg:grid-cols-3 lg:gap-8 lg:[&>*:last-child:nth-child(odd)]:col-span-1 lg:[&>*:last-child:nth-child(odd)]:max-w-none"
+		>
 			{featured.map((item) => <ProjectCard project={item} class="rounded-2xl" />)}
 		</div>
 
