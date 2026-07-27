@@ -2,7 +2,6 @@
 import { Image } from 'astro:assets';
 import type { Product } from '../../../config/products';
 import ArrowRight from '../../icons/ArrowRight.astro';
-import DownloadIcon from '../../icons/DownloadIcon.astro';
 import HighlightIcon from '../../icons/HighlightIcon.astro';
 import Button from '../../ui/Button.astro';
 import Container from '../../layout/Container.astro';
@@ -14,25 +13,10 @@ interface Props {
 const { product } = Astro.props;
 ---
 
-<section class="relative overflow-hidden border-b border-silver/40 bg-background">
-	<!-- Diagonal hero image: full behind content on mobile, clipped on desktop -->
-	<div
-		class="relative h-64 overflow-hidden sm:h-80 md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-[56%] md:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%)]"
-		aria-hidden="true"
-	>
-		<Image
-			src={product.image}
-			alt=""
-			widths={[640, 960, 1400]}
-			sizes="(max-width: 767px) 100vw, 56vw"
-			class="absolute inset-0 h-full w-full object-cover"
-			priority
-		/>
-		<div class="absolute inset-0 bg-primary-dark/20 md:bg-transparent"></div>
-	</div>
-
-	<Container class="relative z-10">
-		<nav class="mb-8 text-sm text-muted" aria-label="Breadcrumb">
+<section class="bg-background">
+	<Container class="!px-0 !py-8 sm:!px-12 md:!py-12">
+		<!-- Breadcrumbs stay outside the rounded hero panel -->
+		<nav class="mb-6 px-6 text-sm text-muted sm:px-0" aria-label="Breadcrumb">
 			<ol class="flex flex-wrap items-center gap-2">
 				<li><a href="/" class="transition-colors hover:text-primary">Home</a></li>
 				<li aria-hidden="true">/</li>
@@ -44,33 +28,75 @@ const { product } = Astro.props;
 			</ol>
 		</nav>
 
-		<div class="max-w-xl pb-4 md:min-h-[28rem] md:pb-10 lg:min-h-[32rem]">
-			<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{product.category}</span>
-			<h1 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[2.75rem]">
-				{product.title}
-			</h1>
-			<span class="mb-5 block h-0.5 w-12 bg-primary" aria-hidden="true"></span>
-			<p class="mb-8 text-base leading-relaxed text-muted md:text-lg">{product.description}</p>
+		<div
+			class="relative min-h-[min(36rem,calc(100vh-8rem))] overflow-hidden bg-[#e8f1fa] sm:rounded-4xl"
+		>
+			<!-- Image: full behind content on mobile, diagonal cut on desktop -->
+			<div
+				class="absolute inset-0 md:[clip-path:polygon(58%_0%,100%_0%,100%_100%,46%_100%)]"
+				aria-hidden="true"
+			>
+				<Image
+					src={product.image}
+					alt=""
+					widths={[640, 960, 1400, 2000]}
+					sizes="(max-width: 767px) 100vw, 60vw"
+					class="absolute inset-0 h-full w-full object-cover"
+					loading="eager"
+					fetchpriority="high"
+				/>
+				<div class="absolute inset-0 bg-[#e8f1fa]/70 md:hidden"></div>
+				<div class="absolute inset-0 hidden bg-linear-to-l from-transparent via-transparent to-[#e8f1fa]/10 md:block"></div>
+			</div>
 
-			<div class="flex flex-wrap items-center gap-4">
-				<Button href="/contact">
-					Request Quote
-					<ArrowRight class="h-3.5 w-3.5" />
-				</Button>
+			<div
+				class="pointer-events-none absolute inset-0 hidden bg-[radial-gradient(circle,rgba(20,36,60,0.08)_1px,transparent_1px)] bg-size-[16px_16px] [mask-image:radial-gradient(ellipse_at_bottom_left,black_20%,transparent_65%)] md:block"
+				aria-hidden="true"
+			>
+			</div>
+
+			<div
+				class="relative z-10 flex min-h-[min(36rem,calc(100vh-8rem))] w-full flex-col items-center justify-center px-8 py-14 text-center md:w-[50%] md:items-start md:px-12 md:py-16 md:text-left lg:py-20"
+			>
+				<div class="flex w-full max-w-xl flex-col items-center md:items-start">
+					<div class="mb-5 flex items-center justify-center gap-3 md:justify-start">
+						<span class="hidden h-px w-8 shrink-0 bg-primary md:block"></span>
+						<span class="text-[11px] font-medium tracking-[0.12em] text-primary uppercase sm:text-xs">
+							{product.category}
+						</span>
+					</div>
+
+					<h1
+						class="mb-5 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl lg:text-[3.1rem] lg:leading-[1.08]"
+					>
+						{product.title}
+					</h1>
+
+					<p class="mb-8 max-w-md text-base leading-relaxed text-muted sm:text-lg">
+						{product.description}
+					</p>
+
+					<div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:justify-start">
+						<Button href="/contact">
+							Request Quote
+							<ArrowRight class="h-4 w-4" />
+						</Button>
+					</div>
+				</div>
+
+				<ul class="mt-12 grid w-full max-w-xl grid-cols-2 gap-x-5 gap-y-6 border-t border-border-light pt-8 sm:grid-cols-4">
+					{
+						product.highlights.map((item) => (
+							<li class="flex flex-col items-center gap-2 text-center md:items-start md:text-left">
+								<span class="flex h-10 w-10 items-center justify-center rounded-full border border-silver/60 bg-white/70 text-primary">
+									<HighlightIcon name={item.icon} class="h-5 w-5" />
+								</span>
+								<span class="text-xs leading-snug font-medium text-heading sm:text-sm">{item.label}</span>
+							</li>
+						))
+					}
+				</ul>
 			</div>
 		</div>
-
-		<ul class="grid grid-cols-2 gap-6 border-t border-silver/50 py-8 sm:grid-cols-4 md:max-w-xl md:gap-5 lg:gap-8">
-			{
-				product.highlights.map((item) => (
-					<li class="flex flex-col items-start gap-2">
-						<span class="flex h-10 w-10 items-center justify-center rounded-full border border-silver/60 bg-background-alt text-primary">
-							<HighlightIcon name={item.icon} class="h-5 w-5" />
-						</span>
-						<span class="text-xs leading-snug font-medium text-heading sm:text-sm">{item.label}</span>
-					</li>
-				))
-			}
-		</ul>
 	</Container>
 </section>
