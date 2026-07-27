@@ -20,8 +20,8 @@ const categories = productsMega.categories;
 					{
 						categories.map((category, index) => (
 							<li>
-								<button
-									type="button"
+								<a
+									href={category.href}
 									role="tab"
 									id={`products-tab-${category.id}`}
 									aria-selected={index === 0 ? 'true' : 'false'}
@@ -41,7 +41,7 @@ const categories = productsMega.categories;
 											index === 0 ? 'text-primary' : 'text-white/40 group-hover:text-white/70',
 										]}
 									/>
-								</button>
+								</a>
 							</li>
 						))
 					}
@@ -70,7 +70,14 @@ const categories = productsMega.categories;
 							<div class="space-y-8 lg:col-span-3">
 								<div>
 									<h3 class="mb-4 text-xs font-medium tracking-[0.08em] text-accent uppercase">Overview</h3>
-									<p class="max-w-xl text-sm leading-relaxed text-white/70">{category.description}</p>
+									<p class="mb-3 max-w-xl text-sm leading-relaxed text-white/70">{category.description}</p>
+									<a
+										href={category.href}
+										class="inline-flex items-center gap-1 text-sm font-medium text-accent transition-colors hover:text-white"
+									>
+										View details
+										<ChevronRight class="h-3.5 w-3.5" />
+									</a>
 								</div>
 
 								<div>
@@ -124,7 +131,7 @@ const categories = productsMega.categories;
 								<div class="absolute inset-x-0 bottom-0 p-5">
 									<p class="mb-1 font-display text-lg font-bold text-white">{category.title}</p>
 									<span class="inline-flex items-center gap-1 text-sm font-medium text-white/90">
-										View all
+										View details
 										<ChevronRight class="h-3.5 w-3.5" />
 									</span>
 								</div>
@@ -154,7 +161,7 @@ const categories = productsMega.categories;
 <script>
 	const mega = document.querySelector('[data-products-mega]');
 	if (mega) {
-		const tabs = mega.querySelectorAll<HTMLButtonElement>('[data-products-tab]');
+		const tabs = mega.querySelectorAll<HTMLAnchorElement>('[data-products-tab]');
 		const panels = mega.querySelectorAll<HTMLElement>('[data-products-panel]');
 
 		const setActive = (id: string) => {
@@ -178,7 +185,6 @@ const categories = productsMega.categories;
 		tabs.forEach((tab) => {
 			tab.addEventListener('mouseenter', () => setActive(tab.dataset.productsTab ?? ''));
 			tab.addEventListener('focus', () => setActive(tab.dataset.productsTab ?? ''));
-			tab.addEventListener('click', () => setActive(tab.dataset.productsTab ?? ''));
 		});
 	}
 </script>

@@ -1,7 +1,10 @@
 ---
 import { projectsMega } from '../../../config/nav-mega';
+import ChevronRight from '../../icons/ChevronRight.astro';
 import MegaMenuColumn from './MegaMenuColumn.astro';
 import MegaMenuFeatured from './MegaMenuFeatured.astro';
+
+const [categoryColumn, featuredColumn, finishesColumn] = projectsMega.columns;
 ---
 
 <div
@@ -11,23 +14,68 @@ import MegaMenuFeatured from './MegaMenuFeatured.astro';
 	data-projects-mega
 >
 	<div class="mx-auto grid max-w-[1980px] gap-10 px-6 py-10 sm:px-12 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/10 lg:py-12">
-		{
-			projectsMega.columns.map((column) => (
-				<div class="lg:px-8 first:lg:pl-0 last:lg:pr-0">
-					<MegaMenuColumn title={column.title} links={column.links} footer={'footer' in column ? column.footer : undefined} />
-				</div>
-			))
-		}
-		<div class="lg:px-8 lg:pr-0">
-			<MegaMenuFeatured
-				label={projectsMega.featured.label}
-				title={projectsMega.featured.title}
-				description={projectsMega.featured.description}
-				href={projectsMega.featured.href}
-				cta={projectsMega.featured.cta}
-				image={projectsMega.featured.image}
-				imageAlt={projectsMega.featured.imageAlt}
+		<div class="lg:px-8 first:lg:pl-0">
+			<MegaMenuColumn
+				title={categoryColumn.title}
+				links={categoryColumn.links}
+				footer={'footer' in categoryColumn ? categoryColumn.footer : undefined}
 			/>
+		</div>
+
+		<div class="lg:px-8">
+			<h3 class="mb-4 text-xs font-medium tracking-[0.08em] text-accent uppercase">{featuredColumn.title}</h3>
+			<ul class="space-y-3">
+				{
+					featuredColumn.links.map((link, index) => (
+						<li>
+							<a
+								href={link.href}
+								data-projects-preview-trigger={'slug' in link ? link.slug : undefined}
+								aria-current={index === 0 ? 'true' : undefined}
+								class:list={[
+									'text-sm transition-colors',
+									index === 0 ? 'text-white' : 'text-white/70 hover:text-white',
+								]}
+							>
+								{link.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+
+		<div class="lg:px-8">
+			<MegaMenuColumn title={finishesColumn.title} links={finishesColumn.links} />
+		</div>
+
+		<div class="lg:px-8 lg:pr-0">
+			<MegaMenuFeatured label={projectsMega.featured.label} cta={projectsMega.featured.cta} items={projectsMega.featured.items} />
 		</div>
 	</div>
 </div>
+
+<script>
+	const mega = document.querySelector('[data-projects-mega]');
+	if (mega) {
+		const triggers = mega.querySelectorAll<HTMLAnchorElement>('[data-projects-preview-trigger]');
+		const panels = mega.querySelectorAll<HTMLElement>('[data-projects-preview-panel]');
+
+		const setActive = (slug: string) => {
+			triggers.forEach((trigger) => {
+				const active = trigger.dataset.projectsPreviewTrigger === slug;
+				trigger.toggleAttribute('aria-current', active);
+				trigger.classList.toggle('text-white', active);
+				trigger.classList.toggle('text-white/70', !active);
+			});
+			panels.forEach((panel) => {
+				panel.hidden = panel.dataset.projectsPreviewPanel !== slug;
+			});
+		};
+
+		triggers.forEach((trigger) => {
+			trigger.addEventListener('mouseenter', () => setActive(trigger.dataset.projectsPreviewTrigger ?? ''));
+			trigger.addEventListener('focus', () => setActive(trigger.dataset.projectsPreviewTrigger ?? ''));
+		});
+	}
+</script>

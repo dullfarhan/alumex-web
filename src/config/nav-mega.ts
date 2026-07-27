@@ -4,7 +4,6 @@ import { productItems } from './products';
 import { projectItems } from './projects';
 
 const uniqueCategories = [...new Set(projectItems.map((item) => item.category))];
-const featuredProject = projectItems[0];
 
 export const projectsMega = {
 	trigger: { label: 'Projects', href: '/projects' },
@@ -22,6 +21,10 @@ export const projectsMega = {
 			links: projectItems.slice(0, 4).map((item) => ({
 				label: item.title,
 				href: item.href,
+				slug: item.slug,
+				description: item.shortDescription,
+				image: item.image,
+				imageAlt: `${item.title} — ${item.category}`,
 			})),
 		},
 		{
@@ -34,12 +37,15 @@ export const projectsMega = {
 	],
 	featured: {
 		label: 'From vision to reality',
-		title: featuredProject.title,
-		description: featuredProject.shortDescription,
-		href: featuredProject.href,
 		cta: 'View project',
-		image: featuredProject.image,
-		imageAlt: `${featuredProject.title} — ${featuredProject.category}`,
+		items: projectItems.slice(0, 4).map((item) => ({
+			slug: item.slug,
+			title: item.title,
+			description: item.shortDescription,
+			href: item.href,
+			image: item.image,
+			imageAlt: `${item.title} — ${item.category}`,
+		})),
 	},
 } as const;
 
