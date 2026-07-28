@@ -224,15 +224,16 @@ const { label, desktopClass, controlsPosition = 'sides', trackId } = Astro.props
 			if (index === currentSlides.length - 1) jumpTo(1);
 		};
 
-		const makeClone = (slide: HTMLElement) => {
-			const clone = slide.cloneNode(true) as HTMLElement;
-			clone.setAttribute('aria-hidden', 'true');
-			clone.setAttribute('data-carousel-clone', '');
-			clone.querySelectorAll<HTMLElement>('a, button, input, select, textarea, [tabindex]').forEach((item) => {
-				item.tabIndex = -1;
-			});
-			return clone;
-		};
+	const makeClone = (slide: HTMLElement) => {
+		const clone = slide.cloneNode(true) as HTMLElement;
+		clone.setAttribute('aria-hidden', 'true');
+		clone.setAttribute('data-carousel-clone', '');
+		clone.querySelectorAll<HTMLElement>('a, button, input, select, textarea, [tabindex]').forEach((item) => {
+			item.tabIndex = -1;
+			if (item.tagName === 'A') item.removeAttribute('href');
+		});
+		return clone;
+	};
 
 		const addEdgeClones = () => {
 			if (edgeClones.length || originalSlides.length < 2) return;
