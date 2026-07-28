@@ -228,6 +228,8 @@ const { label, desktopClass, controlsPosition = 'sides', trackId } = Astro.props
 		const clone = slide.cloneNode(true) as HTMLElement;
 		clone.setAttribute('aria-hidden', 'true');
 		clone.setAttribute('data-carousel-clone', '');
+		clone.tabIndex = -1;
+		if (clone.tagName === 'A') clone.removeAttribute('href');
 		clone.querySelectorAll<HTMLElement>('a, button, input, select, textarea, [tabindex]').forEach((item) => {
 			item.tabIndex = -1;
 			if (item.tagName === 'A') item.removeAttribute('href');
