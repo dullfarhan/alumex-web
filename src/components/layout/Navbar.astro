@@ -33,10 +33,11 @@ const triggerLabelClass =
 			<Image
 				src={logo}
 				alt={`${site.name} logo`}
-				width={56}
-				height={56}
-				densities={[1, 2]}
-				class="h-11 w-11 rounded-full object-cover sm:h-13 sm:w-13"
+				width={128}
+				height={128}
+				densities={[1, 2, 3]}
+				sizes="(max-width: 640px) 2.75rem, 3.25rem"
+				class="h-11 w-11 shrink-0 rounded-full object-contain sm:h-13 sm:w-13"
 			/>
 			<span class="font-display block text-lg font-bold tracking-tight text-heading">{site.name}</span>
 		</a>
