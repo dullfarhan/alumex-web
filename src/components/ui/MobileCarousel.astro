@@ -5,9 +5,10 @@ interface Props {
 	label: string;
 	desktopClass: string;
 	controlsPosition?: 'sides' | 'bottom-right';
+	trackId?: string;
 }
 
-const { label, desktopClass, controlsPosition = 'sides' } = Astro.props;
+const { label, desktopClass, controlsPosition = 'sides', trackId } = Astro.props;
 ---
 
 <div
@@ -17,7 +18,11 @@ const { label, desktopClass, controlsPosition = 'sides' } = Astro.props;
 	aria-roledescription="carousel"
 	aria-label={label}
 >
-	<div class:list={['mobile-carousel__track', desktopClass]} data-carousel-track>
+	<div
+		id={trackId}
+		class:list={['mobile-carousel__track', desktopClass]}
+		data-carousel-track
+	>
 		<slot />
 	</div>
 
@@ -150,12 +155,19 @@ const { label, desktopClass, controlsPosition = 'sides' } = Astro.props;
 		const next = carousel.querySelector<HTMLButtonElement>('[data-carousel-next]');
 		if (!track || !previous || !next) return;
 
-		const originalSlides = Array.from(track.children) as HTMLElement[];
-		if (originalSlides.length < 2) return;
+		let originalSlides = Array.from(track.children).filter(
+			(el) => !el.hasAttribute('data-carousel-clone') && !el.classList.contains('hidden'),
+		) as HTMLElement[];
 
 		let autoplay: ReturnType<typeof setInterval> | undefined;
 		let scrollEndTimer: ReturnType<typeof setTimeout> | undefined;
 		let edgeClones: HTMLElement[] = [];
+
+		const syncSlides = () => {
+			originalSlides = Array.from(track.children).filter(
+				(el) => !el.hasAttribute('data-carousel-clone') && !el.classList.contains('hidden'),
+			) as HTMLElement[];
+		};
 
 		const slides = () => Array.from(track.children) as HTMLElement[];
 		const slideOffset = (slide: HTMLElement) => slide.offsetLeft - slides()[0].offsetLeft;
@@ -172,22 +184,37 @@ const { label, desktopClass, controlsPosition = 'sides' } = Astro.props;
 			);
 		};
 
-		const goTo = (index: number, behavior: ScrollBehavior = 'smooth') => {
-			if (!mobileQuery.matches) return;
-			const currentSlides = slides();
-			const target = currentSlides[(index + currentSlides.length) % currentSlides.length];
-			track.scrollTo({
-				left: slideOffset(target),
-				behavior: reducedMotionQuery.matches ? 'auto' : behavior,
-			});
-		};
+	const goTo = (index: number, behavior: ScrollBehavior = 'smooth') => {
+		if (!mobileQuery.matches) return;
+		const currentSlides = slides();
+		const total = currentSlides.length;
+		const targetIndex = edgeClones.length
+			? Math.max(0, Math.min(total - 1, index))
+			: (index + total) % total;
+		const target = currentSlides[targetIndex];
+		track.scrollTo({
+			left: slideOffset(target),
+			behavior: reducedMotionQuery.matches ? 'auto' : behavior,
+		});
+	};
 
-		const jumpTo = (index: number) => {
-			const target = slides()[index];
-			track.style.scrollBehavior = 'auto';
-			track.scrollLeft = slideOffset(target);
+	const jumpTo = (index: number) => {
+		const target = slides()[index];
+		track.style.scrollSnapType = 'none';
+		track.style.scrollBehavior = 'auto';
+		track.scrollLeft = slideOffset(target);
+		requestAnimationFrame(() => {
 			track.style.removeProperty('scroll-behavior');
-		};
+			track.style.removeProperty('scroll-snap-type');
+		});
+	};
+
+	const updateControlsVisibility = () => {
+		const controls = carousel.querySelector<HTMLElement>('.mobile-carousel__controls');
+		if (!controls) return;
+		const show = mobileQuery.matches && originalSlides.length >= 2;
+		controls.style.display = show ? '' : 'none';
+	};
 
 		const normalizeEdge = () => {
 			if (!edgeClones.length || !mobileQuery.matches) return;
@@ -200,6 +227,7 @@ const { label, desktopClass, controlsPosition = 'sides' } = Astro.props;
 		const makeClone = (slide: HTMLElement) => {
 			const clone = slide.cloneNode(true) as HTMLElement;
 			clone.setAttribute('aria-hidden', 'true');
+			clone.setAttribute('data-carousel-clone', '');
 			clone.querySelectorAll<HTMLElement>('a, button, input, select, textarea, [tabindex]').forEach((item) => {
 				item.tabIndex = -1;
 			});
@@ -207,7 +235,7 @@ const { label, desktopClass, controlsPosition = 'sides' } = Astro.props;
 		};
 
 		const addEdgeClones = () => {
-			if (edgeClones.length) return;
+			if (edgeClones.length || originalSlides.length < 2) return;
 			const lastClone = makeClone(originalSlides.at(-1)!);
 			const firstClone = makeClone(originalSlides[0]);
 			track.prepend(lastClone);
@@ -227,11 +255,17 @@ const { label, desktopClass, controlsPosition = 'sides' } = Astro.props;
 			autoplay = undefined;
 		};
 
-		const startAutoplay = () => {
-			stopAutoplay();
-			if (!mobileQuery.matches || reducedMotionQuery.matches || document.hidden) return;
-			autoplay = setInterval(() => goTo(activeIndex() + 1), 5000);
-		};
+	const startAutoplay = () => {
+		stopAutoplay();
+		if (!mobileQuery.matches || reducedMotionQuery.matches || document.hidden) return;
+		if (originalSlides.length < 2) return;
+		autoplay = setInterval(() => {
+			const idx = activeIndex();
+			const total = slides().length;
+			if (edgeClones.length && idx >= total - 1) return;
+			goTo(idx + 1);
+		}, 5000);
+	};
 
 		const move = (direction: number) => {
 			goTo(activeIndex() + direction);
@@ -252,16 +286,31 @@ const { label, desktopClass, controlsPosition = 'sides' } = Astro.props;
 			{ passive: true },
 		);
 
-		const updateMode = () => {
-			if (!mobileQuery.matches) {
-				stopAutoplay();
-				removeEdgeClones();
-				return;
-			}
+	const refresh = () => {
+		removeEdgeClones();
+		syncSlides();
+		updateControlsVisibility();
+		if (!mobileQuery.matches) return;
+		if (originalSlides.length >= 2) {
 			addEdgeClones();
 			startAutoplay();
-		};
+		} else {
+			track.scrollLeft = 0;
+			stopAutoplay();
+		}
+	};
 
+	const updateMode = () => {
+		if (!mobileQuery.matches) {
+			stopAutoplay();
+			removeEdgeClones();
+			updateControlsVisibility();
+			return;
+		}
+		refresh();
+	};
+
+		carousel.addEventListener('carousel:refresh', refresh);
 		mobileQuery.addEventListener('change', updateMode);
 		reducedMotionQuery.addEventListener('change', startAutoplay);
 		document.addEventListener('visibilitychange', startAutoplay);
