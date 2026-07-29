@@ -77,36 +77,7 @@ const barCount = 3;
 					<div class="hero3d" data-hero3d>
 						<div class="hero3d__scene" data-hero-scene>
 							<div class="hero3d__assembly" data-hero-assembly>
-								<div class="hero3d__frame" data-hero-frame>
-									<div class="hero3d__bar hero3d__bar--top" data-hero-bar />
-									<div class="hero3d__bar hero3d__bar--bottom" data-hero-bar />
-									<div class="hero3d__bar hero3d__bar--left" data-hero-bar />
-									<div class="hero3d__bar hero3d__bar--right" data-hero-bar />
-								</div>
-
-								<div class="hero3d__door hero3d__door--left" data-hero-door="left">
-									<div class="hero3d__door-front">
-										<div class="hero3d__glass" />
-										<div class="hero3d__glass-sheen" />
-									</div>
-									<div class="hero3d__door-edge" />
-									<div class="hero3d__door-back" />
-								</div>
-
-								<div class="hero3d__door hero3d__door--right" data-hero-door="right">
-									<div class="hero3d__door-front">
-										<div class="hero3d__glass" />
-										<div class="hero3d__glass-sheen" />
-									</div>
-									<div class="hero3d__door-edge" />
-									<div class="hero3d__door-back" />
-								</div>
-
-								<div class="hero3d__handle" data-hero-handle>
-									<span class="hero3d__handle-cap" />
-								</div>
-
-								{/* Bars + cutter above doors so they always read in front */}
+								{/* Bars sit behind the door plane, then come forward through the opening */}
 								<div class="hero3d__lathe" data-hero-lathe>
 									{
 										Array.from({ length: barCount }, (_, i) => (
@@ -134,6 +105,38 @@ const barCount = 3;
 											</div>
 										))
 									}
+								</div>
+
+								{/* Door unit in front of bars so leaves occlude them until pushed back */}
+								<div class="hero3d__portal" data-hero-portal>
+									<div class="hero3d__frame" data-hero-frame>
+										<div class="hero3d__bar hero3d__bar--top" data-hero-bar />
+										<div class="hero3d__bar hero3d__bar--bottom" data-hero-bar />
+										<div class="hero3d__bar hero3d__bar--left" data-hero-bar />
+										<div class="hero3d__bar hero3d__bar--right" data-hero-bar />
+									</div>
+
+									<div class="hero3d__door hero3d__door--left" data-hero-door="left">
+										<div class="hero3d__door-front">
+											<div class="hero3d__glass" />
+											<div class="hero3d__glass-sheen" />
+										</div>
+										<div class="hero3d__door-edge" />
+										<div class="hero3d__door-back" />
+									</div>
+
+									<div class="hero3d__door hero3d__door--right" data-hero-door="right">
+										<div class="hero3d__door-front">
+											<div class="hero3d__glass" />
+											<div class="hero3d__glass-sheen" />
+										</div>
+										<div class="hero3d__door-edge" />
+										<div class="hero3d__door-back" />
+									</div>
+
+									<div class="hero3d__handle" data-hero-handle>
+										<span class="hero3d__handle-cap" />
+									</div>
 								</div>
 
 								<div class="hero3d__cutter" data-hero-cutter>
@@ -526,14 +529,13 @@ const barCount = 3;
 
 	.hero3d__lathe {
 		position: absolute;
-		inset: 2.5rem -2rem 2.5rem -3rem;
+		inset: 2.5rem -1rem 2.5rem -1rem;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
-		z-index: 20;
-		transform: translateZ(60px);
+		z-index: 10;
 		transform-style: preserve-3d;
-		isolation: isolate;
+		pointer-events: none;
 	}
 
 	.hero3d__bar-row {
@@ -543,10 +545,10 @@ const barCount = 3;
 		position: relative;
 		width: var(--bar-w);
 		height: var(--bar-h);
-		z-index: 21;
+		margin-inline: auto;
 		transform-style: preserve-3d;
-		transform: rotateY(-8deg) rotateX(4deg) translateZ(20px);
-		transform-origin: right center;
+		transform-origin: center center;
+		/* filter: drop-shadow(0 8px 14px rgb(18 43 77 / 28%)); */
 	}
 
 	/* One full continuous bar — no permanent seam. Width shrinks only at cut. */
@@ -597,10 +599,10 @@ const barCount = 3;
 	.hero3d__cutter {
 		position: absolute;
 		left: calc(-3rem + (600px * 0.7));
-		top: 0;
+		top: -2rem;
 		width: 14rem;
 		height: 14rem;
-		margin-left: -8.8rem;
+		margin-left: -6.8rem;
 		opacity: 0;
 		z-index: 50;
 		pointer-events: none;
@@ -615,10 +617,20 @@ const barCount = 3;
 		height: 100%;
 		object-fit: contain;
 		mix-blend-mode: screen;
-		filter: drop-shadow(0 8px 20px rgb(18 43 77 / 55%));
+		/* filter: drop-shadow(0 8px 20px rgb(18 43 77 / 55%)); */
 		transform: rotateY(-28deg) rotateX(6deg);
 		pointer-events: none;
 		user-select: none;
+	}
+
+	/* Whole door + frame — alone on stage until it clears, then bars enter */
+	.hero3d__portal {
+		position: absolute;
+		inset: 0;
+		z-index: 20;
+		transform-style: preserve-3d;
+		transform-origin: center center;
+		will-change: transform, opacity;
 	}
 
 	/* Fixed aluminium frame — four extrusion bars */
@@ -699,21 +711,23 @@ const barCount = 3;
 	}
 
 	.hero3d__door-front {
-		transform: translateZ(8px);
-		background: linear-gradient(135deg, #d9e0e8 0%, #f5f7fa 30%, #b8c4d1 70%, #e8edf2 100%);
+		transform: translateZ(10px);
+		background: linear-gradient(135deg, #cfd8e3 0%, #f7f9fb 28%, #aebac8 68%, #e6ecf2 100%);
 		border: 2px solid #2a3f5f;
 		border-radius: 2px;
 		box-shadow:
-			inset 0 0 0 4px rgb(255 255 255 / 35%),
-			0 6px 14px rgb(18 43 77 / 30%);
+			inset 0 0 0 4px rgb(255 255 255 / 45%),
+			0 8px 18px rgb(18 43 77 / 35%);
 		overflow: hidden;
+		opacity: 1;
 	}
 
 	.hero3d__door-back {
-		transform: translateZ(-8px) rotateY(180deg);
-		background: linear-gradient(135deg, #c4ccd5 0%, #9aa6b4 100%);
+		transform: translateZ(-10px) rotateY(180deg);
+		background: linear-gradient(135deg, #9aa6b4 0%, #c4ccd5 100%);
 		border: 2px solid #2a3f5f;
 		border-radius: 2px;
+		opacity: 1;
 	}
 
 	.hero3d__door-edge {
@@ -735,21 +749,32 @@ const barCount = 3;
 		left: -8px;
 	}
 
-	/* Glazing with diagonal reflection */
+	/* Glazing — keep solid enough to read as a real door, not a fade */
 	.hero3d__glass {
 		position: absolute;
 		inset: 0.5rem;
-		background: linear-gradient(150deg, rgb(47 168 226 / 22%) 0%, rgb(31 78 140 / 14%) 50%, rgb(18 43 77 / 20%) 100%);
-		border: 1px solid rgb(31 78 140 / 35%);
+		background: linear-gradient(
+			150deg,
+			rgb(180 198 214 / 85%) 0%,
+			rgb(120 150 180 / 70%) 45%,
+			rgb(70 100 140 / 75%) 100%
+		);
+		border: 1px solid rgb(31 78 140 / 45%);
 		border-radius: 1px;
 	}
 
 	.hero3d__glass-sheen {
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 55%) 48%, rgb(255 255 255 / 75%) 52%, transparent 62%);
-		mix-blend-mode: screen;
-		opacity: 0.7;
+		background: linear-gradient(
+			105deg,
+			transparent 38%,
+			rgb(255 255 255 / 45%) 48%,
+			rgb(255 255 255 / 60%) 52%,
+			transparent 62%
+		);
+		opacity: 0.85;
+		pointer-events: none;
 	}
 
 	/* Handle hardware at the meeting stile */
@@ -814,11 +839,9 @@ const barCount = 3;
 		const stocks = pick<HTMLElement>('[data-hero-stock]');
 		const pieces = pick<HTMLElement>('[data-hero-cut]');
 		const chips = pick<HTMLElement>('[data-hero-chip]');
-		const frame = section.querySelector<HTMLElement>('[data-hero-frame]');
-		const handle = section.querySelector<HTMLElement>('[data-hero-handle]');
 		const assembly = section.querySelector<HTMLElement>('[data-hero-assembly]');
+		const portal = section.querySelector<HTMLElement>('[data-hero-portal]');
 		const cutter = section.querySelector<HTMLElement>('[data-hero-cutter]');
-		const doorFade = [...doors, ...(frame ? [frame] : []), ...(handle ? [handle] : [])];
 
 		const BAR_W = 600;
 		const CUT_X = BAR_W * 0.7;
@@ -826,6 +849,10 @@ const barCount = 3;
 		/* Full bar until cut — no seam on the way in or when scrolling back */
 		gsap.set(stocks, { width: BAR_W });
 		gsap.set(pieces, { opacity: 0, y: 0, x: 0, rotate: 0 });
+		gsap.set(rods, { opacity: 0, x: 120 });
+		gsap.set(portal, { transformOrigin: '50% 50%', autoAlpha: 1 });
+		gsap.set('[data-hero-door="left"]', { transformOrigin: 'left center' });
+		gsap.set('[data-hero-door="right"]', { transformOrigin: 'right center' });
 
 		const cutterYs =
 			assembly && cutter
@@ -871,57 +898,78 @@ const barCount = 3;
 			scrollTrigger: { trigger: runway, start: 'top top', end: 'bottom bottom', scrub: 0.7 },
 		});
 
+		/*
+		  Sequence (no bar/door overlap — that always looks broken in CSS 3D):
+		  1) Door opens + tilts back in 3D
+		  2) Door clears the stage
+		  3) Bars extrude into empty space
+		  4) Cutter cuts
+		*/
 		reveal
-			.to('[data-hero-cue]', { opacity: 0, duration: 0.06 }, 0)
-			.fromTo(scene, { rotateX: 4, rotateY: 0 }, { rotateX: 10, rotateY: -6, duration: 1 }, 0)
+			.to('[data-hero-cue]', { opacity: 0, duration: 0.05 }, 0)
+			.fromTo(scene, { rotateX: 4, rotateY: 0 }, { rotateX: 9, rotateY: -5, duration: 1 }, 0)
 			.fromTo(
 				'[data-hero-door="left"]',
 				{ rotateY: 0 },
-				{ rotateY: -88, duration: 0.18, ease: 'power2.inOut' },
-				0.04,
+				{ rotateY: -70, duration: 0.14, ease: 'power2.out' },
+				0.03,
 			)
 			.fromTo(
 				'[data-hero-door="right"]',
 				{ rotateY: 0 },
-				{ rotateY: 88, duration: 0.18, ease: 'power2.inOut' },
-				0.04,
+				{ rotateY: 70, duration: 0.14, ease: 'power2.out' },
+				0.03,
 			)
-			.to('[data-hero-handle]', { opacity: 0, duration: 0.04 }, 0.04)
-			/* Full bars slide out of the door toward the left — no clip-path */
+			.to('[data-hero-handle]', { opacity: 0, duration: 0.04 }, 0.05)
 			.fromTo(
-				rods,
-				{ opacity: 0, x: 160, z: -40 },
-				{ opacity: 1, x: -36, z: 48, duration: 0.24, stagger: 0.055, ease: 'power2.out' },
+				portal,
+				{ rotateX: 0, rotateY: 0, z: 0, scale: 1 },
+				{ rotateX: 14, rotateY: -8, z: -40, scale: 0.98, duration: 0.14, ease: 'power1.out' },
+				0.12,
+			)
+			.to(
+				'[data-hero-door="left"]',
+				{ rotateY: -118, duration: 0.12, ease: 'power1.in' },
 				0.2,
 			)
-			.to(doorFade, { opacity: 0, duration: 0.12 }, 0.32)
-			/* Big cutter drops in once bars are out */
+			.to(
+				'[data-hero-door="right"]',
+				{ rotateY: 118, duration: 0.12, ease: 'power1.in' },
+				0.2,
+			)
+			.to(
+				portal,
+				{ rotateX: 26, rotateY: -16, z: -180, scale: 0.86, duration: 0.14, ease: 'power1.in' },
+				0.22,
+			)
+			.to(portal, { autoAlpha: 0, duration: 0.05, ease: 'none' }, 0.34)
+			/* Bars only after door is gone — clean extrusion, no clipping through leaves */
+			.fromTo(
+				rods,
+				{ opacity: 0, x: 160 },
+				{ opacity: 1, x: -28, duration: 0.2, stagger: 0.05, ease: 'power2.out' },
+				0.36,
+			)
 			.fromTo(
 				cutter,
-				{ opacity: 0, scale: 0.35, y: cutterYs[0], rotateY: -40 },
-				{ opacity: 1, scale: 1, y: cutterYs[0], rotateY: -18, duration: 0.1, ease: 'power2.out' },
-				0.48,
+				{ opacity: 0, scale: 0.4, y: cutterYs[0], rotateY: -36 },
+				{ opacity: 1, scale: 1, y: cutterYs[0], rotateY: -16, duration: 0.08, ease: 'power2.out' },
+				0.56,
 			);
 
 		pieces.forEach((piece, index) => {
-			const at = 0.56 + index * 0.1;
+			const at = 0.62 + index * 0.09;
 			const stock = stocks[index];
 
 			if (index > 0 && cutter) {
 				reveal.fromTo(
 					cutter,
 					{ y: cutterYs[index - 1] },
-					{ y: cutterYs[index], duration: 0.06, ease: 'power1.inOut' },
-					at - 0.04,
+					{ y: cutterYs[index], duration: 0.05, ease: 'power1.inOut' },
+					at - 0.03,
 				);
 			}
 
-			/*
-			  fromTo so scroll-up restores the full bar with no seam.
-			  1) stock snaps from full width → cut width
-			  2) matching right piece appears in that exact gap
-			  3) piece drops away
-			*/
 			if (stock) {
 				reveal.fromTo(
 					stock,
@@ -940,7 +988,7 @@ const barCount = 3;
 				)
 				.to(
 					piece,
-					{ y: 110, x: 16, rotate: 12, opacity: 0, duration: 0.18, ease: 'power2.in' },
+					{ y: 110, x: 16, rotate: 12, opacity: 0, duration: 0.16, ease: 'power2.in' },
 					at + 0.02,
 				);
 
@@ -955,17 +1003,17 @@ const barCount = 3;
 		});
 
 		reveal
-			.to(cutter, { opacity: 0, scale: 0.55, duration: 0.08 }, 0.86)
-			.fromTo(chips[3], { opacity: 0.3, x: -6 }, { opacity: 1, x: 0, duration: 0.06 }, 0.86)
-			.to('[data-hero-trail]', { opacity: 0.35, duration: 0.2 }, 0.9);
+			.to(cutter, { opacity: 0, scale: 0.55, duration: 0.08 }, 0.9)
+			.fromTo(chips[3], { opacity: 0.3, x: -6 }, { opacity: 1, x: 0, duration: 0.06 }, 0.9)
+			.to('[data-hero-trail]', { opacity: 0.35, duration: 0.18 }, 0.92);
 
 		/* Caption follows the scroll position */
 		const scenes: [number, string][] = [
 			[0.9, 'Cut to length'],
-			[0.58, 'Slicing 6063-T5'],
-			[0.5, 'Cutter engaged'],
-			[0.35, 'Extrusion loaded'],
-			[0.16, 'Leaves opening'],
+			[0.62, 'Slicing 6063-T5'],
+			[0.56, 'Cutter engaged'],
+			[0.36, 'Extrusion loaded'],
+			[0.12, 'Leaves opening'],
 			[0, 'Sealed system'],
 		];
 
