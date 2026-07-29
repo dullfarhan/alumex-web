@@ -435,14 +435,14 @@ const barCount = 3;
 		height: 100%;
 		overflow: visible;
 		pointer-events: none;
+		rotate: 180deg;
 	}
 
 	.hero__slogan-text {
 		fill: var(--heading);
 		font-family: var(--font-display);
-		font-size: 9.5px;
-		font-weight: 700;
-		letter-spacing: 0.14em;
+		font-size: 13.5px;
+		font-weight: 600;
 		text-transform: uppercase;
 	}
 
@@ -669,10 +669,31 @@ const barCount = 3;
 
 	/* One full continuous bar — no permanent seam. Width shrinks only at cut. */
 	.hero3d__bar-stock {
+		--cut-face: 0;
 		position: relative;
 		width: var(--bar-w);
 		height: var(--bar-h);
 		overflow: hidden;
+	}
+
+	/* Cut face — only visible once the bar is clipped */
+	.hero3d__bar-stock::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 2;
+		width: 2px;
+		opacity: var(--cut-face);
+		background: linear-gradient(
+			180deg,
+			#7aa3d4 0%,
+			#1f4e8c 35%,
+			#122b4d 65%,
+			#7aa3d4 100%
+		);
+		pointer-events: none;
 	}
 
 	.hero3d__bar-stock .hero3d__bar-img {
@@ -963,7 +984,7 @@ const barCount = 3;
 		const CUT_X = BAR_W * 0.7;
 
 		/* Full bar until cut — no seam on the way in or when scrolling back */
-		gsap.set(stocks, { width: BAR_W });
+		gsap.set(stocks, { width: BAR_W, '--cut-face': 0 });
 		gsap.set(pieces, { opacity: 0, y: 0, x: 0, rotate: 0 });
 		gsap.set(rods, { opacity: 0, x: 120 });
 		gsap.set(portal, { transformOrigin: '50% 50%', autoAlpha: 1 });
@@ -1093,8 +1114,8 @@ const barCount = 3;
 			if (stock) {
 				reveal.fromTo(
 					stock,
-					{ width: BAR_W },
-					{ width: CUT_X, duration: 0.02, ease: 'none' },
+					{ width: BAR_W, '--cut-face': 0 },
+					{ width: CUT_X, '--cut-face': 1, duration: 0.02, ease: 'none' },
 					at,
 				);
 			}
