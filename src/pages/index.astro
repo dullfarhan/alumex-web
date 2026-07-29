@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/sections/Hero.astro';
+// import Hero from '../components/sections/Hero.astro';
+import HeroScrollVideo from '../components/sections/HeroScrollVideo.astro';
 import Partners from '../components/sections/Partners.astro';
 import Products from '../components/sections/Products.astro';
 import Finishes from '../components/sections/Finishes.astro';
@@ -11,7 +12,8 @@ import { site } from '../config/site';
 ---
 
 <Layout title={site.title} description={site.description} canonical="/">
-	<Hero />
+	<HeroScrollVideo />
+	<!-- <Hero /> -->
 	<Partners />
 	<Products mobileCarousel />
 	<Finishes />

@@ -1,0 +1,93 @@
+---
+import homeVideo from '../../assets/videos/home.mp4';
+---
+
+<section class="hero-scroll-video" data-hero-scroll aria-label="Home hero video">
+	<div class="hero-scroll-video__runway" data-hero-runway>
+		<div class="hero-scroll-video__sticky">
+			<video
+				class="hero-scroll-video__video"
+				data-hero-video
+				src={homeVideo}
+				muted
+				playsinline
+				preload="auto"
+				disablepictureinpicture
+				aria-hidden="true"
+			/>
+			<div class="hero-scroll-video__gradient" aria-hidden="true"></div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero-scroll-video__runway {
+		height: 200vh;
+	}
+
+	.hero-scroll-video__sticky {
+		position: sticky;
+		top: 0;
+		height: 100vh;
+		overflow: hidden;
+	}
+
+	.hero-scroll-video__video {
+		position: absolute;
+		inset: 0;
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		transform: translateZ(0);
+	}
+
+	.hero-scroll-video__gradient {
+		position: absolute;
+		inset-inline: 0;
+		bottom: 0;
+		height: 6rem;
+		background: linear-gradient(to top, rgb(18 43 77 / 18%), transparent);
+		pointer-events: none;
+	}
+</style>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-hero-scroll]').forEach((section) => {
+		const runway = section.querySelector<HTMLElement>('[data-hero-runway]');
+		const video = section.querySelector<HTMLVideoElement>('[data-hero-video]');
+		if (!runway || !video) return;
+
+		// Prevent browser from auto-playing
+		video.pause();
+
+		let rafId = 0;
+
+		const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+
+		const scrub = () => {
+			rafId = 0;
+			if (!video.duration) return;
+			const scrollable = runway.offsetHeight - window.innerHeight;
+			if (scrollable <= 0) return;
+			const progress = clamp(-runway.getBoundingClientRect().top / scrollable, 0, 1);
+			video.currentTime = progress * video.duration;
+		};
+
+		const onScroll = () => {
+			if (!rafId) rafId = requestAnimationFrame(scrub);
+		};
+
+		// Start listening once enough data is buffered
+		const start = () => {
+			video.pause();
+			window.addEventListener('scroll', onScroll, { passive: true });
+			onScroll(); // sync to current scroll position immediately
+		};
+
+		if (video.readyState >= 2) {
+			start();
+		} else {
+			video.addEventListener('canplay', start, { once: true });
+		}
+	});
+</script>
