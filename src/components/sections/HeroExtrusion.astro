@@ -454,6 +454,10 @@ const barCount = 3;
 		opacity: 0;
 	}
 
+	:global(html.js) .hero3d__bar-piece {
+		opacity: 0;
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		:global(html.js) .hero__label,
 		:global(html.js) .hero__line-inner,
@@ -467,6 +471,10 @@ const barCount = 3;
 		:global(html.js) [data-hero-handle],
 		:global(html.js) [data-hero-rod],
 		:global(html.js) [data-hero-cutter] {
+			opacity: 1;
+		}
+
+		:global(html.js) .hero3d__bar-piece {
 			opacity: 1;
 		}
 
@@ -541,48 +549,48 @@ const barCount = 3;
 		transform-origin: right center;
 	}
 
-	/*
-	  Same bar.png split into two flush windows.
-	  Left + right abut with zero gap → reads as one continuous bar until the right drops.
-	*/
-	.hero3d__bar-stock,
-	.hero3d__bar-piece {
-		position: absolute;
-		top: 0;
+	/* One full continuous bar — no permanent seam. Width shrinks only at cut. */
+	.hero3d__bar-stock {
+		position: relative;
+		width: var(--bar-w);
 		height: var(--bar-h);
 		overflow: hidden;
 	}
 
-	.hero3d__bar-stock {
-		left: 0;
-		width: calc(var(--bar-w) * var(--cut));
-		z-index: 1;
-	}
-
-	.hero3d__bar-piece {
-		left: calc(var(--bar-w) * var(--cut));
-		width: calc(var(--bar-w) * (1 - var(--cut)));
-		z-index: 40;
-		transform-origin: left center;
-		will-change: transform, opacity;
-	}
-
-	.hero3d__bar-img {
-		position: absolute;
-		top: 0;
-		left: 0;
+	.hero3d__bar-stock .hero3d__bar-img {
 		display: block;
 		width: var(--bar-w);
 		height: var(--bar-h);
 		max-width: none;
-		/* filter: drop-shadow(0 6px 10px rgb(18 43 77 / 35%)); */
 		pointer-events: none;
 		user-select: none;
 	}
 
-	/* Right window shows the matching right end of the same image */
+	/* Right chunk — hidden until cut, then drops. Same image, offset to match seam. */
+	.hero3d__bar-piece {
+		position: absolute;
+		top: 0;
+		left: calc(var(--bar-w) * var(--cut));
+		width: calc(var(--bar-w) * (1 - var(--cut)));
+		height: var(--bar-h);
+		overflow: hidden;
+		opacity: 0;
+		z-index: 40;
+		pointer-events: none;
+		transform-origin: left center;
+		will-change: transform, opacity;
+	}
+
 	.hero3d__bar-piece .hero3d__bar-img {
+		position: absolute;
+		top: 0;
 		left: calc(var(--bar-w) * var(--cut) * -1);
+		display: block;
+		width: var(--bar-w);
+		height: var(--bar-h);
+		max-width: none;
+		pointer-events: none;
+		user-select: none;
 	}
 
 	/* Big cutter centered on the cut seam */
@@ -803,6 +811,7 @@ const barCount = 3;
 		const bars = pick<HTMLElement>('[data-hero-bar]');
 		const doors = pick<HTMLElement>('[data-hero-door]');
 		const rods = pick<HTMLElement>('[data-hero-rod]');
+		const stocks = pick<HTMLElement>('[data-hero-stock]');
 		const pieces = pick<HTMLElement>('[data-hero-cut]');
 		const chips = pick<HTMLElement>('[data-hero-chip]');
 		const frame = section.querySelector<HTMLElement>('[data-hero-frame]');
@@ -811,7 +820,12 @@ const barCount = 3;
 		const cutter = section.querySelector<HTMLElement>('[data-hero-cutter]');
 		const doorFade = [...doors, ...(frame ? [frame] : []), ...(handle ? [handle] : [])];
 
-		gsap.set(pieces, { y: 0, x: 0, rotate: 0, opacity: 1 });
+		const BAR_W = 600;
+		const CUT_X = BAR_W * 0.7;
+
+		/* Full bar until cut — no seam on the way in or when scrolling back */
+		gsap.set(stocks, { width: BAR_W });
+		gsap.set(pieces, { opacity: 0, y: 0, x: 0, rotate: 0 });
 
 		const cutterYs =
 			assembly && cutter
@@ -891,24 +905,44 @@ const barCount = 3;
 
 		pieces.forEach((piece, index) => {
 			const at = 0.56 + index * 0.1;
+			const stock = stocks[index];
 
 			if (index > 0 && cutter) {
-				reveal.to(cutter, { y: cutterYs[index], duration: 0.06, ease: 'power1.inOut' }, at - 0.04);
+				reveal.fromTo(
+					cutter,
+					{ y: cutterYs[index - 1] },
+					{ y: cutterYs[index], duration: 0.06, ease: 'power1.inOut' },
+					at - 0.04,
+				);
 			}
 
-			/* Right half already flush with left — cutter hits, then that half drops */
-			reveal.to(
-				piece,
-				{
-					y: 110,
-					x: 18,
-					rotate: 14,
-					opacity: 0,
-					duration: 0.2,
-					ease: 'power2.in',
-				},
-				at,
-			);
+			/*
+			  fromTo so scroll-up restores the full bar with no seam.
+			  1) stock snaps from full width → cut width
+			  2) matching right piece appears in that exact gap
+			  3) piece drops away
+			*/
+			if (stock) {
+				reveal.fromTo(
+					stock,
+					{ width: BAR_W },
+					{ width: CUT_X, duration: 0.02, ease: 'none' },
+					at,
+				);
+			}
+
+			reveal
+				.fromTo(
+					piece,
+					{ opacity: 0, y: 0, x: 0, rotate: 0 },
+					{ opacity: 1, y: 0, x: 0, rotate: 0, duration: 0.02, ease: 'none' },
+					at,
+				)
+				.to(
+					piece,
+					{ y: 110, x: 16, rotate: 12, opacity: 0, duration: 0.18, ease: 'power2.in' },
+					at + 0.02,
+				);
 
 			if (chips[index]) {
 				reveal.fromTo(
