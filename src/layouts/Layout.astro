@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Navbar from '../components/layout/Navbar.astro';
 import Footer from '../components/layout/Footer.astro';
+import ScrollMotion from '../components/motion/ScrollMotion.astro';
 import { site } from '../config/site';
 
 interface Props {
@@ -40,6 +41,9 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 			rel="stylesheet"
 		/>
 		<meta name="generator" content={Astro.generator} />
+		<script is:inline>
+			document.documentElement.classList.add('js');
+		</script>
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalUrl} />
@@ -68,5 +72,6 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 			<slot />
 		</main>
 		<Footer />
+		<ScrollMotion />
 	</body>
 </html>

@@ -1,0 +1,490 @@
+---
+import { hero } from '../../config/hero';
+import { specs } from '../../config/home';
+import ArrowRight from '../icons/ArrowRight.astro';
+import Button from '../ui/Button.astro';
+
+const titleLines = ['Engineering', 'Aluminium for', 'Modern Architecture.'];
+
+// "500+" counts up, "ISO" stays put
+const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
+---
+
+<section class="hero" data-hero aria-label="Alumex hero">
+	<div class="hero__runway" data-hero-runway>
+		<div class="hero__stage">
+			<div class="hero__grid-bg" data-hero-bg aria-hidden="true"></div>
+			<div class="hero__sheen" data-hero-sheen aria-hidden="true"></div>
+
+			<div class="hero__inner">
+				<div class="hero__copy">
+					<div class="hero__label" data-hero-label>
+						<span class="hero__label-rule" aria-hidden="true"></span>
+						<span>{hero.label}</span>
+					</div>
+
+					<h1 class="hero__title">
+						{
+							titleLines.map((line) => (
+								<span class="hero__line">
+									<span class="hero__line-inner" data-hero-line>
+										{line}
+									</span>
+								</span>
+							))
+						}
+					</h1>
+
+					<p class="hero__description" data-hero-fade>{hero.description}</p>
+
+					<div class="hero__actions" data-hero-fade>
+						<Button href={hero.primaryCta.href}>
+							{hero.primaryCta.label}
+							<ArrowRight class="h-4 w-4" />
+						</Button>
+						<Button href={hero.secondaryCta.href} variant="secondary">
+							{hero.secondaryCta.label}
+						</Button>
+					</div>
+
+					<ul class="hero__stats" data-hero-stats>
+						{
+							hero.stats.map((stat) => {
+								const match = numeric(stat.value);
+								return (
+									<li>
+										<span
+											class="hero__stat-value"
+											data-count={match?.[1]}
+											data-count-suffix={match?.[2]}
+										>
+											{stat.value}
+										</span>
+										<span class="hero__stat-label">{stat.label}</span>
+									</li>
+								);
+							})
+						}
+					</ul>
+				</div>
+
+				<div class="hero__visual" aria-hidden="true">
+					<svg class="hero__profile" data-hero-profile viewBox="0 0 340 340" fill="none">
+						<g data-hero-depth stroke="var(--primary)" stroke-opacity="0.25" stroke-width="1.5">
+							<path d="M104 44 H296 V236 H104 Z" />
+							<path d="M128 68 H272 V212 H128 Z" />
+						</g>
+
+						<g stroke="var(--primary)" stroke-opacity="0.3" stroke-width="1.5">
+							<path d="M60 100 L104 44" />
+							<path d="M252 100 L296 44" />
+							<path d="M252 292 L296 236" />
+							<path d="M60 292 L104 236" />
+						</g>
+
+						<g data-hero-face stroke="var(--primary-dark)" stroke-width="2.5">
+							<path data-hero-draw pathLength="1" d="M60 100 H252 V292 H60 Z" />
+							<path data-hero-draw pathLength="1" d="M84 124 H228 V268 H84 Z" />
+							<path data-hero-draw pathLength="1" d="M84 178 H228" />
+							<path data-hero-draw pathLength="1" d="M84 202 H228" />
+							<path data-hero-draw pathLength="1" d="M156 124 V178" />
+							<path data-hero-draw pathLength="1" d="M156 202 V268" />
+						</g>
+
+						<rect
+							data-hero-break
+							x="84"
+							y="178"
+							width="144"
+							height="24"
+							fill="var(--accent)"
+							fill-opacity="0.18"
+						/>
+
+						<circle
+							data-hero-port
+							cx="156"
+							cy="151"
+							r="15"
+							stroke="var(--primary)"
+							stroke-width="2"
+						/>
+						<circle data-hero-port cx="156" cy="151" r="6" fill="var(--accent)" />
+					</svg>
+
+					<ul class="hero__specs" data-hero-specs>
+						{
+							specs.map((spec) => (
+								<li>
+									<span class="hero__spec-label">{spec.label}</span>
+									<span class="hero__spec-value">{spec.value}</span>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+			</div>
+
+			<div class="hero__cue" data-hero-cue aria-hidden="true">
+				<span>Scroll</span>
+				<span class="hero__cue-line"></span>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		background: var(--background);
+	}
+
+	.hero__runway {
+		height: 220vh;
+	}
+
+	.hero__stage {
+		position: sticky;
+		top: 0;
+		display: flex;
+		height: 100vh;
+		align-items: center;
+		overflow: hidden;
+	}
+
+	.hero__grid-bg {
+		position: absolute;
+		inset: 0;
+		background-image:
+			linear-gradient(to right, rgb(31 78 140 / 7%) 1px, transparent 1px),
+			linear-gradient(to bottom, rgb(31 78 140 / 7%) 1px, transparent 1px);
+		background-size: 72px 72px;
+		mask-image: radial-gradient(ellipse at 65% 45%, black 10%, transparent 72%);
+	}
+
+	/* Brushed-metal highlight that tracks scroll */
+	.hero__sheen {
+		position: absolute;
+		inset: -20% -40%;
+		background: linear-gradient(
+			105deg,
+			transparent 38%,
+			rgb(47 168 226 / 12%) 48%,
+			rgb(255 255 255 / 55%) 52%,
+			rgb(47 168 226 / 12%) 56%,
+			transparent 66%
+		);
+		pointer-events: none;
+	}
+
+	.hero__inner {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		width: 100%;
+		max-width: 1440px;
+		margin-inline: auto;
+		gap: 3rem;
+		padding: 4rem 1.5rem;
+		align-items: center;
+	}
+
+	@media (min-width: 1024px) {
+		.hero__inner {
+			grid-template-columns: 1.05fr 0.95fr;
+			gap: 4rem;
+			padding: 4rem 3rem;
+		}
+	}
+
+	.hero__label {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 1.5rem;
+		font-size: 0.6875rem;
+		font-weight: 500;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--primary);
+	}
+
+	.hero__label-rule {
+		display: block;
+		height: 1px;
+		width: 2rem;
+		flex-shrink: 0;
+		background: var(--primary);
+		transform-origin: left center;
+	}
+
+	.hero__title {
+		margin-bottom: 1.5rem;
+		font-family: var(--font-display);
+		font-size: clamp(2rem, 6vw, 3.6rem);
+		font-weight: 700;
+		line-height: 1.29;
+		letter-spacing: -0.02em;
+		color: var(--heading);
+	}
+
+	.hero__line {
+		display: block;
+		overflow: hidden;
+	}
+
+	.hero__line-inner {
+		display: block;
+	}
+
+	.hero__line:last-child .hero__line-inner {
+		background: var(--brand-gradient);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+
+	.hero__description {
+		max-width: 32rem;
+		margin-bottom: 2rem;
+		font-size: 1.0625rem;
+		line-height: 1.7;
+		color: var(--muted);
+	}
+
+	.hero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.hero__stats {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.25rem 1.5rem;
+		margin-top: 2.5rem;
+		padding-top: 1.75rem;
+		border-top: 1px solid var(--border-light);
+	}
+
+	@media (min-width: 640px) {
+		.hero__stats {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+	}
+
+	.hero__stat-value {
+		display: block;
+		font-family: var(--font-display);
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: var(--primary);
+	}
+
+	.hero__stat-label {
+		display: block;
+		font-size: 0.75rem;
+		line-height: 1.35;
+		color: var(--muted);
+	}
+
+	.hero__visual {
+		position: relative;
+		display: none;
+	}
+
+	@media (min-width: 1024px) {
+		.hero__visual {
+			display: block;
+		}
+	}
+
+	.hero__profile {
+		width: 100%;
+		max-width: 30rem;
+		margin-inline: auto;
+		overflow: visible;
+	}
+
+	.hero__specs {
+		display: flex;
+		justify-content: center;
+		gap: 2rem;
+		margin-top: 1.5rem;
+	}
+
+	.hero__specs li {
+		border-left: 2px solid var(--accent);
+		padding-left: 0.75rem;
+	}
+
+	.hero__spec-label {
+		display: block;
+		font-size: 0.625rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--muted);
+	}
+
+	.hero__spec-value {
+		display: block;
+		font-family: var(--font-display);
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--heading);
+	}
+
+	.hero__cue {
+		position: absolute;
+		bottom: 2rem;
+		left: 50%;
+		display: flex;
+		translate: -50% 0;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.625rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--muted);
+	}
+
+	.hero__cue-line {
+		display: block;
+		height: 2.5rem;
+		width: 1px;
+		background: linear-gradient(to bottom, var(--primary), transparent);
+	}
+
+	/* Pre-animation state, only once we know the timeline will run */
+	/* Hide with opacity only. A CSS transform here would be parsed into gsap's
+	   transform cache and composed with the yPercent it animates. */
+	:global(html.js) .hero__label,
+	:global(html.js) .hero__line-inner,
+	:global(html.js) .hero__description,
+	:global(html.js) .hero__actions,
+	:global(html.js) .hero__stats li,
+	:global(html.js) .hero__specs li,
+	:global(html.js) [data-hero-break],
+	:global(html.js) [data-hero-port] {
+		opacity: 0;
+	}
+
+	:global(html.js) [data-hero-draw] {
+		stroke-dasharray: 1;
+		stroke-dashoffset: 1;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		:global(html.js) .hero__label,
+		:global(html.js) .hero__line-inner,
+		:global(html.js) .hero__description,
+		:global(html.js) .hero__actions,
+		:global(html.js) .hero__stats li,
+		:global(html.js) .hero__specs li,
+		:global(html.js) [data-hero-break],
+		:global(html.js) [data-hero-port] {
+			opacity: 1;
+		}
+
+		:global(html.js) [data-hero-draw] {
+			stroke-dasharray: none;
+			stroke-dashoffset: 0;
+		}
+
+		.hero__runway {
+			height: auto;
+		}
+
+		.hero__stage {
+			position: static;
+			height: auto;
+			min-height: 100vh;
+		}
+
+		.hero__sheen,
+		.hero__cue {
+			display: none;
+		}
+	}
+</style>
+
+<script>
+	import gsap from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const section = document.querySelector<HTMLElement>('[data-hero]');
+	const runway = section?.querySelector<HTMLElement>('[data-hero-runway]');
+
+	if (section && runway && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		const pick = <T extends Element>(selector: string) =>
+			Array.from(section.querySelectorAll<T>(selector));
+
+		const draws = pick<SVGPathElement>('[data-hero-draw]');
+		const stats = pick<HTMLElement>('[data-hero-stats] li');
+		const specs = pick<HTMLElement>('[data-hero-specs] li');
+
+		const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+		intro
+			.fromTo('[data-hero-label]', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6 })
+			.fromTo(
+				'[data-hero-label] .hero__label-rule',
+				{ scaleX: 0 },
+				{ scaleX: 1, duration: 0.6 },
+				'<',
+			)
+			.fromTo(
+				'[data-hero-line]',
+				{ yPercent: 115, opacity: 0 },
+				{ yPercent: 0, opacity: 1, duration: 1, stagger: 0.1 },
+				'-=0.3',
+			)
+			.fromTo(
+				'[data-hero-fade]',
+				{ opacity: 0, y: 20 },
+				{ opacity: 1, y: 0, duration: 0.7, stagger: 0.12 },
+				'-=0.5',
+			)
+			.fromTo(stats, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08 }, '-=0.4')
+			.fromTo(
+				draws,
+				{ strokeDashoffset: 1 },
+				{ strokeDashoffset: 0, duration: 1.4, stagger: 0.12, ease: 'power2.inOut' },
+				0.3,
+			)
+			.fromTo(
+				'[data-hero-break]',
+				{ opacity: 0, scaleX: 0, transformOrigin: 'left center' },
+				{ opacity: 1, scaleX: 1, duration: 0.7 },
+				'-=0.5',
+			)
+			.fromTo(
+				'[data-hero-port]',
+				{ opacity: 0, scale: 0, transformOrigin: 'center' },
+				{ opacity: 1, scale: 1, duration: 0.5, stagger: 0.1 },
+				'-=0.4',
+			)
+			.fromTo(specs, { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.6, stagger: 0.1 }, '-=0.4');
+
+		// Scrubbed depth/rotation while the sticky stage is held
+		const scrub = gsap.timeline({
+			defaults: { ease: 'none' },
+			scrollTrigger: { trigger: runway, start: 'top top', end: 'bottom bottom', scrub: 0.6 },
+		});
+
+		scrub
+			.fromTo(
+				'[data-hero-profile]',
+				{ rotate: 0, scale: 1, transformOrigin: '50% 50%' },
+				{ rotate: 6, scale: 1.14 },
+				0,
+			)
+			.fromTo('[data-hero-depth]', { x: 0, y: 0, opacity: 0.9 }, { x: -28, y: 28, opacity: 1 }, 0)
+			.fromTo('[data-hero-sheen]', { xPercent: -18 }, { xPercent: 18 }, 0)
+			.fromTo('[data-hero-bg]', { yPercent: 0 }, { yPercent: -12 }, 0)
+			.fromTo(specs, { yPercent: 0 }, { yPercent: -40, stagger: 0.05 }, 0)
+			.to('[data-hero-cue]', { opacity: 0, duration: 0.15 }, 0);
+	}
+</script>

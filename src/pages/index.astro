@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-// import Hero from '../components/sections/Hero.astro';
-import HeroScrollVideo from '../components/sections/HeroScrollVideo.astro';
+import HeroExtrusion from '../components/sections/HeroExtrusion.astro';
+import ScrollRail from '../components/motion/ScrollRail.astro';
 import Partners from '../components/sections/Partners.astro';
 import Products from '../components/sections/Products.astro';
 import Finishes from '../components/sections/Finishes.astro';
@@ -12,12 +12,13 @@ import { site } from '../config/site';
 ---
 
 <Layout title={site.title} description={site.description} canonical="/">
-	<HeroScrollVideo />
-	<!-- <Hero /> -->
-	<Partners />
-	<Products mobileCarousel />
-	<Finishes />
-	<Projects mobileCarousel />
-	<Map />
-	<Eco />
+	<ScrollRail />
+
+	<div data-rail="Intro"><HeroExtrusion /></div>
+	<div data-rail="Partners"><Partners /></div>
+	<div data-rail="Systems"><Products mobileCarousel /></div>
+	<div data-rail="Finishes"><Finishes /></div>
+	<div data-rail="Projects"><Projects mobileCarousel /></div>
+	<div data-rail="Reach"><Map /></div>
+	<div data-rail="Sustainability"><Eco /></div>
 </Layout>

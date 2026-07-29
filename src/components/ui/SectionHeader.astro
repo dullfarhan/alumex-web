@@ -10,7 +10,7 @@ interface Props {
 const { label, title, description, align = 'center', class: className } = Astro.props;
 ---
 
-<div class:list={[align === 'start' ? 'text-left' : 'text-center', className]}>
+<div class:list={[align === 'start' ? 'text-left' : 'text-center', className]} data-anim-stagger>
 	{
 		label && (
 			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{label}</span>
