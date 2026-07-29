@@ -248,17 +248,37 @@ const barCount = 3;
 		display: grid;
 		width: 100%;
 		max-width: 1440px;
+		height: 100%;
 		margin-inline: auto;
-		gap: 3rem;
-		padding: 4rem 1.5rem;
-		align-items: center;
+		gap: 1rem;
+		padding: 5.5rem 1.25rem 1.25rem;
+		align-items: stretch;
+		grid-template-rows: 1fr auto;
 	}
 
 	@media (min-width: 1024px) {
 		.hero__inner {
 			grid-template-columns: 1.02fr 0.98fr;
+			grid-template-rows: none;
 			gap: 3.5rem;
 			padding: 4rem 3rem;
+			align-items: center;
+		}
+	}
+
+	.hero__copy {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		min-height: 0;
+	}
+
+	@media (min-width: 1024px) {
+		.hero__copy {
+			align-items: flex-start;
+			text-align: left;
 		}
 	}
 
@@ -290,25 +310,45 @@ const barCount = 3;
 
 	.hero__description {
 		max-width: 30rem;
+		margin-inline: auto;
 		margin-bottom: 1.75rem;
 		font-size: 1.0625rem;
 		line-height: 1.7;
 		color: var(--muted);
 	}
 
+	@media (min-width: 1024px) {
+		.hero__description {
+			margin-inline: 0;
+		}
+	}
+
 	.hero__actions {
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: center;
 		gap: 0.75rem;
 	}
 
+	@media (min-width: 1024px) {
+		.hero__actions {
+			justify-content: flex-start;
+		}
+	}
+
 	.hero__stats {
-		display: grid;
+		display: none;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 1.25rem 1.5rem;
 		margin-top: 2.25rem;
 		padding-top: 1.5rem;
 		border-top: 1px solid var(--border-light);
+	}
+
+	@media (min-width: 1024px) {
+		.hero__stats {
+			display: grid;
+		}
 	}
 
 	@media (min-width: 640px) {
@@ -333,23 +373,33 @@ const barCount = 3;
 	}
 
 	.hero__visual {
-		display: none;
+		display: block;
 		min-width: 0;
+		align-self: end;
 	}
 
 	@media (min-width: 1024px) {
 		.hero__visual {
-			display: block;
+			align-self: center;
 		}
 	}
 
 	.hero__brand {
-		margin-bottom: 1.5rem;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 1.25rem;
+	}
+
+	@media (min-width: 1024px) {
+		.hero__brand {
+			justify-content: flex-start;
+			margin-bottom: 1.5rem;
+		}
 	}
 
 	.hero__logo {
 		position: relative;
-		width: 12rem;
+		width: 10.5rem;
 		aspect-ratio: 1;
 	}
 
@@ -397,6 +447,7 @@ const barCount = 3;
 	}
 
 	.hero__caption {
+		display: none;
 		margin-top: 0.75rem;
 		text-align: center;
 		font-family: var(--font-display);
@@ -407,11 +458,23 @@ const barCount = 3;
 		color: var(--primary);
 	}
 
+	@media (min-width: 1024px) {
+		.hero__caption {
+			display: block;
+		}
+	}
+
 	.hero__layers {
-		display: grid;
+		display: none;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 0.625rem 1rem;
 		margin-top: 1.25rem;
+	}
+
+	@media (min-width: 1024px) {
+		.hero__layers {
+			display: grid;
+		}
 	}
 
 	.hero__layers li {
@@ -539,18 +602,38 @@ const barCount = 3;
 		width: 100%;
 		max-width: 34rem;
 		margin-inline: auto;
-		padding: 1.5rem 0.5rem 2.5rem;
+		padding: 0.25rem 0.5rem 0.5rem;
 		overflow: visible;
+	}
+
+	@media (min-width: 1024px) {
+		.hero3d {
+			padding: 1.5rem 0.5rem 2.5rem;
+		}
 	}
 
 	.hero3d__scene {
 		position: relative;
-		width: 22rem;
-		height: 26rem;
+		width: 11.5rem;
+		height: 13.5rem;
 		margin-inline: auto;
 		transform-style: preserve-3d;
 		overflow: visible;
 		will-change: transform;
+	}
+
+	@media (min-width: 640px) {
+		.hero3d__scene {
+			width: 16rem;
+			height: 19rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.hero3d__scene {
+			width: 22rem;
+			height: 26rem;
+		}
 	}
 
 	.hero3d__assembly {
