@@ -33,6 +33,22 @@ export const systems = {
 	],
 } as const;
 
+/* Hero cutaway, ordered outside-in. `band` matches the SVG layer it labels. */
+export const heroLayers = [
+	{ band: 0, label: 'Anodized Finish', value: 'AA-M12C22A31', detail: '25µm oxide layer' },
+	{ band: 1, label: 'Alloy Core', value: '6063-T5 Billet', detail: 'Extruded at 500°C' },
+	{ band: 2, label: 'Thermal Break', value: 'Polyamide PA66', detail: '0.9 W/m²K' },
+	{ band: 3, label: 'Structural Chamber', value: 'Multi-Chamber', detail: '±0.2mm tolerance' },
+] as const;
+
+/* Hero cut-to-length scene: extrusion rod being sliced by a cutter. */
+export const heroCut = [
+	{ label: 'Billet', value: '6063-T5', detail: 'Extruded at 500°C' },
+	{ label: 'Cut Length', value: '6m standard', detail: '±0.2mm tolerance' },
+	{ label: 'Blade', value: 'Carbide Tipped', detail: 'Wet cut, 3200 RPM' },
+	{ label: 'Cycle', value: '12s / cut', detail: 'Automated feed' },
+] as const;
+
 export const specs = [
 	{ label: 'Material', value: '6063-T5 Alloy' },
 	{ label: 'Finish', value: 'Anodized / Powder Coated' },

@@ -1,20 +1,23 @@
 ---
 import { hero } from '../../config/hero';
-import { specs } from '../../config/home';
+import { heroCut } from '../../config/home';
+import barImage from '../../assets/hero/bar.png';
+import cutterGif from '../../assets/hero/cutter.gif';
 import ArrowRight from '../icons/ArrowRight.astro';
 import Button from '../ui/Button.astro';
 
 const titleLines = ['Engineering', 'Aluminium for', 'Modern Architecture.'];
 
-// "500+" counts up, "ISO" stays put
 const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
+
+const barCount = 3;
 ---
 
 <section class="hero" data-hero aria-label="Alumex hero">
 	<div class="hero__runway" data-hero-runway>
-		<div class="hero__stage">
+		<div class="hero__stage" data-hero-stage>
 			<div class="hero__grid-bg" data-hero-bg aria-hidden="true"></div>
-			<div class="hero__sheen" data-hero-sheen aria-hidden="true"></div>
+			<div class="hero__vignette" aria-hidden="true"></div>
 
 			<div class="hero__inner">
 				<div class="hero__copy">
@@ -35,89 +38,131 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 						}
 					</h1>
 
-					<p class="hero__description" data-hero-fade>{hero.description}</p>
+					<div data-hero-trail>
+						<p class="hero__description" data-hero-fade>{hero.description}</p>
 
-					<div class="hero__actions" data-hero-fade>
-						<Button href={hero.primaryCta.href}>
-							{hero.primaryCta.label}
-							<ArrowRight class="h-4 w-4" />
-						</Button>
-						<Button href={hero.secondaryCta.href} variant="secondary">
-							{hero.secondaryCta.label}
-						</Button>
+						<div class="hero__actions" data-hero-fade>
+							<Button href={hero.primaryCta.href}>
+								{hero.primaryCta.label}
+								<ArrowRight class="h-4 w-4" />
+							</Button>
+							<Button href={hero.secondaryCta.href} variant="secondary">
+								{hero.secondaryCta.label}
+							</Button>
+						</div>
+
+						<ul class="hero__stats" data-hero-stats>
+							{
+								hero.stats.map((stat) => {
+									const match = numeric(stat.value);
+									return (
+										<li>
+											<span
+												class="hero__stat-value"
+												data-count={match?.[1]}
+												data-count-suffix={match?.[2]}
+											>
+												{stat.value}
+											</span>
+											<span class="hero__stat-label">{stat.label}</span>
+										</li>
+									);
+								})
+							}
+						</ul>
 					</div>
-
-					<ul class="hero__stats" data-hero-stats>
-						{
-							hero.stats.map((stat) => {
-								const match = numeric(stat.value);
-								return (
-									<li>
-										<span
-											class="hero__stat-value"
-											data-count={match?.[1]}
-											data-count-suffix={match?.[2]}
-										>
-											{stat.value}
-										</span>
-										<span class="hero__stat-label">{stat.label}</span>
-									</li>
-								);
-							})
-						}
-					</ul>
 				</div>
 
-				<div class="hero__visual" aria-hidden="true">
-					<svg class="hero__profile" data-hero-profile viewBox="0 0 340 340" fill="none">
-						<g data-hero-depth stroke="var(--primary)" stroke-opacity="0.25" stroke-width="1.5">
-							<path d="M104 44 H296 V236 H104 Z" />
-							<path d="M128 68 H272 V212 H128 Z" />
-						</g>
+				<div class="hero__visual">
+					<div class="hero3d" data-hero3d>
+						<div class="hero3d__scene" data-hero-scene>
+							<div class="hero3d__assembly" data-hero-assembly>
+								<div class="hero3d__frame" data-hero-frame>
+									<div class="hero3d__bar hero3d__bar--top" data-hero-bar />
+									<div class="hero3d__bar hero3d__bar--bottom" data-hero-bar />
+									<div class="hero3d__bar hero3d__bar--left" data-hero-bar />
+									<div class="hero3d__bar hero3d__bar--right" data-hero-bar />
+								</div>
 
-						<g stroke="var(--primary)" stroke-opacity="0.3" stroke-width="1.5">
-							<path d="M60 100 L104 44" />
-							<path d="M252 100 L296 44" />
-							<path d="M252 292 L296 236" />
-							<path d="M60 292 L104 236" />
-						</g>
+								<div class="hero3d__door hero3d__door--left" data-hero-door="left">
+									<div class="hero3d__door-front">
+										<div class="hero3d__glass" />
+										<div class="hero3d__glass-sheen" />
+									</div>
+									<div class="hero3d__door-edge" />
+									<div class="hero3d__door-back" />
+								</div>
 
-						<g data-hero-face stroke="var(--primary-dark)" stroke-width="2.5">
-							<path data-hero-draw pathLength="1" d="M60 100 H252 V292 H60 Z" />
-							<path data-hero-draw pathLength="1" d="M84 124 H228 V268 H84 Z" />
-							<path data-hero-draw pathLength="1" d="M84 178 H228" />
-							<path data-hero-draw pathLength="1" d="M84 202 H228" />
-							<path data-hero-draw pathLength="1" d="M156 124 V178" />
-							<path data-hero-draw pathLength="1" d="M156 202 V268" />
-						</g>
+								<div class="hero3d__door hero3d__door--right" data-hero-door="right">
+									<div class="hero3d__door-front">
+										<div class="hero3d__glass" />
+										<div class="hero3d__glass-sheen" />
+									</div>
+									<div class="hero3d__door-edge" />
+									<div class="hero3d__door-back" />
+								</div>
 
-						<rect
-							data-hero-break
-							x="84"
-							y="178"
-							width="144"
-							height="24"
-							fill="var(--accent)"
-							fill-opacity="0.18"
-						/>
+								<div class="hero3d__handle" data-hero-handle>
+									<span class="hero3d__handle-cap" />
+								</div>
 
-						<circle
-							data-hero-port
-							cx="156"
-							cy="151"
-							r="15"
-							stroke="var(--primary)"
-							stroke-width="2"
-						/>
-						<circle data-hero-port cx="156" cy="151" r="6" fill="var(--accent)" />
-					</svg>
+								{/* Bars + cutter above doors so they always read in front */}
+								<div class="hero3d__lathe" data-hero-lathe>
+									{
+										Array.from({ length: barCount }, (_, i) => (
+											<div class="hero3d__bar-row" data-hero-rod data-rod={i}>
+												<div class="hero3d__bar-stock" data-hero-stock>
+													<img
+														src={barImage.src}
+														width={barImage.width}
+														height={barImage.height}
+														alt=""
+														class="hero3d__bar-img"
+														draggable="false"
+													/>
+												</div>
+												<div class="hero3d__bar-piece" data-hero-cut data-cut={i}>
+													<img
+														src={barImage.src}
+														width={barImage.width}
+														height={barImage.height}
+														alt=""
+														class="hero3d__bar-img"
+														draggable="false"
+													/>
+												</div>
+											</div>
+										))
+									}
+								</div>
 
-					<ul class="hero__specs" data-hero-specs>
+								<div class="hero3d__cutter" data-hero-cutter>
+									<img
+										src={cutterGif.src}
+										width={cutterGif.width}
+										height={cutterGif.height}
+										alt=""
+										class="hero3d__cutter-gif"
+										draggable="false"
+									/>
+								</div>
+							</div>
+						</div>
+						<div class="hero3d__floor" aria-hidden="true" />
+					</div>
+
+					<p class="hero__caption" data-hero-caption aria-hidden="true">Sealed system</p>
+
+					<ul class="hero__layers" data-hero-layers>
 						{
-							specs.map((spec) => (
-								<li>
-									<span class="hero__spec-label">{spec.label}</span>
-									<span class="hero__spec-value">{spec.value}</span>
+							heroCut.map((item, i) => (
+								<li data-hero-chip data-cut={i}>
+									<span class="hero__chip-swatch" data-cut={i} aria-hidden="true" />
+									<span class="hero__chip-text">
+										<span class="hero__chip-label">{item.label}</span>
+										<span class="hero__chip-value">{item.value}</span>
+										<span class="hero__chip-detail">{item.detail}</span>
+									</span>
 								</li>
 							))
 						}
@@ -135,11 +180,12 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 
 <style>
 	.hero {
-		background: var(--background);
+		overflow-x: clip;
+		background: radial-gradient(ellipse at 70% 40%, #f4f8fc 0%, #eaf1f8 55%, #dde7f1 100%);
 	}
 
 	.hero__runway {
-		height: 220vh;
+		height: 420vh;
 	}
 
 	.hero__stage {
@@ -155,24 +201,16 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		position: absolute;
 		inset: 0;
 		background-image:
-			linear-gradient(to right, rgb(31 78 140 / 7%) 1px, transparent 1px),
-			linear-gradient(to bottom, rgb(31 78 140 / 7%) 1px, transparent 1px);
-		background-size: 72px 72px;
-		mask-image: radial-gradient(ellipse at 65% 45%, black 10%, transparent 72%);
+			linear-gradient(to right, rgb(31 78 140 / 6%) 1px, transparent 1px),
+			linear-gradient(to bottom, rgb(31 78 140 / 6%) 1px, transparent 1px);
+		background-size: 64px 64px;
+		mask-image: radial-gradient(ellipse at 68% 45%, black 8%, transparent 70%);
 	}
 
-	/* Brushed-metal highlight that tracks scroll */
-	.hero__sheen {
+	.hero__vignette {
 		position: absolute;
-		inset: -20% -40%;
-		background: linear-gradient(
-			105deg,
-			transparent 38%,
-			rgb(47 168 226 / 12%) 48%,
-			rgb(255 255 255 / 55%) 52%,
-			rgb(47 168 226 / 12%) 56%,
-			transparent 66%
-		);
+		inset: 0;
+		background: radial-gradient(ellipse at 50% 55%, transparent 50%, rgb(18 43 77 / 10%) 100%);
 		pointer-events: none;
 	}
 
@@ -190,8 +228,8 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 
 	@media (min-width: 1024px) {
 		.hero__inner {
-			grid-template-columns: 1.05fr 0.95fr;
-			gap: 4rem;
+			grid-template-columns: 1.02fr 0.98fr;
+			gap: 3.5rem;
 			padding: 4rem 3rem;
 		}
 	}
@@ -220,9 +258,9 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 	.hero__title {
 		margin-bottom: 1.5rem;
 		font-family: var(--font-display);
-		font-size: clamp(2rem, 6vw, 3.6rem);
+		font-size: clamp(2rem, 5.4vw, 3.4rem);
 		font-weight: 700;
-		line-height: 1.29;
+		line-height: 1.07;
 		letter-spacing: -0.02em;
 		color: var(--heading);
 	}
@@ -244,8 +282,8 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 	}
 
 	.hero__description {
-		max-width: 32rem;
-		margin-bottom: 2rem;
+		max-width: 30rem;
+		margin-bottom: 1.75rem;
 		font-size: 1.0625rem;
 		line-height: 1.7;
 		color: var(--muted);
@@ -261,8 +299,8 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 1.25rem 1.5rem;
-		margin-top: 2.5rem;
-		padding-top: 1.75rem;
+		margin-top: 2.25rem;
+		padding-top: 1.5rem;
 		border-top: 1px solid var(--border-light);
 	}
 
@@ -288,8 +326,8 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 	}
 
 	.hero__visual {
-		position: relative;
 		display: none;
+		min-width: 0;
 	}
 
 	@media (min-width: 1024px) {
@@ -298,39 +336,85 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		}
 	}
 
-	.hero__profile {
-		width: 100%;
-		max-width: 30rem;
-		margin-inline: auto;
-		overflow: visible;
+	.hero__caption {
+		margin-top: 0.75rem;
+		text-align: center;
+		font-family: var(--font-display);
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: var(--primary);
 	}
 
-	.hero__specs {
+	.hero__layers {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.625rem 1rem;
+		margin-top: 1.25rem;
+	}
+
+	.hero__layers li {
 		display: flex;
-		justify-content: center;
-		gap: 2rem;
-		margin-top: 1.5rem;
+		gap: 0.625rem;
+		min-width: 0;
+		border-left: 2px solid var(--border);
+		padding: 0.125rem 0 0.125rem 0.625rem;
+		transition: border-color 0.3s, opacity 0.3s;
 	}
 
-	.hero__specs li {
-		border-left: 2px solid var(--accent);
-		padding-left: 0.75rem;
+	.hero__layers li[data-active] {
+		border-left-color: var(--accent);
 	}
 
-	.hero__spec-label {
+	.hero__chip-swatch {
+		margin-top: 0.25rem;
+		height: 0.625rem;
+		width: 0.625rem;
+		flex-shrink: 0;
+		border-radius: 2px;
+	}
+
+	li[data-cut='0'] .hero__chip-swatch {
+		background: linear-gradient(135deg, #c8d0db, #8a96a6);
+	}
+
+	li[data-cut='1'] .hero__chip-swatch {
+		background: linear-gradient(135deg, #2fa8e2, #1f4e8c);
+	}
+
+	li[data-cut='2'] .hero__chip-swatch {
+		background: linear-gradient(135deg, #1f4e8c, #122b4d);
+	}
+
+	li[data-cut='3'] .hero__chip-swatch {
+		background: linear-gradient(135deg, #eef2f6, #c4ccd5);
+	}
+
+	.hero__chip-text {
+		min-width: 0;
+	}
+
+	.hero__chip-label {
 		display: block;
-		font-size: 0.625rem;
+		font-size: 0.5625rem;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--muted);
 	}
 
-	.hero__spec-value {
+	.hero__chip-value {
 		display: block;
 		font-family: var(--font-display);
-		font-size: 0.875rem;
+		font-size: 0.8125rem;
 		font-weight: 600;
 		color: var(--heading);
+	}
+
+	.hero__chip-detail {
+		display: block;
+		font-size: 0.6875rem;
+		color: var(--muted);
 	}
 
 	.hero__cue {
@@ -355,23 +439,19 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		background: linear-gradient(to bottom, var(--primary), transparent);
 	}
 
-	/* Pre-animation state, only once we know the timeline will run */
-	/* Hide with opacity only. A CSS transform here would be parsed into gsap's
-	   transform cache and composed with the yPercent it animates. */
 	:global(html.js) .hero__label,
 	:global(html.js) .hero__line-inner,
 	:global(html.js) .hero__description,
 	:global(html.js) .hero__actions,
 	:global(html.js) .hero__stats li,
-	:global(html.js) .hero__specs li,
-	:global(html.js) [data-hero-break],
-	:global(html.js) [data-hero-port] {
+	:global(html.js) .hero__caption,
+	:global(html.js) .hero__layers li,
+	:global(html.js) [data-hero-bar],
+	:global(html.js) [data-hero-door],
+	:global(html.js) [data-hero-handle],
+	:global(html.js) [data-hero-rod],
+	:global(html.js) [data-hero-cutter] {
 		opacity: 0;
-	}
-
-	:global(html.js) [data-hero-draw] {
-		stroke-dasharray: 1;
-		stroke-dashoffset: 1;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
@@ -380,15 +460,14 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		:global(html.js) .hero__description,
 		:global(html.js) .hero__actions,
 		:global(html.js) .hero__stats li,
-		:global(html.js) .hero__specs li,
-		:global(html.js) [data-hero-break],
-		:global(html.js) [data-hero-port] {
+		:global(html.js) .hero__caption,
+		:global(html.js) .hero__layers li,
+		:global(html.js) [data-hero-bar],
+		:global(html.js) [data-hero-door],
+		:global(html.js) [data-hero-handle],
+		:global(html.js) [data-hero-rod],
+		:global(html.js) [data-hero-cutter] {
 			opacity: 1;
-		}
-
-		:global(html.js) [data-hero-draw] {
-			stroke-dasharray: none;
-			stroke-dashoffset: 0;
 		}
 
 		.hero__runway {
@@ -401,10 +480,306 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 			min-height: 100vh;
 		}
 
-		.hero__sheen,
 		.hero__cue {
 			display: none;
 		}
+	}
+</style>
+
+<!-- 3D scene styles -->
+<style>
+	.hero3d {
+		position: relative;
+		perspective: 1800px;
+		perspective-origin: 55% 42%;
+		width: 100%;
+		max-width: 34rem;
+		margin-inline: auto;
+		padding: 1.5rem 0.5rem 2.5rem;
+		overflow: visible;
+	}
+
+	.hero3d__scene {
+		position: relative;
+		width: 22rem;
+		height: 26rem;
+		margin-inline: auto;
+		transform-style: preserve-3d;
+		overflow: visible;
+		will-change: transform;
+	}
+
+	.hero3d__assembly {
+		position: absolute;
+		inset: 0;
+		transform-style: preserve-3d;
+		overflow: visible;
+	}
+
+	.hero3d__lathe {
+		position: absolute;
+		inset: 2.5rem -2rem 2.5rem -3rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		z-index: 20;
+		transform: translateZ(60px);
+		transform-style: preserve-3d;
+		isolation: isolate;
+	}
+
+	.hero3d__bar-row {
+		--bar-w: 600px;
+		--bar-h: 2.2rem;
+		--cut: 0.7;
+		position: relative;
+		width: var(--bar-w);
+		height: var(--bar-h);
+		z-index: 21;
+		transform-style: preserve-3d;
+		transform: rotateY(-8deg) rotateX(4deg) translateZ(20px);
+		transform-origin: right center;
+	}
+
+	/*
+	  Same bar.png split into two flush windows.
+	  Left + right abut with zero gap → reads as one continuous bar until the right drops.
+	*/
+	.hero3d__bar-stock,
+	.hero3d__bar-piece {
+		position: absolute;
+		top: 0;
+		height: var(--bar-h);
+		overflow: hidden;
+	}
+
+	.hero3d__bar-stock {
+		left: 0;
+		width: calc(var(--bar-w) * var(--cut));
+		z-index: 1;
+	}
+
+	.hero3d__bar-piece {
+		left: calc(var(--bar-w) * var(--cut));
+		width: calc(var(--bar-w) * (1 - var(--cut)));
+		z-index: 40;
+		transform-origin: left center;
+		will-change: transform, opacity;
+	}
+
+	.hero3d__bar-img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: block;
+		width: var(--bar-w);
+		height: var(--bar-h);
+		max-width: none;
+		/* filter: drop-shadow(0 6px 10px rgb(18 43 77 / 35%)); */
+		pointer-events: none;
+		user-select: none;
+	}
+
+	/* Right window shows the matching right end of the same image */
+	.hero3d__bar-piece .hero3d__bar-img {
+		left: calc(var(--bar-w) * var(--cut) * -1);
+	}
+
+	/* Big cutter centered on the cut seam */
+	.hero3d__cutter {
+		position: absolute;
+		left: calc(-3rem + (600px * 0.7));
+		top: 0;
+		width: 14rem;
+		height: 14rem;
+		margin-left: -8.8rem;
+		opacity: 0;
+		z-index: 50;
+		pointer-events: none;
+		transform: translateZ(80px);
+		transform-style: preserve-3d;
+		will-change: transform, opacity;
+	}
+
+	.hero3d__cutter-gif {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		mix-blend-mode: screen;
+		filter: drop-shadow(0 8px 20px rgb(18 43 77 / 55%));
+		transform: rotateY(-28deg) rotateX(6deg);
+		pointer-events: none;
+		user-select: none;
+	}
+
+	/* Fixed aluminium frame — four extrusion bars */
+	.hero3d__frame {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		transform-style: preserve-3d;
+	}
+
+	.hero3d__bar {
+		position: absolute;
+		background:
+			repeating-linear-gradient(90deg, #d6dde5 0px, #f1f4f7 1px, #b8c1cc 2px, #e4e9ef 3px),
+			linear-gradient(135deg, #c8d0db 0%, #f1f4f7 30%, #aeb8c4 60%, #d9e0e8 100%);
+		box-shadow:
+			0 2px 4px rgb(18 43 77 / 25%),
+			inset 0 1px 0 rgb(255 255 255 / 60%),
+			inset 0 -1px 0 rgb(18 43 77 / 20%);
+	}
+
+	.hero3d__bar--top {
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 0.75rem;
+		border-radius: 2px 2px 0 0;
+	}
+
+	.hero3d__bar--bottom {
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 0.75rem;
+		border-radius: 0 0 2px 2px;
+	}
+
+	.hero3d__bar--left {
+		top: 0.25rem;
+		bottom: 0.25rem;
+		left: 0;
+		width: 0.75rem;
+	}
+
+	.hero3d__bar--right {
+		top: 0.25rem;
+		bottom: 0.25rem;
+		right: 0;
+		width: 0.75rem;
+	}
+
+	/* Door leaves — real 3D panels hinged on their outer edges */
+	.hero3d__door {
+		position: absolute;
+		top: 0.5rem;
+		bottom: 0.5rem;
+		width: calc(50% - 0.5rem);
+		z-index: 2;
+		transform-style: preserve-3d;
+		will-change: transform;
+	}
+
+	.hero3d__door--left {
+		left: 0.5rem;
+		transform-origin: left center;
+	}
+
+	.hero3d__door--right {
+		right: 0.5rem;
+		transform-origin: right center;
+	}
+
+	.hero3d__door-front,
+	.hero3d__door-back,
+	.hero3d__door-edge {
+		position: absolute;
+		inset: 0;
+	}
+
+	.hero3d__door-front {
+		transform: translateZ(8px);
+		background: linear-gradient(135deg, #d9e0e8 0%, #f5f7fa 30%, #b8c4d1 70%, #e8edf2 100%);
+		border: 2px solid #2a3f5f;
+		border-radius: 2px;
+		box-shadow:
+			inset 0 0 0 4px rgb(255 255 255 / 35%),
+			0 6px 14px rgb(18 43 77 / 30%);
+		overflow: hidden;
+	}
+
+	.hero3d__door-back {
+		transform: translateZ(-8px) rotateY(180deg);
+		background: linear-gradient(135deg, #c4ccd5 0%, #9aa6b4 100%);
+		border: 2px solid #2a3f5f;
+		border-radius: 2px;
+	}
+
+	.hero3d__door-edge {
+		transform: translateZ(0);
+		background: linear-gradient(90deg, #aeb8c4, #d9e0e8, #aeb8c4);
+	}
+
+	.hero3d__door--left .hero3d__door-edge {
+		width: 16px;
+		transform: rotateY(-90deg) translateZ(8px);
+		transform-origin: right center;
+		right: -8px;
+	}
+
+	.hero3d__door--right .hero3d__door-edge {
+		width: 16px;
+		transform: rotateY(90deg) translateZ(8px);
+		transform-origin: left center;
+		left: -8px;
+	}
+
+	/* Glazing with diagonal reflection */
+	.hero3d__glass {
+		position: absolute;
+		inset: 0.5rem;
+		background: linear-gradient(150deg, rgb(47 168 226 / 22%) 0%, rgb(31 78 140 / 14%) 50%, rgb(18 43 77 / 20%) 100%);
+		border: 1px solid rgb(31 78 140 / 35%);
+		border-radius: 1px;
+	}
+
+	.hero3d__glass-sheen {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 55%) 48%, rgb(255 255 255 / 75%) 52%, transparent 62%);
+		mix-blend-mode: screen;
+		opacity: 0.7;
+	}
+
+	/* Handle hardware at the meeting stile */
+	.hero3d__handle {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: 3;
+		transform: translate(-50%, -50%) translateZ(10px);
+		width: 0.5rem;
+		height: 2.5rem;
+		background: linear-gradient(135deg, #2a3f5f, #1f4e8c, #122b4d);
+		border-radius: 4px;
+		box-shadow: 0 2px 6px rgb(18 43 77 / 45%);
+	}
+
+	.hero3d__handle-cap {
+		position: absolute;
+		top: 0.25rem;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 0.25rem;
+		height: 0.25rem;
+		border-radius: 50%;
+		background: var(--accent);
+		box-shadow: 0 0 6px var(--accent);
+	}
+
+	/* Contact shadow on the floor */
+	.hero3d__floor {
+		position: absolute;
+		bottom: 0.75rem;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 18rem;
+		height: 1.75rem;
+		background: radial-gradient(ellipse at center, rgb(18 43 77 / 35%) 0%, transparent 70%);
+		filter: blur(6px);
 	}
 </style>
 
@@ -416,15 +791,38 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 
 	const section = document.querySelector<HTMLElement>('[data-hero]');
 	const runway = section?.querySelector<HTMLElement>('[data-hero-runway]');
+	const stage = section?.querySelector<HTMLElement>('[data-hero-stage]');
+	const scene = section?.querySelector<HTMLElement>('[data-hero-scene]');
+	const caption = section?.querySelector<HTMLElement>('[data-hero-caption]');
 
-	if (section && runway && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+	if (section && runway && stage && scene && caption && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
 		const pick = <T extends Element>(selector: string) =>
 			Array.from(section.querySelectorAll<T>(selector));
 
-		const draws = pick<SVGPathElement>('[data-hero-draw]');
 		const stats = pick<HTMLElement>('[data-hero-stats] li');
-		const specs = pick<HTMLElement>('[data-hero-specs] li');
+		const bars = pick<HTMLElement>('[data-hero-bar]');
+		const doors = pick<HTMLElement>('[data-hero-door]');
+		const rods = pick<HTMLElement>('[data-hero-rod]');
+		const pieces = pick<HTMLElement>('[data-hero-cut]');
+		const chips = pick<HTMLElement>('[data-hero-chip]');
+		const frame = section.querySelector<HTMLElement>('[data-hero-frame]');
+		const handle = section.querySelector<HTMLElement>('[data-hero-handle]');
+		const assembly = section.querySelector<HTMLElement>('[data-hero-assembly]');
+		const cutter = section.querySelector<HTMLElement>('[data-hero-cutter]');
+		const doorFade = [...doors, ...(frame ? [frame] : []), ...(handle ? [handle] : [])];
 
+		gsap.set(pieces, { y: 0, x: 0, rotate: 0, opacity: 1 });
+
+		const cutterYs =
+			assembly && cutter
+				? rods.map((row) => {
+						const asmTop = assembly.offsetTop;
+						const rowMid = row.offsetTop + row.offsetHeight / 2;
+						return rowMid - asmTop - cutter.offsetHeight / 2;
+					})
+				: [8, 72, 136];
+
+		/* Opening act, on load */
 		const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
 		intro
@@ -448,43 +846,149 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 				'-=0.5',
 			)
 			.fromTo(stats, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08 }, '-=0.4')
-			.fromTo(
-				draws,
-				{ strokeDashoffset: 1 },
-				{ strokeDashoffset: 0, duration: 1.4, stagger: 0.12, ease: 'power2.inOut' },
-				0.3,
-			)
-			.fromTo(
-				'[data-hero-break]',
-				{ opacity: 0, scaleX: 0, transformOrigin: 'left center' },
-				{ opacity: 1, scaleX: 1, duration: 0.7 },
-				'-=0.5',
-			)
-			.fromTo(
-				'[data-hero-port]',
-				{ opacity: 0, scale: 0, transformOrigin: 'center' },
-				{ opacity: 1, scale: 1, duration: 0.5, stagger: 0.1 },
-				'-=0.4',
-			)
-			.fromTo(specs, { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.6, stagger: 0.1 }, '-=0.4');
+			.fromTo(bars, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.6, stagger: 0.08 }, 0.4)
+			.fromTo(doors, { opacity: 0 }, { opacity: 1, duration: 0.7, stagger: 0.12 }, '-=0.3')
+			.fromTo('[data-hero-handle]', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.5 }, '-=0.3')
+			.fromTo(caption, { opacity: 0 }, { opacity: 1, duration: 0.5 }, '-=0.3');
 
-		// Scrubbed depth/rotation while the sticky stage is held
-		const scrub = gsap.timeline({
+		/* Scrubbed act — duration 1, so positions read as progress */
+		const reveal = gsap.timeline({
 			defaults: { ease: 'none' },
-			scrollTrigger: { trigger: runway, start: 'top top', end: 'bottom bottom', scrub: 0.6 },
+			scrollTrigger: { trigger: runway, start: 'top top', end: 'bottom bottom', scrub: 0.7 },
 		});
 
-		scrub
+		reveal
+			.to('[data-hero-cue]', { opacity: 0, duration: 0.06 }, 0)
+			.fromTo(scene, { rotateX: 4, rotateY: 0 }, { rotateX: 10, rotateY: -6, duration: 1 }, 0)
 			.fromTo(
-				'[data-hero-profile]',
-				{ rotate: 0, scale: 1, transformOrigin: '50% 50%' },
-				{ rotate: 6, scale: 1.14 },
-				0,
+				'[data-hero-door="left"]',
+				{ rotateY: 0 },
+				{ rotateY: -88, duration: 0.18, ease: 'power2.inOut' },
+				0.04,
 			)
-			.fromTo('[data-hero-depth]', { x: 0, y: 0, opacity: 0.9 }, { x: -28, y: 28, opacity: 1 }, 0)
-			.fromTo('[data-hero-sheen]', { xPercent: -18 }, { xPercent: 18 }, 0)
-			.fromTo('[data-hero-bg]', { yPercent: 0 }, { yPercent: -12 }, 0)
-			.fromTo(specs, { yPercent: 0 }, { yPercent: -40, stagger: 0.05 }, 0)
-			.to('[data-hero-cue]', { opacity: 0, duration: 0.15 }, 0);
+			.fromTo(
+				'[data-hero-door="right"]',
+				{ rotateY: 0 },
+				{ rotateY: 88, duration: 0.18, ease: 'power2.inOut' },
+				0.04,
+			)
+			.to('[data-hero-handle]', { opacity: 0, duration: 0.04 }, 0.04)
+			/* Full bars slide out of the door toward the left — no clip-path */
+			.fromTo(
+				rods,
+				{ opacity: 0, x: 160, z: -40 },
+				{ opacity: 1, x: -36, z: 48, duration: 0.24, stagger: 0.055, ease: 'power2.out' },
+				0.2,
+			)
+			.to(doorFade, { opacity: 0, duration: 0.12 }, 0.32)
+			/* Big cutter drops in once bars are out */
+			.fromTo(
+				cutter,
+				{ opacity: 0, scale: 0.35, y: cutterYs[0], rotateY: -40 },
+				{ opacity: 1, scale: 1, y: cutterYs[0], rotateY: -18, duration: 0.1, ease: 'power2.out' },
+				0.48,
+			);
+
+		pieces.forEach((piece, index) => {
+			const at = 0.56 + index * 0.1;
+
+			if (index > 0 && cutter) {
+				reveal.to(cutter, { y: cutterYs[index], duration: 0.06, ease: 'power1.inOut' }, at - 0.04);
+			}
+
+			/* Right half already flush with left — cutter hits, then that half drops */
+			reveal.to(
+				piece,
+				{
+					y: 110,
+					x: 18,
+					rotate: 14,
+					opacity: 0,
+					duration: 0.2,
+					ease: 'power2.in',
+				},
+				at,
+			);
+
+			if (chips[index]) {
+				reveal.fromTo(
+					chips[index],
+					{ opacity: 0.3, x: -6 },
+					{ opacity: 1, x: 0, duration: 0.06 },
+					at,
+				);
+			}
+		});
+
+		reveal
+			.to(cutter, { opacity: 0, scale: 0.55, duration: 0.08 }, 0.86)
+			.fromTo(chips[3], { opacity: 0.3, x: -6 }, { opacity: 1, x: 0, duration: 0.06 }, 0.86)
+			.to('[data-hero-trail]', { opacity: 0.35, duration: 0.2 }, 0.9);
+
+		/* Caption follows the scroll position */
+		const scenes: [number, string][] = [
+			[0.9, 'Cut to length'],
+			[0.58, 'Slicing 6063-T5'],
+			[0.5, 'Cutter engaged'],
+			[0.35, 'Extrusion loaded'],
+			[0.16, 'Leaves opening'],
+			[0, 'Sealed system'],
+		];
+
+		ScrollTrigger.create({
+			trigger: runway,
+			start: 'top top',
+			end: 'bottom bottom',
+			onUpdate: (self) => {
+				const next = scenes.find(([at]) => self.progress >= at)?.[1] ?? '';
+				if (caption.textContent === next) return;
+				gsap.to(caption, {
+					opacity: 0,
+					duration: 0.12,
+					onComplete: () => {
+						caption.textContent = next;
+						gsap.to(caption, { opacity: 1, duration: 0.2 });
+					},
+				});
+			},
+		});
+
+		/* Pointer-driven 3D camera tilt, layered on top of the scrubbed scene transform */
+		const tiltY = gsap.quickTo(scene, 'rotateY', { duration: 0.8, ease: 'power3' });
+		const tiltX = gsap.quickTo(scene, 'rotateX', { duration: 0.8, ease: 'power3' });
+
+		stage.addEventListener('pointermove', (event) => {
+			if (event.pointerType !== 'mouse') return;
+			const x = event.clientX / window.innerWidth - 0.5;
+			const y = event.clientY / window.innerHeight - 0.5;
+			tiltY(x * 10);
+			tiltX(6 + y * -10);
+		});
+
+		stage.addEventListener('pointerleave', () => {
+			tiltY(-3);
+			tiltX(4);
+		});
+
+		/* Hovering a legend entry highlights its rod */
+		chips.forEach((chip, index) => {
+			const rod = rods[index];
+			if (!rod) return;
+
+			chip.addEventListener('pointerenter', () => {
+				chip.dataset.active = '';
+				gsap.to(rod, { filter: 'brightness(1.25)', duration: 0.25 });
+				gsap.to(
+					rods.filter((other) => other !== rod),
+					{ opacity: 0.45, duration: 0.25 },
+				);
+			});
+
+			chip.addEventListener('pointerleave', () => {
+				delete chip.dataset.active;
+				gsap.to(rod, { filter: 'brightness(1)', duration: 0.25 });
+				gsap.to(rods, { opacity: 1, duration: 0.25 });
+			});
+		});
 	}
 </script>
