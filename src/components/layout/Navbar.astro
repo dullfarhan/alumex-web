@@ -19,129 +19,135 @@ const megaLabels = new Set(['Products', 'Projects']);
 const simpleLinks = navLinks.filter((link) => !megaLabels.has(link.label));
 
 const triggerClass =
-	'group flex h-full items-center gap-1.5 px-1 text-sm font-medium text-heading transition-colors duration-300 hover:text-primary aria-expanded:text-primary';
+	'group flex items-center gap-1.5 px-1 text-sm font-medium text-heading transition-colors duration-300 hover:text-primary aria-expanded:text-primary';
 const triggerLabelClass =
-	'relative inline-flex items-center gap-1.5 pb-1 after:absolute after:right-0 after:bottom-0 after:left-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 after:ease-out group-hover:after:scale-x-100 group-aria-expanded:after:scale-x-100';
+	'relative inline-flex items-center gap-1.5 pb-0.5 after:absolute after:right-0 after:bottom-0 after:left-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform after:duration-300 after:ease-out group-hover:after:scale-x-100 group-aria-expanded:after:scale-x-100';
 ---
 
-<header id="site-header" class="sticky top-0 z-50 border-b border-silver/40 bg-background/95 backdrop-blur-sm">
-	<nav
-		class="relative mx-auto grid h-16 w-full max-w-[1440px] grid-cols-[1fr_auto_1fr] items-stretch px-6 sm:px-12 md:h-20"
-		aria-label="Main navigation"
-	>
-		<a href="/" class="z-10 col-start-1 flex items-center gap-3 justify-self-start">
-			<Image
-				src={logo}
-				alt={`${site.name} logo`}
-				width={128}
-				height={128}
-				densities={[1, 2, 3]}
-				sizes="(max-width: 640px) 2.75rem, 3.25rem"
-				class="h-11 w-11 shrink-0 rounded-full object-contain sm:h-13 sm:w-13"
-			/>
-			<span class="font-display block text-lg font-bold tracking-tight text-heading">{site.name}</span>
-		</a>
+<header id="site-header" class="pointer-events-none fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4">
+	<div class="pointer-events-auto relative mx-auto max-w-[1440px]">
+		<nav
+			class="relative z-10 mx-auto flex h-14 w-full items-center justify-between gap-3 rounded-full border border-silver/60 bg-background/90 px-3 backdrop-blur-md sm:h-16 sm:px-5 md:gap-6 md:px-6"
+			aria-label="Main navigation"
+		>
+			<a href="/" class="z-10 flex shrink-0 items-center gap-2.5 sm:gap-3">
+				<Image
+					src={logo}
+					alt={`${site.name} logo`}
+					width={128}
+					height={128}
+					densities={[1, 2, 3]}
+					sizes="2.75rem"
+					class="h-9 w-9 shrink-0 rounded-full object-contain sm:h-10 sm:w-10"
+				/>
+				<span class="font-display hidden text-base font-bold tracking-tight text-heading sm:block md:text-lg"
+					>{site.name}</span
+				>
+			</a>
 
-		<ul class="col-start-2 hidden h-full items-stretch gap-6 justify-self-center lg:flex lg:gap-8">
-			{
-				navLinks.map(({ href, label }) => {
-					if (label === 'Products') {
-						return (
-							<li class="h-full" data-mega-wrap="products">
-								<button
-									id="products-mega-trigger"
-									type="button"
-									class={triggerClass}
-									aria-expanded="false"
-									aria-controls="products-mega"
-									aria-haspopup="true"
-								>
-									<span class={triggerLabelClass}>
-										{productsMega.trigger.label}
-										<ChevronDown class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180" />
-									</span>
-								</button>
-							</li>
-						);
-					}
-					if (label === 'Projects') {
-						return (
-							<li class="h-full" data-mega-wrap="projects">
-								<button
-									id="projects-mega-trigger"
-									type="button"
-									class={triggerClass}
-									aria-expanded="false"
-									aria-controls="projects-mega"
-									aria-haspopup="true"
-								>
-									<span class={triggerLabelClass}>
-										{projectsMega.trigger.label}
-										<ChevronDown class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180" />
-									</span>
-								</button>
-							</li>
-						);
-					}
-					return (
-						<li class="h-full">
-							<NavLink href={href} active={currentPath === href}>
-								{label}
-							</NavLink>
-						</li>
-					);
-				})
-			}
-		</ul>
-
-		<div class="z-10 col-start-3 flex items-center gap-3 justify-self-end">
-			<Button href={navCta.href} size="sm" class="!hidden md:!inline-flex">
-				{navCta.label}
-				<ArrowRight class="h-3.5 w-3.5" />
-			</Button>
-
-			<button
-				id="nav-toggle"
-				type="button"
-				class="group flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-lg border border-border-light bg-background lg:hidden"
-				aria-expanded="false"
-				aria-controls="mobile-nav"
-				aria-label="Open menu"
-			>
-				<span class="h-0.5 w-5 rounded-full bg-heading transition-all duration-300 group-aria-expanded:translate-y-2 group-aria-expanded:rotate-45"></span>
-				<span class="h-0.5 w-5 rounded-full bg-heading transition-all duration-300 group-aria-expanded:opacity-0"></span>
-				<span class="h-0.5 w-5 rounded-full bg-heading transition-all duration-300 group-aria-expanded:-translate-y-2 group-aria-expanded:-rotate-45"></span>
-			</button>
-		</div>
-	</nav>
-
-	<ProductsMegaMenu />
-	<ProjectsMegaMenu />
-
-	<div
-		id="mobile-nav"
-		class="absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-8rem)] overflow-y-auto border-b border-border-light bg-background shadow-lg lg:hidden"
-		hidden
-	>
-		<Container class="!py-2">
-			<ul class="flex flex-col">
+			<ul class="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 lg:flex lg:gap-8">
 				{
-					simpleLinks.map(({ href, label }) => (
-						<li class="border-b border-border-light">
-							<NavLink href={href} active={currentPath === href} mobile>
-								{label}
-							</NavLink>
-						</li>
-					))
+					navLinks.map(({ href, label }) => {
+						if (label === 'Products') {
+							return (
+								<li data-mega-wrap="products">
+									<button
+										id="products-mega-trigger"
+										type="button"
+										class={triggerClass}
+										aria-expanded="false"
+										aria-controls="products-mega"
+										aria-haspopup="true"
+									>
+										<span class={triggerLabelClass}>
+											{productsMega.trigger.label}
+											<ChevronDown class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180" />
+										</span>
+									</button>
+								</li>
+							);
+						}
+						if (label === 'Projects') {
+							return (
+								<li data-mega-wrap="projects">
+									<button
+										id="projects-mega-trigger"
+										type="button"
+										class={triggerClass}
+										aria-expanded="false"
+										aria-controls="projects-mega"
+										aria-haspopup="true"
+									>
+										<span class={triggerLabelClass}>
+											{projectsMega.trigger.label}
+											<ChevronDown class="h-3.5 w-3.5 transition-transform duration-300 group-aria-expanded:rotate-180" />
+										</span>
+									</button>
+								</li>
+							);
+						}
+						return (
+							<li>
+								<NavLink href={href} active={currentPath === href}>
+									{label}
+								</NavLink>
+							</li>
+						);
+					})
 				}
-				<MobileProductsAccordion />
-				<MobileProjectsAccordion />
 			</ul>
-			<Button href={navCta.href} class="mt-4 mb-4 w-full justify-center md:hidden">
-				{navCta.label}
-				<ArrowRight class="h-3.5 w-3.5" />
-			</Button>
-		</Container>
+
+			<div class="z-10 flex shrink-0 items-center gap-2 sm:gap-3">
+				<Button href={navCta.href} size="sm" class="!hidden !rounded-full md:!inline-flex">
+					{navCta.label}
+					<ArrowRight class="h-3.5 w-3.5" />
+				</Button>
+
+				<button
+					id="nav-toggle"
+					type="button"
+					class="group flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-full border border-border-light bg-background sm:h-10 sm:w-10 lg:hidden"
+					aria-expanded="false"
+					aria-controls="mobile-nav"
+					aria-label="Open menu"
+				>
+					<span class="h-0.5 w-4 rounded-full bg-heading transition-all duration-300 group-aria-expanded:translate-y-[4px] group-aria-expanded:rotate-45 sm:w-5 sm:group-aria-expanded:translate-y-2"></span>
+					<span class="h-0.5 w-4 rounded-full bg-heading transition-all duration-300 group-aria-expanded:opacity-0 sm:w-5"></span>
+					<span class="h-0.5 w-4 rounded-full bg-heading transition-all duration-300 group-aria-expanded:-translate-y-[4px] group-aria-expanded:-rotate-45 sm:w-5 sm:group-aria-expanded:-translate-y-2"></span>
+				</button>
+			</div>
+		</nav>
+
+		<div
+			id="mobile-nav"
+			class="absolute inset-x-0 top-full z-50 mt-2 max-h-[calc(100dvh-8rem)] overflow-y-auto rounded-2xl border border-border-light bg-background/95 shadow-lg backdrop-blur-md lg:hidden"
+			hidden
+		>
+			<Container class="!py-2">
+				<ul class="flex flex-col">
+					{
+						simpleLinks.map(({ href, label }) => (
+							<li class="border-b border-border-light">
+								<NavLink href={href} active={currentPath === href} mobile>
+									{label}
+								</NavLink>
+							</li>
+						))
+					}
+					<MobileProductsAccordion />
+					<MobileProjectsAccordion />
+				</ul>
+				<Button href={navCta.href} class="mt-4 mb-4 w-full justify-center !rounded-full md:hidden">
+					{navCta.label}
+					<ArrowRight class="h-3.5 w-3.5" />
+				</Button>
+			</Container>
+		</div>
+	</div>
+
+	<div class="pointer-events-auto">
+		<ProductsMegaMenu />
+		<ProjectsMegaMenu />
 	</div>
 </header>
 

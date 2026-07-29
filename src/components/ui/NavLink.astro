@@ -12,7 +12,7 @@ const { href, active = false, mobile = false } = Astro.props;
 	href={href}
 	class:list={[
 		'text-sm font-medium transition-colors duration-300',
-		mobile ? 'block py-3' : 'flex h-full items-center px-1',
+		mobile ? 'block py-3' : 'flex items-center px-1',
 		active ? 'text-primary' : 'text-heading hover:text-primary',
 	]}
 	aria-current={active ? 'page' : undefined}
