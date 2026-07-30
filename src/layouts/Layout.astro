@@ -11,6 +11,7 @@ interface Props {
 	canonical?: string;
 	ogType?: string;
 	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+	scrollMotion?: boolean;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
 	canonical = '/',
 	ogType = 'website',
 	jsonLd,
+	scrollMotion = true,
 } = Astro.props;
 
 const origin = Astro.site?.href.replace(/\/$/, '') ?? site.url;
@@ -72,6 +74,6 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 			<slot />
 		</main>
 		<Footer />
-		<ScrollMotion />
+		{scrollMotion && <ScrollMotion />}
 	</body>
 </html>

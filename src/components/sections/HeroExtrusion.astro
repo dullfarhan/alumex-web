@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { hero } from '../../config/hero';
 import { heroCut } from '../../config/home';
 import barImage from '../../assets/hero/bar.png';
@@ -24,11 +25,16 @@ const barCount = 3;
 				<div class="hero__copy">
 					<div class="hero__brand" data-hero-brand>
 						<div class="hero__logo" data-hero-logo>
-							<img
-								src={logo.src}
-								width={logo.width}
-								height={logo.height}
+							<Image
+								src={logo}
 								alt="Alumex"
+								width={256}
+								height={256}
+								densities={[1, 2]}
+								sizes="(min-width: 1024px) 16rem, (min-width: 768px) 14rem, 10.5rem"
+								loading="eager"
+								fetchpriority="high"
+								decoding="async"
 								class="hero__logo-img"
 								draggable="false"
 							/>
@@ -121,21 +127,21 @@ const barCount = 3;
 										Array.from({ length: barCount }, (_, i) => (
 											<div class="hero3d__bar-row" data-hero-rod data-rod={i}>
 												<div class="hero3d__bar-stock" data-hero-stock>
-													<img
-														src={barImage.src}
+													<Image
+														src={barImage}
+														alt=""
 														width={barImage.width}
 														height={barImage.height}
-														alt=""
 														class="hero3d__bar-img"
 														draggable="false"
 													/>
 												</div>
 												<div class="hero3d__bar-piece" data-hero-cut data-cut={i}>
-													<img
-														src={barImage.src}
+													<Image
+														src={barImage}
+														alt=""
 														width={barImage.width}
 														height={barImage.height}
-														alt=""
 														class="hero3d__bar-img"
 														draggable="false"
 													/>
@@ -178,6 +184,7 @@ const barCount = 3;
 								</div>
 
 								<div class="hero3d__cutter" data-hero-cutter>
+									{/* GIF — Astro Image can't optimize animated formats */}
 									<img
 										src={cutterGif.src}
 										width={cutterGif.width}
