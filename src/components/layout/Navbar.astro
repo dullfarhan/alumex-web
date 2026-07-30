@@ -40,7 +40,7 @@ const triggerLabelClass =
 					sizes="2.75rem"
 					class="h-9 w-9 shrink-0 rounded-full object-contain sm:h-10 sm:w-10"
 				/>
-				<span class="font-display hidden text-base font-bold tracking-tight text-heading sm:block md:text-lg"
+				<span class="font-display text-base font-bold tracking-tight text-heading md:text-lg"
 					>{site.name}</span
 				>
 			</a>
@@ -106,14 +106,14 @@ const triggerLabelClass =
 				<button
 					id="nav-toggle"
 					type="button"
-					class="group flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-full border border-border-light bg-background sm:h-10 sm:w-10 lg:hidden"
+					class="group flex h-9 w-9 flex-col items-center justify-center gap-1.5 sm:h-10 lg:hidden"
 					aria-expanded="false"
 					aria-controls="mobile-nav"
 					aria-label="Open menu"
 				>
-					<span class="h-0.5 w-4 rounded-full bg-heading transition-all duration-300 group-aria-expanded:translate-y-[4px] group-aria-expanded:rotate-45 sm:w-5 sm:group-aria-expanded:translate-y-2"></span>
-					<span class="h-0.5 w-4 rounded-full bg-heading transition-all duration-300 group-aria-expanded:opacity-0 sm:w-5"></span>
-					<span class="h-0.5 w-4 rounded-full bg-heading transition-all duration-300 group-aria-expanded:-translate-y-[4px] group-aria-expanded:-rotate-45 sm:w-5 sm:group-aria-expanded:-translate-y-2"></span>
+					<span class="h-0.5 w-5 rounded-full bg-heading transition-all duration-300 group-aria-expanded:translate-y-2 group-aria-expanded:rotate-45"></span>
+					<span class="h-0.5 w-5 rounded-full bg-heading transition-all duration-300 group-aria-expanded:opacity-0"></span>
+					<span class="h-0.5 w-5 rounded-full bg-heading transition-all duration-300 group-aria-expanded:-translate-y-2 group-aria-expanded:-rotate-45"></span>
 				</button>
 			</div>
 		</nav>
