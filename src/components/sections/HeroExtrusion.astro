@@ -2,8 +2,6 @@
 import { Image } from 'astro:assets';
 import { hero } from '../../config/hero';
 import { heroCut } from '../../config/home';
-import barImage from '../../assets/hero/bar.png';
-import cutterGif from '../../assets/hero/cutter.gif';
 import logo from '../../assets/logo.png';
 import ArrowRight from '../icons/ArrowRight.astro';
 import Button from '../ui/Button.astro';
@@ -11,8 +9,6 @@ import Button from '../ui/Button.astro';
 const titleLines = ['Engineering', 'Aluminium for', 'Modern Architecture.'];
 
 const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
-
-const barCount = 3;
 ---
 
 <section class="hero" data-hero aria-label="Alumex hero">
@@ -121,37 +117,37 @@ const barCount = 3;
 					<div class="hero3d" data-hero3d>
 						<div class="hero3d__scene" data-hero-scene>
 							<div class="hero3d__assembly" data-hero-assembly>
-								{/* Bars sit behind the door plane, then come forward through the opening */}
-								<div class="hero3d__lathe" data-hero-lathe>
-									{
-										Array.from({ length: barCount }, (_, i) => (
-											<div class="hero3d__bar-row" data-hero-rod data-rod={i}>
-												<div class="hero3d__bar-stock" data-hero-stock>
-													<Image
-														src={barImage}
-														alt=""
-														width={barImage.width}
-														height={barImage.height}
-														class="hero3d__bar-img"
-														draggable="false"
-													/>
-												</div>
-												<div class="hero3d__bar-piece" data-hero-cut data-cut={i}>
-													<Image
-														src={barImage}
-														alt=""
-														width={barImage.width}
-														height={barImage.height}
-														class="hero3d__bar-img"
-														draggable="false"
-													/>
-												</div>
+								{/* Sliding window — appears after the door clears */}
+								<div class="hero3d__window" data-hero-window>
+									<div class="hero3d__window-opening">
+										<div class="hero3d__window-track" aria-hidden="true" />
+
+										<div class="hero3d__sash hero3d__sash--right" data-hero-sash="right">
+											<div class="hero3d__sash-body">
+												<div class="hero3d__sash-glass" />
+												<div class="hero3d__sash-sheen" />
 											</div>
-										))
-									}
+										</div>
+
+										<div class="hero3d__sash hero3d__sash--left" data-hero-sash="left">
+											<div class="hero3d__sash-body">
+												<div class="hero3d__sash-glass" />
+												<div class="hero3d__sash-sheen" />
+											</div>
+											<span class="hero3d__sash-handle" aria-hidden="true" />
+											<span class="hero3d__sash-lock" aria-hidden="true" />
+										</div>
+									</div>
+
+									<div class="hero3d__window-frame" aria-hidden="true">
+										<span class="hero3d__window-rail hero3d__window-rail--top" />
+										<span class="hero3d__window-rail hero3d__window-rail--bottom" />
+										<span class="hero3d__window-rail hero3d__window-rail--left" />
+										<span class="hero3d__window-rail hero3d__window-rail--right" />
+									</div>
 								</div>
 
-								{/* Door unit in front of bars so leaves occlude them until pushed back */}
+								{/* Door unit in front until it retreats and clears */}
 								<div class="hero3d__portal" data-hero-portal>
 									<div class="hero3d__frame" data-hero-frame>
 										<div class="hero3d__bar hero3d__bar--top" data-hero-bar />
@@ -167,6 +163,12 @@ const barCount = 3;
 										</div>
 										<div class="hero3d__door-edge" />
 										<div class="hero3d__door-back" />
+										<span class="hero3d__hinge hero3d__hinge--1" aria-hidden="true" />
+										<span class="hero3d__hinge hero3d__hinge--2" aria-hidden="true" />
+										<span class="hero3d__hinge hero3d__hinge--3" aria-hidden="true" />
+										<div class="hero3d__handle" data-hero-handle>
+											<span class="hero3d__handle-cap" />
+										</div>
 									</div>
 
 									<div class="hero3d__door hero3d__door--right" data-hero-door="right">
@@ -176,23 +178,13 @@ const barCount = 3;
 										</div>
 										<div class="hero3d__door-edge" />
 										<div class="hero3d__door-back" />
+										<span class="hero3d__hinge hero3d__hinge--1" aria-hidden="true" />
+										<span class="hero3d__hinge hero3d__hinge--2" aria-hidden="true" />
+										<span class="hero3d__hinge hero3d__hinge--3" aria-hidden="true" />
+										<div class="hero3d__handle" data-hero-handle>
+											<span class="hero3d__handle-cap" />
+										</div>
 									</div>
-
-									<div class="hero3d__handle" data-hero-handle>
-										<span class="hero3d__handle-cap" />
-									</div>
-								</div>
-
-								<div class="hero3d__cutter" data-hero-cutter>
-									{/* GIF — Astro Image can't optimize animated formats */}
-									<img
-										src={cutterGif.src}
-										width={cutterGif.width}
-										height={cutterGif.height}
-										alt=""
-										class="hero3d__cutter-gif"
-										draggable="false"
-									/>
 								</div>
 							</div>
 						</div>
@@ -585,12 +577,7 @@ const barCount = 3;
 	:global(html.js) [data-hero-bar],
 	:global(html.js) [data-hero-door],
 	:global(html.js) [data-hero-handle],
-	:global(html.js) [data-hero-rod],
-	:global(html.js) [data-hero-cutter] {
-		opacity: 0;
-	}
-
-	:global(html.js) .hero3d__bar-piece {
+	:global(html.js) [data-hero-window] {
 		opacity: 0;
 	}
 
@@ -606,12 +593,7 @@ const barCount = 3;
 		:global(html.js) [data-hero-bar],
 		:global(html.js) [data-hero-door],
 		:global(html.js) [data-hero-handle],
-		:global(html.js) [data-hero-rod],
-		:global(html.js) [data-hero-cutter] {
-			opacity: 1;
-		}
-
-		:global(html.js) .hero3d__bar-piece {
+		:global(html.js) [data-hero-window] {
 			opacity: 1;
 		}
 
@@ -630,11 +612,6 @@ const barCount = 3;
 <!-- 3D scene styles -->
 <style>
 	.hero3d {
-		--bar-w: 300px;
-		--bar-h: 1.1rem;
-		--cut: 0.7;
-		--cutter-size: 7rem;
-		--cutter-nudge: -1.5rem;
 		position: relative;
 		perspective: 1800px;
 		perspective-origin: 55% 42%;
@@ -645,22 +622,10 @@ const barCount = 3;
 		overflow: visible;
 	}
 
-	@media (min-width: 640px) {
-		.hero3d {
-			--bar-w: 440px;
-			--bar-h: 1.6rem;
-			--cutter-size: 10rem;
-			--cutter-nudge: -2rem;
-		}
-	}
-
 	@media (min-width: 1024px) {
 		.hero3d {
-			--bar-w: 600px;
-			--bar-h: 2.2rem;
-			--cutter-size: 14rem;
-			--cutter-nudge: -3rem;
 			padding: 0.75rem 0.5rem 0.5rem;
+			max-width: 40rem;
 		}
 	}
 
@@ -695,145 +660,167 @@ const barCount = 3;
 		overflow: visible;
 	}
 
-	.hero3d__lathe {
+	/* Sliding window only — wider / shorter; doors keep full tall scene */
+	.hero3d__window {
 		position: absolute;
-		inset: 1.25rem -0.5rem;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-evenly;
+		top: 50%;
+		left: 50%;
 		z-index: 10;
-		transform-style: preserve-3d;
+		width: 148%;
+		height: 58%;
+		translate: -50% -50%;
+		opacity: 0;
+	}
+
+	.hero3d__window-opening {
+		position: absolute;
+		inset: 0.55rem;
+		z-index: 1;
+		overflow: hidden;
+		background: linear-gradient(180deg, #d8e0e8 0%, #eef2f6 50%, #c8d0db 100%);
+	}
+
+	.hero3d__window-track {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		background:
+			linear-gradient(180deg, #9aa6b4 0%, #c4ccd5 20%, #eef2f6 55%, #aeb8c4 100%);
+		box-shadow: inset 0 3px 8px rgb(18 43 77 / 22%);
+	}
+
+	.hero3d__window-frame {
+		position: absolute;
+		inset: 0;
+		z-index: 4;
 		pointer-events: none;
 	}
 
-	@media (min-width: 640px) {
-		.hero3d__lathe {
-			inset: 1.75rem -0.75rem;
-		}
-	}
-
-	@media (min-width: 1024px) {
-		.hero3d__lathe {
-			inset: 2.5rem -1rem;
-		}
-	}
-
-	.hero3d__bar-row {
-		position: relative;
-		width: var(--bar-w);
-		height: var(--bar-h);
-		margin-inline: auto;
-		transform-style: preserve-3d;
-		transform-origin: center center;
-		/* filter: drop-shadow(0 8px 14px rgb(18 43 77 / 28%)); */
-	}
-
-	/* One full continuous bar — no permanent seam. Width shrinks only at cut. */
-	.hero3d__bar-stock {
-		--cut-face: 0;
-		position: relative;
-		width: var(--bar-w);
-		height: var(--bar-h);
-		overflow: hidden;
-	}
-
-	/* Cut face — only visible once the bar is clipped */
-	.hero3d__bar-stock::after {
-		content: '';
+	.hero3d__window-rail {
 		position: absolute;
+		background: linear-gradient(180deg, #f7f9fb 0%, #dce3eb 45%, #b8c1cc 100%);
+		box-shadow:
+			inset 0 1px 0 rgb(255 255 255 / 90%),
+			inset 0 -1px 0 rgb(18 43 77 / 18%);
+	}
+
+	.hero3d__window-rail--top {
 		top: 0;
+		left: 0;
 		right: 0;
-		bottom: 18%;
+		height: 0.55rem;
+	}
+
+	.hero3d__window-rail--bottom {
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 0.55rem;
+	}
+
+	.hero3d__window-rail--left,
+	.hero3d__window-rail--right {
+		top: 0;
+		bottom: 0;
+		width: 0.55rem;
+	}
+
+	.hero3d__window-rail--left {
+		left: 0;
+	}
+
+	.hero3d__window-rail--right {
+		right: 0;
+	}
+
+	.hero3d__sash {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 50%;
+	}
+
+	.hero3d__sash--right {
+		right: 0;
+		z-index: 1;
+	}
+
+	.hero3d__sash--left {
+		left: 0;
 		z-index: 2;
-		width: 1px;
-		opacity: var(--cut-face);
-		background: linear-gradient(
-			180deg,
-			#7aa3d4 0%,
-			#1f4e8c 35%,
-			#122b4d 65%,
-			#7aa3d4 100%
-		);
-		pointer-events: none;
+		will-change: transform;
 	}
 
-	@media (min-width: 1024px) {
-		.hero3d__bar-stock::after {
-			width: 2px;
-		}
-	}
-
-	.hero3d__bar-stock .hero3d__bar-img {
-		display: block;
-		width: var(--bar-w);
-		height: var(--bar-h);
-		max-width: none;
-		pointer-events: none;
-		user-select: none;
-	}
-
-	/* Right chunk — hidden until cut, then drops. Same image, offset to match seam. */
-	.hero3d__bar-piece {
+	.hero3d__sash-body {
 		position: absolute;
-		top: 0;
-		left: calc(var(--bar-w) * var(--cut));
-		width: calc(var(--bar-w) * (1 - var(--cut)));
-		height: var(--bar-h);
+		inset: 0;
 		overflow: hidden;
-		opacity: 0;
-		z-index: 40;
-		pointer-events: none;
-		transform-origin: left center;
-		will-change: transform, opacity;
+		background: linear-gradient(160deg, #eef2f6 0%, #f8fafc 40%, #d5dde6 100%);
+		border: 2px solid #e8eef4;
+		outline: 2px solid #2a3f5f;
+		outline-offset: -4px;
+		box-shadow: inset 0 0 0 1px rgb(255 255 255 / 70%);
 	}
 
-	.hero3d__bar-piece .hero3d__bar-img {
+	.hero3d__sash--left .hero3d__sash-body {
+		/* Front track: slight lift in paint only — no Z pop */
+		box-shadow:
+			inset 0 0 0 1px rgb(255 255 255 / 80%),
+			1px 0 0 rgb(18 43 77 / 12%);
+	}
+
+	.hero3d__sash-glass {
 		position: absolute;
-		top: 0;
-		left: calc(var(--bar-w) * var(--cut) * -1);
-		display: block;
-		width: var(--bar-w);
-		height: var(--bar-h);
-		max-width: none;
-		pointer-events: none;
-		user-select: none;
+		inset: 0.4rem;
+		background: linear-gradient(
+			145deg,
+			rgb(170 200 230 / 55%) 0%,
+			rgb(90 140 185 / 45%) 40%,
+			rgb(55 100 150 / 55%) 100%
+		);
+		border: 1px solid rgb(42 63 95 / 45%);
+		box-shadow: inset 0 0 14px rgb(18 43 77 / 14%);
 	}
 
-	/* Big cutter centered on the cut seam */
-	.hero3d__cutter {
+	.hero3d__sash-sheen {
 		position: absolute;
-		left: calc(var(--cutter-nudge) + (var(--bar-w) * var(--cut)));
-		top: 2rem;
-		width: var(--cutter-size);
-		height: var(--cutter-size);
-		margin-left: calc(var(--cutter-size) / -2);
-		opacity: 0;
-		z-index: 50;
+		inset: 0.4rem;
+		background: linear-gradient(
+			118deg,
+			transparent 32%,
+			rgb(255 255 255 / 55%) 46%,
+			rgb(255 255 255 / 70%) 50%,
+			transparent 64%
+		);
+		opacity: 0.85;
 		pointer-events: none;
-		transform: translateZ(80px);
-		transform-style: preserve-3d;
-		will-change: transform, opacity;
 	}
 
-	@media (min-width: 1024px) {
-		.hero3d__cutter {
-			top: -2rem;
-		}
+	.hero3d__sash-handle {
+		position: absolute;
+		top: 50%;
+		left: 0.45rem;
+		z-index: 3;
+		width: 0.35rem;
+		height: 2rem;
+		translate: 0 -50%;
+		border-radius: 2px;
+		background: linear-gradient(180deg, #2a2a2a, #111 55%, #000);
+		box-shadow: inset 0 1px 0 rgb(255 255 255 / 20%);
 	}
 
-	.hero3d__cutter-gif {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
-		mix-blend-mode: screen;
-		/* filter: drop-shadow(0 8px 20px rgb(18 43 77 / 55%)); */
-		transform: rotateY(-28deg) rotateX(6deg);
-		pointer-events: none;
-		user-select: none;
+	.hero3d__sash-lock {
+		position: absolute;
+		top: calc(50% - 1.35rem);
+		left: 0.5rem;
+		z-index: 3;
+		width: 0.28rem;
+		height: 0.28rem;
+		border-radius: 50%;
+		background: radial-gradient(circle at 30% 30%, #666, #1a1a1a);
 	}
 
-	/* Whole door + frame — alone on stage until it clears, then bars enter */
+	/* Whole door + frame — alone on stage until it clears, then window enters */
 	.hero3d__portal {
 		position: absolute;
 		inset: 0;
@@ -913,6 +900,81 @@ const barCount = 3;
 		transform-origin: right center;
 	}
 
+	/* Metal butt hinges on the pivot edge — travel with each leaf */
+	.hero3d__hinge {
+		position: absolute;
+		z-index: 4;
+		width: 0.55rem;
+		height: 1.05rem;
+		border-radius: 1px;
+		background:
+			linear-gradient(90deg, #5a6570 0%, #c5ccd4 35%, #8a96a6 55%, #dfe4ea 78%, #6b7580 100%);
+		box-shadow:
+			0 1px 2px rgb(18 43 77 / 40%),
+			inset 0 1px 0 rgb(255 255 255 / 55%),
+			inset 0 -1px 0 rgb(18 43 77 / 30%);
+		transform: translateZ(12px);
+	}
+
+	.hero3d__hinge::before {
+		content: '';
+		position: absolute;
+		top: 15%;
+		bottom: 15%;
+		width: 0.22rem;
+		border-radius: 999px;
+		background: linear-gradient(180deg, #9aa6b4, #3d4650 50%, #aeb8c4);
+		box-shadow: inset 0 0 0 1px rgb(18 43 77 / 25%);
+	}
+
+	.hero3d__hinge::after {
+		content: '';
+		position: absolute;
+		top: 0.2rem;
+		bottom: 0.2rem;
+		width: 0.12rem;
+		border-radius: 1px;
+		background: linear-gradient(180deg, #e8ecf0, #7a8490);
+		opacity: 0.9;
+	}
+
+	.hero3d__door--left .hero3d__hinge {
+		left: -0.12rem;
+	}
+
+	.hero3d__door--left .hero3d__hinge::before {
+		left: -0.08rem;
+	}
+
+	.hero3d__door--left .hero3d__hinge::after {
+		right: 0.1rem;
+	}
+
+	.hero3d__door--right .hero3d__hinge {
+		right: -0.12rem;
+	}
+
+	.hero3d__door--right .hero3d__hinge::before {
+		right: -0.08rem;
+	}
+
+	.hero3d__door--right .hero3d__hinge::after {
+		left: 0.1rem;
+	}
+
+	.hero3d__hinge--1 {
+		top: 12%;
+	}
+
+	.hero3d__hinge--2 {
+		top: 50%;
+		translate: 0 -50%;
+	}
+
+	.hero3d__hinge--3 {
+		bottom: 12%;
+	}
+
 	.hero3d__door-front,
 	.hero3d__door-back,
 	.hero3d__door-edge {
@@ -987,18 +1049,25 @@ const barCount = 3;
 		pointer-events: none;
 	}
 
-	/* Handle hardware at the meeting stile */
+	/* One pull handle per leaf — rides with the door as it swings */
 	.hero3d__handle {
 		position: absolute;
 		top: 50%;
-		left: 50%;
-		z-index: 3;
-		transform: translate(-50%, -50%) translateZ(10px);
-		width: 0.5rem;
-		height: 2.5rem;
-		background: linear-gradient(135deg, #2a3f5f, #1f4e8c, #122b4d);
+		z-index: 5;
+		width: 0.42rem;
+		height: 2.35rem;
 		border-radius: 4px;
+		background: linear-gradient(135deg, #2a3f5f, #1f4e8c, #122b4d);
 		box-shadow: 0 2px 6px rgb(18 43 77 / 45%);
+		transform: translateY(-50%) translateZ(14px);
+	}
+
+	.hero3d__door--left .hero3d__handle {
+		right: 0.55rem;
+	}
+
+	.hero3d__door--right .hero3d__handle {
+		left: 0.55rem;
 	}
 
 	.hero3d__handle-cap {
@@ -1006,8 +1075,8 @@ const barCount = 3;
 		top: 0.25rem;
 		left: 50%;
 		transform: translateX(-50%);
-		width: 0.25rem;
-		height: 0.25rem;
+		width: 0.22rem;
+		height: 0.22rem;
 		border-radius: 50%;
 		background: var(--accent);
 		box-shadow: 0 0 6px var(--accent);
@@ -1045,43 +1114,35 @@ const barCount = 3;
 	const stage = section?.querySelector<HTMLElement>('[data-hero-stage]');
 	const scene = section?.querySelector<HTMLElement>('[data-hero-scene]');
 	const caption = section?.querySelector<HTMLElement>('[data-hero-caption]');
+	const portal = section?.querySelector<HTMLElement>('[data-hero-portal]');
+	const windowUnit = section?.querySelector<HTMLElement>('[data-hero-window]');
+	const leftSash = section?.querySelector<HTMLElement>('[data-hero-sash="left"]');
 
-	if (section && runway && stage && scene && caption && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+	if (
+		section &&
+		runway &&
+		stage &&
+		scene &&
+		caption &&
+		portal &&
+		windowUnit &&
+		leftSash &&
+		!matchMedia('(prefers-reduced-motion: reduce)').matches
+	) {
 		const pick = <T extends Element>(selector: string) =>
 			Array.from(section.querySelectorAll<T>(selector));
 
 		const stats = pick<HTMLElement>('[data-hero-stats] li');
 		const bars = pick<HTMLElement>('[data-hero-bar]');
 		const doors = pick<HTMLElement>('[data-hero-door]');
-		const rods = pick<HTMLElement>('[data-hero-rod]');
-		const stocks = pick<HTMLElement>('[data-hero-stock]');
-		const pieces = pick<HTMLElement>('[data-hero-cut]');
 		const chips = pick<HTMLElement>('[data-hero-chip]');
-		const assembly = section.querySelector<HTMLElement>('[data-hero-assembly]');
-		const portal = section.querySelector<HTMLElement>('[data-hero-portal]');
-		const cutter = section.querySelector<HTMLElement>('[data-hero-cutter]');
 
-		const hero3d = section.querySelector<HTMLElement>('.hero3d');
-		const BAR_W = parseFloat(getComputedStyle(hero3d ?? section).getPropertyValue('--bar-w')) || 600;
-		const CUT_X = BAR_W * 0.7;
-		const barScale = BAR_W / 600;
-
-		/* Full bar until cut — no seam on the way in or when scrolling back */
-		gsap.set(stocks, { width: BAR_W, '--cut-face': 0 });
-		gsap.set(pieces, { opacity: 0, y: 0, x: 0, rotate: 0 });
-		gsap.set(rods, { opacity: 0, x: 120 * barScale });
 		gsap.set(portal, { transformOrigin: '50% 50%', autoAlpha: 1 });
+		gsap.set(windowUnit, { autoAlpha: 0 });
+		gsap.set(leftSash, { xPercent: 0, x: 0, y: 0, z: 0, force3D: false });
 		gsap.set('[data-hero-door="left"]', { transformOrigin: 'left center' });
 		gsap.set('[data-hero-door="right"]', { transformOrigin: 'right center' });
-
-		const cutterYs =
-			assembly && cutter
-				? rods.map((row) => {
-						const asmTop = assembly.offsetTop;
-						const rowMid = row.offsetTop + row.offsetHeight / 2;
-						return rowMid - asmTop - cutter.offsetHeight / 2;
-					})
-				: [8, 72, 136];
+		gsap.set(chips, { opacity: 0.3 });
 
 		/* Opening act, on load */
 		const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -1123,124 +1184,54 @@ const barCount = 3;
 		});
 
 		/*
-		  Sequence (no bar/door overlap — that always looks broken in CSS 3D):
-		  1) Door opens + tilts back in 3D
-		  2) Door clears the stage
-		  3) Bars extrude into empty space
-		  4) Cutter cuts
+		  Sequence:
+		  1) Doors open in place (frame stays put — no portal tilt/retreat)
+		  2) Portal fades out
+		  3) Sliding window fades in
+		  4) Left sash slides left → right
 		*/
 		reveal
 			.to('[data-hero-cue]', { opacity: 0, duration: 0.05 }, 0)
-			.fromTo(scene, { rotateX: 4, rotateY: 0 }, { rotateX: 9, rotateY: -5, duration: 1 }, 0)
+			.fromTo(scene, { rotateX: 1, rotateY: 0 }, { rotateX: 1, rotateY: 0, duration: 1 }, 0)
 			.fromTo(
 				'[data-hero-door="left"]',
 				{ rotateY: 0 },
-				{ rotateY: -70, duration: 0.14, ease: 'power2.out' },
+				{ rotateY: -95, duration: 0.22, ease: 'none' },
 				0.03,
 			)
 			.fromTo(
 				'[data-hero-door="right"]',
 				{ rotateY: 0 },
-				{ rotateY: 70, duration: 0.14, ease: 'power2.out' },
+				{ rotateY: 95, duration: 0.22, ease: 'none' },
 				0.03,
 			)
-			.to('[data-hero-handle]', { opacity: 0, duration: 0.04 }, 0.05)
+			.to(portal, { autoAlpha: 0, duration: 0.06, ease: 'none' }, 0.34)
+			/* Frame stays put — only opacity on the unit, then left sash travels L→R */
 			.fromTo(
-				portal,
-				{ rotateX: 0, rotateY: 0, z: 0, scale: 1 },
-				{ rotateX: 14, rotateY: -8, z: -40, scale: 0.98, duration: 0.14, ease: 'power1.out' },
-				0.12,
-			)
-			.to(
-				'[data-hero-door="left"]',
-				{ rotateY: -118, duration: 0.12, ease: 'power1.in' },
-				0.2,
-			)
-			.to(
-				'[data-hero-door="right"]',
-				{ rotateY: 118, duration: 0.12, ease: 'power1.in' },
-				0.2,
-			)
-			.to(
-				portal,
-				{ rotateX: 26, rotateY: -16, z: -180, scale: 0.86, duration: 0.14, ease: 'power1.in' },
-				0.22,
-			)
-			.to(portal, { autoAlpha: 0, duration: 0.05, ease: 'none' }, 0.34)
-			/* Bars only after door is gone — clean extrusion, no clipping through leaves */
-			.fromTo(
-				rods,
-				{ opacity: 0, x: 160 * barScale },
-				{ opacity: 1, x: -28 * barScale, duration: 0.2, stagger: 0.05, ease: 'power2.out' },
+				windowUnit,
+				{ autoAlpha: 0 },
+				{ autoAlpha: 1, duration: 0.08, ease: 'none' },
 				0.36,
 			)
 			.fromTo(
-				cutter,
-				{ opacity: 0, scale: 0.4, y: cutterYs[0], rotateY: -36 },
-				{ opacity: 1, scale: 1, y: cutterYs[0], rotateY: -16, duration: 0.08, ease: 'power2.out' },
-				0.56,
-			);
-
-		pieces.forEach((piece, index) => {
-			const at = 0.62 + index * 0.09;
-			const stock = stocks[index];
-
-			if (index > 0 && cutter) {
-				reveal.fromTo(
-					cutter,
-					{ y: cutterYs[index - 1] },
-					{ y: cutterYs[index], duration: 0.05, ease: 'power1.inOut' },
-					at - 0.03,
-				);
-			}
-
-			if (stock) {
-				/* Shrink first with no face — otherwise the edge stroke rides the moving right edge */
-				reveal.fromTo(
-					stock,
-					{ width: BAR_W, '--cut-face': 0 },
-					{ width: CUT_X, '--cut-face': 0, duration: 0.02, ease: 'none' },
-					at,
-				);
-				/* Mobile: wait until cut piece is dropping — face was firing before the cut felt real */
-				const cutFaceAt = matchMedia('(max-width: 1023px)').matches ? at + 0.1 : at + 0.02;
-				reveal.to(stock, { '--cut-face': 1, duration: 0.001, ease: 'none' }, cutFaceAt);
-			}
-
-			reveal
-				.fromTo(
-					piece,
-					{ opacity: 0, y: 0, x: 0, rotate: 0 },
-					{ opacity: 1, y: 0, x: 0, rotate: 0, duration: 0.02, ease: 'none' },
-					at,
-				)
-				.to(
-					piece,
-					{ y: 110 * barScale, x: 16 * barScale, rotate: 12, opacity: 0, duration: 0.16, ease: 'power2.in' },
-					at + 0.02,
-				);
-
-			if (chips[index]) {
-				reveal.fromTo(
-					chips[index],
-					{ opacity: 0.3, x: -6 },
-					{ opacity: 1, x: 0, duration: 0.06 },
-					at,
-				);
-			}
-		});
-
-		reveal
-			.to(cutter, { opacity: 0, scale: 0.55, duration: 0.08 }, 0.9)
-			.fromTo(chips[3], { opacity: 0.3, x: -6 }, { opacity: 1, x: 0, duration: 0.06 }, 0.9)
-			.to('[data-hero-trail]', { opacity: 0.35, duration: 0.18 }, 0.92);
+				leftSash,
+				{ xPercent: 0, force3D: false },
+				{ xPercent: 94, force3D: false, duration: 0.32, ease: 'none' },
+				0.45,
+			)
+			.fromTo(
+				chips,
+				{ opacity: 0.3, x: -6 },
+				{ opacity: 1, x: 0, duration: 0.2, stagger: 0.05 },
+				0.48,
+			)
+			.to('[data-hero-trail]', { opacity: 0.35, duration: 0.18 }, 0.85);
 
 		/* Caption follows the scroll position */
 		const scenes: [number, string][] = [
-			[0.9, 'Cut to length'],
-			[0.62, 'Slicing 6063-T5'],
-			[0.56, 'Cutter engaged'],
-			[0.36, 'Extrusion loaded'],
+			[0.7, 'Open track'],
+			[0.45, 'Sliding sash'],
+			[0.36, 'Window revealed'],
 			[0.12, 'Leaves opening'],
 			[0, 'Sealed system'],
 		];
@@ -1269,35 +1260,24 @@ const barCount = 3;
 
 		stage.addEventListener('pointermove', (event) => {
 			if (event.pointerType !== 'mouse') return;
+			/* Keep pointer tilt subtle so the sliding window stays near-straight */
 			const x = event.clientX / window.innerWidth - 0.5;
 			const y = event.clientY / window.innerHeight - 0.5;
-			tiltY(x * 10);
-			tiltX(6 + y * -10);
+			tiltY(x * 3);
+			tiltX(1 + y * -2);
 		});
 
 		stage.addEventListener('pointerleave', () => {
-			tiltY(-3);
-			tiltX(4);
+			tiltY(0);
+			tiltX(1);
 		});
 
-		/* Hovering a legend entry highlights its rod */
-		chips.forEach((chip, index) => {
-			const rod = rods[index];
-			if (!rod) return;
-
+		chips.forEach((chip) => {
 			chip.addEventListener('pointerenter', () => {
 				chip.dataset.active = '';
-				gsap.to(rod, { filter: 'brightness(1.25)', duration: 0.25 });
-				gsap.to(
-					rods.filter((other) => other !== rod),
-					{ opacity: 0.45, duration: 0.25 },
-				);
 			});
-
 			chip.addEventListener('pointerleave', () => {
 				delete chip.dataset.active;
-				gsap.to(rod, { filter: 'brightness(1)', duration: 0.25 });
-				gsap.to(rods, { opacity: 1, duration: 0.25 });
 			});
 		});
 	}

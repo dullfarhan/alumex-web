@@ -1,6 +1,4 @@
 ---
-import Container from '../layout/Container.astro';
-
 interface Props {
 	label: string;
 	title: string;
@@ -11,13 +9,13 @@ interface Props {
 const { label, title, description, class: className } = Astro.props;
 ---
 
-<section class:list={['rounded-b-3xl bg-[#e8f1fa] sm:rounded-b-4xl', className]}>
-	<Container>
-		<div class="w-full text-center">
+<section class:list={['mx-auto w-full max-w-[1440px] px-3 sm:px-6', className]}>
+	<div class="rounded-b-3xl bg-[#e8f1fa] px-6 pt-28 pb-14 sm:rounded-b-4xl sm:px-12 sm:pt-32 md:pt-36 md:pb-20">
+		<div class="mx-auto w-full max-w-4xl text-center">
 			<h1 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[3.1rem]">
 				{title}
 			</h1>
 			<p class="text-base leading-relaxed text-muted md:text-lg">{description}</p>
 		</div>
-	</Container>
+	</div>
 </section>

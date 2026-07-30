@@ -41,12 +41,12 @@ export const heroLayers = [
 	{ band: 3, label: 'Structural Chamber', value: 'Multi-Chamber', detail: '±0.2mm tolerance' },
 ] as const;
 
-/* Hero cut-to-length scene: extrusion rod being sliced by a cutter. */
+/* Hero sliding-window scene: specs shown under the door/window visual. */
 export const heroCut = [
-	{ label: 'Billet', value: '6063-T5', detail: 'Extruded at 500°C' },
-	{ label: 'Cut Length', value: '6m standard', detail: '±0.2mm tolerance' },
-	{ label: 'Blade', value: 'Carbide Tipped', detail: 'Wet cut, 3200 RPM' },
-	{ label: 'Cycle', value: '12s / cut', detail: 'Automated feed' },
+	{ label: 'System', value: 'Sliding sash', detail: 'Two-track aluminium' },
+	{ label: 'Profile', value: '6063-T5', detail: 'Thermal break option' },
+	{ label: 'Glazing', value: 'Double pane', detail: 'Low-E / clear glass' },
+	{ label: 'Travel', value: 'Full open', detail: 'Left sash over right' },
 ] as const;
 
 export const specs = [
