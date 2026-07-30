@@ -5,17 +5,19 @@
 //   data-anim-stagger                     reveal direct children in sequence
 //   data-parallax="0.2"                   scrubbed drift, fraction of viewport
 //   data-count="500" data-count-suffix="+"
+//
+// Only hide targets when <html data-scroll-motion="on"> — otherwise they stay visible.
 ---
 
 <style is:global>
-	.js [data-anim],
-	.js [data-anim-stagger] > * {
+	html[data-scroll-motion='on'].js [data-anim],
+	html[data-scroll-motion='on'].js [data-anim-stagger] > * {
 		opacity: 0;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.js [data-anim],
-		.js [data-anim-stagger] > * {
+		html[data-scroll-motion='on'].js [data-anim],
+		html[data-scroll-motion='on'].js [data-anim-stagger] > * {
 			opacity: 1;
 		}
 	}
@@ -27,6 +29,7 @@
 
 	gsap.registerPlugin(ScrollTrigger);
 
+	const motionOn = document.documentElement.dataset.scrollMotion === 'on';
 	const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 	const offsets: Record<string, gsap.TweenVars> = {
@@ -43,7 +46,7 @@
 		const target = Number(el.dataset.count);
 		const suffix = el.dataset.countSuffix ?? '';
 		if (!Number.isFinite(target)) return;
-		if (reduced) {
+		if (reduced || !motionOn) {
 			el.textContent = `${target}${suffix}`;
 			return;
 		}
@@ -61,7 +64,7 @@
 
 	counters.forEach(runCounter);
 
-	if (!reduced) {
+	if (motionOn && !reduced) {
 		document.querySelectorAll<HTMLElement>('[data-anim]').forEach((el) => {
 			gsap.fromTo(
 				el,
@@ -106,5 +109,4 @@
 				},
 			);
 		});
-	}
-</script>
+	}</script>
