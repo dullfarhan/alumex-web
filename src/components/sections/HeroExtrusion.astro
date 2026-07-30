@@ -1,14 +1,35 @@
 ---
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { hero } from '../../config/hero';
-import { heroCut } from '../../config/home';
+import { productItems } from '../../config/products';
+import { projectItems } from '../../config/projects';
 import logo from '../../assets/logo.png';
 import ArrowRight from '../icons/ArrowRight.astro';
 import Button from '../ui/Button.astro';
 
 const titleLines = ['Engineering Aluminium for Modern Architecture.'];
 
-const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
+const galleryPool: { src: ImageMetadata; alt: string; href: string }[] = [
+	...productItems.map((item) => ({
+		src: item.image,
+		alt: item.title,
+		href: item.href,
+	})),
+	...projectItems.map((item) => ({
+		src: item.image,
+		alt: item.title,
+		href: item.href,
+	})),
+];
+
+/* Stable shuffle so products and projects mix in the marquee */
+const galleryItems = galleryPool
+	.map((item, i) => ({ item, sort: (i * 17 + 11) % 31 }))
+	.sort((a, b) => a.sort - b.sort)
+	.map(({ item }) => item);
+
+const marqueeItems = [...galleryItems, ...galleryItems];
 ---
 
 <section class="hero" data-hero aria-label="Alumex hero">
@@ -84,34 +105,6 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 								{hero.secondaryCta.label}
 							</Button>
 						</div>
-
-						<ul class="hero__stats" data-hero-stats>
-							{
-								hero.stats.map((stat) => {
-									const match = numeric(stat.value);
-									return (
-										<li>
-											<img
-												src={stat.icon}
-												alt=""
-												class="hero__stat-icon"
-												width="40"
-												height="40"
-												aria-hidden="true"
-											/>
-											<span
-												class="hero__stat-value"
-												data-count={match?.[1]}
-												data-count-suffix={match?.[2]}
-											>
-												{stat.value}
-											</span>
-											<span class="hero__stat-label">{stat.label}</span>
-										</li>
-									);
-								})
-							}
-						</ul>
 					</div>
 				</div>
 
@@ -194,21 +187,31 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 					</div>
 
 					<p class="hero__caption" data-hero-caption aria-hidden="true">Sealed system</p>
+				</div>
+			</div>
 
-					<ul class="hero__layers" data-hero-layers>
-						{
-							heroCut.map((item, i) => (
-								<li data-hero-chip data-cut={i}>
-									<span class="hero__chip-swatch" data-cut={i} aria-hidden="true" />
-									<span class="hero__chip-text">
-										<span class="hero__chip-label">{item.label}</span>
-										<span class="hero__chip-value">{item.value}</span>
-										<span class="hero__chip-detail">{item.detail}</span>
-									</span>
-								</li>
-							))
-						}
-					</ul>
+			<div class="hero__marquee" data-hero-marquee aria-label="Product and project gallery">
+				<div class="hero__marquee-track">
+					{
+						marqueeItems.map((item, index) => (
+							<a
+								href={item.href}
+								class="hero__marquee-card"
+								tabindex={index >= galleryItems.length ? -1 : undefined}
+								aria-hidden={index >= galleryItems.length ? 'true' : undefined}
+							>
+								<Image
+									src={item.src}
+									alt={item.alt}
+									widths={[240, 360, 480]}
+									sizes="10rem"
+									class="hero__marquee-img"
+									loading={index < 6 ? 'eager' : 'lazy'}
+									draggable="false"
+								/>
+							</a>
+						))
+					}
 				</div>
 			</div>
 		</div>
@@ -229,9 +232,12 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		position: sticky;
 		top: 0;
 		display: flex;
+		flex-direction: column;
+		justify-content: center;
 		height: 100vh;
-		align-items: center;
 		overflow: hidden;
+		gap: 2rem;
+		padding-bottom: 0.75rem;
 	}
 
 	.hero__grid-bg {
@@ -257,10 +263,11 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		display: grid;
 		width: 100%;
 		max-width: 1440px;
-		/* height: 100%; */
+		flex: 0 1 auto;
+		min-height: 0;
 		margin-inline: auto;
-		gap: 3.5rem;
-		padding: 5.5rem 1.25rem 1.25rem;
+		gap: 2rem;
+		padding: 5.5rem 1.25rem 0;
 		align-items: stretch;
 		grid-template-rows: 1fr auto;
 	}
@@ -269,10 +276,12 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		.hero__inner {
 			grid-template-columns: 6fr 6fr;
 			grid-template-rows: none;
-			gap: 2rem;
-			padding: 4rem 3rem;
+			gap: 4rem;
+			padding: 4rem 3rem 0;
 			align-items: center;
-			height: 100%;
+		}
+		.hero__stage{
+			gap: 5rem;
 		}
 	}
 
@@ -374,55 +383,75 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		}
 	}
 
-	.hero__stats {
-		display: none;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 0.85rem 1rem;
-		margin-top: 1.35rem;
-		padding-top: 1.1rem;
-		border-top: 1px solid color-mix(in srgb, var(--border-light) 80%, transparent);
+	.hero__marquee {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		flex-shrink: 0;
+		overflow: hidden;
+		mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
 	}
 
-	@media (min-width: 1024px) {
-		.hero__stats {
-			display: grid;
-		}
+	.hero__marquee-track {
+		display: flex;
+		width: max-content;
+		gap: 0.75rem;
+		animation: hero-marquee 48s linear infinite;
+	}
+
+	.hero__marquee-card {
+		display: block;
+		flex: 0 0 auto;
+		width: 7.5rem;
+		overflow: hidden;
+		border-radius: 0.65rem;
+		box-shadow: 0 8px 20px rgb(18 43 77 / 12%);
+		transition: transform 200ms ease;
 	}
 
 	@media (min-width: 640px) {
-		.hero__stats {
-			grid-template-columns: repeat(4, minmax(0, 1fr));
+		.hero__marquee-card {
+			width: 9rem;
 		}
 	}
 
-	.hero__stats li {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 0.2rem;
+	@media (min-width: 1024px) {
+		.hero__marquee-card {
+			width: 10rem;
+		}
 	}
 
-	.hero__stat-icon {
-		display: block;
-		width: 1.65rem;
-		height: 1.65rem;
-		margin-bottom: 0.1rem;
-		opacity: 0.85;
+	.hero__marquee-card:hover {
+		transform: translateY(-2px);
 	}
 
-	.hero__stat-value {
+	.hero__marquee-img {
 		display: block;
-		font-family: var(--font-display);
-		font-size: 1.05rem;
-		font-weight: 700;
-		color: var(--primary);
+		aspect-ratio: 5 / 4;
+		width: 100%;
+		object-fit: cover;
 	}
 
-	.hero__stat-label {
-		display: block;
-		font-size: 0.6875rem;
-		line-height: 1.3;
-		color: var(--muted);
+	@keyframes hero-marquee {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero__marquee-track {
+			animation: none;
+			flex-wrap: wrap;
+			width: 100%;
+			justify-content: center;
+		}
+
+		.hero__marquee-card[aria-hidden='true'] {
+			display: none;
+		}
 	}
 
 	.hero__visual {
@@ -519,103 +548,13 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		}
 	}
 
-	.hero__layers {
-		display: none;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 0.5rem 1.25rem;
-		margin-top: 0.75rem;
-		margin-inline: auto;
-		width: 100%;
-		max-width: 26rem;
-		justify-items: center;
-		text-align: center;
-	}
-
-	@media (min-width: 1024px) {
-		.hero__layers {
-			display: grid;
-		}
-	}
-
-	.hero__layers li {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.35rem;
-		min-width: 0;
-		border-left: none;
-		padding: 0;
-		transition: opacity 0.3s;
-	}
-
-	.hero__layers li[data-active] {
-		opacity: 1;
-	}
-
-	.hero__layers li[data-active] .hero__chip-swatch {
-		outline: 2px solid var(--accent);
-		outline-offset: 1px;
-	}
-
-	.hero__chip-swatch {
-		margin-top: 0;
-		height: 0.625rem;
-		width: 0.625rem;
-		flex-shrink: 0;
-		border-radius: 2px;
-	}
-
-	li[data-cut='0'] .hero__chip-swatch {
-		background: linear-gradient(135deg, #c8d0db, #8a96a6);
-	}
-
-	li[data-cut='1'] .hero__chip-swatch {
-		background: linear-gradient(135deg, #2fa8e2, #1f4e8c);
-	}
-
-	li[data-cut='2'] .hero__chip-swatch {
-		background: linear-gradient(135deg, #1f4e8c, #122b4d);
-	}
-
-	li[data-cut='3'] .hero__chip-swatch {
-		background: linear-gradient(135deg, #eef2f6, #c4ccd5);
-	}
-
-	.hero__chip-text {
-		min-width: 0;
-		text-align: center;
-	}
-
-	.hero__chip-label {
-		display: block;
-		font-size: 0.5rem;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--muted);
-	}
-
-	.hero__chip-value {
-		display: block;
-		font-family: var(--font-display);
-		font-size: 0.875rem;
-		font-weight: 600;
-		color: var(--heading);
-	}
-
-	.hero__chip-detail {
-		display: block;
-		font-size: 0.625rem;
-		color: var(--muted);
-	}
-
 	:global(html.js) .hero__logo,
 	:global(html.js) .hero__slogan-ring,
 	:global(html.js) .hero__line-inner,
 	:global(html.js) .hero__description,
 	:global(html.js) .hero__actions,
-	:global(html.js) .hero__stats li,
 	:global(html.js) .hero__caption,
-	:global(html.js) .hero__layers li,
+	:global(html.js) .hero__marquee,
 	:global(html.js) [data-hero-bar],
 	:global(html.js) [data-hero-door],
 	:global(html.js) [data-hero-handle],
@@ -629,9 +568,8 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		:global(html.js) .hero__line-inner,
 		:global(html.js) .hero__description,
 		:global(html.js) .hero__actions,
-		:global(html.js) .hero__stats li,
 		:global(html.js) .hero__caption,
-		:global(html.js) .hero__layers li,
+		:global(html.js) .hero__marquee,
 		:global(html.js) [data-hero-bar],
 		:global(html.js) [data-hero-door],
 		:global(html.js) [data-hero-handle],
@@ -1174,10 +1112,9 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		const pick = <T extends Element>(selector: string) =>
 			Array.from(section.querySelectorAll<T>(selector));
 
-		const stats = pick<HTMLElement>('[data-hero-stats] li');
 		const bars = pick<HTMLElement>('[data-hero-bar]');
 		const doors = pick<HTMLElement>('[data-hero-door]');
-		const chips = pick<HTMLElement>('[data-hero-chip]');
+		const marquee = section.querySelector<HTMLElement>('[data-hero-marquee]');
 		const eyebrow = section.querySelector<HTMLElement>('[data-hero-eyebrow]');
 
 		gsap.set(portal, { transformOrigin: '50% 50%', autoAlpha: 1 });
@@ -1185,7 +1122,6 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		gsap.set(leftSash, { xPercent: 0, x: 0, y: 0, z: 0, force3D: false });
 		gsap.set('[data-hero-door="left"]', { transformOrigin: 'left center' });
 		gsap.set('[data-hero-door="right"]', { transformOrigin: 'right center' });
-		gsap.set(chips, { opacity: 0.3 });
 
 		/* Opening act, on load */
 		const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -1225,7 +1161,12 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 				{ opacity: 1, y: 0, duration: 0.7, stagger: 0.12 },
 				'-=0.5',
 			)
-			.fromTo(stats, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08 }, '-=0.4')
+			.fromTo(
+				marquee,
+				{ opacity: 0, y: 16 },
+				{ opacity: 1, y: 0, duration: 0.7 },
+				'-=0.4',
+			)
 			.fromTo(bars, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.6, stagger: 0.08 }, 0.4)
 			.fromTo(doors, { opacity: 0 }, { opacity: 1, duration: 0.7, stagger: 0.12 }, '-=0.3')
 			.fromTo('[data-hero-handle]', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.5 }, '-=0.3')
@@ -1273,12 +1214,6 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 				{ xPercent: 94, force3D: false, duration: 0.32, ease: 'none' },
 				0.45,
 			)
-			.fromTo(
-				chips,
-				{ opacity: 0.3, x: -6 },
-				{ opacity: 1, x: 0, duration: 0.2, stagger: 0.05 },
-				0.48,
-			)
 			.to('[data-hero-trail]', { opacity: 0.35, duration: 0.18 }, 0.85);
 
 		/* Caption follows the scroll position */
@@ -1324,15 +1259,6 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		stage.addEventListener('pointerleave', () => {
 			tiltY(0);
 			tiltX(1);
-		});
-
-		chips.forEach((chip) => {
-			chip.addEventListener('pointerenter', () => {
-				chip.dataset.active = '';
-			});
-			chip.addEventListener('pointerleave', () => {
-				delete chip.dataset.active;
-			});
 		});
 	}
 </script>

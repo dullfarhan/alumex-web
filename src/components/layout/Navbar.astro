@@ -1,9 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../../assets/logo.png';
+import headerWordmark from '../../assets/header.svg';
 import { navCta, navLinks } from '../../config/navigation';
 import { productsMega, projectsMega } from '../../config/nav-mega';
-import { site } from '../../config/site';
 import ArrowRight from '../icons/ArrowRight.astro';
 import ChevronDown from '../icons/ChevronDown.astro';
 import Button from '../ui/Button.astro';
@@ -30,19 +30,25 @@ const triggerLabelClass =
 			class="relative z-10 mx-auto flex h-14 w-full items-center justify-between gap-3 rounded-full border border-silver/60 bg-background/90 px-3 backdrop-blur-md sm:h-16 sm:px-5 md:gap-6 md:px-6"
 			aria-label="Main navigation"
 		>
-			<a href="/" class="z-10 flex shrink-0 items-center gap-2.5 sm:gap-3">
+			<a href="/" class="z-10 flex shrink-0 items-center gap-2.5 sm:gap-3" aria-label="Pak Alumex Industries home">
 				<Image
 					src={logo}
-					alt={`${site.name} logo`}
+					alt=""
 					width={128}
 					height={128}
 					densities={[1, 2, 3]}
 					sizes="2.75rem"
 					class="h-9 w-9 shrink-0 rounded-full object-contain sm:h-10 sm:w-10"
 				/>
-				<span class="font-display text-base font-bold tracking-tight text-heading md:text-lg"
-					>{site.name}</span
-				>
+				<Image
+					src={headerWordmark}
+					alt=""
+					width={2172}
+					height={510}
+					densities={[1, 2]}
+					sizes="(min-width: 640px) 10rem, 8.5rem"
+					class="brand-wordmark h-7 w-auto shrink-0 sm:h-8"
+				/>
 			</a>
 
 			<ul class="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 lg:flex lg:gap-8">
@@ -150,6 +156,14 @@ const triggerLabelClass =
 		<ProjectsMegaMenu />
 	</div>
 </header>
+
+<style>
+	.brand-wordmark {
+		display: block;
+		object-fit: contain;
+		object-position: left center;
+	}
+</style>
 
 <script>
 	const header = document.getElementById('site-header');

@@ -10,11 +10,13 @@ interface Props {
 	title: string;
 	links: readonly Link[];
 	footer?: Link;
+	footers?: readonly Link[];
 	variant?: 'dark' | 'light';
 }
 
-const { title, links, footer, variant = 'dark' } = Astro.props;
+const { title, links, footer, footers, variant = 'dark' } = Astro.props;
 const isDark = variant === 'dark';
+const footerLinks = footers ?? (footer ? [footer] : []);
 ---
 
 <div>
@@ -44,19 +46,23 @@ const isDark = variant === 'dark';
 		}
 	</ul>
 	{
-		footer && (
-			<a
-				href={footer.href}
-				class:list={[
-					'mt-5 inline-flex items-center gap-1 border-b pb-0.5 text-sm font-medium transition-colors',
-					isDark
-						? 'border-accent text-accent hover:border-white hover:text-white'
-						: 'border-primary text-primary hover:text-primary-dark',
-				]}
-			>
-				{footer.label}
-				<ChevronRight class="h-3.5 w-3.5" />
-			</a>
+		footerLinks.length > 0 && (
+			<div class="mt-5 flex flex-col items-start gap-3">
+				{footerLinks.map((item) => (
+					<a
+						href={item.href}
+						class:list={[
+							'inline-flex items-center gap-1 border-b pb-0.5 text-sm font-medium transition-colors',
+							isDark
+								? 'border-accent text-accent hover:border-white hover:text-white'
+								: 'border-primary text-primary hover:text-primary-dark',
+						]}
+					>
+						{item.label}
+						<ChevronRight class="h-3.5 w-3.5" />
+					</a>
+				))}
+			</div>
 		)
 	}
 </div>

@@ -168,6 +168,24 @@ export const projects = {
 	items: projectItems,
 } as const;
 
+export const projectsGallery = {
+	accent: 'Explore Creativity:',
+	title: 'Welcome to Our Gallery',
+	description: 'Browse selected project photography from facades, campuses, and mixed-use developments across Pakistan.',
+	seoTitle: `Project Gallery | ${site.name}`,
+	seoDescription:
+		'Explore the Pak Alumex project gallery — architectural photography from commercial, residential, hospitality, and institutional aluminium projects.',
+	items: projectItems.map((item) => ({
+		slug: item.slug,
+		title: item.title,
+		category: item.category,
+		location: item.location,
+		year: item.year,
+		image: item.image,
+		href: item.href,
+	})),
+} as const;
+
 export const projectCategories = ['All', ...new Set(projectItems.map((item) => item.category))] as const;
 
 export function getProjectBySlug(slug: string): Project | undefined {

@@ -9,6 +9,7 @@ export const footer = {
 			links: [
 				{ href: '/about', label: 'About Us' },
 				{ href: '/projects', label: 'Selected Projects' },
+				{ href: '/projects/gallery', label: 'Project Gallery' },
 				{ href: '/#finishes', label: 'Surface Finishes' },
 				{ href: '/contact', label: 'Contact' },
 			],

@@ -22,6 +22,7 @@ import MegaMenuColumn from './MegaMenuColumn.astro';
 				<MegaMenuColumn
 					title={column.title}
 					links={column.links}
+					footers={'footers' in column ? column.footers : undefined}
 					footer={'footer' in column ? column.footer : undefined}
 					variant="light"
 				/>

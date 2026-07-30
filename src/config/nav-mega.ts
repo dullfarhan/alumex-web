@@ -14,7 +14,10 @@ export const projectsMega = {
 				label: category,
 				href: '/projects',
 			})),
-			footer: { label: 'View all projects', href: '/projects' },
+			footers: [
+				{ label: 'View all projects', href: '/projects' },
+				{ label: 'Project Gallery', href: '/projects/gallery' },
+			],
 		},
 		{
 			title: 'Featured projects',

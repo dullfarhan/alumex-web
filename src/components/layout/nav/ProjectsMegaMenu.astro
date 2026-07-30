@@ -18,6 +18,7 @@ const [categoryColumn, featuredColumn, finishesColumn] = projectsMega.columns;
 			<MegaMenuColumn
 				title={categoryColumn.title}
 				links={categoryColumn.links}
+				footers={'footers' in categoryColumn ? categoryColumn.footers : undefined}
 				footer={'footer' in categoryColumn ? categoryColumn.footer : undefined}
 			/>
 		</div>
