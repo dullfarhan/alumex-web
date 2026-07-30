@@ -2,7 +2,7 @@ import { navLinks } from './navigation';
 
 export const footer = {
 	links: navLinks,
-	hours: 'Mon – Sat · 9:00 AM – 6:00 PM',
+	hours: 'Always open',
 	columns: [
 		{
 			title: 'Company',
@@ -25,10 +25,8 @@ export const footer = {
 		{
 			title: 'Social',
 			links: [
-				{ href: 'https://www.linkedin.com/', label: 'LinkedIn', external: true },
-				{ href: 'https://www.facebook.com/', label: 'Facebook', external: true },
-				{ href: 'https://www.instagram.com/', label: 'Instagram', external: true },
-				{ href: 'https://www.youtube.com/', label: 'YouTube', external: true },
+				{ href: 'https://www.instagram.com/pakalumexpakistan', label: 'Instagram', external: true },
+				{ href: 'https://www.facebook.com/pakalumexindustries', label: 'Facebook', external: true },
 			],
 		},
 	],

@@ -5,12 +5,12 @@ import Container from '../../layout/Container.astro';
 
 <section class="border-y border-silver/40 bg-background-alt">
 	<Container class="!py-10 md:!py-12">
-		<ul class="grid grid-cols-2 gap-8 lg:grid-cols-4 lg:gap-6">
+		<ul class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-10">
 			{
 				about.stats.map((stat) => (
-					<li class="text-center">
-						<p class="font-display text-2xl font-bold tracking-tight text-heading md:text-3xl">{stat.value}</p>
-						<p class="mt-1 text-xs font-medium tracking-[0.08em] text-muted uppercase">{stat.label}</p>
+					<li>
+						<p class="mb-1.5 text-xs font-medium tracking-[0.08em] text-muted uppercase">{stat.label}</p>
+						<p class="font-display text-lg font-bold tracking-tight text-heading md:text-xl">{stat.value}</p>
 					</li>
 				))
 			}

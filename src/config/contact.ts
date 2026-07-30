@@ -40,7 +40,7 @@ export const contact = {
 		{
 			question: 'Can we visit the plant?',
 			answer:
-				'Yes. Schedule a visit during plant hours and we will arrange a walkthrough of extrusion, finishing, and fabrication capability.',
+				'Yes. Contact us to schedule a visit and we will arrange a walkthrough of extrusion, finishing, and fabrication capability.',
 		},
 	],
 } as const;

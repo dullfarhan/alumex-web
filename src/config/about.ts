@@ -1,85 +1,121 @@
 import heroImage from '../assets/hero.jpg';
-import { hero } from './hero';
-import { specs } from './home';
-import { site } from './site';
 
 export const about = {
 	label: 'About',
-	title: 'Engineering Excellence in Aluminium Solutions',
+	title: 'Building Modern Spaces with Premium Aluminium Solutions',
 	description:
-		'Pak Alumex Industries is a trusted manufacturer and supplier of premium architectural aluminium systems based in Faisalabad, Pakistan.',
-	seoTitle: `About | ${site.name}`,
+		'At Pak Alumex Industries, we manufacture high-quality architectural aluminium profiles designed to deliver strength, durability, and elegant aesthetics for modern residential, commercial, and industrial projects.',
+	seoTitle: 'Pak Alumex Industries | Premium Aluminium Profiles Manufacturer in Pakistan',
 	seoDescription:
-		'About Pak Alumex Industries — premium architectural aluminium systems from Faisalabad, Pakistan. Curtain walls, windows, doors, sliding systems, and custom profiles.',
+		'Pak Alumex Industries manufactures premium architectural aluminium profiles for windows, doors, façades, and commercial projects. Quality aluminium solutions engineered for strength, durability, and modern design across Pakistan.',
 	story: {
 		label: 'Who we are',
-		title: 'Trusted aluminium systems for modern architecture.',
+		title: 'Excellence in Aluminium Manufacturing',
 		paragraphs: [
-			'Pak Alumex Industries is a trusted manufacturer and supplier of premium architectural aluminium systems based in Faisalabad, Pakistan. We specialize in delivering innovative aluminium solutions that combine durability, precision, and modern aesthetics for residential, commercial, and industrial projects.',
-			'With a commitment to quality craftsmanship and advanced manufacturing, we provide a comprehensive range of aluminium systems including curtain walls, windows, doors, sliding systems, office partitions, structural glazing, and custom architectural profiles. Every product is designed to meet the highest standards of performance, safety, and long-term reliability.',
-			'Our experienced team works closely with architects, contractors, developers, and fabricators to transform ideas into practical, high-quality aluminium solutions. From consultation and design to manufacturing and installation support, we focus on delivering projects on time while maintaining exceptional quality.',
-			"Driven by innovation and customer satisfaction, Pak Alumex Industries continues to invest in modern technology and skilled professionals to meet the evolving demands of Pakistan's construction industry.",
+			'Pak Alumex Industries is a Pakistani manufacturer specializing in premium aluminium profiles, architectural systems, and aluminium solutions for windows, doors, façades, and modern construction projects. Our products are engineered to combine exceptional strength with refined aesthetics, ensuring every project meets today\'s architectural standards.',
+			'Driven by quality and innovation, we utilize advanced manufacturing processes and precision engineering to produce aluminium sections that offer superior weather resistance, long-lasting performance, and reliable structural integrity. Every product is designed to enhance both functionality and appearance.',
+			'Over the years, we have built strong relationships with architects, contractors, builders, fabricators, and homeowners by consistently delivering dependable aluminium solutions for projects of every scale. Our commitment to quality and customer satisfaction has established us as a trusted manufacturing partner.',
+			"From our manufacturing facility in Faisalabad, we continue to support the construction industry with products that meet modern design trends while maintaining the durability required for Pakistan's diverse environmental conditions.",
 		],
 		image: heroImage,
-		imageAlt: 'Pak Alumex aluminium manufacturing and architectural systems',
+		imageAlt: 'Pak Alumex manufacturing facility and aluminium production',
 	},
-	stats: hero.stats.map(({ value, label }) => ({ value, label })),
+	stats: [
+		{ label: 'Industry', value: 'Aluminium Manufacturing' },
+		{ label: 'Products', value: 'Architectural Aluminium Profiles' },
+		{ label: 'Applications', value: 'Windows, Doors, Facades, Partitions' },
+		{ label: 'Headquarters', value: 'Gojra, Faisalabad, Pakistan' },
+		{ label: 'Service Coverage', value: 'Nationwide' },
+		{ label: 'Manufacturing Focus', value: 'Residential, Commercial & Industrial' },
+	],
 	process: {
 		label: 'How we work',
-		title: 'From consultation to building-ready systems.',
+		title: 'From consultation to delivery & support.',
 		steps: [
 			{
 				number: '01',
-				title: 'Consultation & design',
-				description: 'We work with architects, contractors, and developers to define the right system for each project.',
+				title: 'Consultation',
+				description:
+					'We understand project requirements, architectural specifications, and customer expectations before production begins.',
 			},
 			{
 				number: '02',
-				title: 'Manufacturing',
-				description: 'Premium architectural profiles produced with a focus on durability, precision, and finish quality.',
+				title: 'Precision Manufacturing',
+				description:
+					'Using modern production techniques, we manufacture aluminium profiles with strict quality control and dimensional accuracy.',
 			},
 			{
 				number: '03',
-				title: 'Systems & fabrication',
-				description: 'Curtain walls, windows, doors, sliding systems, partitions, and custom profiles prepared for site use.',
+				title: 'Quality Inspection',
+				description:
+					'Every product undergoes inspection for durability, finish quality, strength, and consistency before dispatch.',
 			},
 			{
 				number: '04',
-				title: 'Installation support',
-				description: 'On-time delivery with installation support so projects move from fabrication to facade with confidence.',
+				title: 'Delivery & Support',
+				description:
+					'Products are delivered efficiently with ongoing support to contractors, fabricators, architects, and project partners.',
 			},
 		],
 	},
 	quality: {
-		label: 'Built to standard',
-		title: 'Material, finish, and tolerance you can specify.',
-		intro: 'Every product is designed for performance, safety, and long-term reliability across residential, commercial, and industrial builds.',
-		specs,
+		label: 'Quality & Specifications',
+		title: 'Engineered for Performance',
+		intro:
+			'Pak Alumex Industries manufactures aluminium profiles that combine structural strength with premium finishing to meet the demands of modern architecture.',
+		groups: [
+			{
+				label: 'Materials',
+				items: [
+					'High-quality architectural aluminium',
+					'Premium aluminium extrusion profiles',
+					'Durable structural sections',
+				],
+			},
+			{
+				label: 'Surface Finish',
+				items: ['Powder Coating', 'Anodized Finish', 'Decorative Colour Finishes'],
+			},
+			{
+				label: 'Performance Features',
+				items: [
+					'Excellent weather resistance',
+					'Corrosion-resistant',
+					'High structural strength',
+					'Long service life',
+					'Low maintenance',
+					'Precision engineered profiles',
+					'Smooth finish for modern aesthetics',
+				],
+			},
+		],
 	},
 	mission: {
 		label: 'Our Mission',
-		text: 'To provide innovative, reliable, and high-quality aluminium systems that enhance modern architecture while delivering exceptional value and service to our customers.',
+		text: 'To manufacture premium-quality aluminium profiles that deliver exceptional durability, precision, and value while supporting architects, builders, and homeowners in creating stronger, smarter, and more beautiful spaces.',
 	},
 	vision: {
 		label: 'Our Vision',
-		text: "To become one of Pakistan's leading architectural aluminium solution providers, recognized for quality, innovation, and long-lasting customer relationships.",
+		text: "To become Pakistan's most trusted aluminium manufacturing company by setting new standards in innovation, quality, customer satisfaction, and sustainable industrial excellence.",
 	},
 	values: {
 		label: 'Our Core Values',
 		title: 'What guides every project we deliver.',
 		items: [
-			'Quality Without Compromise',
-			'Innovation & Continuous Improvement',
-			'Customer-Centric Approach',
-			'Integrity & Transparency',
+			'Quality Excellence',
 			'Precision Engineering',
-			'Sustainable Manufacturing',
+			'Customer Commitment',
+			'Innovation',
+			'Reliability',
+			'Integrity',
+			'Continuous Improvement',
 		],
 	},
 	cta: {
-		title: 'Ready to specify Pak Alumex on your next project?',
-		description: 'Share drawings or project details and our team will help with systems, finishes, and timelines.',
+		title: 'Ready to Build with Premium Aluminium?',
+		description:
+			"Whether you're working on residential, commercial, or industrial projects, Pak Alumex Industries is your trusted partner for high-performance aluminium solutions.",
 		href: '/contact',
-		label: 'Request Quote',
+		label: 'Request a Quote',
 	},
 } as const;

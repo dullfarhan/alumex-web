@@ -5,20 +5,24 @@ import Container from '../../layout/Container.astro';
 
 <section class="border-t border-silver/40 bg-background-alt">
 	<Container>
-		<div class="mb-12 w-full md:mb-14 text-center">
+		<div class="mb-12 w-full text-center md:mb-14">
 			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.quality.label}</span>
 			<h2 class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[2.75rem]">
 				{about.quality.title}
 			</h2>
-			<p class="text-base leading-relaxed text-muted md:text-lg">{about.quality.intro}</p>
+			<p class="mx-auto max-w-3xl text-base leading-relaxed text-muted md:text-lg">{about.quality.intro}</p>
 		</div>
 
-		<ul class="mb-14 grid gap-6 border-y border-silver/40 py-8 sm:grid-cols-3">
+		<ul class="mb-14 grid gap-10 border-y border-silver/40 py-10 md:grid-cols-3 md:gap-8">
 			{
-				about.quality.specs.map((spec) => (
+				about.quality.groups.map((group) => (
 					<li>
-						<span class="mb-1.5 block text-xs font-medium tracking-[0.08em] text-muted uppercase">{spec.label}</span>
-						<p class="font-display text-lg font-bold text-heading md:text-xl">{spec.value}</p>
+						<span class="mb-4 block text-xs font-medium tracking-[0.08em] text-muted uppercase">{group.label}</span>
+						<ul class="space-y-2.5">
+							{group.items.map((item) => (
+								<li class="text-sm leading-relaxed text-heading md:text-base">{item}</li>
+							))}
+						</ul>
 					</li>
 				))
 			}

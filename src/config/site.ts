@@ -6,9 +6,8 @@ export const site = {
 	url: 'https://pakalumex.com',
 	logo: '/logo/logo.png',
 	tagline: 'Premium architectural aluminium systems.',
-	email: 'info@pakalumex.com',
-	phone: '+92 300 0000000',
-	address: 'Faisalabad, Pakistan',
-	mapEmbedUrl:
-		'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.5!2d73.135!3d31.4504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDI3JzAxLjQiTiA3M8KwMDgnMDYuMCJF!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s',
+	email: 'ranaamran@gmail.com',
+	phone: '+92 322 7771540',
+	address: '5 Kilometer Painsra Road, Gojra, Faisalabad, Pakistan 36120',
+	mapEmbedUrl: 'https://www.google.com/maps?q=29.399776,68.814636&z=16&output=embed',
 } as const;
