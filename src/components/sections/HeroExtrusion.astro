@@ -6,7 +6,7 @@ import logo from '../../assets/logo.png';
 import ArrowRight from '../icons/ArrowRight.astro';
 import Button from '../ui/Button.astro';
 
-const titleLines = ['Engineering', 'Aluminium for', 'Modern Architecture.'];
+const titleLines = ['Engineering Aluminium for Modern Architecture.'];
 
 const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 ---
@@ -27,7 +27,7 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 								width={256}
 								height={256}
 								densities={[1, 2]}
-								sizes="(min-width: 1024px) 16rem, (min-width: 768px) 14rem, 10.5rem"
+								sizes="(min-width: 1024px) 10.5rem, (min-width: 768px) 9rem, 7.5rem"
 								loading="eager"
 								fetchpriority="high"
 								decoding="async"
@@ -58,7 +58,9 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 						</div>
 					</div>
 
-					<!-- <h1 class="hero__title">
+					<p class="hero__eyebrow" data-hero-eyebrow>{hero.label}</p>
+
+					<h1 class="hero__title">
 						{
 							titleLines.map((line) => (
 								<span class="hero__line">
@@ -68,7 +70,7 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 								</span>
 							))
 						}
-					</h1> -->
+					</h1>
 
 					<div data-hero-trail>
 						<p class="hero__description" data-hero-fade>{hero.description}</p>
@@ -265,9 +267,9 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 
 	@media (min-width: 1024px) {
 		.hero__inner {
-			grid-template-columns: 1fr 1fr;
+			grid-template-columns: 6fr 6fr;
 			grid-template-rows: none;
-			gap: 2.5rem;
+			gap: 2rem;
 			padding: 4rem 3rem;
 			align-items: center;
 			height: 100%;
@@ -281,6 +283,7 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		align-items: center;
 		text-align: center;
 		min-height: 0;
+		gap: 0;
 	}
 
 	@media (min-width: 1024px) {
@@ -289,13 +292,51 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 			text-align: left;
 		}
 	}
+
+	.hero__eyebrow {
+		margin: 0.85rem 0 0.5rem;
+		font-family: var(--font-display);
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--primary);
+	}
+
+	@media (min-width: 1024px) {
+		.hero__eyebrow {
+			margin-top: 0.75rem;
+		}
+	}
+
+	.hero__title {
+		margin: 0 auto 1rem;
+		/* max-width: 18ch; */
+		font-family: var(--font-display);
+		font-size: clamp(1.875rem, 4.2vw, 3.25rem);
+		font-weight: 700;
+		line-height: 1.15;
+		letter-spacing: -0.02em;
+		color: var(--heading);
+	}
+
+	@media (min-width: 1024px) {
+		.hero__title {
+			margin-inline: 0;
+		}
+	}
+
 	.hero__line {
 		display: block;
 		overflow: hidden;
+		/* Room for descenders (g, y) inside the reveal mask */
+		padding-bottom: 0.18em;
+		margin-bottom: -0.12em;
 	}
 
 	.hero__line-inner {
 		display: block;
+		padding-bottom: 0.06em;
 	}
 
 	.hero__line:last-child .hero__line-inner {
@@ -308,10 +349,10 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 	.hero__description {
 		max-width: 30rem;
 		margin-inline: auto;
-		margin-bottom: 1.75rem;
+		margin-bottom: 1.5rem;
 		font-size: 1.0625rem;
-		line-height: 1.7;
-		color: var(--muted);
+		line-height: 1.65;
+		color: var(--text);
 	}
 
 	@media (min-width: 1024px) {
@@ -336,10 +377,10 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 	.hero__stats {
 		display: none;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1.25rem 1.5rem;
-		margin-top: 1.75rem;
-		padding-top: 1.5rem;
-		border-top: 1px solid var(--border-light);
+		gap: 0.85rem 1rem;
+		margin-top: 1.35rem;
+		padding-top: 1.1rem;
+		border-top: 1px solid color-mix(in srgb, var(--border-light) 80%, transparent);
 	}
 
 	@media (min-width: 1024px) {
@@ -358,28 +399,29 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 0.35rem;
+		gap: 0.2rem;
 	}
 
 	.hero__stat-icon {
 		display: block;
-		width: 2.25rem;
-		height: 2.25rem;
-		margin-bottom: 0.15rem;
+		width: 1.65rem;
+		height: 1.65rem;
+		margin-bottom: 0.1rem;
+		opacity: 0.85;
 	}
 
 	.hero__stat-value {
 		display: block;
 		font-family: var(--font-display);
-		font-size: 1.25rem;
+		font-size: 1.05rem;
 		font-weight: 700;
 		color: var(--primary);
 	}
 
 	.hero__stat-label {
 		display: block;
-		font-size: 0.75rem;
-		line-height: 1.35;
+		font-size: 0.6875rem;
+		line-height: 1.3;
 		color: var(--muted);
 	}
 
@@ -412,19 +454,19 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 
 	.hero__logo {
 		position: relative;
-		width: 10.5rem;
+		width: 7.5rem;
 		aspect-ratio: 1;
 	}
 
 	@media (min-width: 768px) {
 		.hero__logo {
-			width: 14rem;
+			width: 9rem;
 		}
 	}
 
 	@media (min-width: 1024px) {
 		.hero__logo {
-			width: 16rem;
+			width: 10.5rem;
 		}
 	}
 
@@ -454,7 +496,7 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 	.hero__slogan-text {
 		fill: var(--heading);
 		font-family: var(--font-display);
-		font-size: 13.5px;
+		font-size: 15px;
 		font-weight: 600;
 		text-transform: uppercase;
 	}
@@ -480,11 +522,11 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 	.hero__layers {
 		display: none;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 0.5rem 1rem;
-		margin-top: 0.625rem;
+		gap: 0.5rem 1.25rem;
+		margin-top: 0.75rem;
 		margin-inline: auto;
 		width: 100%;
-		max-width: 22rem;
+		max-width: 26rem;
 		justify-items: center;
 		text-align: center;
 	}
@@ -546,7 +588,7 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 
 	.hero__chip-label {
 		display: block;
-		font-size: 0.5625rem;
+		font-size: 0.5rem;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--muted);
@@ -555,14 +597,14 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 	.hero__chip-value {
 		display: block;
 		font-family: var(--font-display);
-		font-size: 0.8125rem;
+		font-size: 0.875rem;
 		font-weight: 600;
 		color: var(--heading);
 	}
 
 	.hero__chip-detail {
 		display: block;
-		font-size: 0.6875rem;
+		font-size: 0.625rem;
 		color: var(--muted);
 	}
 
@@ -616,7 +658,7 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		perspective: 1800px;
 		perspective-origin: 55% 42%;
 		width: 100%;
-		max-width: 34rem;
+		max-width: 36rem;
 		margin-inline: auto;
 		padding: 0.25rem 0.5rem 0.5rem;
 		overflow: visible;
@@ -624,8 +666,8 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 
 	@media (min-width: 1024px) {
 		.hero3d {
-			padding: 0.75rem 0.5rem 0.5rem;
-			max-width: 40rem;
+			padding: 0.75rem 0.25rem 0.5rem;
+			max-width: none;
 		}
 	}
 
@@ -648,8 +690,8 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 
 	@media (min-width: 1024px) {
 		.hero3d__scene {
-			width: 20rem;
-			height: 23.5rem;
+			width: 22rem;
+			height: 26rem;
 		}
 	}
 
@@ -1136,6 +1178,7 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 		const bars = pick<HTMLElement>('[data-hero-bar]');
 		const doors = pick<HTMLElement>('[data-hero-door]');
 		const chips = pick<HTMLElement>('[data-hero-chip]');
+		const eyebrow = section.querySelector<HTMLElement>('[data-hero-eyebrow]');
 
 		gsap.set(portal, { transformOrigin: '50% 50%', autoAlpha: 1 });
 		gsap.set(windowUnit, { autoAlpha: 0 });
@@ -1158,12 +1201,23 @@ const numeric = (value: string) => /^(\d+)(\D*)$/.exec(value);
 				{ opacity: 0 },
 				{ opacity: 1, duration: 0.55 },
 				'-=0.35',
-			)
+			);
+
+		if (eyebrow) {
+			intro.fromTo(
+				eyebrow,
+				{ opacity: 0, y: 12 },
+				{ opacity: 1, y: 0, duration: 0.45 },
+				'-=0.2',
+			);
+		}
+
+		intro
 			.fromTo(
 				'[data-hero-line]',
 				{ yPercent: 115, opacity: 0 },
 				{ yPercent: 0, opacity: 1, duration: 1, stagger: 0.1 },
-				'-=0.25',
+				'-=0.15',
 			)
 			.fromTo(
 				'[data-hero-fade]',
