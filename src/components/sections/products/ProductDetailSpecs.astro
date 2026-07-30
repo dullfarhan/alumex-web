@@ -1,12 +1,17 @@
 ---
 import { Image } from 'astro:assets';
-import type { Product } from '../../../config/products';
+import type { ImageMetadata } from 'astro';
 import BlueprintSchematic from '../../icons/BlueprintSchematic.astro';
 import CheckIcon from '../../icons/CheckIcon.astro';
 import Container from '../../layout/Container.astro';
 
 interface Props {
-	product: Product;
+	product: {
+		title: string;
+		image: ImageMetadata;
+		gallery: ImageMetadata[];
+		specs: { label: string; value: string }[];
+	};
 }
 
 const { product } = Astro.props;

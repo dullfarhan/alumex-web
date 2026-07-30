@@ -1,0 +1,56 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductDetailHero from '../../components/sections/products/ProductDetailHero.astro';
+import ProductDetailSpecs from '../../components/sections/products/ProductDetailSpecs.astro';
+import ProductDetailBody from '../../components/sections/products/ProductDetailBody.astro';
+import ProductRelated from '../../components/sections/products/ProductRelated.astro';
+import CtaBanner from '../../components/ui/CtaBanner.astro';
+import { finishes, getFinishBySlug, getRelatedFinishes } from '../../config/finishes';
+import { site } from '../../config/site';
+
+export function getStaticPaths() {
+	return finishes.items.map((finish) => ({
+		params: { slug: finish.slug },
+	}));
+}
+
+const { slug } = Astro.params;
+const finish = getFinishBySlug(slug as string)!;
+const related = getRelatedFinishes(finish.slug);
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Product',
+	name: finish.title,
+	description: finish.description,
+	image: new URL(finish.image.src, site.url).href,
+	brand: {
+		'@type': 'Brand',
+		name: site.name,
+	},
+	category: finish.category,
+	url: `${site.url}${finish.href}`,
+};
+---
+
+<Layout
+	title={`${finish.title} | ${site.name}`}
+	description={finish.shortDescription}
+	canonical={finish.href}
+	jsonLd={jsonLd}
+>
+	<ProductDetailHero
+		product={finish}
+		collectionHref="/#finishes"
+		collectionLabel="Finishes"
+	/>
+	<ProductDetailSpecs product={finish} />
+	<ProductDetailBody product={finish} />
+	<ProductRelated products={related} title="Related finishes" />
+	<CtaBanner
+		title="Specify this finish on your next project"
+		description="Share drawings or project details and our team will help with systems, finishes, and delivery timelines."
+		href="/contact"
+		label="Request Quote"
+	/>
+</Layout>

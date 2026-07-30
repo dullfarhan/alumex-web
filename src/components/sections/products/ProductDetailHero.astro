@@ -1,16 +1,27 @@
 ---
 import { Image } from 'astro:assets';
-import type { Product } from '../../../config/products';
+import type { ImageMetadata } from 'astro';
+import type { ProductHighlightIcon } from '../../../config/products';
 import ArrowRight from '../../icons/ArrowRight.astro';
 import HighlightIcon from '../../icons/HighlightIcon.astro';
 import Button from '../../ui/Button.astro';
 import Container from '../../layout/Container.astro';
 
 interface Props {
-	product: Product;
+	product: {
+		title: string;
+		category: string;
+		description: string;
+		image: ImageMetadata;
+		highlights: { label: string; icon: ProductHighlightIcon }[];
+		href: string;
+	};
+	/** Override breadcrumb parent (default: Products) */
+	collectionHref?: string;
+	collectionLabel?: string;
 }
 
-const { product } = Astro.props;
+const { product, collectionHref = '/products', collectionLabel = 'Products' } = Astro.props;
 ---
 
 <section class="bg-background">
@@ -20,9 +31,9 @@ const { product } = Astro.props;
 			<ol class="flex flex-wrap items-center gap-2">
 				<li><a href="/" class="transition-colors hover:text-primary">Home</a></li>
 				<li aria-hidden="true">/</li>
-				<li><a href="/products" class="transition-colors hover:text-primary">Products</a></li>
+				<li><a href={collectionHref} class="transition-colors hover:text-primary">{collectionLabel}</a></li>
 				<li aria-hidden="true">/</li>
-				<li><a href="/products" class="transition-colors hover:text-primary">{product.category}</a></li>
+				<li><a href={collectionHref} class="transition-colors hover:text-primary">{product.category}</a></li>
 				<li aria-hidden="true">/</li>
 				<li class="text-heading">{product.title}</li>
 			</ol>

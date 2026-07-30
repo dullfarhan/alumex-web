@@ -51,14 +51,7 @@ const baseSpecs = [
 	{ label: 'Tolerance', value: '±0.2mm Precision' },
 ] as const;
 
-export const finishDescriptions: Record<string, string> = {
-	'Mill Finish': 'Natural extruded aluminium surface, ready for fabrication or coating.',
-	Anodizing: 'Durable oxide layer for corrosion resistance and refined metallic tone.',
-	'Powder Coating': 'Color-stable polymer finish for weather exposure and brand matching.',
-	'Wood Finish': 'Architectural wood-look coating with aluminium durability underneath.',
-	'Satin Finish': 'Soft sheen surface for contemporary interiors and elevations.',
-	'Value Addition': 'Secondary processes for project-specific detailing and performance.',
-};
+export { finishDescriptions } from './finishes';
 
 export const productItems: Product[] = [
 	{
@@ -84,7 +77,7 @@ export const productItems: Product[] = [
 			{ label: 'Performance', value: 'High wind & weather rated' },
 			{ label: 'Installation', value: 'Stick / Unitized' },
 		],
-		finishes: ['Mill Finish', 'Anodizing', 'Powder Coating', 'Satin Finish'],
+		finishes: ['Anodizing', 'Powder Coating', 'Wood Texture'],
 		applications: [
 			{
 				title: 'Commercial Towers',
@@ -136,7 +129,7 @@ export const productItems: Product[] = [
 			{ label: 'Performance', value: 'Thermal & weather sealed' },
 			{ label: 'Installation', value: 'Frame & sash systems' },
 		],
-		finishes: ['Anodizing', 'Powder Coating', 'Wood Finish', 'Satin Finish'],
+		finishes: ['Anodizing', 'Powder Coating', 'Wood Texture'],
 		applications: [
 			{
 				title: 'Residences',
@@ -194,7 +187,7 @@ export const productItems: Product[] = [
 			{ label: 'Performance', value: 'Smooth-track rated' },
 			{ label: 'Installation', value: 'Floor / ceiling track' },
 		],
-		finishes: ['Mill Finish', 'Anodizing', 'Powder Coating', 'Wood Finish'],
+		finishes: ['Anodizing', 'Powder Coating', 'Wood Texture'],
 		applications: [
 			{
 				title: 'Living Spaces',
@@ -252,7 +245,7 @@ export const productItems: Product[] = [
 			{ label: 'Performance', value: 'Acoustic options' },
 			{ label: 'Installation', value: 'Modular framing' },
 		],
-		finishes: ['Anodizing', 'Powder Coating', 'Satin Finish'],
+		finishes: ['Anodizing', 'Powder Coating', 'Wood Texture'],
 		applications: [
 			{
 				title: 'Corporate Offices',
@@ -310,7 +303,7 @@ export const productItems: Product[] = [
 			{ label: 'Performance', value: 'Weather & structural' },
 			{ label: 'Installation', value: 'SSG / bolted systems' },
 		],
-		finishes: ['Anodizing', 'Powder Coating', 'Satin Finish'],
+		finishes: ['Anodizing', 'Powder Coating', 'Wood Texture'],
 		applications: [
 			{
 				title: 'Landmark Facades',
@@ -368,7 +361,7 @@ export const productItems: Product[] = [
 			{ label: 'Performance', value: 'Project engineered' },
 			{ label: 'Installation', value: 'Fabricator-led' },
 		],
-		finishes: ['Mill Finish', 'Anodizing', 'Powder Coating', 'Wood Finish', 'Satin Finish', 'Value Addition'],
+		finishes: ['Anodizing', 'Powder Coating', 'Wood Texture'],
 		applications: [
 			{
 				title: 'Bespoke Facades',

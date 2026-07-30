@@ -1,10 +1,17 @@
 ---
 import { Image } from 'astro:assets';
-import type { Product } from '../../../config/products';
+import type { ImageMetadata } from 'astro';
 import ArrowRight from '../../icons/ArrowRight.astro';
 
 interface Props {
-	product: Product;
+	product: {
+		title: string;
+		category: string;
+		shortDescription: string;
+		description: string;
+		image: ImageMetadata;
+		href: string;
+	};
 	index: number;
 }
 

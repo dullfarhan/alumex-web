@@ -1,20 +1,28 @@
 ---
-import type { Product } from '../../../config/products';
+import type { ImageMetadata } from 'astro';
 import Container from '../../layout/Container.astro';
 import ProductCard from './ProductCard.astro';
 
 interface Props {
-	products: Product[];
+	products: {
+		title: string;
+		category: string;
+		shortDescription: string;
+		description: string;
+		image: ImageMetadata;
+		href: string;
+	}[];
+	title?: string;
 }
 
-const { products: related } = Astro.props;
+const { products: related, title = 'Related systems' } = Astro.props;
 ---
 
 {
 	related.length > 0 && (
 		<section class="border-t border-silver/40 bg-background-alt">
 			<Container>
-				<h2 class="mb-8 font-display text-xl font-bold tracking-tight text-heading md:text-2xl text-center">Related systems</h2>
+				<h2 class="mb-8 font-display text-xl font-bold tracking-tight text-heading md:text-2xl text-center">{title}</h2>
 				<div class="mx-auto grid max-w-4xl min-w-0 grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-7">
 					{related.map((product, index) => (
 						<ProductCard product={product} index={index} />

@@ -34,7 +34,7 @@ export const projectsMega = {
 			title: 'Surface finishes',
 			links: finishes.items.map((item) => ({
 				label: item.title,
-				href: '/#finishes',
+				href: item.href,
 			})),
 		},
 	],
@@ -66,10 +66,13 @@ export const productsMega = {
 			label: capability.title,
 			description: capability.description,
 		})),
-		finishes: item.finishes.slice(0, 4).map((finish) => ({
-			label: finish,
-			href: '/#finishes',
-		})),
+		finishes: item.finishes.slice(0, 4).map((finish) => {
+			const match = finishes.items.find((f) => f.title === finish);
+			return {
+				label: finish,
+				href: match?.href ?? '/#finishes',
+			};
+		}),
 		specs: item.specs,
 	})),
 	footerTiles: [
@@ -80,7 +83,7 @@ export const productsMega = {
 		},
 		{
 			title: 'Surface finishes',
-			description: 'Explore mill, anodizing, powder coating, wood, and satin options.',
+			description: 'Explore wood texture, anodizing, and powder coating options.',
 			href: '/#finishes',
 		},
 		{
