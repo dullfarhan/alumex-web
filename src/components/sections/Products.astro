@@ -25,19 +25,18 @@ const featuredProducts = products.items.slice(0, 3);
 				mobileCarousel ? (
 					<MobileCarousel
 						label="Featured products"
-						controlsPosition="bottom-right"
 						desktopClass="min-w-0 w-full text-left sm:grid sm:grid-cols-1 sm:gap-6 lg:grid-cols-2 lg:gap-7 lg:[&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:mx-auto lg:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.875rem)] 2xl:grid-cols-3 2xl:gap-8 2xl:[&>*:last-child:nth-child(odd)]:col-span-1 2xl:[&>*:last-child:nth-child(odd)]:max-w-none"
 					>
 						{featuredProducts.map((item, index) => <ProductCard product={item} index={index} />)}
 					</MobileCarousel>
 				) : (
-					<div class="grid min-w-0 w-full grid-cols-1 gap-6 text-left lg:grid-cols-2 lg:gap-7 lg:[&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:mx-auto lg:[&>*:last-child:nth-child(odd)]:max-w-[calc(50%-0.875rem)] 2xl:grid-cols-3 2xl:gap-8 2xl:[&>*:last-child:nth-child(odd)]:col-span-1 2xl:[&>*:last-child:nth-child(odd)]:max-w-none">
+					<div class="flex flex-wrap justify-center gap-6">
 						{featuredProducts.map((item, index) => <ProductCard product={item} index={index} />)}
 					</div>
 				)
 			}
 
-			<Button href="/products" class="mt-10">
+			<Button href="/products" class="mt-10 !rounded-full">
 				View all systems
 				<ArrowRight class="h-3.5 w-3.5" />
 			</Button>

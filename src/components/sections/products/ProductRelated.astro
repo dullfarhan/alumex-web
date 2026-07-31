@@ -23,7 +23,7 @@ const { products: related, title = 'Related systems' } = Astro.props;
 		<section class="border-t border-silver/40 bg-background-alt">
 			<Container>
 				<h2 class="mb-8 font-display text-xl font-bold tracking-tight text-heading md:text-2xl text-center">{title}</h2>
-				<div class="mx-auto grid max-w-4xl min-w-0 grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-7">
+				<div class="flex flex-wrap gap-6 justify-center">
 					{related.map((product, index) => (
 						<ProductCard product={product} index={index} />
 					))}

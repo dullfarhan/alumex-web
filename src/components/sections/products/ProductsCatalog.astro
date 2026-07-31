@@ -11,7 +11,7 @@ import ProductCard from './ProductCard.astro';
 			label="Product catalog"
 			controlsPosition="bottom-right"
 			trackId="products-grid"
-			desktopClass="min-w-0 sm:grid sm:grid-cols-1 sm:gap-6 lg:grid-cols-2 lg:gap-7 xl:grid-cols-3 xl:gap-8"
+			desktopClass="min-w-0 sm:grid sm:grid-cols-1 sm:justify-items-center sm:gap-6 lg:grid-cols-2 lg:gap-7 xl:grid-cols-3 xl:gap-8"
 		>
 			{productItems.map((product, index) => <ProductCard product={product} index={index} />)}
 		</MobileCarousel>
