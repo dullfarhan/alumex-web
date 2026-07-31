@@ -1,8 +1,6 @@
 import type { ImageMetadata } from 'astro';
 import biFoldDoors from '../assets/products/bi-fold-doors.jpg';
-import automatedDoors from '../assets/products/automated-doors.jpg';
 import swingDoors from '../assets/products/swing-doors.jpg';
-import revolvingDoor from '../assets/products/revolving-door.jpg';
 import stableDoor from '../assets/products/stable-door.jpg';
 import swingDoorFixedPanel from '../assets/products/swing-door-fixed-panel.jpg';
 import aluminiumDoorWithSheet from '../assets/products/aluminium-door-with-sheet.jpg';
@@ -21,15 +19,10 @@ import topHungOpenableWindows from '../assets/products/top-hung-openable-windows
 import oneSideReflectiveGlass from '../assets/products/one-side-reflective-glass.jpg';
 import slidingWindow from '../assets/products/sliding-window.jpg';
 import curtainWallsSystem from '../assets/products/curtain-walls-system.jpg';
-import acpCladdingCeiling from '../assets/products/acp-cladding-ceiling.jpg';
 import contemporaryLouverSystem from '../assets/products/contemporary-louver-system.jpg';
-import aluminumLouvers from '../assets/products/aluminum-louvers.jpg';
-import mashrabiya from '../assets/products/mashrabiya.jpg';
-import aluminiumLadder from '../assets/products/aluminium-ladder.jpg';
-import quranStand from '../assets/products/quran-stand.jpg';
 import { site } from './site';
 
-export type ProductCategory = 'Doors' | 'Windows' | 'Facades' | 'Louvers' | 'Specialty';
+export type ProductCategory = 'Doors' | 'Windows' | 'Facades' | 'Louvers';
 
 export type ProductHighlightIcon = 'strength' | 'weather' | 'precision' | 'aesthetics';
 
@@ -92,13 +85,6 @@ const louverAxes = [
 	{ label: 'Design Flexibility', value: 94 },
 ] as const;
 
-const specialtyAxes = [
-	{ label: 'Structural Strength', value: 88 },
-	{ label: 'Weather Resistance', value: 72 },
-	{ label: 'Thermal Performance', value: 50 },
-	{ label: 'Acoustic Insulation', value: 40 },
-	{ label: 'Design Flexibility', value: 90 },
-] as const;
 
 const baseSpecs = [
 	{ label: 'Material', value: '6063-T5 Alloy' },
@@ -151,46 +137,6 @@ export const productItems: Product[] = [
 		href: '/products/bi-fold-doors',
 	},
 	{
-		slug: 'automated-doors',
-		title: 'Automated Doors',
-		category: 'Doors',
-		shortDescription: 'Motorized aluminium entrance doors for high-traffic commercial entries.',
-		description:
-			'Automated aluminium door systems for lobbies, retail, and institutional entrances. Profiles support operator hardware with reliable sealing, clean sightlines, and durable finishes for continuous daily use.',
-		image: automatedDoors,
-		gallery: [automatedDoors, revolvingDoor, swingDoors, frenchSlidingDoor],
-		features: [
-			'Operator-ready aluminium framing',
-			'Designed for high-traffic entrances',
-			'Reliable sealing and safety clearances',
-			'Finish options for brand-matched lobbies',
-		],
-		specs: [
-			...baseSpecs,
-			{ label: 'Finish', value: 'Anodized / Powder Coated' },
-			{ label: 'Use', value: 'Commercial entrances' },
-			{ label: 'Operation', value: 'Automatic sliding / swing' },
-			{ label: 'Performance', value: 'High-cycle rated' },
-			{ label: 'Installation', value: 'Operator integrated' },
-		],
-		finishes: ['Anodizing', 'Powder Coating'],
-		applications: [
-			{ title: 'Office Lobbies', description: 'Hands-free entrances for corporate towers.', image: automatedDoors },
-			{ title: 'Retail Fronts', description: 'Smooth automatic access for busy storefronts.', image: revolvingDoor },
-			{ title: 'Hospitals & Campuses', description: 'Accessible entries for institutional buildings.', image: swingDoors },
-		],
-		highlights: defaultHighlights,
-		performance: {
-			axes: [...doorAxes],
-			metrics: [
-				{ label: 'Cycle Durability', value: '200k+ cycles' },
-				{ label: 'Opening Width', value: 'Project sized' },
-				{ label: 'Service Life', value: '15+ Years' },
-			],
-		},
-		href: '/products/automated-doors',
-	},
-	{
 		slug: 'swing-doors',
 		title: 'Swing Doors',
 		category: 'Doors',
@@ -229,46 +175,6 @@ export const productItems: Product[] = [
 			],
 		},
 		href: '/products/swing-doors',
-	},
-	{
-		slug: 'revolving-door',
-		title: 'Revolving Door',
-		category: 'Doors',
-		shortDescription: 'Aluminium revolving door systems for climate-controlled lobby entries.',
-		description:
-			'Revolving door packages that reduce lobby air exchange while keeping pedestrian flow continuous. Aluminium framing supports glazed wings, safety detailing, and premium entrance finishes.',
-		image: revolvingDoor,
-		gallery: [revolvingDoor, automatedDoors, swingDoors, frenchSlidingDoor],
-		features: [
-			'Reduced lobby air exchange',
-			'Glazed wing construction',
-			'Designed for continuous pedestrian flow',
-			'Premium lobby-ready finishes',
-		],
-		specs: [
-			...baseSpecs,
-			{ label: 'Finish', value: 'Anodized / Powder Coated' },
-			{ label: 'Use', value: 'Hotel & tower lobbies' },
-			{ label: 'Operation', value: 'Manual / motorized revolving' },
-			{ label: 'Performance', value: 'Climate buffer entry' },
-			{ label: 'Installation', value: 'Drum & canopy package' },
-		],
-		finishes: ['Anodizing', 'Powder Coating'],
-		applications: [
-			{ title: 'Hotel Lobbies', description: 'Climate-buffered guest entrances with polished finish.', image: revolvingDoor },
-			{ title: 'Corporate Towers', description: 'High-volume entries with reduced HVAC loss.', image: automatedDoors },
-			{ title: 'Banks & Institutions', description: 'Secure, formal entrance statements.', image: swingDoors },
-		],
-		highlights: defaultHighlights,
-		performance: {
-			axes: [...doorAxes],
-			metrics: [
-				{ label: 'Drum Diameter', value: 'Project sized' },
-				{ label: 'Throughput', value: 'High volume' },
-				{ label: 'Service Life', value: '15+ Years' },
-			],
-		},
-		href: '/products/revolving-door',
 	},
 	{
 		slug: 'stable-door',
@@ -478,7 +384,7 @@ export const productItems: Product[] = [
 		description:
 			'Louvered aluminium doors that allow airflow while screening the opening. Stainless-steel handle detailing completes a durable package for utility rooms, plant areas, and ventilated service doors.',
 		image: louversDoorSsHandle,
-		gallery: [louversDoorSsHandle, aluminiumDoorWithSheet, stableDoor, aluminumLouvers],
+		gallery: [louversDoorSsHandle, aluminiumDoorWithSheet, stableDoor, contemporaryLouverSystem],
 		features: [
 			'Integrated aluminium louvers for airflow',
 			'Stainless-steel handle hardware',
@@ -958,7 +864,7 @@ export const productItems: Product[] = [
 		description:
 			'Engineered curtain wall systems for commercial towers and modern facades. Profiles support glazing packages with strength, weather performance, and clean architectural sightlines.',
 		image: curtainWallsSystem,
-		gallery: [curtainWallsSystem, acpCladdingCeiling, oneSideReflectiveGlass, fixedWindow],
+		gallery: [curtainWallsSystem, oneSideReflectiveGlass, fixedWindow, contemporaryLouverSystem],
 		features: [
 			'Stick and unitized-ready profile options',
 			'Designed for high-rise wind and weather loads',
@@ -976,8 +882,8 @@ export const productItems: Product[] = [
 		finishes: [...allFinishes],
 		applications: [
 			{ title: 'Commercial Towers', description: 'High-rise envelopes with clean sightlines.', image: curtainWallsSystem },
-			{ title: 'Corporate Campuses', description: 'Consistent facade language across blocks.', image: acpCladdingCeiling },
-			{ title: 'Mixed-Use Facades', description: 'Flexible spanning for podiums and offices.', image: oneSideReflectiveGlass },
+			{ title: 'Corporate Campuses', description: 'Consistent facade language across blocks.', image: oneSideReflectiveGlass },
+			{ title: 'Mixed-Use Facades', description: 'Flexible spanning for podiums and offices.', image: fixedWindow },
 		],
 		highlights: defaultHighlights,
 		performance: {
@@ -991,46 +897,6 @@ export const productItems: Product[] = [
 		href: '/products/curtain-walls-system',
 	},
 	{
-		slug: 'acp-cladding-ceiling',
-		title: 'ACP Cladding & Ceiling',
-		category: 'Facades',
-		shortDescription: 'Aluminium composite panel cladding and ceiling systems for crisp envelopes.',
-		description:
-			'ACP cladding and ceiling packages for rainscreen facades, soffits, and interior feature ceilings. Flat, durable panels with aluminium framing create crisp contemporary surfaces indoors and out.',
-		image: acpCladdingCeiling,
-		gallery: [acpCladdingCeiling, curtainWallsSystem, aluminumLouvers, contemporaryLouverSystem],
-		features: [
-			'ACP rainscreen and ceiling panels',
-			'Flat, durable contemporary surfaces',
-			'Suitable for facades and soffits',
-			'Wide colour and finish matching',
-		],
-		specs: [
-			...baseSpecs,
-			{ label: 'Finish', value: 'PVDF / Powder Coated' },
-			{ label: 'Use', value: 'Cladding & ceilings' },
-			{ label: 'Panel', value: 'Aluminium composite' },
-			{ label: 'Performance', value: 'Weather & fire options' },
-			{ label: 'Installation', value: 'Rainscreen / cassette' },
-		],
-		finishes: ['Anodizing', 'Powder Coating'],
-		applications: [
-			{ title: 'Commercial Facades', description: 'Crisp rainscreen cladding for street elevations.', image: acpCladdingCeiling },
-			{ title: 'Entrance Soffits', description: 'Feature ceilings for lobbies and canopies.', image: curtainWallsSystem },
-			{ title: 'Retail Podia', description: 'Brand-matched cladding for podium fronts.', image: aluminumLouvers },
-		],
-		highlights: defaultHighlights,
-		performance: {
-			axes: [...facadeAxes],
-			metrics: [
-				{ label: 'Panel Flatness', value: 'Architectural grade' },
-				{ label: 'Colour Fastness', value: 'PVDF options' },
-				{ label: 'Service Life', value: '15+ Years' },
-			],
-		},
-		href: '/products/acp-cladding-ceiling',
-	},
-	{
 		slug: 'contemporary-louver-system',
 		title: 'Contemporary Louver System',
 		category: 'Louvers',
@@ -1038,7 +904,7 @@ export const productItems: Product[] = [
 		description:
 			'Contemporary louver systems that shade elevations while adding depth and rhythm. Adjustable or fixed aluminium blades support solar control, privacy, and architectural expression.',
 		image: contemporaryLouverSystem,
-		gallery: [contemporaryLouverSystem, aluminumLouvers, mashrabiya, acpCladdingCeiling],
+		gallery: [contemporaryLouverSystem, curtainWallsSystem, louversDoorSsHandle, oneSideReflectiveGlass],
 		features: [
 			'Fixed or adjustable blade options',
 			'Solar shading for hot climates',
@@ -1056,8 +922,8 @@ export const productItems: Product[] = [
 		finishes: ['Anodizing', 'Powder Coating'],
 		applications: [
 			{ title: 'Office Facades', description: 'Horizontal louvers for west and south sun.', image: contemporaryLouverSystem },
-			{ title: 'Parking Screens', description: 'Ventilated screens with architectural finish.', image: aluminumLouvers },
-			{ title: 'Courtyards', description: 'Shaded outdoor rooms with filtered light.', image: mashrabiya },
+			{ title: 'Parking Screens', description: 'Ventilated screens with architectural finish.', image: curtainWallsSystem },
+			{ title: 'Courtyards', description: 'Shaded outdoor rooms with filtered light.', image: louversDoorSsHandle },
 		],
 		highlights: defaultHighlights,
 		performance: {
@@ -1070,166 +936,6 @@ export const productItems: Product[] = [
 		},
 		href: '/products/contemporary-louver-system',
 	},
-	{
-		slug: 'aluminum-louvers',
-		title: 'Aluminum Louvers',
-		category: 'Louvers',
-		shortDescription: 'Durable aluminium louvers for ventilation, screening, and sun control.',
-		description:
-			'Aluminium louvers for plant screening, facade ventilation, and solar control. Extruded blades and frames deliver long service life with finishes matched to the wider aluminium package.',
-		image: aluminumLouvers,
-		gallery: [aluminumLouvers, contemporaryLouverSystem, mashrabiya, louversDoorSsHandle],
-		features: [
-			'Extruded aluminium blades',
-			'Ventilation with visual screening',
-			'Suitable for plant and MEP zones',
-			'Corrosion-ready finishes',
-		],
-		specs: [
-			...baseSpecs,
-			{ label: 'Finish', value: 'Anodized / Powder Coated' },
-			{ label: 'Use', value: 'Screening & ventilation' },
-			{ label: 'Blade', value: 'Extruded fixed' },
-			{ label: 'Performance', value: 'Weather & airflow' },
-			{ label: 'Installation', value: 'Frame / modular banks' },
-		],
-		finishes: ['Anodizing', 'Powder Coating'],
-		applications: [
-			{ title: 'MEP Screens', description: 'Conceal plant while keeping airflow.', image: aluminumLouvers },
-			{ title: 'Facade Bands', description: 'Horizontal louver bands on commercial shells.', image: contemporaryLouverSystem },
-			{ title: 'Boundary Walls', description: 'Ventilated privacy screens for compounds.', image: mashrabiya },
-		],
-		highlights: defaultHighlights,
-		performance: {
-			axes: [...louverAxes],
-			metrics: [
-				{ label: 'Airflow', value: 'High free area' },
-				{ label: 'Screening', value: 'Visual privacy' },
-				{ label: 'Service Life', value: '15+ Years' },
-			],
-		},
-		href: '/products/aluminum-louvers',
-	},
-	{
-		slug: 'mashrabiya',
-		title: 'Mashrabiya',
-		category: 'Louvers',
-		shortDescription: 'Ornamental aluminium mashrabiya screens for shade, privacy, and pattern.',
-		description:
-			'Mashrabiya-inspired aluminium screens that filter light and add cultural pattern to facades and courtyards. Precision-cut or framed panels deliver shade and privacy with contemporary metal craft.',
-		image: mashrabiya,
-		gallery: [mashrabiya, contemporaryLouverSystem, aluminumLouvers, acpCladdingCeiling],
-		features: [
-			'Patterned shade and privacy screens',
-			'Cultural facade expression in aluminium',
-			'Filtered daylight for interiors and courtyards',
-			'Custom pattern options',
-		],
-		specs: [
-			...baseSpecs,
-			{ label: 'Finish', value: 'Anodized / Powder / Wood' },
-			{ label: 'Use', value: 'Facade & courtyard screens' },
-			{ label: 'Pattern', value: 'Custom mashrabiya' },
-			{ label: 'Performance', value: 'Shade & privacy' },
-			{ label: 'Installation', value: 'Panel / frame mount' },
-		],
-		finishes: [...allFinishes],
-		applications: [
-			{ title: 'Courtyard Screens', description: 'Patterned privacy with filtered light.', image: mashrabiya },
-			{ title: 'Feature Facades', description: 'Cultural motif as a modern metal skin.', image: contemporaryLouverSystem },
-			{ title: 'Balcony Screens', description: 'Shade for residential balconies.', image: aluminumLouvers },
-		],
-		highlights: defaultHighlights,
-		performance: {
-			axes: [...louverAxes],
-			metrics: [
-				{ label: 'Pattern', value: 'Custom cut' },
-				{ label: 'Shade Factor', value: 'High' },
-				{ label: 'Service Life', value: '15+ Years' },
-			],
-		},
-		href: '/products/mashrabiya',
-	},
-	{
-		slug: 'aluminium-ladder',
-		title: 'Aluminium Ladder',
-		category: 'Specialty',
-		shortDescription: 'Lightweight structural aluminium ladders for industrial and site use.',
-		description:
-			'Aluminium ladders fabricated for strength at low weight. Suitable for industrial access, plant rooms, and site work where corrosion resistance and portability matter.',
-		image: aluminiumLadder,
-		gallery: [aluminiumLadder, quranStand, aluminiumDoorWithSheet, aluminumLouvers],
-		features: [
-			'Lightweight high-strength aluminium',
-			'Corrosion resistant for outdoor use',
-			'Industrial and site access ready',
-			'Custom length options',
-		],
-		specs: [
-			...baseSpecs,
-			{ label: 'Finish', value: 'Mill / Anodized' },
-			{ label: 'Use', value: 'Access & industrial' },
-			{ label: 'Construction', value: 'Welded / riveted' },
-			{ label: 'Performance', value: 'Load rated' },
-			{ label: 'Installation', value: 'Portable / fixed mount' },
-		],
-		finishes: ['Anodizing'],
-		applications: [
-			{ title: 'Plant Access', description: 'Light ladders for mechanical rooms.', image: aluminiumLadder },
-			{ title: 'Site Work', description: 'Portable access for construction teams.', image: aluminiumDoorWithSheet },
-			{ title: 'Warehouses', description: 'Durable access for storage mezzanines.', image: aluminumLouvers },
-		],
-		highlights: defaultHighlights,
-		performance: {
-			axes: [...specialtyAxes],
-			metrics: [
-				{ label: 'Weight', value: 'Lightweight alloy' },
-				{ label: 'Load Rating', value: 'Industrial' },
-				{ label: 'Service Life', value: '10+ Years' },
-			],
-		},
-		href: '/products/aluminium-ladder',
-	},
-	{
-		slug: 'quran-stand',
-		title: 'Quran Stand',
-		category: 'Specialty',
-		shortDescription: 'Crafted aluminium Quran stands for mosques, homes, and institutions.',
-		description:
-			'Purpose-built aluminium Quran stands combining structural stability with refined detailing. Suitable for mosques, prayer rooms, and homes seeking durable metal craftsmanship.',
-		image: quranStand,
-		gallery: [quranStand, aluminiumLadder, mashrabiya, aluminiumDoorWithSheet],
-		features: [
-			'Stable aluminium frame construction',
-			'Refined detailing for sacred spaces',
-			'Lightweight and durable',
-			'Custom size and finish options',
-		],
-		specs: [
-			...baseSpecs,
-			{ label: 'Finish', value: 'Anodized / Powder / Wood' },
-			{ label: 'Use', value: 'Mosque & home' },
-			{ label: 'Construction', value: 'Fabricated stand' },
-			{ label: 'Performance', value: 'Stable & durable' },
-			{ label: 'Installation', value: 'Freestanding' },
-		],
-		finishes: [...allFinishes],
-		applications: [
-			{ title: 'Mosques', description: 'Durable stands for prayer halls.', image: quranStand },
-			{ title: 'Homes', description: 'Refined metal craft for private prayer spaces.', image: mashrabiya },
-			{ title: 'Institutions', description: 'Matching stands for schools and foundations.', image: aluminiumLadder },
-		],
-		highlights: defaultHighlights,
-		performance: {
-			axes: [...specialtyAxes],
-			metrics: [
-				{ label: 'Stability', value: 'Weighted base options' },
-				{ label: 'Finish Range', value: 'Full catalogue' },
-				{ label: 'Service Life', value: '10+ Years' },
-			],
-		},
-		href: '/products/quran-stand',
-	},
 ];
 
 export const products = {
@@ -1238,7 +944,7 @@ export const products = {
 	description: 'Doors, windows, facades, louvers, and specialty aluminium — engineered for precision, performance, and lasting finish.',
 	seoTitle: `Products | ${site.name}`,
 	seoDescription:
-		'Browse Pak Alumex aluminium products — doors, windows, curtain walls, ACP cladding, louvers, mashrabiya, and specialty fabrications.',
+		'Browse Pak Alumex aluminium products — doors, windows, curtain walls, louvers, and architectural aluminium systems.',
 	items: productItems,
 } as const;
 

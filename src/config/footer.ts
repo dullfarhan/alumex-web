@@ -21,7 +21,6 @@ export const footer = {
 				{ href: '/products?category=Windows', label: 'Windows' },
 				{ href: '/products?category=Facades', label: 'Facades' },
 				{ href: '/products?category=Louvers', label: 'Louvers' },
-				{ href: '/products?category=Specialty', label: 'Specialty' },
 			],
 		},
 		{

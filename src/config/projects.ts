@@ -39,7 +39,7 @@ export const projectItems: Project[] = [
 		],
 		systems: [
 			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
-			{ label: 'ACP Cladding & Ceiling', href: '/products/acp-cladding-ceiling' },
+			{ label: 'Contemporary Louver System', href: '/products/contemporary-louver-system' },
 		],
 		image: horizonTower,
 		gallery: [horizonTower, metroCorporateHub, canalViewCampus, harbourMixedUse],
@@ -83,7 +83,7 @@ export const projectItems: Project[] = [
 		],
 		systems: [
 			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
-			{ label: 'Aluminum Louvers', href: '/products/aluminum-louvers' },
+			{ label: 'Contemporary Louver System', href: '/products/contemporary-louver-system' },
 		],
 		image: metroCorporateHub,
 		gallery: [metroCorporateHub, horizonTower, canalViewCampus, harbourMixedUse],
@@ -128,7 +128,7 @@ export const projectItems: Project[] = [
 		systems: [
 			{ label: 'French Sliding Door', href: '/products/french-sliding-door' },
 			{ label: 'Sliding Window', href: '/products/sliding-window' },
-			{ label: 'Mashrabiya', href: '/products/mashrabiya' },
+			{ label: 'Contemporary Louver System', href: '/products/contemporary-louver-system' },
 		],
 		image: harbourMixedUse,
 		gallery: [harbourMixedUse, metroCorporateHub, crescentResidences, canalViewCampus],
