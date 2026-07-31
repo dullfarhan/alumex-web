@@ -1,5 +1,11 @@
 import { navLinks } from './navigation';
 
+export const socialLinks = [
+	{ href: 'https://www.instagram.com/pakalumexpakistan', label: 'Instagram', external: true },
+	{ href: 'https://www.facebook.com/pakalumexindustries', label: 'Facebook', external: true },
+	{ href: 'https://www.tiktok.com/@pakalumexindustries', label: 'TikTok', external: true },
+] as const;
+
 export const footer = {
 	links: navLinks,
 	hours: 'Sat–Thu · 9am–6pm',
@@ -25,11 +31,7 @@ export const footer = {
 		},
 		{
 			title: 'Social',
-			links: [
-				{ href: 'https://www.instagram.com/pakalumexpakistan', label: 'Instagram', external: true },
-				{ href: 'https://www.facebook.com/pakalumexindustries', label: 'Facebook', external: true },
-				{ href: 'https://www.tiktok.com/@pakalumexindustries', label: 'TikTok', external: true },
-			],
+			links: socialLinks,
 		},
 	],
 } as const;
