@@ -28,9 +28,9 @@ import { products } from '../../config/products';
 	const search = document.getElementById('products-search') as HTMLInputElement | null;
 	const chips = document.querySelectorAll<HTMLButtonElement>('[data-category-filter]');
 	const cards = document.querySelectorAll<HTMLElement>(
-		'#products-grid [data-product-card]:not([data-carousel-clone])',
+		'[data-products-catalog] [data-product-card]:not([data-carousel-clone])',
 	);
-	const carousel = document.querySelector('[data-mobile-carousel]');
+	const carousel = document.querySelector('[data-products-catalog] [data-mobile-carousel]');
 	const countEl = document.getElementById('products-count');
 	const emptyEl = document.getElementById('products-empty');
 

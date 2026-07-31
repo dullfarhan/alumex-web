@@ -26,7 +26,7 @@ const listingNumber = String(index + 1).padStart(2, '0');
 	data-title={product.title}
 	data-category={product.category}
 	data-description={`${product.shortDescription} ${product.description}`}
-	class="group flex w-full max-w-[22.5rem] flex-col rounded-[1.5rem] shadow-[-10px_0_24px_rgba(18,43,77,0.1),10px_0_24px_rgba(18,43,77,0.1),0_6px_16px_rgba(18,43,77,0.06)] transition-shadow duration-300 hover:shadow-[-12px_0_28px_rgba(18,43,77,0.12),12px_0_28px_rgba(18,43,77,0.12),0_8px_18px_rgba(18,43,77,0.08)]"
+	class="group flex w-full max-w-[22.5rem] flex-col rounded-[1.5rem] shadow-none transition-shadow duration-300 sm:shadow-[-10px_0_24px_rgba(18,43,77,0.1),10px_0_24px_rgba(18,43,77,0.1),0_6px_16px_rgba(18,43,77,0.06)] sm:hover:shadow-[-12px_0_28px_rgba(18,43,77,0.12),12px_0_28px_rgba(18,43,77,0.12),0_8px_18px_rgba(18,43,77,0.08)]"
 >
 	<div
 		class="relative h-[16rem] shrink-0 overflow-hidden rounded-t-[1.5rem] bg-gradient-to-br from-[#c5d8ee] via-[#d7e6f5] to-[#b9d4ec]"

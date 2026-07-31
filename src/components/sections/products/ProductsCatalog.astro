@@ -5,16 +5,23 @@ import MobileCarousel from '../../ui/MobileCarousel.astro';
 import ProductCard from './ProductCard.astro';
 ---
 
-<section class="border-b border-silver/40 bg-background">
+<section class="border-b border-silver/40 bg-background" data-products-catalog>
 	<Container>
-		<MobileCarousel
-			label="Product catalog"
-			controlsPosition="bottom-right"
-			trackId="products-grid"
-			desktopClass="min-w-0 sm:grid sm:grid-cols-1 sm:justify-items-center sm:gap-6 lg:grid-cols-2 lg:gap-7 xl:grid-cols-3 xl:gap-8"
+		{/* Mobile carousel only */}
+		<div class="sm:hidden">
+			<MobileCarousel label="Product catalog" trackId="products-grid-mobile" desktopClass="w-full">
+				{productItems.map((product, index) => <ProductCard product={product} index={index} />)}
+			</MobileCarousel>
+		</div>
+
+		{/* Desktop / tablet grid — separate from carousel */}
+		<div
+			id="products-grid"
+			class="hidden sm:flex flex-wrap justify-center gap-6"
 		>
 			{productItems.map((product, index) => <ProductCard product={product} index={index} />)}
-		</MobileCarousel>
+		</div>
+
 		<p id="products-empty" class="hidden py-16 text-center text-muted" hidden>
 			No systems match your search. Try another keyword or category.
 		</p>
