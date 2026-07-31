@@ -1,10 +1,20 @@
 ---
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import facebookIcon from '../../assets/icons/facebook.svg';
+import instagramIcon from '../../assets/icons/instagram.svg';
+import tiktokIcon from '../../assets/icons/tiktok.svg';
 import logo from '../../assets/logo-white.png';
 import { footer } from '../../config/footer';
 import { site } from '../../config/site';
 import ArrowRight from '../icons/ArrowRight.astro';
 import Container from './Container.astro';
+
+const socialIcons: Record<string, ImageMetadata> = {
+	Instagram: instagramIcon,
+	Facebook: facebookIcon,
+	TikTok: tiktokIcon,
+};
 ---
 
 <footer class="bg-primary-dark text-white">
@@ -40,19 +50,35 @@ import Container from './Container.astro';
 									: 'space-y-2.5 sm:space-y-3',
 							]}
 						>
-							{column.links.map((link) => (
-								<li>
-									<a
-										href={link.href}
-										class="text-sm text-white/65 transition-colors hover:text-white"
-										{...('external' in link && link.external
-											? { target: '_blank', rel: 'noopener noreferrer' }
-											: {})}
-									>
-										{link.label}
-									</a>
-								</li>
-							))}
+							{column.links.map((link) => {
+								const icon = column.title === 'Social' ? socialIcons[link.label] : undefined;
+								return (
+									<li>
+										<a
+											href={link.href}
+											class:list={[
+												'group text-sm text-white/65 transition-colors hover:text-white',
+												icon && 'inline-flex items-center gap-2',
+											]}
+											{...('external' in link && link.external
+												? { target: '_blank', rel: 'noopener noreferrer' }
+												: {})}
+										>
+											{icon && (
+												<Image
+													src={icon}
+													alt=""
+													width={16}
+													height={16}
+													class="h-5 w-5 opacity-65 transition-opacity group-hover:opacity-100"
+													aria-hidden="true"
+												/>
+											)}
+											{link.label}
+										</a>
+									</li>
+								);
+							})}
 						</ul>
 					</nav>
 				))

@@ -2,7 +2,7 @@ import { navLinks } from './navigation';
 
 export const footer = {
 	links: navLinks,
-	hours: 'Always open',
+	hours: 'Sat–Thu · 9am–6pm',
 	columns: [
 		{
 			title: 'Company',
@@ -28,6 +28,7 @@ export const footer = {
 			links: [
 				{ href: 'https://www.instagram.com/pakalumexpakistan', label: 'Instagram', external: true },
 				{ href: 'https://www.facebook.com/pakalumexindustries', label: 'Facebook', external: true },
+				{ href: 'https://www.tiktok.com/@pakalumexindustries', label: 'TikTok', external: true },
 			],
 		},
 	],
