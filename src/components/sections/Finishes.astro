@@ -14,7 +14,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 		/>
 
 		<ul
-			class="flex flex-wrap gap-6 justify-center"
+			class="grid grid-cols-1 gap-5 sm:gap-6"
 			data-anim-stagger
 		>
 			{
@@ -22,20 +22,18 @@ import SectionHeader from '../ui/SectionHeader.astro';
 					<li class="min-w-0">
 						<a
 							href={item.href}
-							class="group relative block h-[360px] w-[200px] origin-center overflow-hidden shadow-[8px_16px_32px_rgba(18,43,77,0.28)] transition-transform duration-500 ease-out [transform:perspective(900px)_rotateY(-16deg)] hover:z-10 hover:[transform:perspective(900px)_rotateY(-16deg)_scale(1.08)] sm:h-[460px] md:w-[250px]"
+							class="group relative block h-[100px] sm:h-[150px] w-full overflow-hidden rounded-2xl shadow-[0_12px_32px_rgba(18,43,77,0.18)] transition-transform duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(18,43,77,0.24)]"
 						>
 							<Image
 								src={item.image}
 								alt={item.title}
-								widths={[320, 480, 640]}
-								sizes="(max-width: 768px) 50vw, 33vw"
-								class="absolute inset-0 h-full w-full object-cover"
+								widths={[400, 640, 960]}
+								sizes="(max-width: 640px) 100vw, 33vw"
+								class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
 							/>
-							<div class="absolute inset-0 bg-primary-dark/45 transition-colors duration-300 group-hover:bg-primary-dark/55"></div>
-							<div class="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-linear-to-r from-white/25 to-transparent opacity-70"></div>
-							<div class="pointer-events-none absolute inset-y-0 right-0 w-1/5 bg-linear-to-l from-black/35 to-transparent"></div>
-							<div class="absolute inset-x-0 bottom-0 px-4 pt-16 pb-6 text-center sm:px-5 sm:pb-7">
-								<h3 class="font-display text-sm font-bold tracking-wide text-white drop-shadow-sm sm:text-base md:text-lg">
+							<div class="absolute inset-0 bg-primary-dark/40 transition-colors duration-300 group-hover:bg-primary-dark/50"></div>
+							<div class="pointer-events-none absolute inset-x-0 bottom-0 pt-20 pb-6 text-center sm:px-6 sm:pb-7">
+								<h3 class="font-display text-base font-bold tracking-wide text-white drop-shadow-sm sm:text-lg md:text-xl">
 									{item.title}
 								</h3>
 								<span class="mt-2 inline-block text-xs tracking-wide text-white/80 uppercase">
