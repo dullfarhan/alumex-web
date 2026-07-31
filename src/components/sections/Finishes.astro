@@ -14,7 +14,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 		/>
 
 		<ul
-			class="mx-auto grid max-w-5xl grid-cols-1 gap-6 pb-2 sm:grid-cols-3 md:gap-8"
+			class="flex flex-wrap gap-6 justify-center"
 			data-anim-stagger
 		>
 			{
@@ -22,7 +22,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 					<li class="min-w-0">
 						<a
 							href={item.href}
-							class="group relative block h-64 w-full origin-center overflow-hidden shadow-[8px_16px_32px_rgba(18,43,77,0.28)] transition-transform duration-500 ease-out [transform:perspective(900px)_rotateY(-16deg)] hover:z-10 hover:[transform:perspective(900px)_rotateY(-16deg)_scale(1.08)] sm:h-[460px]"
+							class="group relative block h-[360px] w-[200px] origin-center overflow-hidden shadow-[8px_16px_32px_rgba(18,43,77,0.28)] transition-transform duration-500 ease-out [transform:perspective(900px)_rotateY(-16deg)] hover:z-10 hover:[transform:perspective(900px)_rotateY(-16deg)_scale(1.08)] sm:h-[460px] md:w-[250px]"
 						>
 							<Image
 								src={item.image}

@@ -55,26 +55,30 @@ export const projectsMega = {
 export const productsMega = {
 	trigger: { label: 'Products', href: '/products' },
 	viewAll: { label: 'View all architectural systems', href: '/products' },
-	categories: productItems.map((item) => ({
-		id: item.slug,
-		title: item.title,
-		description: item.shortDescription,
-		href: item.href,
-		image: item.image,
-		imageAlt: item.title,
-		capabilities: systems.items.map((capability) => ({
-			label: capability.title,
-			description: capability.description,
+	// Navbar shows one product per major category — not the full 28-item catalog.
+	categories: (['Doors', 'Windows', 'Facades', 'Louvers'] as const)
+		.map((category) => productItems.find((item) => item.category === category))
+		.filter((item): item is (typeof productItems)[number] => Boolean(item))
+		.map((item) => ({
+			id: item.slug,
+			title: item.title,
+			description: item.shortDescription,
+			href: item.href,
+			image: item.image,
+			imageAlt: item.title,
+			capabilities: systems.items.map((capability) => ({
+				label: capability.title,
+				description: capability.description,
+			})),
+			finishes: item.finishes.slice(0, 4).map((finish) => {
+				const match = finishes.items.find((f) => f.title === finish);
+				return {
+					label: finish,
+					href: match?.href ?? '/#finishes',
+				};
+			}),
+			specs: item.specs,
 		})),
-		finishes: item.finishes.slice(0, 4).map((finish) => {
-			const match = finishes.items.find((f) => f.title === finish);
-			return {
-				label: finish,
-				href: match?.href ?? '/#finishes',
-			};
-		}),
-		specs: item.specs,
-	})),
 	footerTiles: [
 		{
 			title: 'Request a quote',
