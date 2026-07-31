@@ -1,6 +1,6 @@
 import { finishes } from './finishes';
 import { systems } from './home';
-import { productItems } from './products';
+import { productItems, type ProductCategory } from './products';
 import { projectItems } from './projects';
 
 const uniqueCategories = [...new Set(projectItems.map((item) => item.category))];
@@ -52,33 +52,49 @@ export const projectsMega = {
 	},
 } as const;
 
+const megaCategoryOrder = ['Doors', 'Windows', 'Facades', 'Louvers'] as const satisfies readonly ProductCategory[];
+
+const megaCategoryCopy: Record<(typeof megaCategoryOrder)[number], string> = {
+	Doors: 'Aluminium door systems for residential and commercial entrances — swinging, sliding, bi-fold, and more.',
+	Windows: 'Precision window systems for daylight, ventilation, and weather performance across every opening type.',
+	Facades: 'Curtain wall and facade systems engineered for high-rise strength, weather sealing, and clean sightlines.',
+	Louvers: 'Architectural louver systems for solar control, screening, and facade rhythm.',
+};
+
 export const productsMega = {
 	trigger: { label: 'Products', href: '/products' },
 	viewAll: { label: 'View all architectural systems', href: '/products' },
-	// Navbar shows one product per major category — not the full 28-item catalog.
-	categories: (['Doors', 'Windows', 'Facades', 'Louvers'] as const)
-		.map((category) => productItems.find((item) => item.category === category))
-		.filter((item): item is (typeof productItems)[number] => Boolean(item))
-		.map((item) => ({
-			id: item.slug,
-			title: item.title,
-			description: item.shortDescription,
-			href: item.href,
-			image: item.image,
-			imageAlt: item.title,
-			capabilities: systems.items.map((capability) => ({
-				label: capability.title,
-				description: capability.description,
-			})),
-			finishes: item.finishes.slice(0, 4).map((finish) => {
-				const match = finishes.items.find((f) => f.title === finish);
-				return {
-					label: finish,
-					href: match?.href ?? '/#finishes',
-				};
-			}),
-			specs: item.specs,
-		})),
+	categories: megaCategoryOrder
+		.map((category) => {
+			const inCategory = productItems.filter((item) => item.category === category);
+			const featured = inCategory[0];
+			if (!featured) return null;
+
+			const finishNames = [...new Set(inCategory.flatMap((item) => item.finishes))].slice(0, 4);
+
+			return {
+				id: category.toLowerCase(),
+				title: category,
+				description: megaCategoryCopy[category],
+				href: `/products?category=${encodeURIComponent(category)}`,
+				count: inCategory.length,
+				image: featured.image,
+				imageAlt: `${category} — ${featured.title}`,
+				capabilities: systems.items.map((capability) => ({
+					label: capability.title,
+					description: capability.description,
+				})),
+				finishes: finishNames.map((finish) => {
+					const match = finishes.items.find((f) => f.title === finish);
+					return {
+						label: finish,
+						href: match?.href ?? '/#finishes',
+					};
+				}),
+				specs: featured.specs,
+			};
+		})
+		.filter((item): item is NonNullable<typeof item> => Boolean(item)),
 	footerTiles: [
 		{
 			title: 'Request a quote',

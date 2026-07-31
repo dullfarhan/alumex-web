@@ -34,6 +34,10 @@ import { products } from '../../config/products';
 	const countEl = document.getElementById('products-count');
 	const emptyEl = document.getElementById('products-empty');
 
+	const validCategories = new Set(
+		[...chips].map((chip) => chip.dataset.categoryFilter).filter((value): value is string => Boolean(value)),
+	);
+
 	let activeCategory = 'All';
 
 	const applyFilter = () => {
@@ -45,7 +49,11 @@ import { products } from '../../config/products';
 			const category = card.dataset.category ?? '';
 			const description = card.dataset.description?.toLowerCase() ?? '';
 			const matchesCategory = activeCategory === 'All' || category === activeCategory;
-			const matchesQuery = !query || title.includes(query) || description.includes(query) || category.toLowerCase().includes(query);
+			const matchesQuery =
+				!query ||
+				title.includes(query) ||
+				description.includes(query) ||
+				category.toLowerCase().includes(query);
 			const show = matchesCategory && matchesQuery;
 			card.hidden = !show;
 			card.classList.toggle('hidden', !show);
@@ -67,10 +75,27 @@ import { products } from '../../config/products';
 		carousel?.dispatchEvent(new Event('carousel:refresh'));
 	};
 
-	search?.addEventListener('input', applyFilter);
+	const syncCategoryToUrl = (category: string) => {
+		const url = new URL(window.location.href);
+		if (!category || category === 'All') url.searchParams.delete('category');
+		else url.searchParams.set('category', category);
+		history.replaceState({}, '', url);
+	};
 
-	const setCategory = (category: string) => {
-		activeCategory = category;
+	const resolveCategory = (raw: string | null) => {
+		if (!raw) return null;
+		const value = raw.trim();
+		if (!value || value.toLowerCase() === 'all') return 'All';
+		const exact = [...validCategories].find((category) => category === value);
+		if (exact) return exact;
+		const caseInsensitive = [...validCategories].find(
+			(category) => category.toLowerCase() === value.toLowerCase(),
+		);
+		return caseInsensitive ?? null;
+	};
+
+	const setCategory = (category: string, { syncUrl = true }: { syncUrl?: boolean } = {}) => {
+		activeCategory = validCategories.has(category) ? category : 'All';
 		chips.forEach((chip) => {
 			const active = (chip.dataset.categoryFilter ?? 'All') === activeCategory;
 			chip.setAttribute('aria-pressed', String(active));
@@ -81,7 +106,10 @@ import { products } from '../../config/products';
 			chip.classList.toggle('text-heading', !active);
 		});
 		applyFilter();
+		if (syncUrl) syncCategoryToUrl(activeCategory);
 	};
+
+	search?.addEventListener('input', applyFilter);
 
 	chips.forEach((chip) => {
 		chip.addEventListener('click', () => {
@@ -89,8 +117,6 @@ import { products } from '../../config/products';
 		});
 	});
 
-	const categoryFromUrl = new URLSearchParams(window.location.search).get('category');
-	if (categoryFromUrl && [...chips].some((chip) => chip.dataset.categoryFilter === categoryFromUrl)) {
-		setCategory(categoryFromUrl);
-	}
+	const categoryFromUrl = resolveCategory(new URLSearchParams(window.location.search).get('category'));
+	if (categoryFromUrl) setCategory(categoryFromUrl, { syncUrl: false });
 </script>
