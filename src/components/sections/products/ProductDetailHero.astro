@@ -26,87 +26,75 @@ const { product, collectionHref = '/products', collectionLabel = 'Products' } = 
 
 <section class="bg-background">
 	<Container class="!px-0 !pt-24 !pb-8 sm:!px-12 sm:!pt-24 md:!pt-28 md:!pb-12">
-		<!-- Breadcrumbs stay outside the rounded hero panel -->
 		<nav class="mb-6 px-6 text-sm text-muted sm:px-0" aria-label="Breadcrumb">
 			<ol class="flex flex-wrap items-center gap-2">
 				<li><a href="/" class="transition-colors hover:text-primary">Home</a></li>
 				<li aria-hidden="true">/</li>
 				<li><a href={collectionHref} class="transition-colors hover:text-primary">{collectionLabel}</a></li>
 				<li aria-hidden="true">/</li>
-				<li><a href={collectionHref} class="transition-colors hover:text-primary">{product.category}</a></li>
+				<li>
+					<a
+						href={`${collectionHref}?category=${encodeURIComponent(product.category)}`}
+						class="transition-colors hover:text-primary"
+					>
+						{product.category}
+					</a>
+				</li>
 				<li aria-hidden="true">/</li>
 				<li class="text-heading">{product.title}</li>
 			</ol>
 		</nav>
 
-		<div
-			class="relative min-h-[min(36rem,calc(100vh-8rem))] overflow-hidden bg-[#e8f1fa] sm:rounded-4xl"
-		>
-			<!-- Image: full behind content on mobile, diagonal cut on desktop -->
-			<div
-				class="absolute inset-0 md:[clip-path:polygon(58%_0%,100%_0%,100%_100%,46%_100%)]"
-				aria-hidden="true"
-			>
-				<Image
-					src={product.image}
-					alt=""
-					widths={[640, 960, 1400, 2000]}
-					sizes="(max-width: 767px) 100vw, 60vw"
-					class="absolute inset-0 h-full w-full object-cover"
-					loading="eager"
-					fetchpriority="high"
-				/>
-				<div class="absolute inset-0 bg-[#e8f1fa]/88 backdrop-blur-[1px] md:hidden"></div>
-				<div class="absolute inset-0 hidden bg-linear-to-l from-transparent via-transparent to-[#e8f1fa]/10 md:block"></div>
-			</div>
+		<div class="relative min-h-[min(44rem,calc(100vh-6rem))] overflow-hidden sm:rounded-4xl">
+			<Image
+				src={product.image}
+				alt={product.title}
+				widths={[800, 1200, 1600, 2000]}
+				sizes="(max-width: 1440px) 100vw, 1440px"
+				quality={90}
+				class="absolute inset-0 h-full w-full object-cover"
+				loading="eager"
+				fetchpriority="high"
+			/>
+			<div class="absolute inset-0 bg-linear-to-t from-primary-dark via-primary-dark/55 to-primary-dark/25"></div>
 
-			<div
-				class="pointer-events-none absolute inset-0 hidden bg-[radial-gradient(circle,rgba(20,36,60,0.08)_1px,transparent_1px)] bg-size-[16px_16px] [mask-image:radial-gradient(ellipse_at_bottom_left,black_20%,transparent_65%)] md:block"
-				aria-hidden="true"
-			>
-			</div>
-
-			<div
-				class="relative z-10 flex min-h-[min(36rem,calc(100vh-8rem))] w-full flex-col items-center justify-center px-8 py-14 text-center md:w-[50%] md:items-start md:px-12 md:py-16 md:text-left lg:py-20"
-			>
-				<div class="flex w-full max-w-xl flex-col items-center md:items-start">
-					<div class="mb-5 flex items-center justify-center gap-3 md:justify-start">
-						<span class="hidden h-px w-8 shrink-0 bg-primary md:block"></span>
-						<span class="text-[11px] font-medium tracking-[0.12em] text-primary uppercase sm:text-xs">
-							{product.category}
-						</span>
-					</div>
-
+			<div class="relative flex min-h-[min(44rem,calc(100vh-6rem))] items-end">
+				<div class="mt-auto w-full px-8 pt-24 pb-10 md:px-12 md:pt-32 md:pb-12 lg:pb-14">
+					<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-white/80 uppercase">
+						{product.category}
+					</span>
 					<h1
-						class="mb-5 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl lg:text-[3.1rem] lg:leading-[1.08]"
+						class="max-w-4xl font-display text-[2rem] leading-[1.05] font-bold tracking-tight text-white sm:text-4xl md:text-[3.25rem]"
 					>
 						{product.title}
 					</h1>
-
-					<p class="mb-8 max-w-md text-base leading-relaxed text-heading/75 sm:text-lg md:text-muted">
+					<p class="mt-4 max-w-2xl text-base leading-relaxed text-white/90 md:text-lg">
 						{product.description}
 					</p>
 
-					<div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:justify-start">
-						<Button href="/contact">
+					<div class="mt-6">
+						<Button
+							href="/contact"
+							class="!rounded-full !border-white !bg-transparent !text-white hover:!bg-white hover:!text-primary-dark"
+						>
 							Request Quote
 							<ArrowRight class="h-4 w-4" />
 						</Button>
 					</div>
-				</div>
 
-				<ul class="mt-12 grid w-full max-w-xl grid-cols-2 gap-x-5 gap-y-6 border-t border-border-light pt-8 sm:grid-cols-4">
-					{
-						product.highlights.map((item) => (
-							<li class="flex flex-col items-center gap-2 text-center md:items-start md:text-left">
-								<span class="flex h-10 w-10 items-center justify-center rounded-full border border-silver/60 bg-white/70 text-primary">
-									<HighlightIcon name={item.icon} class="h-5 w-5" />
-								</span>
-								<span class="text-xs leading-snug font-medium text-heading sm:text-sm">{item.label}</span>
-							</li>
-						))
-					}
-				</ul>
+					<ul class="mt-8 grid max-w-3xl grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-4">
+						{
+							product.highlights.map((item) => (
+								<li class="flex flex-col items-start gap-2 text-left">
+									<span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white">
+										<HighlightIcon name={item.icon} class="h-5 w-5" />
+									</span>
+									<span class="text-xs leading-snug font-medium text-white/90 sm:text-sm">{item.label}</span>
+								</li>
+							))
+						}
+					</ul>
+				</div>
 			</div>
 		</div>
 	</Container>
