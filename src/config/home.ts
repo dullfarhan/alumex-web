@@ -1,10 +1,10 @@
 export const expertise = {
 	number: '01',
 	label: 'Our Expertise',
-	title: 'A legacy of precision manufacturing.',
+	title: 'Leading aluminium manufacturing across Pakistan.',
 	description:
-		'From extrusion to anodizing, every profile is crafted with meticulous attention to detail, meeting international standards for strength and finish.',
-	link: { href: '/about', label: 'Learn more about our process' },
+		'From extrusion and powder coating to anodizing and wood finish, Pak Alumex modernizes production with imported tools and machinery — backed by a nationwide dealership network.',
+	link: { href: '/about', label: 'Learn more about us' },
 } as const;
 
 export const systems = {
