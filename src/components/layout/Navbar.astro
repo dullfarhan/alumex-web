@@ -119,15 +119,15 @@ const triggerLabelClass =
 						socialLinks.map((link) => {
 							const Icon = socialIconComponents[link.label as keyof typeof socialIconComponents];
 							return (
-									<a
-										href={link.href}
-										target="_blank"
-										rel="noopener noreferrer"
-										aria-label={link.label}
-										class="inline-flex items-center justify-center text-heading transition-colors hover:text-primary"
-									>
-										{Icon && <Icon class="h-6 w-6" />}
-									</a>
+								<a
+									href={link.href}
+									target="_blank"
+									rel="noopener noreferrer"
+									aria-label={link.label}
+									class="inline-flex items-center justify-center opacity-90 transition-opacity hover:opacity-100"
+								>
+									{Icon && <Icon class="h-5 w-5 sm:h-6 sm:w-6" />}
+								</a>
 							);
 						})
 					}

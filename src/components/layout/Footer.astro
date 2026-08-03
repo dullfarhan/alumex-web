@@ -1,20 +1,19 @@
 ---
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
-import facebookIcon from '../../assets/icons/facebook.svg';
-import instagramIcon from '../../assets/icons/instagram.svg';
-import tiktokIcon from '../../assets/icons/tiktok.svg';
 import logo from '../../assets/logo-white.png';
 import { footer } from '../../config/footer';
 import { site } from '../../config/site';
 import ArrowRight from '../icons/ArrowRight.astro';
+import FacebookIcon from '../icons/FacebookIcon.astro';
+import InstagramIcon from '../icons/InstagramIcon.astro';
+import TikTokIcon from '../icons/TikTokIcon.astro';
 import Container from './Container.astro';
 
-const socialIcons: Record<string, ImageMetadata> = {
-	Instagram: instagramIcon,
-	Facebook: facebookIcon,
-	TikTok: tiktokIcon,
-};
+const socialIconComponents = {
+	Instagram: InstagramIcon,
+	Facebook: FacebookIcon,
+	TikTok: TikTokIcon,
+} as const;
 ---
 
 <footer class="bg-primary-dark text-white">
@@ -51,28 +50,26 @@ const socialIcons: Record<string, ImageMetadata> = {
 							]}
 						>
 							{column.links.map((link) => {
-								const icon = column.title === 'Social' ? socialIcons[link.label] : undefined;
+								const Icon =
+									column.title === 'Social'
+										? socialIconComponents[link.label as keyof typeof socialIconComponents]
+										: undefined;
 								return (
 									<li>
 										<a
 											href={link.href}
 											class:list={[
 												'group text-sm text-white/65 transition-colors hover:text-white',
-												icon && 'inline-flex items-center gap-2',
+												Icon && 'inline-flex items-center gap-2',
 											]}
 											{...('external' in link && link.external
 												? { target: '_blank', rel: 'noopener noreferrer' }
 												: {})}
 										>
-											{icon && (
-												<Image
-													src={icon}
-													alt=""
-													width={16}
-													height={16}
-													class="h-6 w-6 brightness-0 invert opacity-65 transition-opacity group-hover:opacity-100"
-													aria-hidden="true"
-												/>
+											{Icon && (
+												<span class:list={[link.label === 'TikTok' && 'brightness-0 invert']}>
+													<Icon class="h-6 w-6 opacity-90 transition-opacity group-hover:opacity-100" />
+												</span>
 											)}
 											{link.label}
 										</a>
@@ -89,7 +86,7 @@ const socialIcons: Record<string, ImageMetadata> = {
 					<p class="mb-4 text-sm text-white/65 sm:mb-5">{footer.hours}</p>
 					<a
 						href="/contact"
-						class="inline-flex w-full items-center justify-center gap-2 !rounded-full bg-white px-5 py-2.5 text-sm font-medium text-primary-dark transition-colors hover:bg-accent hover:text-white sm:w-auto sm:justify-start"
+						class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-medium text-primary-dark transition-colors hover:bg-accent hover:text-white sm:w-auto sm:justify-start"
 					>
 						Contact Us
 						<ArrowRight class="h-3.5 w-3.5" />
