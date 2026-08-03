@@ -61,40 +61,61 @@ const megaCategoryCopy: Record<(typeof megaCategoryOrder)[number], string> = {
 	Louvers: 'Architectural louver systems for solar control, screening, and facade rhythm.',
 };
 
+const productCategories = megaCategoryOrder
+	.map((category) => {
+		const inCategory = productItems.filter((item) => item.category === category);
+		const featured = inCategory[0];
+		if (!featured) return null;
+
+		const finishNames = [...new Set(inCategory.flatMap((item) => item.finishes))].slice(0, 4);
+
+		return {
+			id: category.toLowerCase(),
+			title: category,
+			description: megaCategoryCopy[category],
+			href: `/products?category=${encodeURIComponent(category)}`,
+			count: inCategory.length,
+			image: featured.image,
+			imageAlt: `${category} — ${featured.title}`,
+			capabilities: systems.items.map((capability) => ({
+				label: capability.title,
+				description: capability.description,
+			})),
+			finishes: finishNames.map((finish) => {
+				const match = finishes.items.find((f) => f.title === finish);
+				return {
+					label: finish,
+					href: match?.href ?? '/#finishes',
+				};
+			}),
+			specs: featured.specs,
+		};
+	})
+	.filter((item): item is NonNullable<typeof item> => Boolean(item));
+
+const finishCategories = finishes.items.map((item) => ({
+	id: item.slug,
+	title: item.title,
+	description: item.description,
+	href: item.href,
+	count: 1,
+	image: item.image,
+	imageAlt: `${item.title} — surface finish`,
+	capabilities: item.highlights.slice(0, 3).map((highlight, index) => ({
+		label: highlight.label,
+		description: item.features[index] ?? item.shortDescription,
+	})),
+	finishes: finishes.items.map((finish) => ({
+		label: finish.title,
+		href: finish.href,
+	})),
+	specs: item.specs,
+}));
+
 export const productsMega = {
 	trigger: { label: 'Products', href: '/products' },
 	viewAll: { label: 'View all architectural systems', href: '/products' },
-	categories: megaCategoryOrder
-		.map((category) => {
-			const inCategory = productItems.filter((item) => item.category === category);
-			const featured = inCategory[0];
-			if (!featured) return null;
-
-			const finishNames = [...new Set(inCategory.flatMap((item) => item.finishes))].slice(0, 4);
-
-			return {
-				id: category.toLowerCase(),
-				title: category,
-				description: megaCategoryCopy[category],
-				href: `/products?category=${encodeURIComponent(category)}`,
-				count: inCategory.length,
-				image: featured.image,
-				imageAlt: `${category} — ${featured.title}`,
-				capabilities: systems.items.map((capability) => ({
-					label: capability.title,
-					description: capability.description,
-				})),
-				finishes: finishNames.map((finish) => {
-					const match = finishes.items.find((f) => f.title === finish);
-					return {
-						label: finish,
-						href: match?.href ?? '/#finishes',
-					};
-				}),
-				specs: featured.specs,
-			};
-		})
-		.filter((item): item is NonNullable<typeof item> => Boolean(item)),
+	categories: [...productCategories, ...finishCategories],
 	footerTiles: [
 		{
 			title: 'Request a quote',
