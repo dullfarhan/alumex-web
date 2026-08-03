@@ -236,8 +236,14 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		justify-content: center;
 		height: 100vh;
 		overflow: hidden;
-		gap: 2rem;
+		gap: 1rem;
 		padding-bottom: 0.75rem;
+	}
+
+	@media (min-width: 400px) {
+		.hero__stage {
+			gap: 2rem;
+		}
 	}
 
 	.hero__grid-bg {
@@ -266,10 +272,15 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		flex: 0 1 auto;
 		min-height: 0;
 		margin-inline: auto;
-		gap: 2rem;
+		gap: 0.5rem;
 		padding: 3rem 1.25rem 0;
 		align-items: stretch;
 		grid-template-rows: 1fr auto;
+	}
+	@media (min-width: 400px) {
+		.hero__inner {
+			gap: 2rem;
+		}
 	}
 	@media (min-width: 768px) {
 		.hero__inner {
@@ -639,6 +650,14 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		will-change: transform;
 	}
 
+	/* Narrow phones: shrink door + window so they fit the first viewport */
+	@media (max-width: 399px) {
+		.hero3d__scene {
+			width: 9.25rem;
+			height: 10.75rem;
+		}
+	}
+
 	@media (min-width: 640px) {
 		.hero3d__scene {
 			width: 16rem;
@@ -670,6 +689,13 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		height: 58%;
 		translate: -50% -50%;
 		opacity: 0;
+	}
+
+	@media (max-width: 399px) {
+		.hero3d__window {
+			width: 122%;
+			height: 50%;
+		}
 	}
 
 	.hero3d__window-opening {
