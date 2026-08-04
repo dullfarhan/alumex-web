@@ -4,7 +4,7 @@ import isoCertified from '../assets/icons/iso-certified.svg?url';
 import map from '../assets/icons/map.svg?url';
 
 export const hero = {
-	label: 'Architectural Aluminium Systems',
+	label: 'DURABLE ARCHITECTURAL ALUMINIUM EXTRUSION & POWDER COATING',
 	title: 'Engineering Aluminium for Modern Architecture.',
 	description:
 		'Premium aluminium solutions designed for precision, durability, and architectural excellence.',
