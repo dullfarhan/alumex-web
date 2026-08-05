@@ -33,7 +33,7 @@ const items = projectsGallery.items;
 								alt={`${item.title} — ${item.category}, ${item.location}`}
 								widths={[640, 960, 1280, 1600]}
 								sizes="(min-width: 1024px) 72rem, 100vw"
-								class="h-[min(56vh,24rem)] w-full object-cover sm:h-[min(60vh,30rem)] md:h-[min(64vh,38rem)]"
+								class="aspect-video w-full object-cover object-center"
 								loading={index === 0 ? 'eager' : 'lazy'}
 							/>
 							<figcaption class="absolute inset-x-0 bottom-0 bg-linear-to-t from-primary-dark/85 via-primary-dark/40 to-transparent px-5 py-5 sm:px-8 sm:py-7">
