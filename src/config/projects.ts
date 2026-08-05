@@ -1,10 +1,14 @@
 import type { ImageMetadata } from 'astro';
-import horizonTower from '../assets/projects/horizon-tower.jpg';
-import crescentResidences from '../assets/projects/crescent-residences.jpg';
-import metroCorporateHub from '../assets/projects/metro-corporate-hub.jpg';
-import canalViewCampus from '../assets/projects/canal-view-campus.jpg';
-import harbourMixedUse from '../assets/projects/harbour-mixed-use.jpg';
-import sereneHotel from '../assets/projects/serene-hotel-islamabad.jpg';
+import signatureBahria from '../assets/projects/1-project.png';
+import tajPalace from '../assets/projects/2-project.png';
+import allamaIqbalHostel from '../assets/projects/3-project.png';
+import motherChildHospital from '../assets/projects/4-project.png';
+import akbarPlaza from '../assets/projects/5-project.png';
+import ucpSargodha from '../assets/projects/6-project.png';
+import fbrRegionalTaxOffice from '../assets/projects/7-project.png';
+import canalHospital from '../assets/projects/8-project.png';
+import themeResidency2 from '../assets/projects/9-project.png';
+import jamiaAlFurkanya from '../assets/projects/10-project.png';
 import { site } from './site';
 
 export type Project = {
@@ -24,137 +28,232 @@ export type Project = {
 
 export const projectItems: Project[] = [
 	{
-		slug: 'horizon-tower',
-		title: 'Horizon Tower',
-		category: 'Commercial Facade',
-		location: 'Lahore',
-		year: '2024',
-		shortDescription: 'High-rise curtain wall package for a landmark commercial tower.',
-		description:
-			'Pak Alumex supplied curtain wall profiles and finishes for Horizon Tower’s primary elevations. The package supported large glazed bays, clean sightlines, and weather performance suited to a high-rise commercial brief in Lahore.',
-		scope: [
-			'Curtain wall profile supply for primary elevations',
-			'Finish matching across facade zones',
-			'Coordination with fabricators on glazing interfaces',
-		],
-		systems: [
-			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
-			{ label: 'Contemporary Louver System', href: '/products/contemporary-louver-system' },
-		],
-		image: horizonTower,
-		gallery: [horizonTower, metroCorporateHub, canalViewCampus, harbourMixedUse],
-		href: '/projects/horizon-tower',
-	},
-	{
-		slug: 'crescent-residences',
-		title: 'Crescent Residences',
-		category: 'Residential Systems',
-		location: 'Islamabad',
-		year: '2023',
-		shortDescription: 'Windows, doors, and sliding systems for a contemporary residential development.',
-		description:
-			'For Crescent Residences, we delivered opening systems and finishes aligned with the project’s residential aesthetic. Thermal-break windows, entrance doors, and large sliding spans support comfort and indoor-outdoor living across the development.',
-		scope: [
-			'Window and door systems for apartment openings',
-			'Large-span sliding packages for living spaces',
-			'Coordinated powder and wood-look finishes',
-		],
-		systems: [
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-			{ label: 'French Sliding Door', href: '/products/french-sliding-door' },
-		],
-		image: crescentResidences,
-		gallery: [crescentResidences, sereneHotel, harbourMixedUse, metroCorporateHub],
-		href: '/projects/crescent-residences',
-	},
-	{
-		slug: 'metro-corporate-hub',
-		title: 'Metro Corporate Hub',
-		category: 'Curtain Wall',
-		location: 'Karachi',
-		year: '2024',
-		shortDescription: 'Curtain wall and glazing profiles for a multi-tenant corporate campus.',
-		description:
-			'Metro Corporate Hub required a coherent facade language across multiple corporate blocks. Pak Alumex provided curtain wall systems and finish options that keep elevations consistent while meeting commercial performance expectations in Karachi.',
-		scope: [
-			'Stick curtain wall profiles for office blocks',
-			'Shared finish specification across campus buildings',
-			'Support for phased fabrication and install',
-		],
-		systems: [
-			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
-			{ label: 'Contemporary Louver System', href: '/products/contemporary-louver-system' },
-		],
-		image: metroCorporateHub,
-		gallery: [metroCorporateHub, horizonTower, canalViewCampus, harbourMixedUse],
-		href: '/projects/metro-corporate-hub',
-	},
-	{
-		slug: 'canal-view-campus',
-		title: 'Canal View Campus',
-		category: 'Institutional',
-		location: 'Faisalabad',
-		year: '2025',
-		shortDescription: 'Facade and opening systems for a new institutional campus in Faisalabad.',
-		description:
-			'Canal View Campus brought together curtain wall bays, classroom openings, and entrance systems under one aluminium package. Based in Faisalabad, our team supported local coordination from specification through finish selection.',
-		scope: [
-			'Facade profiles for academic and admin blocks',
-			'Windows and doors for teaching spaces',
-			'Entrance and lobby framing packages',
-		],
-		systems: [
-			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-		],
-		image: canalViewCampus,
-		gallery: [canalViewCampus, horizonTower, metroCorporateHub, sereneHotel],
-		href: '/projects/canal-view-campus',
-	},
-	{
-		slug: 'harbour-mixed-use',
-		title: 'Harbour Mixed-Use',
-		category: 'Mixed-Use',
-		location: 'Karachi',
-		year: '2023',
-		shortDescription: 'Retail podium and residential tower openings with matched finishes.',
-		description:
-			'Harbour Mixed-Use paired a retail podium with residential floors above. Pak Alumex supplied sliding systems, windows, and custom profiles so podium and tower detailing stayed visually aligned with durable coastal-ready finishes.',
-		scope: [
-			'Sliding and window systems for residential floors',
-			'Retail front framing for podium levels',
-			'Custom profiles for balcony and canopy interfaces',
-		],
-		systems: [
-			{ label: 'French Sliding Door', href: '/products/french-sliding-door' },
-			{ label: 'Sliding Window', href: '/products/sliding-window' },
-			{ label: 'Contemporary Louver System', href: '/products/contemporary-louver-system' },
-		],
-		image: harbourMixedUse,
-		gallery: [harbourMixedUse, metroCorporateHub, crescentResidences, canalViewCampus],
-		href: '/projects/harbour-mixed-use',
-	},
-	{
-		slug: 'serene-hotel-islamabad',
-		title: 'Serene Hotel Islamabad',
+		slug: 'taj-palace',
+		title: 'TAJ PALACE',
 		category: 'Hospitality',
-		location: 'Islamabad',
-		year: '2025',
-		shortDescription: 'Guest-room openings and lobby glazing for a boutique hospitality project.',
+		location: 'Chishtian',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega hospitality project.',
 		description:
-			'Serene Hotel Islamabad called for refined openings and lobby glazing that balance guest comfort with a calm architectural finish. We supplied window and door systems, partition-ready interiors profiles, and coordinated anodized and satin finishes.',
+			'TAJ PALACE is a mega project featuring classical arched openings and ornate facade detailing. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by AMEERKAY Aluminium, Chishtian.',
 		scope: [
-			'Guest-room window and door packages',
-			'Lobby and amenity glazing frames',
-			'Interior partition profiles for back-of-house zones',
+			'Architectural aluminium extrusion for windows and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Fabrication by AMEERKAY Aluminium, Chishtian',
 		],
 		systems: [
 			{ label: 'Casement Windows', href: '/products/casement-windows' },
 			{ label: 'Swing Doors', href: '/products/swing-doors' },
 		],
-		image: sereneHotel,
-		gallery: [sereneHotel, crescentResidences, harbourMixedUse, canalViewCampus],
-		href: '/projects/serene-hotel-islamabad',
+		image: tajPalace,
+		gallery: [tajPalace, jamiaAlFurkanya, canalHospital, motherChildHospital],
+		href: '/projects/taj-palace',
+	},
+	{
+		slug: 'signature-bahria-town',
+		title: 'SIGNATURE',
+		category: 'Mixed-Use',
+		location: 'Bahria Town Karachi',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega mixed-use project by Property Master.',
+		description:
+			'SIGNATURE by Property Master is a mega mixed-use development in Bahria Town Karachi. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating for the project, delivered through authorized distributor Javaid Aluminium, Karachi.',
+		scope: [
+			'Architectural aluminium extrusion for facade and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Supply coordination via Javaid Aluminium, Karachi',
+		],
+		systems: [
+			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
+			{ label: 'Casement Windows', href: '/products/casement-windows' },
+			{ label: 'French Sliding Door', href: '/products/french-sliding-door' },
+		],
+		image: signatureBahria,
+		gallery: [signatureBahria, themeResidency2, akbarPlaza, tajPalace],
+		href: '/projects/signature-bahria-town',
+	},
+	{
+		slug: 'fbr-regional-tax-office',
+		title: 'FBR Regional Tax Office',
+		category: 'Commercial Facade',
+		location: 'G-9 Islamabad',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for the FBR Regional Tax Office in Islamabad.',
+		description:
+			'FBR Regional Tax Office in G-9 Islamabad is a mega commercial facade project. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Sarhad Aluminium, Peshawar, and delivered by Haji Asghar.',
+		scope: [
+			'Architectural aluminium extrusion for curtain wall and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Fabrication by Sarhad Aluminium, Peshawar',
+		],
+		systems: [
+			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
+			{ label: 'Casement Windows', href: '/products/casement-windows' },
+			{ label: 'Swing Doors', href: '/products/swing-doors' },
+		],
+		image: fbrRegionalTaxOffice,
+		gallery: [fbrRegionalTaxOffice, jamiaAlFurkanya, ucpSargodha, allamaIqbalHostel],
+		href: '/projects/fbr-regional-tax-office',
+	},
+	{
+		slug: 'mother-child-care-hospital',
+		title: 'Mother & Child Care Hospital',
+		category: 'Institutional',
+		location: 'Kot Addu, Muzaffargarh',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega healthcare project in Kot Addu.',
+		description:
+			'Mother & Child Care Hospital in Kot Addu, District Muzaffargarh, is a mega institutional project. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, with Manzoor & Co as contractor.',
+		scope: [
+			'Architectural aluminium extrusion for windows and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Contractor coordination with Manzoor & Co',
+		],
+		systems: [
+			{ label: 'Casement Windows', href: '/products/casement-windows' },
+			{ label: 'Swing Doors', href: '/products/swing-doors' },
+			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
+		],
+		image: motherChildHospital,
+		gallery: [motherChildHospital, canalHospital, allamaIqbalHostel, ucpSargodha],
+		href: '/projects/mother-child-care-hospital',
+	},
+	{
+		slug: 'akbar-plaza',
+		title: 'Akbar Plaza',
+		category: 'Mixed-Use',
+		location: 'Timergara',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mixed-use plaza in Timergara.',
+		description:
+			'Akbar Plaza in Timergara is a modern mixed-use development. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Ahmad Aluminium, Timergara.',
+		scope: [
+			'Architectural aluminium extrusion for facade and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Fabrication by Ahmad Aluminium, Timergara',
+		],
+		systems: [
+			{ label: 'Casement Windows', href: '/products/casement-windows' },
+			{ label: 'French Sliding Door', href: '/products/french-sliding-door' },
+			{ label: 'Swing Doors', href: '/products/swing-doors' },
+		],
+		image: akbarPlaza,
+		gallery: [akbarPlaza, signatureBahria, themeResidency2, tajPalace],
+		href: '/projects/akbar-plaza',
+	},
+	{
+		slug: 'jamia-dar-ul-aloom-al-furkanya',
+		title: 'Jamia Dar-ul-Aloom Al-Furkanya',
+		category: 'Institutional',
+		location: 'Peshawar',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega institutional project in Peshawar.',
+		description:
+			'Jamia Dar-ul-Aloom Al-Furkanya in Peshawar is a mega institutional project featuring arched glazed elevations. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Sarhad Aluminium, Peshawar.',
+		scope: [
+			'Architectural aluminium extrusion for arched facade openings',
+			'Powder coating finishes for durable exterior performance',
+			'Fabrication by Sarhad Aluminium, Peshawar',
+		],
+		systems: [
+			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
+			{ label: 'Casement Windows', href: '/products/casement-windows' },
+			{ label: 'Contemporary Louver System', href: '/products/contemporary-louver-system' },
+		],
+		image: jamiaAlFurkanya,
+		gallery: [jamiaAlFurkanya, fbrRegionalTaxOffice, ucpSargodha, allamaIqbalHostel],
+		href: '/projects/jamia-dar-ul-aloom-al-furkanya',
+	},
+	{
+		slug: 'allama-iqbal-hostel',
+		title: 'Allama Iqbal Hostel',
+		category: 'Institutional',
+		location: 'Sports Complex Islamabad',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega hostel project in Islamabad.',
+		description:
+			'Allama Iqbal Hostel at Sports Complex Islamabad is a mega institutional project. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Barki Contractors, Islamabad.',
+		scope: [
+			'Architectural aluminium extrusion for windows and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Fabrication by Barki Contractors, Islamabad',
+		],
+		systems: [
+			{ label: 'Casement Windows', href: '/products/casement-windows' },
+			{ label: 'Swing Doors', href: '/products/swing-doors' },
+		],
+		image: allamaIqbalHostel,
+		gallery: [allamaIqbalHostel, ucpSargodha, fbrRegionalTaxOffice, motherChildHospital],
+		href: '/projects/allama-iqbal-hostel',
+	},
+	{
+		slug: 'canal-hospital-sargodha',
+		title: 'Canal Hospital',
+		category: 'Institutional',
+		location: 'Sargodha',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for Canal Hospital in Sargodha.',
+		description:
+			'Canal Hospital in Sargodha is a mega healthcare project. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Paragon Aluminium, Sargodha.',
+		scope: [
+			'Architectural aluminium extrusion for facade and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Fabrication by Paragon Aluminium, Sargodha',
+		],
+		systems: [
+			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
+			{ label: 'Casement Windows', href: '/products/casement-windows' },
+			{ label: 'Contemporary Louver System', href: '/products/contemporary-louver-system' },
+		],
+		image: canalHospital,
+		gallery: [canalHospital, motherChildHospital, ucpSargodha, tajPalace],
+		href: '/projects/canal-hospital-sargodha',
+	},
+	{
+		slug: 'theme-residency-2',
+		title: 'Theme Residency 2',
+		category: 'Mixed-Use',
+		location: 'Karachi',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega mixed-use residency in Karachi.',
+		description:
+			'Theme Residency 2 is a mega mixed-use development with retail podium and residential floors above. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, delivered through authorized distributor Javaid Aluminium, Karachi.',
+		scope: [
+			'Architectural aluminium extrusion for facade and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Supply coordination via Javaid Aluminium, Karachi',
+		],
+		systems: [
+			{ label: 'Casement Windows', href: '/products/casement-windows' },
+			{ label: 'French Sliding Door', href: '/products/french-sliding-door' },
+			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
+		],
+		image: themeResidency2,
+		gallery: [themeResidency2, signatureBahria, akbarPlaza, tajPalace],
+		href: '/projects/theme-residency-2',
+	},
+	{
+		slug: 'university-of-central-punjab-sargodha',
+		title: 'University of Central Punjab, Sargodha',
+		category: 'Institutional',
+		location: 'Sargodha',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega university campus project.',
+		description:
+			'University of Central Punjab, Sargodha is a mega institutional campus project. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Paragon Aluminium, Sargodha.',
+		scope: [
+			'Architectural aluminium extrusion for facade and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Fabrication by Paragon Aluminium, Sargodha',
+		],
+		systems: [
+			{ label: 'Casement Windows', href: '/products/casement-windows' },
+			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
+			{ label: 'Swing Doors', href: '/products/swing-doors' },
+		],
+		image: ucpSargodha,
+		gallery: [ucpSargodha, allamaIqbalHostel, motherChildHospital, canalHospital],
+		href: '/projects/university-of-central-punjab-sargodha',
 	},
 ];
 

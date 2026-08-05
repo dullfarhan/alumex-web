@@ -50,6 +50,15 @@ const items = projectsGallery.items;
 						</figure>
 					))
 				}
+
+				<button type="button" class="gallery-zoom" data-gallery-zoom aria-label="View full image">
+					<svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path d="M15 3h6v6"></path>
+						<path d="M9 21H3v-6"></path>
+						<path d="M21 3l-7 7"></path>
+						<path d="M3 21l7-7"></path>
+					</svg>
+				</button>
 			</div>
 
 			<div class="gallery-controls" aria-label="Gallery controls">
@@ -61,7 +70,6 @@ const items = projectsGallery.items;
 				</button>
 			</div>
 		</div>
-
 
 		<ul class="mt-4 grid grid-cols-3 gap-2 sm:mt-5 sm:grid-cols-4 sm:gap-3 md:grid-cols-6 md:gap-3" role="list">
 			{
@@ -92,6 +100,30 @@ const items = projectsGallery.items;
 			}
 		</ul>
 	</div>
+
+	<div
+		data-gallery-lightbox
+		class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/95 p-4 sm:p-8"
+		hidden
+		role="dialog"
+		aria-modal="true"
+		aria-label="Full project image"
+	>
+		<div class="relative max-h-full max-w-full">
+			<button
+				type="button"
+				data-gallery-lightbox-close
+				class="gallery-lightbox-close"
+				aria-label="Close full image"
+			>
+				<svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M18 6L6 18"></path>
+					<path d="M6 6l12 12"></path>
+				</svg>
+			</button>
+			<img data-gallery-lightbox-image alt="" class="max-h-[min(90vh,100%)] max-w-full object-contain" />
+		</div>
+	</div>
 </section>
 
 <style>
@@ -107,7 +139,9 @@ const items = projectsGallery.items;
 		transform: translateY(-50%);
 	}
 
-	.gallery-controls button {
+	.gallery-controls button,
+	.gallery-zoom,
+	.gallery-lightbox-close {
 		display: inline-flex;
 		height: 1.8rem;
 		width: 1.8rem;
@@ -129,20 +163,51 @@ const items = projectsGallery.items;
 			transform 200ms;
 	}
 
-	.gallery-controls button:hover {
+	.gallery-controls button:hover,
+	.gallery-zoom:hover,
+	.gallery-lightbox-close:hover {
 		background: linear-gradient(135deg, rgb(255 255 255 / 84%), rgb(255 255 255 / 48%));
-		box-shadow:
-			0 10px 28px rgb(18 43 77 / 22%),
-			inset 0 1px 0 rgb(255 255 255 / 85%);
 	}
 
-	.gallery-controls button:active {
+	.gallery-controls button:active,
+	.gallery-zoom:active,
+	.gallery-lightbox-close:active {
 		transform: scale(0.95);
 	}
 
-	.gallery-controls button:focus-visible {
+	.gallery-controls button:focus-visible,
+	.gallery-zoom:focus-visible,
+	.gallery-lightbox-close:focus-visible {
 		outline: 2px solid var(--color-primary);
 		outline-offset: 2px;
+	}
+
+	.gallery-zoom {
+		position: absolute;
+		z-index: 11;
+		top: 0.75rem;
+		right: 0.75rem;
+		height: 2.25rem;
+		width: 2.25rem;
+		background: linear-gradient(135deg, rgb(18 43 77 / 72%), rgb(18 43 77 / 48%));
+	}
+
+	.gallery-zoom:hover {
+		background: linear-gradient(135deg, rgb(18 43 77 / 84%), rgb(18 43 77 / 58%));
+	}
+
+	.gallery-lightbox-close {
+		position: absolute;
+		top: 0.75rem;
+		right: 0.75rem;
+		z-index: 2;
+		height: 2.5rem;
+		width: 2.5rem;
+		background: linear-gradient(135deg, rgb(18 43 77 / 72%), rgb(18 43 77 / 48%));
+	}
+
+	.gallery-lightbox-close:hover {
+		background: linear-gradient(135deg, rgb(18 43 77 / 84%), rgb(18 43 77 / 58%));
 	}
 
 	@media (min-width: 640px) {
@@ -155,6 +220,13 @@ const items = projectsGallery.items;
 			height: 2.2rem;
 			width: 2.2rem;
 		}
+
+		.gallery-zoom {
+			top: 1rem;
+			right: 1rem;
+			height: 2.5rem;
+			width: 2.5rem;
+		}
 	}
 </style>
 
@@ -165,12 +237,15 @@ const items = projectsGallery.items;
 		const thumbs = [...root.querySelectorAll<HTMLButtonElement>('[data-gallery-thumb]')];
 		const prevBtn = root.querySelector<HTMLButtonElement>('[data-gallery-prev]');
 		const nextBtn = root.querySelector<HTMLButtonElement>('[data-gallery-next]');
+		const zoomBtn = root.querySelector<HTMLButtonElement>('[data-gallery-zoom]');
+		const lightbox = root.querySelector<HTMLElement>('[data-gallery-lightbox]');
+		const lightboxImg = root.querySelector<HTMLImageElement>('[data-gallery-lightbox-image]');
+		const lightboxClose = root.querySelector<HTMLButtonElement>('[data-gallery-lightbox-close]');
 		const positionEl = root.querySelector<HTMLElement>('[data-gallery-position]');
 		const total = slides.length;
 		let current = 0;
 
 		const goTo = (index: number) => {
-			// Infinite wrap — never stops at first or last
 			current = ((index % total) + total) % total;
 
 			slides.forEach((slide, i) => {
@@ -191,15 +266,49 @@ const items = projectsGallery.items;
 			if (positionEl) positionEl.textContent = String(current + 1);
 		};
 
+		const openLightbox = () => {
+			const slide = slides[current];
+			const img = slide?.querySelector('img');
+			if (!lightbox || !lightboxImg || !img) return;
+
+			lightboxImg.src = img.currentSrc || img.src;
+			lightboxImg.alt = img.alt;
+			lightbox.hidden = false;
+			lightbox.classList.remove('hidden');
+			lightbox.classList.add('flex');
+			document.body.style.overflow = 'hidden';
+			lightboxClose?.focus();
+		};
+
+		const closeLightbox = () => {
+			if (!lightbox) return;
+			lightbox.hidden = true;
+			lightbox.classList.add('hidden');
+			lightbox.classList.remove('flex');
+			document.body.style.overflow = '';
+			zoomBtn?.focus();
+		};
+
 		prevBtn?.addEventListener('click', () => goTo(current - 1));
 		nextBtn?.addEventListener('click', () => goTo(current + 1));
 		thumbs.forEach((thumb) => {
 			thumb.addEventListener('click', () => goTo(Number(thumb.dataset.index)));
 		});
+		zoomBtn?.addEventListener('click', openLightbox);
+		lightboxClose?.addEventListener('click', closeLightbox);
+		lightbox?.addEventListener('click', (e) => {
+			if (e.target === lightbox) closeLightbox();
+		});
 
-		root.addEventListener('keydown', (e) => {
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && lightbox && !lightbox.hidden) {
+				e.preventDefault();
+				closeLightbox();
+				return;
+			}
 			if (!(e.target instanceof HTMLElement)) return;
 			if (!root.contains(e.target)) return;
+			if (lightbox && !lightbox.hidden) return;
 			if (e.key === 'ArrowLeft') {
 				e.preventDefault();
 				goTo(current - 1);

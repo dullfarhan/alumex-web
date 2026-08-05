@@ -61,7 +61,7 @@ import { projects } from '../../config/projects';
 		});
 
 		visibleCards.forEach((card, index) => {
-			const isFeatured = index === 0 || index === visibleCards.length - 1;
+			const isFeatured = index % 3 === 0;
 			card.classList.toggle('col-span-full', isFeatured);
 			card.dataset.featured = String(isFeatured);
 

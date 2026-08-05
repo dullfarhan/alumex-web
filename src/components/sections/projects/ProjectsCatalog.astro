@@ -11,7 +11,7 @@ import ProjectCard from './ProjectCard.astro';
 				projectItems.map((project, index) => (
 					<ProjectCard
 						project={project}
-						featured={index === 0 || index === projectItems.length - 1}
+						featured={index % 3 === 0}
 					/>
 				))
 			}
