@@ -28,27 +28,24 @@ import Container from '../../layout/Container.astro';
 			}
 		</ul>
 
-		<div class="mb-14 grid gap-10 md:grid-cols-2 md:gap-14">
+		<div class="mb-14 border-t border-silver/60 pt-8">
+			<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.qualityControl.label}</span>
+			<p class="max-w-3xl text-base leading-relaxed text-heading md:text-lg">{about.qualityControl.text}</p>
+		</div>
+
+		<div class="grid gap-10 md:grid-cols-2 md:gap-14">
 			<div class="border-t border-silver/60 pt-6">
 				<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.mission.label}</span>
 				<p class="text-base leading-relaxed text-heading md:text-lg">{about.mission.text}</p>
 			</div>
 			<div class="border-t border-silver/60 pt-6">
-				<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.vision.label}</span>
-				<p class="text-base leading-relaxed text-heading md:text-lg">{about.vision.text}</p>
+				<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.team.label}</span>
+				<p class="text-base leading-relaxed text-heading md:text-lg">{about.team.text}</p>
 			</div>
-		</div>
-
-		<div>
-			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.values.label}</span>
-			<h3 class="mb-8 font-display text-xl font-bold tracking-tight text-heading md:text-2xl">{about.values.title}</h3>
-			<ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-				{
-					about.values.items.map((item) => (
-						<li class="border-t border-silver/60 pt-4 font-display text-sm font-semibold text-heading">{item}</li>
-					))
-				}
-			</ul>
+			<div class="border-t border-silver/60 pt-6 md:col-span-2">
+				<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.supplyChain.label}</span>
+				<p class="max-w-3xl text-base leading-relaxed text-heading md:text-lg">{about.supplyChain.text}</p>
+			</div>
 		</div>
 	</Container>
 </section>

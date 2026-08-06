@@ -5,23 +5,24 @@ import Container from '../../layout/Container.astro';
 
 <section class="bg-background">
 	<Container>
-		<div class="mb-12 md:mb-14 text-center">
-			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.process.label}</span>
+		<div class="mb-12 text-center md:mb-14">
+			<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{about.whyChooseUs.label}</span>
 			<h2 class="font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[2.75rem]">
-				{about.process.title}
+				{about.whyChooseUs.title}
 			</h2>
 		</div>
 
-		<ol class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+		<ul class="grid gap-10 border-y border-silver/40 py-10 md:grid-cols-3 md:gap-0 md:divide-x md:divide-primary/30">
 			{
-				about.process.steps.map((step) => (
-					<li class="border-t border-silver/60 pt-6">
-						<span class="mb-3 block font-display text-sm font-semibold tracking-wide text-primary">{step.number}</span>
-						<h3 class="mb-2 font-display text-lg font-bold text-heading">{step.title}</h3>
-						<p class="text-sm leading-relaxed text-muted">{step.description}</p>
+				about.whyChooseUs.items.map((item) => (
+					<li class="px-0 text-center md:px-8">
+						<h3 class="mb-3 font-display text-sm font-bold tracking-[0.06em] text-primary uppercase md:text-base">
+							{item.title}
+						</h3>
+						<p class="mx-auto max-w-xs text-sm leading-relaxed text-muted md:text-base">{item.description}</p>
 					</li>
 				))
 			}
-		</ol>
+		</ul>
 	</Container>
 </section>
