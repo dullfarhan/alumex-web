@@ -1,4 +1,20 @@
-import heroImage from '../assets/hero.jpg';
+import factoryA from '../assets/factory/a.png';
+import factoryB from '../assets/factory/b.png';
+import factoryC from '../assets/factory/c.png';
+import factoryD from '../assets/factory/d.png';
+import factoryE from '../assets/factory/e.png';
+import factoryF from '../assets/factory/f.png';
+import factoryG from '../assets/factory/g.png';
+import factoryH from '../assets/factory/h.png';
+import factoryI from '../assets/factory/i.png';
+import factoryJ from '../assets/factory/j.png';
+import factoryK from '../assets/factory/k.png';
+import factoryL from '../assets/factory/l.png';
+import factoryM from '../assets/factory/m.png';
+import factoryN from '../assets/factory/n.png';
+import factoryO from '../assets/factory/o.png';
+import factoryP from '../assets/factory/p.png';
+import factoryQ from '../assets/factory/q.png';
 
 export const about = {
 	label: 'About',
@@ -16,8 +32,8 @@ export const about = {
 			'Pak Alumex is the leading manufacturer of aluminium profiles and that is not a coincidence. Technology, product knowledge and development are all important but equally significant is the desire, courage, power and forward-looking spirit that drives our team to success. It\'s all about the passion within us, the love of aluminium!',
 			'Eager to become the largest aluminium company in Pakistan, Pak Alumex is continuously modernizing our production facility with imported tools and machinery.',
 		],
-		image: heroImage,
-		imageAlt: 'Pak Alumex manufacturing facility and aluminium production',
+		image: factoryA,
+		imageAlt: 'Aluminium extrusion line with profiles on the production conveyor at Pak Alumex',
 	},
 	stats: [
 		{ label: 'Extrusion Furnaces', value: '2 Large Aluminium Extrusion Furnaces' },
@@ -27,6 +43,99 @@ export const about = {
 		{ label: 'Wood Finish', value: 'State-of-the-Art Wood Finish Line' },
 		{ label: 'Dealership Network', value: 'Nationwide Across Pakistan' },
 	],
+	factoryGallery: {
+		label: 'Our Factory',
+		title: 'Inside Our Production Facility',
+		description:
+			'A look at our modern extrusion lines, finishing systems, materials handling, and the team behind every Pak Alumex profile.',
+		items: [
+			{
+				image: factoryA,
+				alt: 'Aluminium extrusion line with profiles on a blue conveyor',
+				caption: 'Extrusion line',
+			},
+			{
+				image: factoryB,
+				alt: 'Long production floor with aluminium profiles and orange processing stations',
+				caption: 'Production floor',
+			},
+			{
+				image: factoryH,
+				alt: 'Wide factory aisle with blue machinery and finished aluminium stock',
+				caption: 'Factory aisle',
+			},
+			{
+				image: factoryI,
+				alt: 'Spacious manufacturing hall with blue industrial machinery',
+				caption: 'Manufacturing hall',
+			},
+			{
+				image: factoryJ,
+				alt: 'Blue processing machine along the production line',
+				caption: 'Processing line',
+			},
+			{
+				image: factoryQ,
+				alt: 'Organized factory floor with aluminium profiles and workers in safety gear',
+				caption: 'Active production',
+			},
+			{
+				image: factoryG,
+				alt: 'Stack of finished aluminium extrusion profiles on a red industrial rack',
+				caption: 'Finished profiles',
+			},
+			{
+				image: factoryF,
+				alt: 'Solar-covered yard with workers organizing aluminium profile bundles',
+				caption: 'Solar-covered yard',
+			},
+			{
+				image: factoryK,
+				alt: 'Outdoor rows of stacked aluminium billets under a clear sky',
+				caption: 'Aluminium billets',
+			},
+			{
+				image: factoryL,
+				alt: 'Machine shop with Bridgeport milling equipment and control systems',
+				caption: 'Machine shop',
+			},
+			{
+				image: factoryM,
+				alt: 'Precision CNC machining station with control console',
+				caption: 'Precision CNC',
+			},
+			{
+				image: factoryC,
+				alt: 'Organized raw material and chemical storage with safety markings',
+				caption: 'Raw materials',
+			},
+			{
+				image: factoryN,
+				alt: 'Blue shelving stocked with powder coating material boxes',
+				caption: 'Powder coating stock',
+			},
+			{
+				image: factoryO,
+				alt: 'Warehouse shelves with rolled materials and a weighing trolley',
+				caption: 'Materials inventory',
+			},
+			{
+				image: factoryP,
+				alt: 'Clean factory corridor with Quality Builds Trust signage',
+				caption: 'Facility corridor',
+			},
+			{
+				image: factoryD,
+				alt: 'Management office consultation with aluminium profile samples on the desk',
+				caption: 'Management office',
+			},
+			{
+				image: factoryE,
+				alt: 'Administrative team working at shared desks with finish samples on the wall',
+				caption: 'Our team',
+			},
+		],
+	},
 	whyChooseUs: {
 		label: 'Why Choose Us',
 		title: 'Why Choose Us?',

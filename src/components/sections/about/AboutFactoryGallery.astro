@@ -1,0 +1,295 @@
+---
+import { Image } from "astro:assets";
+import { about } from "../../../config/about";
+import Container from "../../layout/Container.astro";
+import ChevronRight from "../../icons/ChevronRight.astro";
+
+const items = about.factoryGallery.items;
+---
+
+<section class="bg-background" data-factory-gallery>
+	<Container>
+		<div class="mb-10 text-center md:mb-12">
+			<span
+				class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase"
+			>
+				{about.factoryGallery.label}
+			</span>
+			<h2
+				class="mb-4 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[2.75rem]"
+			>
+				{about.factoryGallery.title}
+			</h2>
+			<p
+				class="mx-auto max-w-2xl text-base leading-relaxed text-muted md:text-lg"
+			>
+				{about.factoryGallery.description}
+			</p>
+		</div>
+
+		<div
+			class="relative"
+			role="region"
+			aria-roledescription="carousel"
+			aria-label={about.factoryGallery.label}
+		>
+			<div
+				class="relative overflow-hidden rounded-xl bg-primary-dark/5 sm:rounded-2xl"
+			>
+				{
+					items.map((item, index) => (
+						<figure
+							data-factory-slide
+							data-index={index}
+							class:list={[
+								"relative",
+								index === 0 ? "" : "hidden",
+							]}
+							hidden={index !== 0}
+						>
+							<Image
+								src={item.image}
+								alt={item.alt}
+								widths={[640, 960, 1280, 1600]}
+								sizes="(min-width: 1024px) 72rem, 100vw"
+								class="aspect-[3/2] w-full object-cover object-center"
+								loading={index === 0 ? "eager" : "lazy"}
+							/>
+							<figcaption class="absolute inset-x-0 bottom-0 bg-linear-to-t from-primary-dark/85 via-primary-dark/40 to-transparent px-5 py-5 sm:px-8 sm:py-7">
+								<p class="font-display text-lg font-bold text-white sm:text-2xl">
+									{item.caption}
+								</p>
+							</figcaption>
+						</figure>
+					))
+				}
+
+				<p
+					class="pointer-events-none absolute right-4 bottom-4 z-10 rounded-full bg-primary-dark/50 px-3 py-1 text-xs font-medium tracking-wide text-white/90 sm:right-6 sm:bottom-6"
+					aria-live="polite"
+				>
+					<span data-factory-counter>1</span> / {items.length}
+				</p>
+			</div>
+
+			<div class="factory-controls" aria-label="Factory gallery controls">
+				<button
+					type="button"
+					data-factory-prev
+					aria-label="Previous factory image"
+				>
+					<ChevronRight class="h-6 w-6 rotate-180 text-white" />
+				</button>
+				<button
+					type="button"
+					data-factory-next
+					aria-label="Next factory image"
+				>
+					<ChevronRight class="h-6 w-6 text-white" />
+				</button>
+			</div>
+		</div>
+
+		<ul
+			class="mt-4 grid grid-cols-4 gap-2 sm:mt-5 sm:grid-cols-6 sm:gap-3 md:grid-cols-8 lg:grid-cols-9"
+			role="list"
+		>
+			{
+				items.map((item, index) => (
+					<li>
+						<button
+							type="button"
+							data-factory-thumb
+							data-index={index}
+							aria-label={`Show ${item.caption}`}
+							aria-pressed={index === 0 ? "true" : "false"}
+							class:list={[
+								"group relative block w-full overflow-hidden rounded-md ring-2 transition-[box-shadow,opacity] sm:rounded-lg cursor-pointer",
+								index === 0
+									? "ring-primary opacity-100"
+									: "ring-transparent opacity-70 hover:opacity-100",
+							]}
+						>
+							<Image
+								src={item.image}
+								alt=""
+								widths={[120, 200, 280]}
+								sizes="(min-width: 768px) 6rem, 22vw"
+								class="aspect-[3/2] h-auto w-full object-cover transition-transform duration-300 group-hover:scale-105"
+								loading="lazy"
+							/>
+						</button>
+					</li>
+				))
+			}
+		</ul>
+	</Container>
+</section>
+
+<style>
+	.factory-controls {
+		position: absolute;
+		z-index: 10;
+		top: 50%;
+		right: 0.75rem;
+		left: 0.75rem;
+		display: flex;
+		justify-content: space-between;
+		pointer-events: none;
+		transform: translateY(-50%);
+	}
+
+	.factory-controls button {
+		display: inline-flex;
+		height: 2.5rem;
+		width: 2.5rem;
+		align-items: center;
+		justify-content: center;
+		border: 0;
+		border-radius: 9999px;
+		background: linear-gradient(
+			135deg,
+			rgb(18 43 77 / 72%),
+			rgb(18 43 77 / 48%)
+		);
+		color: white;
+		cursor: pointer;
+		pointer-events: auto;
+		-webkit-backdrop-filter: blur(14px) saturate(160%);
+		backdrop-filter: blur(14px) saturate(160%);
+		touch-action: manipulation;
+		transition:
+			background-color 200ms,
+			box-shadow 200ms,
+			transform 200ms;
+	}
+
+	.factory-controls button:hover {
+		background: linear-gradient(
+			135deg,
+			rgb(18 43 77 / 88%),
+			rgb(18 43 77 / 62%)
+		);
+		box-shadow: 0 10px 28px rgb(18 43 77 / 28%);
+	}
+
+	.factory-controls button:active {
+		transform: scale(0.95);
+	}
+
+	.factory-controls button:focus-visible {
+		outline: 2px solid white;
+		outline-offset: 2px;
+	}
+
+	@media (min-width: 640px) {
+		.factory-controls {
+			right: 1rem;
+			left: 1rem;
+		}
+
+		.factory-controls button {
+			height: 2.75rem;
+			width: 2.75rem;
+		}
+	}
+</style>
+
+<script>
+	const root = document.querySelector("[data-factory-gallery]");
+	if (root) {
+		const slides = [
+			...root.querySelectorAll<HTMLElement>("[data-factory-slide]"),
+		];
+		const thumbs = [
+			...root.querySelectorAll<HTMLButtonElement>("[data-factory-thumb]"),
+		];
+		const prevBtn = root.querySelector<HTMLButtonElement>(
+			"[data-factory-prev]",
+		);
+		const nextBtn = root.querySelector<HTMLButtonElement>(
+			"[data-factory-next]",
+		);
+		const counter = root.querySelector<HTMLElement>(
+			"[data-factory-counter]",
+		);
+		const region = root.querySelector<HTMLElement>(
+			'[aria-roledescription="carousel"]',
+		);
+		const total = slides.length;
+		const reducedMotion = window.matchMedia(
+			"(prefers-reduced-motion: reduce)",
+		);
+		let current = 0;
+		let autoplay: ReturnType<typeof setInterval> | undefined;
+
+		const goTo = (index: number) => {
+			current = ((index % total) + total) % total;
+
+			slides.forEach((slide, i) => {
+				const active = i === current;
+				slide.hidden = !active;
+				slide.classList.toggle("hidden", !active);
+			});
+
+			thumbs.forEach((thumb, i) => {
+				const active = i === current;
+				thumb.setAttribute("aria-pressed", String(active));
+				thumb.classList.toggle("ring-primary", active);
+				thumb.classList.toggle("opacity-100", active);
+				thumb.classList.toggle("ring-transparent", !active);
+				thumb.classList.toggle("opacity-70", !active);
+			});
+
+			if (counter) counter.textContent = String(current + 1);
+		};
+
+		const stopAutoplay = () => {
+			clearInterval(autoplay);
+			autoplay = undefined;
+		};
+
+		const startAutoplay = () => {
+			stopAutoplay();
+			if (reducedMotion.matches || document.hidden || total < 2) return;
+			autoplay = setInterval(() => goTo(current + 1), 4000);
+		};
+
+		const move = (direction: number) => {
+			goTo(current + direction);
+			startAutoplay();
+		};
+
+		prevBtn?.addEventListener("click", () => move(-1));
+		nextBtn?.addEventListener("click", () => move(1));
+		thumbs.forEach((thumb) => {
+			thumb.addEventListener("click", () => {
+				goTo(Number(thumb.dataset.index));
+				startAutoplay();
+			});
+		});
+
+		region?.addEventListener("pointerenter", stopAutoplay);
+		region?.addEventListener("pointerleave", startAutoplay);
+		document.addEventListener("visibilitychange", () => {
+			if (document.hidden) stopAutoplay();
+			else startAutoplay();
+		});
+		reducedMotion.addEventListener("change", startAutoplay);
+
+		document.addEventListener("keydown", (e) => {
+			if (!(e.target instanceof HTMLElement) || !root.contains(e.target))
+				return;
+			if (e.key === "ArrowLeft") {
+				e.preventDefault();
+				move(-1);
+			}
+			if (e.key === "ArrowRight") {
+				e.preventDefault();
+				move(1);
+			}
+		});
+
+		startAutoplay();
+	}
+</script>
