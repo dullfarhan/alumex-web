@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ProductDetailHero from '../../components/sections/products/ProductDetailHero.astro';
+import FinishSwatchGallery from '../../components/sections/products/FinishSwatchGallery.astro';
 import ProductDetailSpecs from '../../components/sections/products/ProductDetailSpecs.astro';
 import ProductDetailBody from '../../components/sections/products/ProductDetailBody.astro';
 import ProductRelated from '../../components/sections/products/ProductRelated.astro';
@@ -44,6 +45,20 @@ const jsonLd = {
 		collectionHref="/#finishes"
 		collectionLabel="Finishes"
 	/>
+	{
+		finish.sampleGalleries?.length
+			? finish.sampleGalleries.map((section) => (
+					<FinishSwatchGallery
+						label={section.label}
+						title={section.title}
+						description={section.description}
+						images={section.images}
+					/>
+				))
+			: (
+					<FinishSwatchGallery title={`${finish.title} options`} images={finish.gallery} />
+				)
+	}
 	<ProductDetailSpecs product={finish} />
 	<ProductDetailBody product={finish} />
 	<ProductRelated products={related} title="Related finishes" />

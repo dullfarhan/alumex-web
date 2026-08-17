@@ -5,8 +5,42 @@ import anodizing from '../assets/finishes/anodizing.jpg';
 import anodizing2 from '../assets/finishes/anodizing-2.jpg';
 import powderCoating from '../assets/finishes/powder-coating.jpg';
 import powderCoating2 from '../assets/finishes/powder-coating-2.jpg';
+import powderHero from '../assets/finishes/power-coatig/sahara/s-3.png';
+
+const woodSwatchModules = import.meta.glob<{ default: ImageMetadata }>(
+	'../assets/finishes/wood-texture/*.jpeg',
+	{ eager: true },
+);
+const woodSwatches = Object.entries(woodSwatchModules)
+	.sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+	.map(([, mod]) => mod.default);
+
+const [woodSwatch1, woodSwatch2, , , , woodSwatch6] = woodSwatches;
+
+const powderSaharaModules = import.meta.glob<{ default: ImageMetadata }>(
+	'../assets/finishes/power-coatig/sahara/*.{jpeg,jpg,png}',
+	{ eager: true },
+);
+const powderSaharaSwatches = Object.entries(powderSaharaModules)
+	.sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+	.map(([, mod]) => mod.default);
+
+const powderRalModules = import.meta.glob<{ default: ImageMetadata }>(
+	'../assets/finishes/power-coatig/rall/*.{jpeg,jpg,png}',
+	{ eager: true },
+);
+const powderRalSwatches = Object.entries(powderRalModules)
+	.sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+	.map(([, mod]) => mod.default);
 
 type FinishHighlightIcon = 'strength' | 'weather' | 'precision' | 'aesthetics';
+
+export type FinishSampleGallery = {
+	label: string;
+	title: string;
+	description: string;
+	images: ImageMetadata[];
+};
 
 export type Finish = {
 	slug: string;
@@ -16,6 +50,7 @@ export type Finish = {
 	description: string;
 	image: ImageMetadata;
 	gallery: ImageMetadata[];
+	sampleGalleries?: FinishSampleGallery[];
 	features: string[];
 	specs: { label: string; value: string }[];
 	applications: { title: string; description: string; image: ImageMetadata }[];
@@ -53,8 +88,8 @@ export const finishes = {
 			shortDescription: 'Natural wood-look coating with the strength of aluminium underneath.',
 			description:
 				'Heat-transfer wood texture finishes replicate oak, walnut, teak, and custom grains on aluminium profiles. Ideal when projects need warm timber aesthetics without rot, warp, or heavy maintenance.',
-			image: woodTexture,
-			gallery: [woodTexture, woodTexture2, powderCoating, anodizing],
+			image: woodSwatch1,
+			gallery: woodSwatches,
 			features: [
 				'Realistic multi-tone wood grain transfer',
 				'UV-stable topcoat for exterior exposure',
@@ -73,17 +108,17 @@ export const finishes = {
 				{
 					title: 'Residential Facades',
 					description: 'Warm timber look on cladding and balcony profiles.',
-					image: woodTexture,
+					image: woodSwatch1,
 				},
 				{
 					title: 'Windows & Doors',
 					description: 'Wood-grain frames with aluminium performance.',
-					image: woodTexture2,
+					image: woodSwatch2,
 				},
 				{
 					title: 'Interior Joinery',
 					description: 'Consistent grain language across partitions and trim.',
-					image: powderCoating,
+					image: woodSwatch6,
 				},
 			],
 			highlights: defaultHighlights,
@@ -167,8 +202,22 @@ export const finishes = {
 			shortDescription: 'Color-stable electrostatic coating for weather exposure and brand matching.',
 			description:
 				'Powder coating delivers a uniform, durable polymer film in virtually any RAL or custom color. Applied electrostatically and cured for strong adhesion, UV stability, and clean architectural color control.',
-			image: powderCoating,
-			gallery: [powderCoating, powderCoating2, anodizing, woodTexture],
+			image: powderHero,
+			gallery: [...powderSaharaSwatches, ...powderRalSwatches],
+			sampleGalleries: [
+				{
+					label: 'Sahara',
+					title: 'Sahara colors',
+					description: 'Warm metallic and textured Sahara powder finishes for architectural aluminium.',
+					images: powderSaharaSwatches,
+				},
+				{
+					label: 'RAL Colors',
+					title: 'RAL colors',
+					description: 'Standard RAL powder coating options for precise color matching across projects.',
+					images: powderRalSwatches,
+				},
+			],
 			features: [
 				'Wide RAL and custom color range',
 				'Strong adhesion with electrostatic application',
@@ -178,7 +227,7 @@ export const finishes = {
 			specs: [
 				{ label: 'Process', value: 'Electrostatic powder + cure' },
 				{ label: 'Film thickness', value: '60–80 µm typical' },
-				{ label: 'Colors', value: 'RAL / Custom match' },
+				{ label: 'Colors', value: 'Sahara / RAL / Custom match' },
 				{ label: 'Effects', value: 'Gloss / Matt / Texture' },
 				{ label: 'Use', value: 'All architectural systems' },
 				{ label: 'Weathering', value: 'Exterior polyester systems' },
@@ -187,17 +236,17 @@ export const finishes = {
 				{
 					title: 'Brand Facades',
 					description: 'Exact color matching for corporate and retail envelopes.',
-					image: powderCoating,
+					image: powderHero,
 				},
 				{
 					title: 'Windows & Doors',
 					description: 'Uniform color across frames, sashes, and accessories.',
-					image: powderCoating2,
+					image: powderRalSwatches[0] ?? powderCoating2,
 				},
 				{
 					title: 'Industrial Buildings',
 					description: 'Tough coatings for high-traffic and exposed sites.',
-					image: anodizing,
+					image: powderRalSwatches[1] ?? anodizing,
 				},
 			],
 			highlights: defaultHighlights,
@@ -212,7 +261,7 @@ export const finishes = {
 				metrics: [
 					{ label: 'Film Build', value: '60–80 µm' },
 					{ label: 'Service Life', value: '15+ Years' },
-					{ label: 'Color Match', value: 'RAL / Custom' },
+					{ label: 'Color Match', value: 'Sahara / RAL / Custom' },
 				],
 			},
 			href: '/finishes/powder-coating',
