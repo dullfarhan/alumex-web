@@ -45,7 +45,7 @@ const { product, collectionHref = '/products', collectionLabel = 'Products' } = 
 			</ol>
 		</nav>
 
-		<div class="relative min-h-[min(44rem,calc(100vh-6rem))] overflow-hidden sm:rounded-4xl">
+		<div class="relative overflow-hidden sm:rounded-4xl">
 			<Image
 				src={product.image}
 				alt={product.title}
@@ -58,7 +58,7 @@ const { product, collectionHref = '/products', collectionLabel = 'Products' } = 
 			/>
 			<div class="absolute inset-0 bg-linear-to-t from-primary-dark via-primary-dark/55 to-primary-dark/25"></div>
 
-			<div class="relative flex min-h-[min(44rem,calc(100vh-6rem))] items-end">
+			<div class="relative flex items-end">
 				<div class="mt-auto w-full px-8 pt-24 pb-10 md:px-12 md:pt-32 md:pb-12 lg:pb-14">
 					<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-white/80 uppercase">
 						{product.category}
@@ -72,28 +72,8 @@ const { product, collectionHref = '/products', collectionLabel = 'Products' } = 
 						{product.description}
 					</p>
 
-					<div class="mt-6">
-						<Button
-							href="/contact"
-							class="!rounded-full !border-white !bg-transparent !text-white hover:!bg-white hover:!text-primary-dark"
-						>
-							Request Quote
-							<ArrowRight class="h-4 w-4" />
-						</Button>
-					</div>
+				
 
-					<ul class="mt-8 grid max-w-3xl grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-4">
-						{
-							product.highlights.map((item) => (
-								<li class="flex flex-col items-start gap-2 text-left">
-									<span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white">
-										<HighlightIcon name={item.icon} class="h-5 w-5" />
-									</span>
-									<span class="text-xs leading-snug font-medium text-white/90 sm:text-sm">{item.label}</span>
-								</li>
-							))
-						}
-					</ul>
 				</div>
 			</div>
 		</div>

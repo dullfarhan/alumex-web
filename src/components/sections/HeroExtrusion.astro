@@ -10,11 +10,10 @@ import Button from '../ui/Button.astro';
 
 const titleLines = ['Engineering Aluminium for Modern Architecture.'];
 
-const galleryPool: { src: ImageMetadata; alt: string; href: string }[] = [
+const galleryPool: { src: ImageMetadata; alt: string; href?: string }[] = [
 	...productItems.map((item) => ({
 		src: item.image,
 		alt: item.title,
-		href: item.href,
 	})),
 	...projectItems.map((item) => ({
 		src: item.image,
@@ -193,13 +192,9 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 			<div class="hero__marquee" data-hero-marquee aria-label="Product and project gallery">
 				<div class="hero__marquee-track">
 					{
-						marqueeItems.map((item, index) => (
-							<a
-								href={item.href}
-								class="hero__marquee-card"
-								tabindex={index >= galleryItems.length ? -1 : undefined}
-								aria-hidden={index >= galleryItems.length ? 'true' : undefined}
-							>
+						marqueeItems.map((item, index) => {
+							const hidden = index >= galleryItems.length;
+							const image = (
 								<Image
 									src={item.src}
 									alt={item.alt}
@@ -209,8 +204,25 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 									loading={index < 6 ? 'eager' : 'lazy'}
 									draggable="false"
 								/>
-							</a>
-						))
+							);
+							return item.href ? (
+								<a
+									href={item.href}
+									class="hero__marquee-card"
+									tabindex={hidden ? -1 : undefined}
+									aria-hidden={hidden ? 'true' : undefined}
+								>
+									{image}
+								</a>
+							) : (
+								<div
+									class="hero__marquee-card"
+									aria-hidden={hidden ? 'true' : undefined}
+								>
+									{image}
+								</div>
+							);
+						})
 					}
 				</div>
 			</div>

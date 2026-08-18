@@ -46,9 +46,7 @@ const { project } = Astro.props;
 						<dd class="flex flex-col gap-2">
 							{
 								project.systems.map((system) => (
-									<a href={system.href} class="text-sm font-medium text-heading transition-colors hover:text-primary">
-										{system.label} →
-									</a>
+									<span class="text-sm font-medium text-heading">{system.label}</span>
 								))
 							}
 						</dd>

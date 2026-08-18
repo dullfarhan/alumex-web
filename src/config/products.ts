@@ -43,7 +43,6 @@ export type Product = {
 		axes: { label: string; value: number }[];
 		metrics: { label: string; value: string }[];
 	};
-	href: string;
 };
 
 const defaultHighlights: Product['highlights'] = [
@@ -134,7 +133,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/bi-fold-doors',
 	},
 	{
 		slug: 'swing-doors',
@@ -174,7 +172,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/swing-doors',
 	},
 	{
 		slug: 'stable-door',
@@ -214,7 +211,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/stable-door',
 	},
 	{
 		slug: 'swing-door-fixed-panel',
@@ -254,7 +250,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/swing-door-fixed-panel',
 	},
 	{
 		slug: 'aluminium-door-with-sheet',
@@ -294,7 +289,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/aluminium-door-with-sheet',
 	},
 	{
 		slug: 'french-sliding-door',
@@ -334,7 +328,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/french-sliding-door',
 	},
 	{
 		slug: 'sliding-door-fixed-glass',
@@ -374,7 +367,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/sliding-door-fixed-glass',
 	},
 	{
 		slug: 'louvers-door-ss-handle',
@@ -414,7 +406,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/louvers-door-ss-handle',
 	},
 	{
 		slug: 'casement-windows',
@@ -454,7 +445,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/casement-windows',
 	},
 	{
 		slug: 'bi-folding-windows',
@@ -494,7 +484,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/bi-folding-windows',
 	},
 	{
 		slug: 'skylight-windows',
@@ -534,7 +523,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/skylight-windows',
 	},
 	{
 		slug: 'bay-windows',
@@ -574,7 +562,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/bay-windows',
 	},
 	{
 		slug: 'mini-openable',
@@ -614,7 +601,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/mini-openable',
 	},
 	{
 		slug: 'fixed-window',
@@ -654,7 +640,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '20+ Years' },
 			],
 		},
-		href: '/products/fixed-window',
 	},
 	{
 		slug: 'dormer-window',
@@ -694,7 +679,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/dormer-window',
 	},
 	{
 		slug: 'sash-window',
@@ -734,7 +718,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/sash-window',
 	},
 	{
 		slug: 'top-hung-openable-windows',
@@ -774,7 +757,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/top-hung-openable-windows',
 	},
 	{
 		slug: 'one-side-reflective-glass',
@@ -814,7 +796,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/one-side-reflective-glass',
 	},
 	{
 		slug: 'sliding-window',
@@ -854,7 +835,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/sliding-window',
 	},
 	{
 		slug: 'curtain-walls-system',
@@ -894,7 +874,6 @@ export const productItems: Product[] = [
 				{ label: 'Surface Durability', value: '10+ Years' },
 			],
 		},
-		href: '/products/curtain-walls-system',
 	},
 	{
 		slug: 'contemporary-louver-system',
@@ -934,7 +913,6 @@ export const productItems: Product[] = [
 				{ label: 'Service Life', value: '15+ Years' },
 			],
 		},
-		href: '/products/contemporary-louver-system',
 	},
 ];
 
@@ -949,15 +927,3 @@ export const products = {
 } as const;
 
 export const productCategories = ['All', ...new Set(productItems.map((item) => item.category))] as const;
-
-export function getProductBySlug(slug: string): Product | undefined {
-	return productItems.find((item) => item.slug === slug);
-}
-
-export function getRelatedProducts(slug: string, limit = 2): Product[] {
-	const current = getProductBySlug(slug);
-	if (!current) return productItems.slice(0, limit);
-	const sameCategory = productItems.filter((item) => item.slug !== slug && item.category === current.category);
-	const others = productItems.filter((item) => item.slug !== slug && item.category !== current.category);
-	return [...sameCategory, ...others].slice(0, limit);
-}

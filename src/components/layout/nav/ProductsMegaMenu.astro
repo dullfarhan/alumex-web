@@ -92,23 +92,7 @@ const categories = productsMega.categories;
 									</a>
 								</div>
 
-								<div>
-									<h3 class="mb-4 text-xs font-medium tracking-[0.08em] text-accent uppercase">
-										Performance
-									</h3>
-									<ul class="grid gap-4 sm:grid-cols-3">
-										{category.capabilities.map((item) => (
-											<li class="border-t border-white/15 pt-3">
-												<p class="mb-1 font-display text-sm font-semibold text-white">
-													{item.label}
-												</p>
-												<p class="text-xs leading-relaxed text-white/55">
-													{item.description}
-												</p>
-											</li>
-										))}
-									</ul>
-								</div>
+
 
 								<div class="grid gap-8 sm:grid-cols-2">
 									<div>
@@ -124,23 +108,6 @@ const categories = productsMega.categories;
 													>
 														{finish.label}
 													</a>
-												</li>
-											))}
-										</ul>
-									</div>
-									<div>
-										<h3 class="mb-4 text-xs font-medium tracking-[0.08em] text-accent uppercase">
-											Specifications
-										</h3>
-										<ul class="space-y-2.5">
-											{category.specs.map((spec) => (
-												<li class="flex justify-between gap-4 text-sm">
-													<span class="text-white/50">
-														{spec.label}
-													</span>
-													<span class="text-right text-white/85">
-														{spec.value}
-													</span>
 												</li>
 											))}
 										</ul>

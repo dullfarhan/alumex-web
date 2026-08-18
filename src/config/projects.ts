@@ -20,7 +20,7 @@ export type Project = {
 	shortDescription: string;
 	description: string;
 	scope: string[];
-	systems: { label: string; href: string }[];
+	systems: { label: string }[];
 	image: ImageMetadata;
 	gallery: ImageMetadata[];
 	href: string;
@@ -42,8 +42,8 @@ export const projectItems: Project[] = [
 			'Fabrication by AMEERKAY Aluminium, Chishtian',
 		],
 		systems: [
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-			{ label: 'Swing Doors', href: '/products/swing-doors' },
+			{ label: 'Casement Windows' },
+			{ label: 'Swing Doors' },
 		],
 		image: tajPalace,
 		gallery: [tajPalace, jamiaAlFurkanya, canalHospital, motherChildHospital],
@@ -64,9 +64,9 @@ export const projectItems: Project[] = [
 			'Supply coordination via Javaid Aluminium, Karachi',
 		],
 		systems: [
-			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-			{ label: 'French Sliding Door', href: '/products/french-sliding-door' },
+			{ label: 'Curtain Walls System' },
+			{ label: 'Casement Windows' },
+			{ label: 'French Sliding Door' },
 		],
 		image: signatureBahria,
 		gallery: [signatureBahria, themeResidency2, akbarPlaza, tajPalace],
@@ -87,9 +87,9 @@ export const projectItems: Project[] = [
 			'Fabrication by Sarhad Aluminium, Peshawar',
 		],
 		systems: [
-			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-			{ label: 'Swing Doors', href: '/products/swing-doors' },
+			{ label: 'Curtain Walls System' },
+			{ label: 'Casement Windows' },
+			{ label: 'Swing Doors' },
 		],
 		image: fbrRegionalTaxOffice,
 		gallery: [fbrRegionalTaxOffice, jamiaAlFurkanya, ucpSargodha, allamaIqbalHostel],
@@ -110,9 +110,9 @@ export const projectItems: Project[] = [
 			'Contractor coordination with Manzoor & Co',
 		],
 		systems: [
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-			{ label: 'Swing Doors', href: '/products/swing-doors' },
-			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
+			{ label: 'Casement Windows' },
+			{ label: 'Swing Doors' },
+			{ label: 'Curtain Walls System' },
 		],
 		image: motherChildHospital,
 		gallery: [motherChildHospital, canalHospital, allamaIqbalHostel, ucpSargodha],
@@ -133,9 +133,9 @@ export const projectItems: Project[] = [
 			'Fabrication by Ahmad Aluminium, Timergara',
 		],
 		systems: [
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-			{ label: 'French Sliding Door', href: '/products/french-sliding-door' },
-			{ label: 'Swing Doors', href: '/products/swing-doors' },
+			{ label: 'Casement Windows' },
+			{ label: 'French Sliding Door' },
+			{ label: 'Swing Doors' },
 		],
 		image: akbarPlaza,
 		gallery: [akbarPlaza, signatureBahria, themeResidency2, tajPalace],
@@ -156,9 +156,9 @@ export const projectItems: Project[] = [
 			'Fabrication by Sarhad Aluminium, Peshawar',
 		],
 		systems: [
-			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-			{ label: 'Contemporary Louver System', href: '/products/contemporary-louver-system' },
+			{ label: 'Curtain Walls System' },
+			{ label: 'Casement Windows' },
+			{ label: 'Contemporary Louver System' },
 		],
 		image: jamiaAlFurkanya,
 		gallery: [jamiaAlFurkanya, fbrRegionalTaxOffice, ucpSargodha, allamaIqbalHostel],
@@ -179,8 +179,8 @@ export const projectItems: Project[] = [
 			'Fabrication by Barki Contractors, Islamabad',
 		],
 		systems: [
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-			{ label: 'Swing Doors', href: '/products/swing-doors' },
+			{ label: 'Casement Windows' },
+			{ label: 'Swing Doors' },
 		],
 		image: allamaIqbalHostel,
 		gallery: [allamaIqbalHostel, ucpSargodha, fbrRegionalTaxOffice, motherChildHospital],
@@ -201,9 +201,9 @@ export const projectItems: Project[] = [
 			'Fabrication by Paragon Aluminium, Sargodha',
 		],
 		systems: [
-			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-			{ label: 'Contemporary Louver System', href: '/products/contemporary-louver-system' },
+			{ label: 'Curtain Walls System' },
+			{ label: 'Casement Windows' },
+			{ label: 'Contemporary Louver System' },
 		],
 		image: canalHospital,
 		gallery: [canalHospital, motherChildHospital, ucpSargodha, tajPalace],
@@ -224,9 +224,9 @@ export const projectItems: Project[] = [
 			'Supply coordination via Javaid Aluminium, Karachi',
 		],
 		systems: [
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-			{ label: 'French Sliding Door', href: '/products/french-sliding-door' },
-			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
+			{ label: 'Casement Windows' },
+			{ label: 'French Sliding Door' },
+			{ label: 'Curtain Walls System' },
 		],
 		image: themeResidency2,
 		gallery: [themeResidency2, signatureBahria, akbarPlaza, tajPalace],
@@ -247,9 +247,9 @@ export const projectItems: Project[] = [
 			'Fabrication by Paragon Aluminium, Sargodha',
 		],
 		systems: [
-			{ label: 'Casement Windows', href: '/products/casement-windows' },
-			{ label: 'Curtain Walls System', href: '/products/curtain-walls-system' },
-			{ label: 'Swing Doors', href: '/products/swing-doors' },
+			{ label: 'Casement Windows' },
+			{ label: 'Curtain Walls System' },
+			{ label: 'Swing Doors' },
 		],
 		image: ucpSargodha,
 		gallery: [ucpSargodha, allamaIqbalHostel, motherChildHospital, canalHospital],

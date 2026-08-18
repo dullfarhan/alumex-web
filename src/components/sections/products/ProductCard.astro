@@ -11,7 +11,7 @@ interface Props {
 		shortDescription: string;
 		description: string;
 		image: ImageMetadata;
-		href: string;
+		href?: string;
 	};
 	index: number;
 }
@@ -60,9 +60,13 @@ const listingNumber = String(index + 1).padStart(2, '0');
 			{product.shortDescription}
 		</p>
 
-		<Button href={product.href} class="mt-4 w-full justify-center !rounded-full">
-			Explore Details
-			<ArrowRight class="h-3.5 w-3.5" />
-		</Button>
+		{
+			product.href && (
+				<Button href={product.href} class="mt-4 w-full justify-center !rounded-full">
+					Explore Details
+					<ArrowRight class="h-3.5 w-3.5" />
+				</Button>
+			)
+		}
 	</div>
 </article>
