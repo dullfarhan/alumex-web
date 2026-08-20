@@ -6,12 +6,24 @@ import ProductsToolbar from '../../components/sections/products/ProductsToolbar.
 import ProductsCatalog from '../../components/sections/products/ProductsCatalog.astro';
 import Finishes from '../../components/sections/Finishes.astro';
 import Projects from '../../components/sections/Projects.astro';
+import Button from '../../components/ui/Button.astro';
+import DownloadIcon from '../../components/icons/DownloadIcon.astro';
 import { about } from '../../config/about';
+import { productsMega } from '../../config/nav-mega';
 import { products } from '../../config/products';
 ---
 
 <Layout title={products.seoTitle} description={products.seoDescription} canonical="/products">
-	<PageHero label={products.label} title={products.title} description={products.description} />
+	<PageHero label={products.label} title={products.title} description={products.description}>
+		<Button
+			href={productsMega.catalogue.href}
+			download={productsMega.catalogue.filename}
+			class="!rounded-full"
+		>
+			<DownloadIcon class="h-4 w-4" />
+			{productsMega.catalogue.label}
+		</Button>
+	</PageHero>
 	<ProductsToolbar />
 	<ProductsCatalog />
 	<Finishes />

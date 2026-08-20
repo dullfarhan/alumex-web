@@ -4,9 +4,10 @@ interface Props {
 	variant?: 'primary' | 'secondary';
 	size?: 'default' | 'sm';
 	class?: string;
+	download?: string | boolean;
 }
 
-const { href, variant = 'primary', size = 'default', class: className } = Astro.props;
+const { href, variant = 'primary', size = 'default', class: className, download } = Astro.props;
 
 const base =
 	'inline-flex items-center gap-2 rounded-lg border text-sm font-medium transition-[background-color,color,border-color,transform] duration-300 [&_svg]:transition-transform [&_svg]:duration-300 hover:[&_svg]:translate-x-1';
@@ -24,6 +25,6 @@ const sizes = {
 };
 ---
 
-<a href={href} class:list={[base, variants[variant], sizes[size], className]}>
+<a href={href} download={download} class:list={[base, variants[variant], sizes[size], className]}>
 	<slot />
 </a>

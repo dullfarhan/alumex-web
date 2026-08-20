@@ -16,6 +16,9 @@ const { label, title, description, class: className } = Astro.props;
 				{title}
 			</h1>
 			<p class="text-base leading-relaxed text-muted md:text-lg">{description}</p>
+			<div class="mt-8 flex justify-center empty:hidden">
+				<slot />
+			</div>
 		</div>
 	</div>
 </section>

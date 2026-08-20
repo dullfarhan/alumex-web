@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { productsMega } from "../../../config/nav-mega";
 import ChevronRight from "../../icons/ChevronRight.astro";
+import DownloadIcon from "../../icons/DownloadIcon.astro";
 
 const categories = productsMega.categories;
 ---
@@ -16,7 +17,7 @@ const categories = productsMega.categories;
 		<div class="grid lg:grid-cols-12">
 			<!-- Category sidebar -->
 			<aside
-				class="border-b border-white/10 bg-black/20 lg:col-span-3 lg:border-r lg:border-b-0"
+				class="flex flex-col border-b border-white/10 bg-black/20 lg:col-span-3 lg:border-r lg:border-b-0"
 			>
 				<ul class="py-2" role="tablist" aria-label="Product categories">
 					{
@@ -56,10 +57,18 @@ const categories = productsMega.categories;
 				</ul>
 				<a
 					href={productsMega.viewAll.href}
-					class="mx-6 mb-5 mt-2 inline-flex items-center gap-1 border-b border-accent pb-0.5 text-sm font-medium text-accent transition-colors hover:border-white hover:text-white sm:mx-8"
+					class="mx-6 mt-2 inline-flex items-center gap-1 border-b border-accent pb-0.5 text-sm font-medium text-accent transition-colors hover:border-white hover:text-white sm:mx-8"
 				>
 					{productsMega.viewAll.label}
 					<ChevronRight class="h-3.5 w-3.5" />
+				</a>
+				<a
+					href={productsMega.catalogue.href}
+					download={productsMega.catalogue.filename}
+					class="mx-6 mb-5 mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-medium text-primary-dark transition-colors hover:bg-white sm:mx-8"
+				>
+					<DownloadIcon class="h-4 w-4" />
+					{productsMega.catalogue.label}
 				</a>
 			</aside>
 
