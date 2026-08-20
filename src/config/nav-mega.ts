@@ -1,3 +1,4 @@
+import cataloguePdf from '../assets/catalouge/PaK-ALUMEX-Catalogue-Volume-4.pdf?url';
 import { finishes } from './finishes';
 import { systems } from './home';
 import { productItems, type ProductCategory } from './products';
@@ -115,6 +116,11 @@ const finishCategories = finishes.items.map((item) => ({
 export const productsMega = {
 	trigger: { label: 'Products', href: '/products' },
 	viewAll: { label: 'View all architectural systems', href: '/products' },
+	catalogue: {
+		label: 'Download Catalogue',
+		href: cataloguePdf,
+		filename: 'Pak-Alumex-Catalogue-Volume-4.pdf',
+	},
 	categories: [...productCategories, ...finishCategories],
 	footerTiles: [
 		{

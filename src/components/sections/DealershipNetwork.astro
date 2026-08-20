@@ -1,0 +1,1477 @@
+---
+import { Image } from "astro:assets";
+import logo from "../../assets/logo-white.png";
+import {
+	dealerRoutes,
+	dealers,
+	headquarters,
+	networkScenes,
+	pakistanOutline,
+	type Dealer,
+} from "../../config/dealerships";
+
+const project = ({ lon, lat }: Pick<Dealer, "lon" | "lat">) => ({
+	x: 42 + (lon - 60.5) * 46,
+	y: 35 + (37.5 - lat) * 56,
+});
+
+const points = new Map(
+	[headquarters, ...dealers].map((location) => [
+		location.id,
+		project(location),
+	]),
+);
+const headquartersPoint = points.get(headquarters.id);
+if (!headquartersPoint) throw new Error("Missing headquarters coordinates.");
+const labelPlacements = new Map<
+	string,
+	{ x: number; y: number; anchor: "start" | "end" }
+>();
+
+for (let scene = 2; scene <= 8; scene += 1) {
+	const sceneDealers = dealers
+		.filter((dealer) => dealer.scene === scene)
+		.sort(
+			(a, b) => (points.get(a.id)?.y ?? 0) - (points.get(b.id)?.y ?? 0),
+		);
+	const lanes = Math.ceil(sceneDealers.length / 2);
+
+	sceneDealers.forEach((dealer, index) => {
+		const side = index % 2 === 0 ? 1 : -1;
+		const lane = Math.floor(index / 2);
+		labelPlacements.set(dealer.id, {
+			x: side * (26 + (lane % 2) * 24),
+			y: (lane - (lanes - 1) / 2) * 20 - 8,
+			anchor: side === 1 ? "start" : "end",
+		});
+	});
+}
+
+const outlinePath = `${pakistanOutline
+	.map(([lon, lat], index) => {
+		const { x, y } = project({ lon, lat });
+		return `${index ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)}`;
+	})
+	.join(" ")} Z`;
+
+const makeRoutePath = (from: string, to: string, index: number) => {
+	const start = points.get(from);
+	const end = points.get(to);
+	if (!start || !end)
+		throw new Error(`Missing route coordinates for ${from} → ${to}.`);
+
+	const dx = end.x - start.x;
+	const dy = end.y - start.y;
+	const length = Math.hypot(dx, dy);
+	const bend = (index % 2 ? 1 : -1) * Math.min(16, length * 0.08);
+	const cx = (start.x + end.x) / 2 - (dy / length) * bend;
+	const cy = (start.y + end.y) / 2 + (dx / length) * bend;
+
+	return `M${start.x.toFixed(1)} ${start.y.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${end.x.toFixed(1)} ${end.y.toFixed(1)}`;
+};
+
+const routes = dealerRoutes.map((route, index) => {
+	const target = dealers.find(({ id }) => id === route.to);
+	if (!target) throw new Error(`Missing route target ${route.to}.`);
+	return {
+		...route,
+		scene: target.scene,
+		path: makeRoutePath(route.from, route.to, index),
+	};
+});
+
+const regionCounts = [
+	{
+		label: "Sindh",
+		count: dealers.filter(({ region }) => region === "Sindh").length,
+	},
+	{
+		label: "Punjab & Capital",
+		count: dealers.filter(({ region }) => region === "Punjab & Capital")
+			.length,
+	},
+	{
+		label: "KPK",
+		count: dealers.filter(({ region }) => region === "KPK").length,
+	},
+];
+
+const intro = networkScenes[0];
+---
+
+<section
+	id="dealership-network"
+	class="network"
+	data-network
+	aria-labelledby="network-title"
+>
+	<div class="network__runway" data-network-runway>
+		<div class="network__stage" data-network-stage>
+			<div
+				class="network__ambient network__ambient--one"
+				aria-hidden="true"
+			>
+			</div>
+			<div
+				class="network__ambient network__ambient--two"
+				aria-hidden="true"
+			>
+			</div>
+
+			<div class="network__shell">
+				<div class="network__copy">
+					<Image
+						src={logo}
+						alt="Pak Alumex Aluminium Industries"
+						width={76}
+						height={76}
+						class="network__logo"
+						data-network-logo
+					/>
+
+					<p class="network__eyebrow" data-network-eyebrow>
+						{intro.eyebrow}
+					</p>
+					<h2
+						id="network-title"
+						class="network__title"
+						data-network-title
+					>
+						{intro.title}
+					</h2>
+					<p class="network__description" data-network-description>
+						{intro.description}
+					</p>
+
+					<div class="network__status" aria-hidden="true">
+						<div>
+							<strong class="network__count" data-network-count
+								>44</strong
+							>
+							<span>Authorized dealers</span>
+						</div>
+						<div class="network__scene">
+							<span data-network-scene>01</span>
+							<i></i>
+							<span>09</span>
+						</div>
+					</div>
+
+					<div class="network__progress" aria-hidden="true">
+						<span data-network-progress></span>
+					</div>
+
+					<ul
+						class="network__regions"
+						aria-label="Dealership coverage by region"
+					>
+						{
+							regionCounts.map(({ label, count }) => (
+								<li>
+									<span>{label}</span>
+									<strong>
+										{String(count).padStart(2, "0")}
+									</strong>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+
+				<div class="network__visual">
+					<div class="network__camera" data-network-camera>
+						<svg
+							class="network__map"
+							viewBox="0 0 900 840"
+							role="img"
+							aria-labelledby="network-map-title network-map-description"
+							preserveAspectRatio="xMidYMid meet"
+						>
+							<title id="network-map-title">
+								Pak Alumex dealership network across Pakistan
+							</title>
+							<desc id="network-map-description">
+								A map of Pakistan showing 44 authorized dealer
+								locations expanding north and south from Pak
+								Alumex headquarters near Gojra, Faisalabad.
+							</desc>
+
+							<defs>
+								<linearGradient
+									id="network-map-fill"
+									x1="0"
+									y1="0"
+									x2="1"
+									y2="1"
+								>
+									<stop offset="0" stop-color="#1a3558"
+									></stop>
+									<stop offset="0.55" stop-color="#122b4d"
+									></stop>
+									<stop offset="1" stop-color="#0b1c30"
+									></stop>
+								</linearGradient>
+								<radialGradient id="network-illumination">
+									<stop
+										offset="0"
+										stop-color="#2fa8e2"
+										stop-opacity="0.2"></stop>
+									<stop
+										offset="0.48"
+										stop-color="#1f4e8c"
+										stop-opacity="0.08"></stop>
+									<stop
+										offset="1"
+										stop-color="#1f4e8c"
+										stop-opacity="0"></stop>
+								</radialGradient>
+							</defs>
+
+							<g>
+								<path
+									d={outlinePath}
+									fill="none"
+									stroke="#1f4e8c"
+									stroke-width="5"
+									opacity="0.12"
+									vector-effect="non-scaling-stroke"
+									data-map-glow
+									aria-hidden="true"></path>
+								<path
+									d={outlinePath}
+									class="network__country"
+									fill="url(#network-map-fill)"
+									data-country></path>
+								<path
+									d={outlinePath}
+									class="network__country-grid"
+									pathLength="1"
+									aria-hidden="true"></path>
+								<ellipse
+									class="network__illumination"
+									cx="610"
+									cy="410"
+									rx="250"
+									ry="360"
+									fill="url(#network-illumination)"
+									data-illumination
+									aria-hidden="true"></ellipse>
+
+								<g class="network__routes" aria-hidden="true">
+									{
+										routes.map(
+											({ from, to, scene, path }) => (
+												<path
+													id={`route-${from}-${to}`}
+													d={path}
+													class="network__route"
+													data-route
+													data-scene={scene}
+													data-target={to}
+													vector-effect="non-scaling-stroke"
+												/>
+											),
+										)
+									}
+								</g>
+
+								<g
+									class="network__headquarters"
+									transform={`translate(${headquartersPoint.x.toFixed(1)} ${headquartersPoint.y.toFixed(1)})`}
+									data-headquarters
+								>
+									<circle
+										class="network__hq-core"
+										r="5"
+										aria-hidden="true"></circle>
+									<line
+										class="network__label-line"
+										x1="0"
+										y1="0"
+										x2="-105"
+										y2="0"
+										aria-hidden="true"></line>
+									<text
+										class="network__hq-label"
+										x="-172"
+										text-anchor="middle"
+										y="4"
+									>
+										Headquarters
+										<tspan
+											class="network__hq-location"
+											x="-172"
+											dy="14">Gojra, Faisalabad</tspan>
+									</text>
+								</g>
+
+								<g class="network__dealers">
+									{
+										dealers.map((dealer) => {
+											const point = points.get(dealer.id);
+											const label = labelPlacements.get(
+												dealer.id,
+											);
+											if (!point || !label) return null;
+											return (
+												<g
+													class="network__dealer"
+													transform={`translate(${point.x.toFixed(1)} ${point.y.toFixed(1)})`}
+													data-dealer={dealer.id}
+													data-scene={dealer.scene}
+													role="button"
+													tabindex="-1"
+													aria-label={`Highlight ${dealer.name} dealer`}
+													aria-pressed="false"
+												>
+													<g data-node-mark>
+														<circle
+															class="network__pulse"
+															r="13"
+															aria-hidden="true"
+														/>
+														{/* <circle class="network__halo" r="7" aria-hidden="true" /> */}
+														<circle
+															class="network__core"
+															r="3.6"
+															aria-hidden="true"
+														/>
+													</g>
+													<g data-node-label>
+														<line
+															class="network__label-line"
+															x1="0"
+															y1="0"
+															x2={(
+																label.x * 0.72
+															).toFixed(1)}
+															y2={(
+																label.y * 0.72
+															).toFixed(1)}
+															aria-hidden="true"
+														/>
+														<text
+															class="network__label"
+															x={label.x}
+															y={label.y}
+															text-anchor={
+																label.anchor
+															}
+														>
+															{dealer.name}
+														</text>
+													</g>
+												</g>
+											);
+										})
+									}
+								</g>
+							</g>
+						</svg>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="sr-only">
+		<h3>44 authorized dealers across Pakistan</h3>
+		<p>
+			The network originates at Pak Alumex headquarters on Painsra Road
+			near Gojra, Faisalabad.
+		</p>
+		<p>
+			5 in Sindh, 35 across Punjab and the capital region, and 4 in Khyber
+			Pakhtunkhwa.
+		</p>
+		<ul>
+			{
+				dealers.map(({ name, region }) => (
+					<li>
+						{name}, {region}
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.network {
+		--network-bg: #07101c;
+		--network-map: #122b4d;
+		--network-node: #2fa8e2;
+		--network-glow: #8fd7f4;
+		--network-accent: #1f4e8c;
+		position: relative;
+		background: var(--network-bg);
+		color: #fff;
+		overflow: clip;
+	}
+
+	.network__runway {
+		height: 240vh;
+		height: 240dvh;
+	}
+
+	.network__stage {
+		position: sticky;
+		top: 0;
+		height: 100vh;
+		height: 100dvh;
+		min-height: 620px;
+		isolation: isolate;
+		overflow: hidden;
+		contain: layout paint style;
+		background:
+			radial-gradient(
+				circle at 74% 46%,
+				rgba(47, 168, 226, 0.08),
+				transparent 34%
+			),
+			linear-gradient(145deg, #07101c 0%, #0a1728 58%, #07101c 100%);
+	}
+
+	.network__stage::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		opacity: 0.16;
+		background-image:
+			linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+			linear-gradient(
+				90deg,
+				rgba(255, 255, 255, 0.035) 1px,
+				transparent 1px
+			);
+		background-size: 64px 64px;
+		mask-image: linear-gradient(90deg, transparent, #000 42%, #000);
+	}
+
+	.network__ambient {
+		position: absolute;
+		width: 44rem;
+		aspect-ratio: 1;
+		border-radius: 999px;
+		opacity: 0.18;
+		background: radial-gradient(
+			circle,
+			rgba(47, 168, 226, 0.24),
+			transparent 68%
+		);
+		pointer-events: none;
+	}
+
+	.network__ambient--one {
+		top: -18rem;
+		right: 8%;
+	}
+
+	.network__ambient--two {
+		right: -20rem;
+		bottom: -20rem;
+	}
+
+	.network__shell {
+		width: min(100%, 1440px);
+		height: 100%;
+		margin-inline: auto;
+		padding: clamp(5.5rem, 8vh, 8rem) clamp(1.5rem, 5vw, 5rem)
+			clamp(2rem, 5vh, 4rem);
+		display: grid;
+		grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+		align-items: center;
+		gap: clamp(1rem, 4vw, 5rem);
+	}
+
+	.network__copy {
+		position: relative;
+		z-index: 2;
+		max-width: 34rem;
+	}
+
+	.network__logo {
+		width: clamp(3.5rem, 5vw, 4.75rem);
+		height: auto;
+		margin-bottom: clamp(1.5rem, 4vh, 3rem);
+		filter: drop-shadow(0 0 18px rgba(47, 168, 226, 0.14));
+	}
+
+	.network__eyebrow {
+		margin: 0 0 1rem;
+		color: var(--network-glow);
+		font-family: var(--font-display);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+	}
+
+	.network__title {
+		max-width: 42ch;
+		margin: 0;
+		color: #fff;
+		font-family: var(--font-display);
+		font-size: clamp(1.25rem, 3.2vw, 2rem);
+		font-weight: 700;
+		line-height: 0.98;
+		letter-spacing: -0.045em;
+		text-wrap: balance;
+	}
+
+	.network__description {
+		max-width: 31rem;
+		margin: 1.4rem 0 0;
+		color: rgba(255, 255, 255, 0.62);
+		font-size: clamp(0.95rem, 1.2vw, 1.08rem);
+		line-height: 1.7;
+	}
+
+	.network__status {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 2rem;
+		margin-top: clamp(2rem, 5vh, 4rem);
+		padding-bottom: 0.85rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+	}
+
+	.network__status > div:first-child {
+		display: flex;
+		align-items: baseline;
+		gap: 0.7rem;
+	}
+
+	.network__count {
+		color: #fff;
+		font-family: var(--font-display);
+		font-size: clamp(2.3rem, 4vw, 4rem);
+		font-weight: 700;
+		line-height: 0.8;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.network__status span {
+		color: rgba(255, 255, 255, 0.48);
+		font-size: 0.66rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.network__scene {
+		display: flex;
+		align-items: center;
+		gap: 0.55rem;
+		padding-bottom: 0.15rem;
+	}
+
+	.network__scene i {
+		width: 1.8rem;
+		height: 1px;
+		background: rgba(255, 255, 255, 0.24);
+	}
+
+	.network__progress {
+		height: 2px;
+		background: rgba(255, 255, 255, 0.07);
+		overflow: hidden;
+	}
+
+	.network__progress span {
+		display: block;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(
+			90deg,
+			var(--network-node),
+			var(--network-glow)
+		);
+		transform: scaleX(0);
+		transform-origin: left;
+	}
+
+	.network__regions {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.6rem;
+		margin: 1.15rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.network__regions li {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.network__regions span {
+		color: rgba(255, 255, 255, 0.35);
+		font-size: 0.58rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.network__regions strong {
+		color: rgba(255, 255, 255, 0.78);
+		font-family: var(--font-display);
+		font-size: 0.82rem;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.network__visual {
+		position: relative;
+		align-self: stretch;
+		display: grid;
+		place-items: center;
+		min-width: 0;
+		overflow: hidden;
+	}
+
+	.network__map {
+		display: block;
+		width: min(100%, 52rem);
+		max-height: 86dvh;
+		overflow: visible;
+	}
+
+	.network__camera {
+		width: 100%;
+		display: grid;
+		place-items: center;
+		will-change: transform;
+		transform: translateZ(0);
+		backface-visibility: hidden;
+	}
+
+	.network__country {
+		stroke: rgba(255, 255, 255, 0.2);
+		stroke-width: 1.4;
+		vector-effect: non-scaling-stroke;
+	}
+
+	.network__country-grid {
+		fill: none;
+		stroke: rgba(47, 168, 226, 0.15);
+		stroke-width: 4;
+		stroke-dasharray: 0.015 0.025;
+		vector-effect: non-scaling-stroke;
+	}
+
+	.network__illumination {
+		opacity: 0.18;
+	}
+
+	.network__route {
+		fill: none;
+		stroke: rgba(47, 168, 226, 0.5);
+		stroke-width: 1.45;
+		stroke-linecap: round;
+	}
+
+	.network__dealer {
+		cursor: pointer;
+		transition: opacity 180ms ease;
+	}
+
+	.network__dealer:focus-visible {
+		outline: none;
+	}
+
+	.network__dealer:focus-visible .network__pulse {
+		opacity: 0.85;
+		stroke-width: 2;
+	}
+
+	.network[data-node-selected] .network__dealer {
+		opacity: 0.16;
+	}
+
+	.network[data-node-selected] .network__dealer.is-selected {
+		opacity: 1;
+	}
+
+	.network[data-node-selected]
+		.network__dealer.is-selected
+		[data-node-label] {
+		opacity: 1 !important;
+	}
+
+	.network[data-node-selected] .network__dealer.is-selected .network__core {
+		fill: #fff;
+		stroke: var(--network-node);
+		stroke-width: 2;
+	}
+
+	.network[data-node-selected] .network__route {
+		opacity: 0.07 !important;
+	}
+
+	.network[data-node-selected] .network__route.is-selected-route {
+		opacity: 0.95 !important;
+		stroke: var(--network-glow);
+		stroke-width: 2;
+	}
+
+	.network__pulse {
+		fill: none;
+		stroke-width: 1.2;
+		opacity: 0.18;
+		vector-effect: non-scaling-stroke;
+	}
+
+	.network__halo {
+		fill: rgba(47, 168, 226, 0.15);
+		stroke-width: 1;
+		vector-effect: non-scaling-stroke;
+	}
+
+	.network__core {
+		fill: var(--network-node);
+		stroke: #d8effa;
+		stroke-width: 0.5;
+		vector-effect: non-scaling-stroke;
+	}
+
+	.network__headquarters {
+		transform-box: fill-box;
+		transform-origin: center;
+	}
+
+	.network__hq-core {
+		fill: #fff;
+		stroke: #2fa8e2;
+		stroke-width: 2;
+		vector-effect: non-scaling-stroke;
+	}
+
+	.network__hq-label {
+		fill: #fff;
+		font-family: var(--font-display);
+		font-size: 15px;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		paint-order: stroke;
+		stroke: #071020;
+		stroke-width: 3px;
+		stroke-linejoin: round;
+	}
+
+	.network__hq-location {
+		fill: rgba(255, 255, 255, 0.78);
+		font-family: var(--font-sans);
+		font-size: 9.5px;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		stroke-width: 2.5px;
+	}
+
+	.network__label {
+		fill: rgba(255, 255, 255, 0.76);
+		font-family: var(--font-sans);
+		font-size: 9.5px;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		paint-order: stroke;
+		stroke: #071020;
+		stroke-width: 2.5px;
+		stroke-linejoin: round;
+	}
+
+	.network__label-line {
+		stroke: rgba(143, 215, 244, 0.4);
+		stroke-width: 0.75;
+		vector-effect: non-scaling-stroke;
+	}
+
+	[data-node-mark] {
+		transform-box: fill-box;
+		transform-origin: center;
+	}
+
+	@media (max-width: 767px) {
+		.network__runway {
+			height: 220vh;
+			height: 220dvh;
+		}
+
+		.network__stage {
+			min-height: 560px;
+		}
+
+		.network__shell {
+			grid-template-columns: 1fr;
+			grid-template-rows: auto minmax(0, 1fr);
+			align-items: stretch;
+			gap: 0;
+			padding: 5.5rem 1.25rem 1rem;
+		}
+
+		.network__copy {
+			max-width: none;
+		}
+
+		.network__logo {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 3.25rem;
+			margin: 0;
+		}
+
+		.network__eyebrow {
+			margin-bottom: 0.55rem;
+			font-size: 0.62rem;
+		}
+
+		.network__title {
+			max-width: 15ch;
+			font-size: clamp(1.85rem, 8vw, 2.75rem);
+			line-height: 1.02;
+		}
+
+		.network__description {
+			display: none;
+		}
+
+		.network__status {
+			margin-top: 1.1rem;
+			padding-bottom: 0.55rem;
+		}
+
+		.network__count {
+			font-size: 2.2rem;
+		}
+
+		.network__regions {
+			display: none;
+		}
+
+		.network__visual {
+			min-height: 0;
+			margin: -0.5rem -2.4rem -1.5rem;
+		}
+
+		.network__visual::after {
+			display: none;
+		}
+
+		.network__map {
+			width: 100%;
+			max-height: 62dvh;
+		}
+
+		.network__label {
+			font-size: 8.5px;
+			stroke-width: 2px;
+		}
+
+		.network__hq-label {
+			font-size: 12px;
+			stroke-width: 2px;
+		}
+
+		.network__hq-location {
+			font-size: 8.5px;
+			stroke-width: 2px;
+		}
+
+		.network__core {
+			stroke-width: 1.8;
+		}
+	}
+
+	@media (max-height: 700px) and (min-width: 768px) {
+		.network__shell {
+			padding-top: 4.75rem;
+			padding-bottom: 1.5rem;
+		}
+
+		.network__logo {
+			width: 3.25rem;
+			margin-bottom: 1rem;
+		}
+
+		.network__status {
+			margin-top: 1.5rem;
+		}
+
+		.network__regions {
+			display: none;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.network__runway {
+			height: auto;
+		}
+
+		.network__dealer {
+			transition: none;
+		}
+
+		.network__stage {
+			position: relative;
+			height: auto;
+			min-height: min(52rem, 100dvh);
+		}
+	}
+</style>
+
+<script>
+	import gsap from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+	import {
+		dealerRoutes,
+		dealers,
+		headquarters,
+		networkScenes,
+	} from "../../config/dealerships";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const root = document.querySelector<HTMLElement>("[data-network]");
+	const runway = root?.querySelector<HTMLElement>("[data-network-runway]");
+	const stage = root?.querySelector<HTMLElement>("[data-network-stage]");
+	const camera = root?.querySelector<HTMLElement>("[data-network-camera]");
+	const country = root?.querySelector<SVGPathElement>("[data-country]");
+	const mapGlow = root?.querySelector<SVGPathElement>("[data-map-glow]");
+	const illumination = root?.querySelector<SVGEllipseElement>(
+		"[data-illumination]",
+	);
+	const headquartersMark = root?.querySelector<SVGGElement>(
+		"[data-headquarters]",
+	);
+	const routes = Array.from(
+		root?.querySelectorAll<SVGPathElement>("[data-route]") ?? [],
+	);
+	const marks = Array.from(
+		root?.querySelectorAll<SVGGElement>("[data-node-mark]") ?? [],
+	);
+	const dealerElements = Array.from(
+		root?.querySelectorAll<SVGGElement>(".network__dealer") ?? [],
+	);
+	const labels = Array.from(
+		root?.querySelectorAll<SVGGElement>("[data-node-label]") ?? [],
+	);
+	const count = root?.querySelector<HTMLElement>("[data-network-count]");
+	const eyebrow = root?.querySelector<HTMLElement>("[data-network-eyebrow]");
+	const title = root?.querySelector<HTMLElement>("[data-network-title]");
+	const description = root?.querySelector<HTMLElement>(
+		"[data-network-description]",
+	);
+	const sceneNumber = root?.querySelector<HTMLElement>(
+		"[data-network-scene]",
+	);
+	const progress = root?.querySelector<HTMLElement>(
+		"[data-network-progress]",
+	);
+	const logo = root?.querySelector<HTMLElement>("[data-network-logo]");
+	const reducedMotion = matchMedia(
+		"(prefers-reduced-motion: reduce)",
+	).matches;
+
+	const totalDuration = networkScenes.reduce(
+		(sum, scene) => sum + scene.duration,
+		0,
+	);
+	const countByScene = new Map<number, number>();
+	let runningCount = 0;
+	for (let scene = 2; scene <= 8; scene += 1) {
+		runningCount += dealers.filter(
+			(dealer) => dealer.scene === scene,
+		).length;
+		countByScene.set(scene, runningCount);
+	}
+	countByScene.set(9, dealers.length);
+
+	const dealerById = new Map(dealers.map((dealer) => [dealer.id, dealer]));
+	const parentById = new Map(dealerRoutes.map(({ from, to }) => [to, from]));
+	const depthCache = new Map<string, number>([[headquarters.id, 0]]);
+	const getDepth = (id: string): number => {
+		const cached = depthCache.get(id);
+		if (cached !== undefined) return cached;
+		const parent = parentById.get(id);
+		const depth = parent ? getDepth(parent) + 1 : 0;
+		depthCache.set(id, depth);
+		return depth;
+	};
+	const interleaveDirections = <T,>(
+		items: T[],
+		getId: (item: T) => string,
+	) => {
+		const sorted = [...items].sort((a, b) => {
+			const aId = getId(a);
+			const bId = getId(b);
+			return getDepth(aId) - getDepth(bId) || aId.localeCompare(bId);
+		});
+		const south = sorted.filter(
+			(item) =>
+				(dealerById.get(getId(item))?.lat ?? headquarters.lat) <
+				headquarters.lat,
+		);
+		const north = sorted.filter(
+			(item) =>
+				(dealerById.get(getId(item))?.lat ?? headquarters.lat) >=
+				headquarters.lat,
+		);
+		const interleaved: T[] = [];
+		while (south.length || north.length) {
+			if (south.length) interleaved.push(south.shift()!);
+			if (north.length) interleaved.push(north.shift()!);
+		}
+		return interleaved;
+	};
+
+	let selectedDealerId: string | null = null;
+	let clearNodeSelection = () => {};
+	let activeScene = 0;
+	const setCopy = (sceneId: number, animate = true) => {
+		if (
+			!eyebrow ||
+			!title ||
+			!description ||
+			!sceneNumber ||
+			activeScene === sceneId
+		)
+			return;
+		const scene = networkScenes.find(({ id }) => id === sceneId);
+		if (!scene) return;
+		activeScene = sceneId;
+		dealerElements.forEach((dealer) => {
+			dealer.tabIndex =
+				sceneId === 9 || Number(dealer.dataset.scene) <= sceneId
+					? 0
+					: -1;
+		});
+		if (
+			selectedDealerId &&
+			Number(dealerById.get(selectedDealerId)?.scene ?? 9) > sceneId
+		) {
+			clearNodeSelection();
+		}
+
+		const elements = [eyebrow, title, description];
+		const update = () => {
+			eyebrow.textContent = scene.eyebrow;
+			title.textContent = scene.title;
+			description.textContent = scene.description;
+			sceneNumber.textContent = String(scene.id).padStart(2, "0");
+		};
+
+		if (!animate) {
+			update();
+			return;
+		}
+
+		gsap.killTweensOf(elements);
+		gsap.to(elements, {
+			opacity: 0,
+			y: -8,
+			duration: 0.14,
+			overwrite: true,
+			onComplete: () => {
+				update();
+				gsap.fromTo(
+					elements,
+					{ opacity: 0, y: 10 },
+					{ opacity: 1, y: 0, duration: 0.35 },
+				);
+			},
+		});
+	};
+
+	if (
+		root &&
+		runway &&
+		stage &&
+		camera &&
+		country &&
+		mapGlow &&
+		illumination &&
+		headquartersMark &&
+		count &&
+		progress &&
+		logo
+	) {
+		const routeByTarget = new Map(
+			routes.map((route) => [route.dataset.target ?? "", route]),
+		);
+		clearNodeSelection = () => {
+			selectedDealerId = null;
+			delete root.dataset.nodeSelected;
+			dealerElements.forEach((dealer) => {
+				dealer.classList.remove("is-selected");
+				dealer.setAttribute("aria-pressed", "false");
+			});
+			routes.forEach((route) =>
+				route.classList.remove("is-selected-route"),
+			);
+		};
+		const selectDealer = (dealer: SVGGElement) => {
+			const id = dealer.dataset.dealer;
+			const mark = dealer.querySelector<SVGGElement>("[data-node-mark]");
+			if (!id || !mark || Number(getComputedStyle(mark).opacity) < 0.2)
+				return;
+			if (selectedDealerId === id) {
+				clearNodeSelection();
+				return;
+			}
+
+			clearNodeSelection();
+			selectedDealerId = id;
+			root.dataset.nodeSelected = id;
+			dealer.classList.add("is-selected");
+			dealer.setAttribute("aria-pressed", "true");
+
+			let current = id;
+			while (current !== headquarters.id) {
+				routeByTarget.get(current)?.classList.add("is-selected-route");
+				const parent = parentById.get(current);
+				if (!parent) break;
+				current = parent;
+			}
+		};
+		const onNetworkClick = (event: MouseEvent) => {
+			const target = event.target as Element;
+			const dealer = target.closest<SVGGElement>(".network__dealer");
+			if (dealer) selectDealer(dealer);
+			else clearNodeSelection();
+		};
+		const onNetworkKeydown = (event: KeyboardEvent) => {
+			const target = event.target as Element;
+			const dealer = target.closest<SVGGElement>(".network__dealer");
+			if (!dealer || (event.key !== "Enter" && event.key !== " ")) return;
+			event.preventDefault();
+			selectDealer(dealer);
+		};
+		const onDocumentKeydown = (event: KeyboardEvent) => {
+			if (event.key === "Escape") clearNodeSelection();
+		};
+		const cleanupNodeInteraction = () => {
+			root.removeEventListener("click", onNetworkClick);
+			root.removeEventListener("keydown", onNetworkKeydown);
+			document.removeEventListener("keydown", onDocumentKeydown);
+		};
+
+		root.addEventListener("click", onNetworkClick);
+		root.addEventListener("keydown", onNetworkKeydown);
+		document.addEventListener("keydown", onDocumentKeydown);
+		document.addEventListener("astro:before-swap", cleanupNodeInteraction, {
+			once: true,
+		});
+
+		if (reducedMotion) {
+			count.textContent = String(dealers.length);
+			setCopy(9, false);
+		} else {
+			const context = gsap.context(() => {
+				const routeLengths = new Map(
+					routes.map((route) => {
+						const length = route.getTotalLength();
+						gsap.set(route, {
+							opacity: 0,
+							strokeDasharray: length,
+							strokeDashoffset: length + 1,
+						});
+						return [route, length] as const;
+					}),
+				);
+
+				gsap.set(marks, { opacity: 0, scale: 0 });
+				gsap.set(labels, { opacity: 0 });
+				gsap.set(headquartersMark, { opacity: 0, scale: 0 });
+				gsap.set([country, mapGlow], { opacity: 0 });
+				gsap.set(illumination, { opacity: 0 });
+				gsap.set(camera, {
+					xPercent: 0,
+					yPercent: 0,
+					scale: 0.94,
+					transformOrigin: "50% 50%",
+					force3D: true,
+				});
+				gsap.set(logo, { opacity: 0 });
+				count.textContent = "0";
+				setCopy(1, false);
+
+				const pulseTimeline = gsap.timeline({ paused: true });
+				pulseTimeline.fromTo(
+					".network__dealer:nth-child(5n + 1) .network__pulse",
+					{ scale: 0.7, opacity: 0.2 },
+					{
+						scale: 1.45,
+						opacity: 0.04,
+						transformOrigin: "center",
+						duration: 1.6,
+						ease: "sine.out",
+						stagger: 0.18,
+						repeat: -1,
+					},
+				);
+
+				const cameraViews: Record<
+					number,
+					{ xPercent: number; yPercent: number; scale: number }
+				> = {
+					1: { xPercent: 0, yPercent: 0, scale: 0.94 },
+					2: { xPercent: -17, yPercent: 4, scale: 2 },
+					3: { xPercent: -5, yPercent: 0, scale: 1.2 },
+					4: { xPercent: -4, yPercent: 0, scale: 1.15 },
+					5: { xPercent: -3, yPercent: 0, scale: 1.1 },
+					6: { xPercent: -2, yPercent: 0, scale: 1.04 },
+					7: { xPercent: -1, yPercent: 0, scale: 0.98 },
+					8: { xPercent: 0, yPercent: 0, scale: 0.94 },
+					9: { xPercent: 0, yPercent: 0, scale: 0.94 },
+				};
+
+				const buildTimeline = () => {
+					const timeline = gsap.timeline({
+						defaults: { ease: "power3.out" },
+					});
+					const sceneStarts = new Map<number, number>();
+					let cursor = 0;
+					for (const scene of networkScenes) {
+						sceneStarts.set(scene.id, cursor);
+						timeline.addLabel(`scene-${scene.id}`, cursor);
+						cursor += scene.duration;
+					}
+
+					timeline.to(country, { opacity: 1, duration: 1.8 }, 0);
+					timeline.to(mapGlow, { opacity: 0.28, duration: 1.8 }, 0);
+					timeline.to(logo, { opacity: 0.82, duration: 1.25 }, 0.35);
+					timeline.to(
+						camera,
+						{ ...cameraViews[1], duration: 3, ease: "expo.out" },
+						0,
+					);
+					const originStart = sceneStarts.get(2) ?? 3;
+					timeline.to(
+						headquartersMark,
+						{
+							opacity: 1,
+							scale: 1,
+							duration: 0.55,
+							ease: "expo.out",
+						},
+						originStart + 0.35,
+					);
+					for (let sceneId = 2; sceneId <= 8; sceneId += 1) {
+						const start = sceneStarts.get(sceneId) ?? 0;
+						const duration = networkScenes[sceneId - 1].duration;
+						const sceneRoutes = interleaveDirections(
+							routes.filter(
+								(route) =>
+									Number(route.dataset.scene) === sceneId,
+							),
+							(route) => route.dataset.target ?? "",
+						);
+						const sceneDealers = interleaveDirections(
+							Array.from(
+								root.querySelectorAll<SVGGElement>(
+									`.network__dealer[data-scene="${sceneId}"]`,
+								),
+							),
+							(dealer) => dealer.dataset.dealer ?? "",
+						);
+						const step = Math.max(
+							0.18,
+							(duration - 1.15) /
+								Math.max(sceneDealers.length, 1),
+						);
+						const sceneMarks = sceneDealers
+							.map((dealer) =>
+								dealer.querySelector<SVGGElement>(
+									"[data-node-mark]",
+								),
+							)
+							.filter((mark): mark is SVGGElement =>
+								Boolean(mark),
+							);
+						const sceneLabels = sceneDealers
+							.map((dealer) =>
+								dealer.querySelector<SVGGElement>(
+									"[data-node-label]",
+								),
+							)
+							.filter((label): label is SVGGElement =>
+								Boolean(label),
+							);
+
+						timeline.to(
+							camera,
+							{
+								...cameraViews[sceneId],
+								duration: Math.min(1.7, duration * 0.42),
+								ease: "expo.out",
+							},
+							start,
+						);
+
+						if (sceneRoutes.length) {
+							timeline.to(
+								sceneRoutes,
+								{
+									opacity: 1,
+									strokeDashoffset: 0,
+									duration: Math.min(0.55, step * 1.45),
+									stagger: step,
+								},
+								start + 0.42,
+							);
+						}
+						if (sceneMarks.length) {
+							timeline.to(
+								sceneMarks,
+								{
+									opacity: 1,
+									scale: 1,
+									duration: 0.34,
+									ease: "expo.out",
+									stagger: step,
+								},
+								start + 0.5,
+							);
+						}
+						if (sceneLabels.length) {
+							timeline.to(
+								sceneLabels,
+								{
+									opacity: 1,
+									duration: 0.25,
+									stagger: Math.max(step, 0.3),
+								},
+								start + 0.62,
+							);
+						}
+
+						const counterState = {
+							value: countByScene.get(sceneId - 1) ?? 0,
+						};
+						timeline.to(
+							counterState,
+							{
+								value:
+									countByScene.get(sceneId) ?? dealers.length,
+								duration: Math.max(0.8, duration - 0.55),
+								ease: "power3.out",
+								onUpdate: () => {
+									count.textContent = String(
+										Math.round(counterState.value),
+									);
+								},
+							},
+							start + 0.25,
+						);
+					}
+
+					const finalStart = sceneStarts.get(9) ?? 37;
+					timeline.to(
+						camera,
+						{ ...cameraViews[9], duration: 2.4, ease: "expo.out" },
+						finalStart,
+					);
+					timeline.to(
+						illumination,
+						{ opacity: 0.85, duration: 2.6 },
+						finalStart + 0.4,
+					);
+					timeline.to(
+						mapGlow,
+						{ opacity: 0.42, duration: 2.3 },
+						finalStart + 0.5,
+					);
+					timeline.to(
+						logo,
+						{ opacity: 1, scale: 1.04, duration: 1.3 },
+						finalStart + 1.2,
+					);
+					timeline.to(
+						{},
+						{ duration: totalDuration - timeline.duration() },
+					);
+
+					return timeline;
+				};
+
+				const media = gsap.matchMedia();
+				const resizeObserver = new ResizeObserver(() =>
+					ScrollTrigger.refresh(),
+				);
+				resizeObserver.observe(runway);
+				media.add(
+					{
+						desktop: "(min-width: 768px)",
+						mobile: "(max-width: 767px)",
+					},
+					() => {
+						const timeline = buildTimeline();
+						const trigger = ScrollTrigger.create({
+							animation: timeline,
+							trigger: runway,
+							start: "top top",
+							end: () =>
+								`+=${Math.max(1, runway.offsetHeight - stage.offsetHeight)}`,
+							scrub: true,
+							invalidateOnRefresh: true,
+							onLeave: () => {
+								timeline.progress(1);
+								setCopy(9, false);
+								count.textContent = String(dealers.length);
+								progress.style.transform = "scaleX(1)";
+							},
+							onUpdate: (self) => {
+								const time = self.progress * totalDuration;
+								let elapsed = 0;
+								let nextScene = 9;
+								for (const scene of networkScenes) {
+									elapsed += scene.duration;
+									if (time < elapsed) {
+										nextScene = scene.id;
+										break;
+									}
+								}
+								setCopy(nextScene);
+								progress.style.transform = `scaleX(${self.progress})`;
+
+								const finalActive = nextScene === 9;
+								if (finalActive && pulseTimeline.paused()) {
+									pulseTimeline.play();
+								} else if (
+									!finalActive &&
+									!pulseTimeline.paused()
+								) {
+									pulseTimeline.pause(0);
+								}
+							},
+						});
+						requestAnimationFrame(() => ScrollTrigger.refresh());
+						document.fonts.ready.then(() =>
+							ScrollTrigger.refresh(),
+						);
+
+						return () => {
+							trigger.kill();
+							timeline.kill();
+						};
+					},
+				);
+
+				return () => {
+					resizeObserver.disconnect();
+					media.revert();
+					pulseTimeline.kill();
+					routeLengths.clear();
+				};
+			}, root);
+
+			document.addEventListener(
+				"astro:before-swap",
+				() => context.revert(),
+				{ once: true },
+			);
+		}
+	}
+</script>
