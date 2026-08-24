@@ -3,6 +3,7 @@ import woodTexture from '../assets/finishes/wood-texture.jpg';
 import woodTexture2 from '../assets/finishes/wood-texture-2.jpg';
 import anodizing from '../assets/finishes/anodizing.jpg';
 import anodizing2 from '../assets/finishes/anodizing-2.jpg';
+import anodizingHero from '../assets/finishes/anodizing/Bronze-Anodizing.png';
 import powderCoating from '../assets/finishes/powder-coating.jpg';
 import powderCoating2 from '../assets/finishes/powder-coating-2.jpg';
 import powderHero from '../assets/finishes/power-coatig/sahara/s-3.png';
@@ -33,13 +34,42 @@ const powderRalSwatches = Object.entries(powderRalModules)
 	.sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
 	.map(([, mod]) => mod.default);
 
+const anodizingSwatchModules = import.meta.glob<{ default: ImageMetadata }>(
+	'../assets/finishes/anodizing/*.{jpeg,jpg,png}',
+	{ eager: true },
+);
+const anodizingSwatches = Object.entries(anodizingSwatchModules)
+	.sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+	.map(([, mod]) => mod.default);
+
+const anodizingSamples = Object.entries(anodizingSwatchModules)
+	.sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+	.map(([path, mod]) => ({
+		image: mod.default,
+		name:
+			path
+				.split('/')
+				.pop()
+				?.replace(/\.(png|jpe?g)$/i, '')
+				.replace(/-/g, ' ') ?? 'Sample',
+	}));
+
+const [anodizingSwatch1, anodizingSwatch2, anodizingSwatch3] = anodizingSwatches;
+
 type FinishHighlightIcon = 'strength' | 'weather' | 'precision' | 'aesthetics';
+
+export type FinishSwatchSample = {
+	image: ImageMetadata;
+	name: string;
+};
 
 export type FinishSampleGallery = {
 	label: string;
 	title: string;
 	description: string;
 	images: ImageMetadata[];
+	samples?: FinishSwatchSample[];
+	layout?: 'default' | 'labeled';
 };
 
 export type Finish = {
@@ -145,8 +175,22 @@ export const finishes = {
 			shortDescription: 'Electrochemical oxide layer for corrosion resistance and metallic depth.',
 			description:
 				'Anodizing builds a controlled aluminium oxide film that hardens the surface, improves corrosion resistance, and delivers a refined metallic finish — from clear and champagne to bronze and black.',
-			image: anodizing,
-			gallery: [anodizing, anodizing2, powderCoating, woodTexture],
+			image: anodizingHero,
+			gallery: anodizingSwatches.length > 0 ? anodizingSwatches : [anodizing, anodizing2],
+			sampleGalleries:
+				anodizingSwatches.length > 0
+					? [
+							{
+								label: 'Anodizing',
+								title: 'Anodizing colors',
+								description:
+									'Architectural anodized finishes — from champagne and bronze to black and dull metallic tones.',
+								images: anodizingSwatches,
+								samples: anodizingSamples,
+								layout: 'labeled',
+							},
+						]
+					: undefined,
 			features: [
 				'Integrated oxide layer — will not peel or flake',
 				'Excellent corrosion and abrasion resistance',
@@ -156,7 +200,7 @@ export const finishes = {
 			specs: [
 				{ label: 'Process', value: 'Sulphuric anodizing' },
 				{ label: 'Oxide thickness', value: '15–25 µm typical' },
-				{ label: 'Colors', value: 'Clear / Bronze / Black / Custom' },
+				{ label: 'Colors', value: 'Champagne / Bronze / Black / Dull' },
 				{ label: 'Hardness', value: 'High abrasion resistance' },
 				{ label: 'Use', value: 'Facades, curtain walls, trim' },
 				{ label: 'Standard', value: 'Architectural grade' },
@@ -165,17 +209,17 @@ export const finishes = {
 				{
 					title: 'Curtain Walls',
 					description: 'Durable metallic sightlines for commercial towers.',
-					image: anodizing,
+					image: anodizingSwatch1 ?? anodizing,
 				},
 				{
 					title: 'Coastal Projects',
 					description: 'Oxide protection for humid and saline environments.',
-					image: anodizing2,
+					image: anodizingSwatch2 ?? anodizing2,
 				},
 				{
 					title: 'Architectural Trim',
 					description: 'Consistent tone across mullions, caps, and flashings.',
-					image: powderCoating2,
+					image: anodizingSwatch3 ?? anodizing,
 				},
 			],
 			highlights: defaultHighlights,

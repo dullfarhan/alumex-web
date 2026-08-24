@@ -4,7 +4,7 @@ import ChevronRight from '../../icons/ChevronRight.astro';
 import MegaMenuColumn from './MegaMenuColumn.astro';
 import MegaMenuFeatured from './MegaMenuFeatured.astro';
 
-const [categoryColumn, featuredColumn, finishesColumn] = projectsMega.columns;
+const [projectsColumn, finishesColumn] = projectsMega.columns;
 ---
 
 <div
@@ -13,21 +13,12 @@ const [categoryColumn, featuredColumn, finishesColumn] = projectsMega.columns;
 	hidden
 	data-projects-mega
 >
-	<div class="mx-auto grid max-w-[1440px] gap-10 px-6 py-10 sm:px-12 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-white/10 lg:py-12">
+	<div class="mx-auto grid max-w-[1440px] gap-10 px-6 py-10 sm:px-12 lg:grid-cols-3 lg:gap-0 lg:divide-x lg:divide-white/10 lg:py-12">
 		<div class="lg:px-8 first:lg:pl-0">
-			<MegaMenuColumn
-				title={categoryColumn.title}
-				links={categoryColumn.links}
-				footers={'footers' in categoryColumn ? categoryColumn.footers : undefined}
-				footer={'footer' in categoryColumn ? categoryColumn.footer : undefined}
-			/>
-		</div>
-
-		<div class="lg:px-8">
-			<h3 class="mb-4 text-xs font-medium tracking-[0.08em] text-accent uppercase">{featuredColumn.title}</h3>
+			<h3 class="mb-4 text-xs font-medium tracking-[0.08em] text-accent uppercase">{projectsColumn.title}</h3>
 			<ul class="space-y-3">
 				{
-					featuredColumn.links.map((link, index) => (
+					projectsColumn.links.map((link, index) => (
 						<li>
 							<a
 								href={link.href}
@@ -44,6 +35,21 @@ const [categoryColumn, featuredColumn, finishesColumn] = projectsMega.columns;
 					))
 				}
 			</ul>
+			{
+				'footers' in projectsColumn && projectsColumn.footers && (
+					<div class="mt-5 flex flex-col items-start gap-3">
+						{projectsColumn.footers.map((item) => (
+							<a
+								href={item.href}
+								class="inline-flex items-center gap-1 border-b border-accent pb-0.5 text-sm font-medium text-accent transition-colors hover:border-white hover:text-white"
+							>
+								{item.label}
+								<ChevronRight class="h-3.5 w-3.5" />
+							</a>
+						))}
+					</div>
+				)
+			}
 		</div>
 
 		<div class="lg:px-8">

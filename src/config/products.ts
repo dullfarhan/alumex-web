@@ -1,6 +1,5 @@
 import type { ImageMetadata } from 'astro';
 import biFoldDoors from '../assets/products/bi-fold-doors.jpg';
-import swingDoors from '../assets/products/swing-doors.jpg';
 import stableDoor from '../assets/products/stable-door.jpg';
 import swingDoorFixedPanel from '../assets/products/swing-door-fixed-panel.jpg';
 import aluminiumDoorWithSheet from '../assets/products/aluminium-door-with-sheet.jpg';
@@ -16,7 +15,6 @@ import fixedWindow from '../assets/products/fixed-window.jpg';
 import dormerWindow from '../assets/products/dormer-window.jpg';
 import sashWindow from '../assets/products/sash-window.jpg';
 import topHungOpenableWindows from '../assets/products/top-hung-openable-windows.jpg';
-import oneSideReflectiveGlass from '../assets/products/one-side-reflective-glass.jpg';
 import slidingWindow from '../assets/products/sliding-window.jpg';
 import curtainWallsSystem from '../assets/products/curtain-walls-system.jpg';
 import contemporaryLouverSystem from '../assets/products/contemporary-louver-system.jpg';
@@ -103,7 +101,7 @@ export const productItems: Product[] = [
 		description:
 			'Bi-fold door systems that stack neatly to open entire walls. Engineered tracks and aluminium frames deliver smooth travel, weather sealing, and clean contemporary lines for homes and hospitality spaces.',
 		image: biFoldDoors,
-		gallery: [biFoldDoors, frenchSlidingDoor, swingDoors, slidingDoorFixedGlass],
+		gallery: [biFoldDoors, frenchSlidingDoor, stableDoor, slidingDoorFixedGlass],
 		features: [
 			'Multi-panel folding with compact stack',
 			'Smooth bottom or top-hung track options',
@@ -122,7 +120,7 @@ export const productItems: Product[] = [
 		applications: [
 			{ title: 'Living Rooms', description: 'Wide openings that connect living spaces to gardens.', image: biFoldDoors },
 			{ title: 'Hospitality Terraces', description: 'Flexible cafe and lounge fronts that open fully.', image: frenchSlidingDoor },
-			{ title: 'Villas', description: 'Premium residential patio spans with refined finishes.', image: swingDoors },
+			{ title: 'Villas', description: 'Premium residential patio spans with refined finishes.', image: stableDoor },
 		],
 		highlights: defaultHighlights,
 		performance: {
@@ -135,45 +133,6 @@ export const productItems: Product[] = [
 		},
 	},
 	{
-		slug: 'swing-doors',
-		title: 'Swing Doors',
-		category: 'Doors',
-		shortDescription: 'Classic hinged aluminium doors for residential and commercial entrances.',
-		description:
-			'Swing door systems with precision aluminium frames for main entrances and internal openings. Built for weather performance, hardware flexibility, and finishes that match modern elevations.',
-		image: swingDoors,
-		gallery: [swingDoors, swingDoorFixedPanel, aluminiumDoorWithSheet, stableDoor],
-		features: [
-			'Single and double-leaf configurations',
-			'Hardware-ready for locks and closers',
-			'Weather stripping for external use',
-			'Glazed or solid panel options',
-		],
-		specs: [
-			...baseSpecs,
-			{ label: 'Finish', value: 'Anodized / Powder / Wood' },
-			{ label: 'Use', value: 'Entrance & passage doors' },
-			{ label: 'Operation', value: 'Hinged swing' },
-			{ label: 'Performance', value: 'Weather & impact ready' },
-			{ label: 'Installation', value: 'Frame & leaf' },
-		],
-		finishes: [...allFinishes],
-		applications: [
-			{ title: 'Main Entrances', description: 'Durable hinged doors for homes and offices.', image: swingDoors },
-			{ title: 'Side Entries', description: 'Secondary openings with matching finishes.', image: swingDoorFixedPanel },
-			{ title: 'Commercial Suites', description: 'Clean aluminium doors for tenant spaces.', image: aluminiumDoorWithSheet },
-		],
-		highlights: defaultHighlights,
-		performance: {
-			axes: [...doorAxes],
-			metrics: [
-				{ label: 'Leaf Height', value: 'Up to 2.4 m' },
-				{ label: 'Air Infiltration', value: 'Class A3' },
-				{ label: 'Service Life', value: '15+ Years' },
-			],
-		},
-	},
-	{
 		slug: 'stable-door',
 		title: 'Stable Door',
 		category: 'Doors',
@@ -181,7 +140,7 @@ export const productItems: Product[] = [
 		description:
 			'Stable doors with independently operable upper and lower leaves. Aluminium construction keeps the classic Dutch-door function while delivering modern weather sealing and finish quality.',
 		image: stableDoor,
-		gallery: [stableDoor, swingDoors, aluminiumDoorWithSheet, louversDoorSsHandle],
+		gallery: [stableDoor, aluminiumDoorWithSheet, louversDoorSsHandle, frenchSlidingDoor],
 		features: [
 			'Independent upper and lower leaves',
 			'Ventilation with security when half-open',
@@ -220,7 +179,7 @@ export const productItems: Product[] = [
 		description:
 			'Swing door and fixed-panel combinations for generous entrance compositions. Shared aluminium framing keeps sightlines consistent while adding daylight beside the operable leaf.',
 		image: swingDoorFixedPanel,
-		gallery: [swingDoorFixedPanel, swingDoors, slidingDoorFixedGlass, frenchSlidingDoor],
+		gallery: [swingDoorFixedPanel, stableDoor, slidingDoorFixedGlass, frenchSlidingDoor],
 		features: [
 			'Operable leaf with fixed sidelight',
 			'Shared frame for clean detailing',
@@ -238,7 +197,7 @@ export const productItems: Product[] = [
 		finishes: [...allFinishes],
 		applications: [
 			{ title: 'Villa Entrances', description: 'Wider door sets with sidelight daylighting.', image: swingDoorFixedPanel },
-			{ title: 'Office Suites', description: 'Formal entries with glazed fixed panels.', image: swingDoors },
+			{ title: 'Office Suites', description: 'Formal entries with glazed fixed panels.', image: swingDoorFixedPanel },
 			{ title: 'Lobby Doors', description: 'Matched compositions for hospitality and offices.', image: frenchSlidingDoor },
 		],
 		highlights: defaultHighlights,
@@ -259,7 +218,7 @@ export const productItems: Product[] = [
 		description:
 			'Aluminium doors with sheet infills where privacy and durability matter more than full glazing. Suitable for utility rooms, plant areas, and elevations that need a solid, weather-ready leaf.',
 		image: aluminiumDoorWithSheet,
-		gallery: [aluminiumDoorWithSheet, swingDoors, stableDoor, louversDoorSsHandle],
+		gallery: [aluminiumDoorWithSheet, stableDoor, louversDoorSsHandle, frenchSlidingDoor],
 		features: [
 			'Solid sheet or panel infill',
 			'Higher privacy and impact resistance',
@@ -277,7 +236,7 @@ export const productItems: Product[] = [
 		finishes: ['Anodizing', 'Powder Coating'],
 		applications: [
 			{ title: 'Plant Rooms', description: 'Solid leaves for mechanical and storage spaces.', image: aluminiumDoorWithSheet },
-			{ title: 'Service Corridors', description: 'Durable doors for back-of-house traffic.', image: swingDoors },
+			{ title: 'Service Corridors', description: 'Durable doors for back-of-house traffic.', image: stableDoor },
 			{ title: 'Boundary Entries', description: 'Privacy-first doors on exposed elevations.', image: stableDoor },
 		],
 		highlights: defaultHighlights,
@@ -610,7 +569,7 @@ export const productItems: Product[] = [
 		description:
 			'Fixed aluminium windows for large glazed areas where ventilation is handled elsewhere. Minimal frames maximize daylight while delivering excellent weather and air performance.',
 		image: fixedWindow,
-		gallery: [fixedWindow, casementWindows, oneSideReflectiveGlass, slidingWindow],
+		gallery: [fixedWindow, casementWindows, skylightWindows, slidingWindow],
 		features: [
 			'Non-operable maximum glass area',
 			'Excellent weather and air sealing',
@@ -628,7 +587,7 @@ export const productItems: Product[] = [
 		finishes: [...allFinishes],
 		applications: [
 			{ title: 'Stair Glazing', description: 'Fixed lights for vertical circulation.', image: fixedWindow },
-			{ title: 'Feature Walls', description: 'Large glass planes with slim frames.', image: oneSideReflectiveGlass },
+			{ title: 'Feature Walls', description: 'Large glass planes with slim frames.', image: fixedWindow },
 			{ title: 'Office Facades', description: 'Fixed bays paired with operable neighbors.', image: casementWindows },
 		],
 		highlights: defaultHighlights,
@@ -759,45 +718,6 @@ export const productItems: Product[] = [
 		},
 	},
 	{
-		slug: 'one-side-reflective-glass',
-		title: 'One Side Reflective Glass',
-		category: 'Windows',
-		shortDescription: 'Aluminium glazed openings with one-way reflective glass for privacy and solar control.',
-		description:
-			'Window and facade lights with one-side reflective glass that reduces solar gain and adds daytime privacy. Aluminium framing supports reflective IGUs for offices, residences, and street-facing elevations.',
-		image: oneSideReflectiveGlass,
-		gallery: [oneSideReflectiveGlass, fixedWindow, casementWindows, curtainWallsSystem],
-		features: [
-			'Daytime privacy with reflective coating',
-			'Solar control for hot climates',
-			'Compatible with aluminium window frames',
-			'Clean modern glass expression',
-		],
-		specs: [
-			...baseSpecs,
-			{ label: 'Finish', value: 'Anodized / Powder Coated' },
-			{ label: 'Use', value: 'Solar & privacy glazing' },
-			{ label: 'Glazing', value: 'One-side reflective IGU' },
-			{ label: 'Performance', value: 'Solar control' },
-			{ label: 'Installation', value: 'Frame glazed' },
-		],
-		finishes: ['Anodizing', 'Powder Coating'],
-		applications: [
-			{ title: 'Street Facades', description: 'Privacy for ground and mid-level rooms.', image: oneSideReflectiveGlass },
-			{ title: 'Offices', description: 'Solar control for west and south exposures.', image: fixedWindow },
-			{ title: 'Residences', description: 'Cooler interiors with reflective daylight.', image: casementWindows },
-		],
-		highlights: defaultHighlights,
-		performance: {
-			axes: [...windowAxes],
-			metrics: [
-				{ label: 'Solar Control', value: 'Reflective coating' },
-				{ label: 'Thermal U-Value', value: '≤ 1.8 W/m²K' },
-				{ label: 'Service Life', value: '15+ Years' },
-			],
-		},
-	},
-	{
 		slug: 'sliding-window',
 		title: 'Sliding Window',
 		category: 'Windows',
@@ -844,7 +764,7 @@ export const productItems: Product[] = [
 		description:
 			'Engineered curtain wall systems for commercial towers and modern facades. Profiles support glazing packages with strength, weather performance, and clean architectural sightlines.',
 		image: curtainWallsSystem,
-		gallery: [curtainWallsSystem, oneSideReflectiveGlass, fixedWindow, contemporaryLouverSystem],
+		gallery: [curtainWallsSystem, fixedWindow, casementWindows, contemporaryLouverSystem],
 		features: [
 			'Stick and unitized-ready profile options',
 			'Designed for high-rise wind and weather loads',
@@ -862,7 +782,7 @@ export const productItems: Product[] = [
 		finishes: [...allFinishes],
 		applications: [
 			{ title: 'Commercial Towers', description: 'High-rise envelopes with clean sightlines.', image: curtainWallsSystem },
-			{ title: 'Corporate Campuses', description: 'Consistent facade language across blocks.', image: oneSideReflectiveGlass },
+			{ title: 'Corporate Campuses', description: 'Consistent facade language across blocks.', image: fixedWindow },
 			{ title: 'Mixed-Use Facades', description: 'Flexible spanning for podiums and offices.', image: fixedWindow },
 		],
 		highlights: defaultHighlights,
@@ -883,7 +803,7 @@ export const productItems: Product[] = [
 		description:
 			'Contemporary louver systems that shade elevations while adding depth and rhythm. Adjustable or fixed aluminium blades support solar control, privacy, and architectural expression.',
 		image: contemporaryLouverSystem,
-		gallery: [contemporaryLouverSystem, curtainWallsSystem, louversDoorSsHandle, oneSideReflectiveGlass],
+		gallery: [contemporaryLouverSystem, curtainWallsSystem, louversDoorSsHandle, fixedWindow],
 		features: [
 			'Fixed or adjustable blade options',
 			'Solar shading for hot climates',

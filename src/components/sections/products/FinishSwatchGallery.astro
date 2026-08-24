@@ -3,11 +3,18 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Container from '../../layout/Container.astro';
 
+interface SwatchSample {
+	image: ImageMetadata;
+	name?: string;
+}
+
 interface Props {
 	label?: string;
 	title: string;
 	description?: string;
 	images: ImageMetadata[];
+	samples?: SwatchSample[];
+	layout?: 'default' | 'labeled';
 	class?: string;
 }
 
@@ -16,14 +23,24 @@ const {
 	title,
 	description = 'Browse the full set of available samples for this finish.',
 	images,
+	samples,
+	layout = 'default',
 	class: className,
 } = Astro.props;
 
-const gallery = [...new Map(images.map((img) => [img.src, img])).values()];
+const labeled = layout === 'labeled';
+const gallery: SwatchSample[] = labeled
+	? (samples ?? images.map((image) => ({ image, name: undefined })))
+	: [...new Map(images.map((img) => [img.src, img])).values()].map((image) => ({ image, name: undefined }));
 ---
 
 <section class:list={['border-b border-silver/40 bg-background', className]}>
-	<Container class="!pt-10 !pb-12 md:!pt-12 md:!pb-16">
+	<Container
+		class:list={[
+			'!pt-10 !pb-12 md:!pt-12 md:!pb-16',
+			labeled && '!px-4 sm:!px-6 lg:!px-8',
+		]}
+	>
 		<div class="mb-8 md:mb-10">
 			<span class="mb-3 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{label}</span>
 			<h2 class="font-display text-[1.5rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-2xl md:text-3xl">
@@ -34,20 +51,46 @@ const gallery = [...new Map(images.map((img) => [img.src, img])).values()];
 
 		{
 			gallery.length > 0 ? (
-				<ul class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3" role="list">
-					{gallery.map((image, index) => (
-						<li>
-							<figure class="overflow-hidden rounded-xl bg-background-alt shadow-[0_8px_24px_rgba(18,43,77,0.1)]">
+				<ul
+					class:list={[
+						'grid w-full grid-cols-1',
+						labeled ? 'gap-5 md:grid-cols-2 md:gap-6 lg:gap-8' : 'gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3',
+					]}
+					role="list"
+				>
+					{gallery.map(({ image, name }, index) => (
+						<li class="flex flex-col">
+							<figure
+								class:list={[
+									'overflow-hidden rounded-xl bg-background-alt shadow-[0_8px_24px_rgba(18,43,77,0.1)]',
+									labeled && 'shadow-[0_12px_32px_rgba(18,43,77,0.14)]',
+								]}
+							>
 								<Image
 									src={image}
-									alt={`${title} sample ${index + 1}`}
-									widths={[480, 720, 1100]}
-									sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+									alt={name ?? `${title} sample ${index + 1}`}
+									widths={labeled ? [640, 1024, 1402] : [480, 720, 1100]}
+									sizes={
+										labeled
+											? '(min-width: 1024px) 50vw, (min-width: 768px) 46vw, calc(100vw - 2rem)'
+											: '(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw'
+									}
 									quality={90}
-									class="aspect-[5/2] w-full object-cover"
+									class:list={[
+										labeled
+											? 'block aspect-[5/4] w-full object-cover object-center'
+											: 'aspect-[5/2] w-full object-cover',
+									]}
 									loading={index < 3 ? 'eager' : 'lazy'}
 								/>
 							</figure>
+							{
+								name && (
+									<p class="mt-3 text-center font-display text-sm font-semibold tracking-tight text-heading md:mt-4 md:text-base lg:text-lg">
+										{name}
+									</p>
+								)
+							}
 						</li>
 					))}
 				</ul>

@@ -4,32 +4,20 @@ import { systems } from './home';
 import { productItems, type ProductCategory } from './products';
 import { projectItems } from './projects';
 
-const uniqueCategories = [...new Set(projectItems.map((item) => item.category))];
-
 export const projectsMega = {
 	trigger: { label: 'Projects', href: '/projects' },
 	columns: [
 		{
-			title: 'Project category',
-			links: uniqueCategories.map((category) => ({
-				label: category,
-				href: '/projects',
+			title: 'All projects',
+			links: projectItems.map((item) => ({
+				label: item.title,
+				href: item.href,
+				slug: item.slug,
 			})),
 			footers: [
 				{ label: 'View all projects', href: '/projects' },
 				{ label: 'Project Gallery', href: '/projects/gallery' },
 			],
-		},
-		{
-			title: 'Featured projects',
-			links: projectItems.slice(0, 4).map((item) => ({
-				label: item.title,
-				href: item.href,
-				slug: item.slug,
-				description: item.shortDescription,
-				image: item.image,
-				imageAlt: `${item.title} — ${item.category}`,
-			})),
 		},
 		{
 			title: 'Surface finishes',
@@ -42,7 +30,7 @@ export const projectsMega = {
 	featured: {
 		label: 'From vision to reality',
 		cta: 'View project',
-		items: projectItems.slice(0, 4).map((item) => ({
+		items: projectItems.map((item) => ({
 			slug: item.slug,
 			title: item.title,
 			description: item.shortDescription,
