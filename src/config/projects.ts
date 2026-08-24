@@ -27,29 +27,9 @@ export type Project = {
 	href: string;
 };
 
+// Grid pattern: tall, tall, WIDE — repeating (wide = index 2, 5, 8, 11…)
 export const projectItems: Project[] = [
-	{
-		slug: 'taj-palace',
-		title: 'TAJ PALACE',
-		category: 'Hospitality',
-		location: 'Chishtian',
-		year: '2024',
-		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega hospitality project.',
-		description:
-			'TAJ PALACE is a mega project featuring classical arched openings and ornate facade detailing. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by AMEERKAY Aluminium, Chishtian.',
-		scope: [
-			'Architectural aluminium extrusion for windows and openings',
-			'Powder coating finishes for durable exterior performance',
-			'Fabrication by AMEERKAY Aluminium, Chishtian',
-		],
-		systems: [
-			{ label: 'Casement Windows' },
-			{ label: 'Swing Doors' },
-		],
-		image: tajPalace,
-		gallery: [tajPalace, jamiaAlFurkanya, canalHospital, motherChildHospital],
-		href: '/projects/taj-palace',
-	},
+	// ── row 1: pair ──
 	{
 		slug: 'signature-bahria-town',
 		title: 'SIGNATURE',
@@ -73,6 +53,7 @@ export const projectItems: Project[] = [
 		gallery: [signatureBahria, themeResidency2, akbarPlaza, tajPalace],
 		href: '/projects/signature-bahria-town',
 	},
+	// ── row 1: wide ──
 	{
 		slug: 'fbr-regional-tax-office',
 		title: 'FBR Regional Tax Office',
@@ -97,28 +78,28 @@ export const projectItems: Project[] = [
 		href: '/projects/fbr-regional-tax-office',
 	},
 	{
-		slug: 'mother-child-care-hospital',
-		title: 'Mother & Child Care Hospital',
-		category: 'Institutional',
-		location: 'Kot Addu, Muzaffargarh',
+		slug: 'taj-palace',
+		title: 'TAJ PALACE',
+		category: 'Hospitality',
+		location: 'Chishtian',
 		year: '2024',
-		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega healthcare project in Kot Addu.',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega hospitality project.',
 		description:
-			'Mother & Child Care Hospital in Kot Addu, District Muzaffargarh, is a mega institutional project. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, with Manzoor & Co as contractor.',
+			'TAJ PALACE is a mega project featuring classical arched openings and ornate facade detailing. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by AMEERKAY Aluminium, Chishtian.',
 		scope: [
 			'Architectural aluminium extrusion for windows and openings',
 			'Powder coating finishes for durable exterior performance',
-			'Contractor coordination with Manzoor & Co',
+			'Fabrication by AMEERKAY Aluminium, Chishtian',
 		],
 		systems: [
 			{ label: 'Casement Windows' },
 			{ label: 'Swing Doors' },
-			{ label: 'Curtain Walls System' },
 		],
-		image: motherChildHospital,
-		gallery: [motherChildHospital, canalHospital, allamaIqbalHostel, ucpSargodha],
-		href: '/projects/mother-child-care-hospital',
+		image: tajPalace,
+		gallery: [tajPalace, jamiaAlFurkanya, canalHospital, motherChildHospital],
+		href: '/projects/taj-palace',
 	},
+	// ── row 2: pair ──
 	{
 		slug: 'akbar-plaza',
 		title: 'Akbar Plaza',
@@ -165,51 +146,31 @@ export const projectItems: Project[] = [
 		gallery: [jamiaAlFurkanya, fbrRegionalTaxOffice, ucpSargodha, allamaIqbalHostel],
 		href: '/projects/jamia-dar-ul-aloom-al-furkanya',
 	},
+	// ── row 2: wide ──
 	{
-		slug: 'allama-iqbal-hostel',
-		title: 'Allama Iqbal Hostel',
+		slug: 'mother-child-care-hospital',
+		title: 'Mother & Child Care Hospital',
 		category: 'Institutional',
-		location: 'Sports Complex Islamabad',
+		location: 'Kot Addu, Muzaffargarh',
 		year: '2024',
-		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega hostel project in Islamabad.',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega healthcare project in Kot Addu.',
 		description:
-			'Allama Iqbal Hostel at Sports Complex Islamabad is a mega institutional project. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Barki Contractors, Islamabad.',
+			'Mother & Child Care Hospital in Kot Addu, District Muzaffargarh, is a mega institutional project. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, with Manzoor & Co as contractor.',
 		scope: [
 			'Architectural aluminium extrusion for windows and openings',
 			'Powder coating finishes for durable exterior performance',
-			'Fabrication by Barki Contractors, Islamabad',
+			'Contractor coordination with Manzoor & Co',
 		],
 		systems: [
 			{ label: 'Casement Windows' },
 			{ label: 'Swing Doors' },
-		],
-		image: allamaIqbalHostel,
-		gallery: [allamaIqbalHostel, ucpSargodha, fbrRegionalTaxOffice, motherChildHospital],
-		href: '/projects/allama-iqbal-hostel',
-	},
-	{
-		slug: 'canal-hospital-sargodha',
-		title: 'Canal Hospital',
-		category: 'Institutional',
-		location: 'Sargodha',
-		year: '2024',
-		shortDescription: 'Architectural aluminium extrusion and powder coating for Canal Hospital in Sargodha.',
-		description:
-			'Canal Hospital in Sargodha is a mega healthcare project. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Paragon Aluminium, Sargodha.',
-		scope: [
-			'Architectural aluminium extrusion for facade and openings',
-			'Powder coating finishes for durable exterior performance',
-			'Fabrication by Paragon Aluminium, Sargodha',
-		],
-		systems: [
 			{ label: 'Curtain Walls System' },
-			{ label: 'Casement Windows' },
-			{ label: 'Contemporary Louver System' },
 		],
-		image: canalHospital,
-		gallery: [canalHospital, motherChildHospital, ucpSargodha, tajPalace],
-		href: '/projects/canal-hospital-sargodha',
+		image: motherChildHospital,
+		gallery: [motherChildHospital, canalHospital, allamaIqbalHostel, ucpSargodha],
+		href: '/projects/mother-child-care-hospital',
 	},
+	// ── row 3: pair ──
 	{
 		slug: 'theme-residency-2',
 		title: 'Theme Residency 2',
@@ -234,28 +195,28 @@ export const projectItems: Project[] = [
 		href: '/projects/theme-residency-2',
 	},
 	{
-		slug: 'iqbal-heights',
-		title: 'Iqbal Heights',
-		category: 'Mixed-Use',
-		location: 'Bani Gala, Islamabad',
+		slug: 'allama-iqbal-hostel',
+		title: 'Allama Iqbal Hostel',
+		category: 'Institutional',
+		location: 'Sports Complex Islamabad',
 		year: '2024',
-		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega mixed-use project in Islamabad.',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega hostel project in Islamabad.',
 		description:
-			'Iqbal Heights in Bani Gala, Islamabad is a mega mixed-use project featuring modern residential and commercial spaces. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Nadir Aluminium, Islamabad.',
+			'Allama Iqbal Hostel at Sports Complex Islamabad is a mega institutional project. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Barki Contractors, Islamabad.',
 		scope: [
 			'Architectural aluminium extrusion for windows and openings',
 			'Powder coating finishes for durable exterior performance',
-			'Fabrication by Nadir Aluminium, Islamabad',
+			'Fabrication by Barki Contractors, Islamabad',
 		],
 		systems: [
 			{ label: 'Casement Windows' },
-			{ label: 'Sliding Door with Fixed Glass' },
-			{ label: 'Curtain Walls System' },
+			{ label: 'Swing Doors' },
 		],
-		image: iqbalHeights,
-		gallery: [iqbalHeights, signatureBahria, themeResidency2, akbarPlaza],
-		href: '/projects/iqbal-heights',
+		image: allamaIqbalHostel,
+		gallery: [allamaIqbalHostel, ucpSargodha, fbrRegionalTaxOffice, motherChildHospital],
+		href: '/projects/allama-iqbal-hostel',
 	},
+	// ── row 3: wide ──
 	{
 		slug: 'university-of-central-punjab-sargodha',
 		title: 'University of Central Punjab, Sargodha',
@@ -279,11 +240,58 @@ export const projectItems: Project[] = [
 		gallery: [ucpSargodha, allamaIqbalHostel, motherChildHospital, canalHospital],
 		href: '/projects/university-of-central-punjab-sargodha',
 	},
+	// ── row 4: pair ──
+	{
+		slug: 'canal-hospital-sargodha',
+		title: 'Canal Hospital',
+		category: 'Institutional',
+		location: 'Sargodha',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for Canal Hospital in Sargodha.',
+		description:
+			'Canal Hospital in Sargodha is a mega healthcare project. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Paragon Aluminium, Sargodha.',
+		scope: [
+			'Architectural aluminium extrusion for facade and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Fabrication by Paragon Aluminium, Sargodha',
+		],
+		systems: [
+			{ label: 'Curtain Walls System' },
+			{ label: 'Casement Windows' },
+			{ label: 'Contemporary Louver System' },
+		],
+		image: canalHospital,
+		gallery: [canalHospital, motherChildHospital, ucpSargodha, tajPalace],
+		href: '/projects/canal-hospital-sargodha',
+	},
+	{
+		slug: 'iqbal-heights',
+		title: 'Iqbal Heights',
+		category: 'Mixed-Use',
+		location: 'Bani Gala, Islamabad',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega mixed-use project in Islamabad.',
+		description:
+			'Iqbal Heights in Bani Gala, Islamabad is a mega mixed-use project featuring modern residential and commercial spaces. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Nadir Aluminium, Islamabad.',
+		scope: [
+			'Architectural aluminium extrusion for windows and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Fabrication by Nadir Aluminium, Islamabad',
+		],
+		systems: [
+			{ label: 'Casement Windows' },
+			{ label: 'Sliding Door with Fixed Glass' },
+			{ label: 'Curtain Walls System' },
+		],
+		image: iqbalHeights,
+		gallery: [iqbalHeights, signatureBahria, themeResidency2, akbarPlaza],
+		href: '/projects/iqbal-heights',
+	},
 ];
 
 export const projects = {
 	label: 'Selected Projects',
-	title: 'Built into Pakistan’s modern skyline.',
+	title: 'Built into Pakistan\u2019s modern skyline.',
 	description: 'From commercial towers to residential developments, our systems support demanding architectural briefs.',
 	seoTitle: `Projects | ${site.name}`,
 	seoDescription:

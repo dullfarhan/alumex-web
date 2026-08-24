@@ -16,7 +16,7 @@ const [projectsColumn, finishesColumn] = projectsMega.columns;
 	<div class="mx-auto grid max-w-[1440px] gap-10 px-6 py-10 sm:px-12 lg:grid-cols-3 lg:gap-0 lg:divide-x lg:divide-white/10 lg:py-12">
 		<div class="lg:px-8 first:lg:pl-0">
 			<h3 class="mb-4 text-xs font-medium tracking-[0.08em] text-accent uppercase">{projectsColumn.title}</h3>
-			<ul class="max-h-[22rem] space-y-3 overflow-y-auto pr-2">
+			<ul class="space-y-3">
 				{
 					projectsColumn.links.map((link, index) => (
 						<li>
