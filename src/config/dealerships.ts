@@ -19,7 +19,7 @@ export interface DealerRoute {
 export const headquarters = {
 	id: 'headquarters',
 	name: 'Pak Alumex Headquarters',
-	address: '5 Kilometer Painsra Road, Gojra, Faisalabad, Pakistan 36120',
+	address: '5km Painsra Road, Gojra, Faisalabad, Pakistan 36120',
 	lat: 31.1930644,
 	lon: 72.7172928,
 } as const;

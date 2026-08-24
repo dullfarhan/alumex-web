@@ -9,6 +9,7 @@ import fbrRegionalTaxOffice from '../assets/projects/7-project.png';
 import canalHospital from '../assets/projects/8-project.png';
 import themeResidency2 from '../assets/projects/9-project.png';
 import jamiaAlFurkanya from '../assets/projects/10-project.png';
+import iqbalHeights from '../assets/projects/11-project.jpeg';
 import { site } from './site';
 
 export type Project = {
@@ -231,6 +232,29 @@ export const projectItems: Project[] = [
 		image: themeResidency2,
 		gallery: [themeResidency2, signatureBahria, akbarPlaza, tajPalace],
 		href: '/projects/theme-residency-2',
+	},
+	{
+		slug: 'iqbal-heights',
+		title: 'Iqbal Heights',
+		category: 'Mixed-Use',
+		location: 'Bani Gala, Islamabad',
+		year: '2024',
+		shortDescription: 'Architectural aluminium extrusion and powder coating for a mega mixed-use project in Islamabad.',
+		description:
+			'Iqbal Heights in Bani Gala, Islamabad is a mega mixed-use project featuring modern residential and commercial spaces. Pak Alumex Industries supplied durable architectural aluminium extrusion and powder coating, fabricated by Nadir Aluminium, Islamabad.',
+		scope: [
+			'Architectural aluminium extrusion for windows and openings',
+			'Powder coating finishes for durable exterior performance',
+			'Fabrication by Nadir Aluminium, Islamabad',
+		],
+		systems: [
+			{ label: 'Casement Windows' },
+			{ label: 'Sliding Door with Fixed Glass' },
+			{ label: 'Curtain Walls System' },
+		],
+		image: iqbalHeights,
+		gallery: [iqbalHeights, signatureBahria, themeResidency2, akbarPlaza],
+		href: '/projects/iqbal-heights',
 	},
 	{
 		slug: 'university-of-central-punjab-sargodha',
