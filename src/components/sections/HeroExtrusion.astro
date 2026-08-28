@@ -6,6 +6,7 @@ import { productItems } from '../../config/products';
 import { projectItems } from '../../config/projects';
 import logo from '../../assets/logo.png';
 import ArrowRight from '../icons/ArrowRight.astro';
+import DownloadIcon from '../icons/DownloadIcon.astro';
 import Button from '../ui/Button.astro';
 
 const titleLines = ['Engineering Aluminium for Modern Architecture.'];
@@ -100,7 +101,13 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 								{hero.primaryCta.label}
 								<ArrowRight class="h-4 w-4" />
 							</Button>
-							<Button href={hero.secondaryCta.href} variant="secondary" class="!rounded-full">
+							<Button
+								href={hero.secondaryCta.href}
+								download={hero.secondaryCta.download}
+								variant="secondary"
+								class="!rounded-full"
+							>
+								<DownloadIcon class="h-4 w-4" />
 								{hero.secondaryCta.label}
 							</Button>
 						</div>

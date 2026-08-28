@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import heroImage from '../../assets/hero.png';
 import { hero } from '../../config/hero';
 import ArrowRight from '../icons/ArrowRight.astro';
+import DownloadIcon from '../icons/DownloadIcon.astro';
 import Button from '../ui/Button.astro';
 import Container from '../layout/Container.astro';
 ---
@@ -66,7 +67,8 @@ import Container from '../layout/Container.astro';
 							{hero.primaryCta.label}
 							<ArrowRight class="h-4 w-4" />
 						</Button>
-						<Button href={hero.secondaryCta.href} variant="secondary">
+						<Button href={hero.secondaryCta.href} download={hero.secondaryCta.download} variant="secondary">
+							<DownloadIcon class="h-4 w-4" />
 							{hero.secondaryCta.label}
 						</Button>
 					</div>

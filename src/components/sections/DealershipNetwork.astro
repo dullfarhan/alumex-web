@@ -144,11 +144,9 @@ const intro = networkScenes[0];
 					</p>
 
 					<div class="network__status" aria-hidden="true">
-						<div>
-							<strong class="network__count" data-network-count
-								>44</strong
-							>
-							<span>Authorized dealers</span>
+						<div class="network__stat">
+							<strong class="network__count" data-network-count>44+</strong>
+							<span class="network__stat-label">Cities covered</span>
 						</div>
 						<div class="network__scene">
 							<span data-network-scene>01</span>
@@ -191,9 +189,9 @@ const intro = networkScenes[0];
 								Pak Alumex dealership network across Pakistan
 							</title>
 							<desc id="network-map-description">
-								A map of Pakistan showing 44 authorized dealer
-								locations expanding north and south from Pak
-								Alumex headquarters near Gojra, Faisalabad.
+								A map of Pakistan showing authorized dealers in 44+
+								cities, expanding north and south from Pak Alumex
+								headquarters near Gojra, Faisalabad.
 							</desc>
 
 							<defs>
@@ -375,7 +373,7 @@ const intro = networkScenes[0];
 	</div>
 
 	<div class="sr-only">
-		<h3>44 authorized dealers across Pakistan</h3>
+		<h3>Authorized dealers in 44+ cities across Pakistan</h3>
 		<p>
 			The network originates at Pak Alumex headquarters on Painsra Road
 			near Gojra, Faisalabad.
@@ -538,10 +536,20 @@ const intro = networkScenes[0];
 		border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 	}
 
-	.network__status > div:first-child {
+	.network__stat {
 		display: flex;
-		align-items: baseline;
-		gap: 0.7rem;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.4rem;
+	}
+
+	.network__stat-label,
+	.network__scene span {
+		color: rgba(255, 255, 255, 0.48);
+		font-size: 0.66rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
 	}
 
 	.network__count {
@@ -551,14 +559,6 @@ const intro = networkScenes[0];
 		font-weight: 700;
 		line-height: 0.8;
 		font-variant-numeric: tabular-nums;
-	}
-
-	.network__status span {
-		color: rgba(255, 255, 255, 0.48);
-		font-size: 0.66rem;
-		font-weight: 600;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
 	}
 
 	.network__scene {
@@ -931,6 +931,11 @@ const intro = networkScenes[0];
 		networkScenes,
 	} from "../../config/dealerships";
 
+	const formatDealerCount = (value: number) => {
+		const rounded = Math.round(value);
+		return rounded >= dealers.length ? `${dealers.length}+` : String(rounded);
+	};
+
 	gsap.registerPlugin(ScrollTrigger);
 
 	const root = document.querySelector<HTMLElement>("[data-network]");
@@ -1165,7 +1170,7 @@ const intro = networkScenes[0];
 		});
 
 		if (reducedMotion) {
-			count.textContent = String(dealers.length);
+			count.textContent = formatDealerCount(dealers.length);
 			setCopy(9, false);
 		} else {
 			const context = gsap.context(() => {
@@ -1358,8 +1363,8 @@ const intro = networkScenes[0];
 								duration: Math.max(0.8, duration - 0.55),
 								ease: "power3.out",
 								onUpdate: () => {
-									count.textContent = String(
-										Math.round(counterState.value),
+									count.textContent = formatDealerCount(
+										counterState.value,
 									);
 								},
 							},
@@ -1419,7 +1424,7 @@ const intro = networkScenes[0];
 							onLeave: () => {
 								timeline.progress(1);
 								setCopy(9, false);
-								count.textContent = String(dealers.length);
+								count.textContent = formatDealerCount(dealers.length);
 								progress.style.transform = "scaleX(1)";
 							},
 							onUpdate: (self) => {

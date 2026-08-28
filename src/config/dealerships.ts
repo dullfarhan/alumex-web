@@ -85,7 +85,7 @@ export const networkScenes = [
 		id: 9,
 		duration: 5,
 		eyebrow: 'Nationwide Network',
-		title: '44+ Authorized Dealers',
+		title: 'Authorized Dealers in 44+ Cities',
 		description: 'Serving customers across Pakistan.',
 	},
 ] as const;
