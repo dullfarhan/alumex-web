@@ -109,6 +109,11 @@ export const productsMega = {
 		href: cataloguePdf,
 		filename: 'Pak-Alumex-Catalogue-Volume-4.pdf',
 	},
+	gradeList: {
+		label: 'Download Grade List',
+		href: '#',
+		filename: 'Pak-Alumex-Grade-List.pdf',
+	},
 	categories: [...productCategories, ...finishCategories],
 	footerTiles: [
 		{
