@@ -24,6 +24,13 @@ export const about = {
 	seoTitle: 'About Pak Alumex | Leading Aluminium Manufacturer in Pakistan',
 	seoDescription:
 		'Pak Alumex is a leading aluminium manufacturer and pioneer in standardized powder coatings, with extrusion, anodizing, and a nationwide dealership network across Pakistan.',
+	ceoMessage: {
+		label: 'Leadership',
+		title: "CEO's Message",
+		text: 'Welcome to Pak Alumex Aluminium Industry. Since our start, we have focused on making strong, precise, and high-quality aluminum profiles that build a better future. We use advanced technology and strict quality checks to meet global standards and serve our clients with trust.',
+		name: '',
+		role: 'Chief Executive Officer',
+	},
 	story: {
 		label: 'Why Pak Alumex',
 		title: 'Building Excellence Every Day',
