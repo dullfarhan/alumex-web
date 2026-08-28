@@ -1,0 +1,104 @@
+---
+import { productsMega } from '../../../config/nav-mega';
+import DownloadIcon from '../../icons/DownloadIcon.astro';
+
+const { catalogue } = productsMega;
+---
+
+<div
+	id="catalogue-download-widget"
+	class="catalogue-download-widget fixed right-4 bottom-4 z-40 flex flex-col items-end gap-2 sm:right-6 sm:bottom-6"
+	aria-hidden="true"
+>
+	<span class="catalogue-download-widget__tooltip rounded-lg border border-silver/50 bg-white px-3 py-2 text-xs font-medium whitespace-nowrap text-heading shadow-lg sm:px-3.5 sm:py-2.5 sm:text-sm">
+		{catalogue.label}
+	</span>
+	<a
+		href={catalogue.href}
+		download={catalogue.filename}
+		class="catalogue-download-widget__btn flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-primary-dark bg-primary-dark text-white shadow-lg shadow-primary-dark/25 transition-[background-color,color,transform,box-shadow] duration-300 hover:bg-transparent hover:text-heading hover:shadow-xl"
+		aria-label={catalogue.label}
+		tabindex={-1}
+	>
+		<DownloadIcon class="h-6 w-6" />
+	</a>
+</div>
+
+<style>
+	.catalogue-download-widget {
+		opacity: 0;
+		transform: translateY(1rem);
+		pointer-events: none;
+		transition:
+			opacity 0.3s ease,
+			transform 0.3s ease;
+	}
+
+	.catalogue-download-widget.is-visible {
+		opacity: 1;
+		transform: translateY(0);
+		pointer-events: auto;
+	}
+
+	.catalogue-download-widget__tooltip {
+		position: relative;
+	}
+
+	.catalogue-download-widget__tooltip::after {
+		content: '';
+		position: absolute;
+		bottom: -5px;
+		right: 1.75rem;
+		width: 10px;
+		height: 10px;
+		border-right: 1px solid rgb(192 192 192 / 0.5);
+		border-bottom: 1px solid rgb(192 192 192 / 0.5);
+		background: white;
+		transform: translateX(50%) rotate(45deg);
+	}
+
+	.catalogue-download-widget.is-visible:hover .catalogue-download-widget__btn {
+		transform: translateY(-2px);
+	}
+
+	.catalogue-download-widget__btn:hover svg {
+		transform: translateY(2px);
+	}
+
+	.catalogue-download-widget__btn svg {
+		transition: transform 0.3s ease;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.catalogue-download-widget,
+		.catalogue-download-widget__btn svg {
+			transition: none;
+		}
+
+		.catalogue-download-widget.is-visible:hover .catalogue-download-widget__btn {
+			transform: none;
+		}
+	}
+</style>
+
+<script>
+	const hero = document.getElementById('products-hero');
+	const widget = document.getElementById('catalogue-download-widget');
+	const button = widget?.querySelector<HTMLAnchorElement>('.catalogue-download-widget__btn');
+
+	if (hero && widget && button) {
+		const setVisible = (visible: boolean) => {
+			widget.classList.toggle('is-visible', visible);
+			widget.setAttribute('aria-hidden', String(!visible));
+			if (visible) button.removeAttribute('tabindex');
+			else button.setAttribute('tabindex', '-1');
+		};
+
+		const observer = new IntersectionObserver(
+			([entry]) => setVisible(!entry.isIntersecting),
+			{ threshold: 0 },
+		);
+
+		observer.observe(hero);
+	}
+</script>

@@ -16,8 +16,19 @@ import dormerWindow from '../assets/products/dormer-window.jpg';
 import sashWindow from '../assets/products/sash-window.jpg';
 import topHungOpenableWindows from '../assets/products/top-hung-openable-windows.jpg';
 import slidingWindow from '../assets/products/sliding-window.jpg';
-import curtainWallsSystem from '../assets/products/curtain-walls-system.jpg';
+import curtainWallsSystem from '../assets/products/Unitized-Curtain-Wall-System.jpeg';
 import contemporaryLouverSystem from '../assets/products/contemporary-louver-system.jpg';
+import aluminiumRailingSystem from '../assets/products/Aluminium-Railing-System.webp';
+import aluminiumOfficePartition from '../assets/products/aluminium-office-partition.jpeg';
+import doubleGlazedCurtainWallSystem from '../assets/products/Double-Glazed-Curtain-Wall-System.jpeg';
+import entranceDoor from '../assets/products/Entrance-Door.jpeg';
+import hingedDoor from '../assets/products/Hinged-Door.jpg';
+import hingedWindow from '../assets/products/Hinged-Window.jpeg';
+import kitchenCabinet from '../assets/products/kitchen-cabinet.jpeg';
+import openableCurtainWallSystem from '../assets/products/Openable-Curtain-Wall-System.jpeg';
+import pergolaSystem from '../assets/products/Pergola-System.jpeg';
+import solarShading from '../assets/products/Solar-Shading.jpeg';
+import spiderGlazing from '../assets/products/Spider-Glazing.webp';
 import { site } from './site';
 
 export type ProductCategory = 'Doors' | 'Windows' | 'Facades' | 'Louvers';
@@ -823,6 +834,435 @@ export const productItems: Product[] = [
 			{ title: 'Office Facades', description: 'Horizontal louvers for west and south sun.', image: contemporaryLouverSystem },
 			{ title: 'Parking Screens', description: 'Ventilated screens with architectural finish.', image: curtainWallsSystem },
 			{ title: 'Courtyards', description: 'Shaded outdoor rooms with filtered light.', image: louversDoorSsHandle },
+		],
+		highlights: defaultHighlights,
+		performance: {
+			axes: [...louverAxes],
+			metrics: [
+				{ label: 'Solar Control', value: 'Blade shaded' },
+				{ label: 'Blade Pitch', value: 'Project sized' },
+				{ label: 'Service Life', value: '15+ Years' },
+			],
+		},
+	},
+	{
+		slug: 'entrance-door',
+		title: 'Entrance Door',
+		category: 'Doors',
+		shortDescription: 'Premium double-leaf glass entrance doors for lobbies, storefronts, and main entries.',
+		description:
+			'Large-format aluminium entrance doors with expansive glazing for commercial lobbies and architectural main entries. Slim frames, vertical pull handles, and weather-sealed construction deliver a professional first impression with lasting durability.',
+		image: entranceDoor,
+		gallery: [entranceDoor, swingDoorFixedPanel, frenchSlidingDoor, slidingDoorFixedGlass],
+		features: [
+			'Double-leaf configurations for wide openings',
+			'Full-height glazing with slim aluminium frames',
+			'Commercial-grade hardware and pull handles',
+			'Weather-sealed for exposed main entries',
+		],
+		specs: [
+			...baseSpecs,
+			{ label: 'Finish', value: 'Anodized / Powder Coated' },
+			{ label: 'Use', value: 'Main entrance' },
+			{ label: 'Operation', value: 'Double swing' },
+			{ label: 'Glazing', value: 'Single / Double IGU' },
+			{ label: 'Installation', value: 'Framed entrance set' },
+		],
+		finishes: [...allFinishes],
+		applications: [
+			{ title: 'Commercial Lobbies', description: 'Grand entries for offices and retail.', image: entranceDoor },
+			{ title: 'Storefronts', description: 'Transparent shop fronts with secure access.', image: frenchSlidingDoor },
+			{ title: 'Residential Entrances', description: 'Modern villa and apartment main doors.', image: swingDoorFixedPanel },
+		],
+		highlights: defaultHighlights,
+		performance: {
+			axes: [...doorAxes],
+			metrics: [
+				{ label: 'Opening Width', value: 'Project sized' },
+				{ label: 'Air Infiltration', value: 'Class A3' },
+				{ label: 'Service Life', value: '15+ Years' },
+			],
+		},
+	},
+	{
+		slug: 'hinged-door',
+		title: 'Hinged Door',
+		category: 'Doors',
+		shortDescription: 'Classic hinged aluminium doors with glazed panels for residential and commercial openings.',
+		description:
+			'Versatile hinged door systems with aluminium frames and large glass panels. Suitable for interior and exterior openings where reliable swing operation, clean sightlines, and durable hardware are required.',
+		image: hingedDoor,
+		gallery: [hingedDoor, entranceDoor, swingDoorFixedPanel, frenchSlidingDoor],
+		features: [
+			'Single or double-leaf hinged operation',
+			'Glazed panels with slim frame profiles',
+			'Lock-ready hardware and durable hinges',
+			'Interior and exterior configurations',
+		],
+		specs: [
+			...baseSpecs,
+			{ label: 'Finish', value: 'Anodized / Powder / Wood' },
+			{ label: 'Use', value: 'Interior & exterior doors' },
+			{ label: 'Operation', value: 'Side-hung swing' },
+			{ label: 'Glazing', value: 'Single / Double IGU' },
+			{ label: 'Installation', value: 'Frame & leaf' },
+		],
+		finishes: [...allFinishes],
+		applications: [
+			{ title: 'Living Areas', description: 'Glazed doors connecting rooms and gardens.', image: hingedDoor },
+			{ title: 'Office Suites', description: 'Professional entries with natural light.', image: entranceDoor },
+			{ title: 'Balcony Access', description: 'Secure hinged leaves for terrace doors.', image: frenchSlidingDoor },
+		],
+		highlights: defaultHighlights,
+		performance: {
+			axes: [...doorAxes],
+			metrics: [
+				{ label: 'Cycle Durability', value: '100k+ cycles' },
+				{ label: 'Air Infiltration', value: 'Class A3' },
+				{ label: 'Service Life', value: '15+ Years' },
+			],
+		},
+	},
+	{
+		slug: 'hinged-window',
+		title: 'Hinged Window',
+		category: 'Windows',
+		shortDescription: 'Side-hung hinged windows for natural ventilation and classic architectural openings.',
+		description:
+			'Hinged window systems that swing outward for effective ventilation and easy cleaning. Engineered aluminium frames with secure hardware suit residential and commercial elevations that need reliable operable glazing.',
+		image: hingedWindow,
+		gallery: [hingedWindow, casementWindows, topHungOpenableWindows, fixedWindow],
+		features: [
+			'Outward-opening side-hung leaves',
+			'Multi-point locking for secure closure',
+			'Compatible with double-glazed units',
+			'Classic grid or clear glass options',
+		],
+		specs: [
+			...baseSpecs,
+			{ label: 'Finish', value: 'Anodized / Powder / Wood' },
+			{ label: 'Use', value: 'Residential & commercial' },
+			{ label: 'Operation', value: 'Side-hung swing' },
+			{ label: 'Glazing', value: 'Single / Double IGU' },
+			{ label: 'Installation', value: 'Frame & sash' },
+		],
+		finishes: [...allFinishes],
+		applications: [
+			{ title: 'Bedrooms', description: 'Comfortable ventilation with secure locking.', image: hingedWindow },
+			{ title: 'Living Rooms', description: 'Wide openings with classic hinged operation.', image: casementWindows },
+			{ title: 'Offices', description: 'Operable lights for workplace floors.', image: fixedWindow },
+		],
+		highlights: defaultHighlights,
+		performance: {
+			axes: [...windowAxes],
+			metrics: [
+				{ label: 'Thermal U-Value', value: '≤ 2.0 W/m²K' },
+				{ label: 'Air Infiltration', value: 'Class A3' },
+				{ label: 'Service Life', value: '15+ Years' },
+			],
+		},
+	},
+	{
+		slug: 'double-glazed-curtain-wall-system',
+		title: 'Double-Glazed Curtain Wall System',
+		category: 'Facades',
+		shortDescription: 'Insulated double-glazed curtain wall facades for energy-efficient commercial buildings.',
+		description:
+			'Double-glazed curtain wall systems that combine expansive glass envelopes with improved thermal performance. Engineered aluminium mullions and transoms support IGU packages for modern towers, offices, and retail facades.',
+		image: doubleGlazedCurtainWallSystem,
+		gallery: [doubleGlazedCurtainWallSystem, curtainWallsSystem, openableCurtainWallSystem, spiderGlazing],
+		features: [
+			'Double-glazed unit integration',
+			'Improved thermal and acoustic performance',
+			'Stick and unitized installation options',
+			'Clean sightlines for large glazed facades',
+		],
+		specs: [
+			...baseSpecs,
+			{ label: 'Finish', value: 'Anodized / Powder Coated' },
+			{ label: 'Use', value: 'Commercial facade' },
+			{ label: 'Glazing', value: 'Double IGU' },
+			{ label: 'Performance', value: 'Thermal & weather rated' },
+			{ label: 'Installation', value: 'Stick / Unitized' },
+		],
+		finishes: [...allFinishes],
+		applications: [
+			{ title: 'Office Towers', description: 'Energy-efficient envelopes with full glazing.', image: doubleGlazedCurtainWallSystem },
+			{ title: 'Retail Fronts', description: 'Bright storefronts with insulated glass.', image: curtainWallsSystem },
+			{ title: 'Mixed-Use Blocks', description: 'Consistent facade language across uses.', image: fixedWindow },
+		],
+		highlights: defaultHighlights,
+		performance: {
+			axes: [...facadeAxes],
+			metrics: [
+				{ label: 'Thermal U-Value', value: '≤ 1.8 W/m²K' },
+				{ label: 'Wind Load Resistance', value: '≥ 2800 Pa' },
+				{ label: 'Surface Durability', value: '10+ Years' },
+			],
+		},
+	},
+	{
+		slug: 'openable-curtain-wall-system',
+		title: 'Openable Curtain Wall System',
+		category: 'Facades',
+		shortDescription: 'Ventilated curtain wall facades with integrated top-hung opening panels.',
+		description:
+			'Curtain wall systems with integrated openable panels for natural ventilation without breaking the facade grid. Top-hung opening units maintain clean architectural lines while allowing airflow in offices and commercial buildings.',
+		image: openableCurtainWallSystem,
+		gallery: [openableCurtainWallSystem, doubleGlazedCurtainWallSystem, curtainWallsSystem, topHungOpenableWindows],
+		features: [
+			'Top-hung openable panels within the facade grid',
+			'Natural ventilation for occupied floors',
+			'Matched mullions for seamless sightlines',
+			'High-rise wind and weather performance',
+		],
+		specs: [
+			...baseSpecs,
+			{ label: 'Finish', value: 'Anodized / Powder Coated' },
+			{ label: 'Use', value: 'Ventilated commercial facade' },
+			{ label: 'Operation', value: 'Top-hung openable' },
+			{ label: 'Glazing', value: 'Double IGU' },
+			{ label: 'Installation', value: 'Stick / Unitized' },
+		],
+		finishes: [...allFinishes],
+		applications: [
+			{ title: 'Office Floors', description: 'Ventilated workspaces behind full glazing.', image: openableCurtainWallSystem },
+			{ title: 'Atria', description: 'Openable panels for stack ventilation.', image: curtainWallsSystem },
+			{ title: 'Hotels', description: 'Guest floors with operable facade lights.', image: doubleGlazedCurtainWallSystem },
+		],
+		highlights: defaultHighlights,
+		performance: {
+			axes: [...facadeAxes],
+			metrics: [
+				{ label: 'Wind Load Resistance', value: '≥ 2800 Pa' },
+				{ label: 'Opening Type', value: 'Top-hung' },
+				{ label: 'Service Life', value: '15+ Years' },
+			],
+		},
+	},
+	{
+		slug: 'spider-glazing',
+		title: 'Spider Glazing',
+		category: 'Facades',
+		shortDescription: 'Point-fixed glass facades with minimal visible framing for premium elevations.',
+		description:
+			'Spider glazing systems that suspend glass panels with discrete point fixings for near frameless facades. Ideal for entrances, atria, and feature walls where maximum transparency and architectural impact are required.',
+		image: spiderGlazing,
+		gallery: [spiderGlazing, curtainWallsSystem, entranceDoor, doubleGlazedCurtainWallSystem],
+		features: [
+			'Point-fixed glass with minimal visible structure',
+			'High transparency for feature elevations',
+			'Engineered fixings for wind and dead loads',
+			'Suitable for entrances, canopies, and atria',
+		],
+		specs: [
+			...baseSpecs,
+			{ label: 'Finish', value: 'Anodized / Powder Coated' },
+			{ label: 'Use', value: 'Feature glazing' },
+			{ label: 'Fixing', value: 'Spider / point fixed' },
+			{ label: 'Glazing', value: 'Tempered / laminated' },
+			{ label: 'Installation', value: 'Structural backup wall' },
+		],
+		finishes: ['Anodizing', 'Powder Coating'],
+		applications: [
+			{ title: 'Building Entrances', description: 'Frameless lobby and canopy glazing.', image: spiderGlazing },
+			{ title: 'Atria', description: 'Vertical glass walls with minimal structure.', image: entranceDoor },
+			{ title: 'Showrooms', description: 'Premium transparent retail fronts.', image: curtainWallsSystem },
+		],
+		highlights: defaultHighlights,
+		performance: {
+			axes: [...facadeAxes],
+			metrics: [
+				{ label: 'Glass Span', value: 'Project sized' },
+				{ label: 'Wind Load Resistance', value: 'Engineered' },
+				{ label: 'Service Life', value: '15+ Years' },
+			],
+		},
+	},
+	{
+		slug: 'aluminium-office-partition',
+		title: 'Aluminium Office Partition',
+		category: 'Facades',
+		shortDescription: 'Modular glass office partitions for meeting rooms and flexible workspaces.',
+		description:
+			'Modular aluminium and glass partition systems for modern offices. Frosted band options balance privacy with daylight, creating meeting rooms, executive offices, and flexible workspaces without sacrificing an open-plan feel.',
+		image: aluminiumOfficePartition,
+		gallery: [aluminiumOfficePartition, entranceDoor, hingedDoor, fixedWindow],
+		features: [
+			'Modular aluminium-framed glass panels',
+			'Frosted privacy bands and clear vision zones',
+			'Integrated door sets with matching hardware',
+			'Fast installation for fit-out projects',
+		],
+		specs: [
+			...baseSpecs,
+			{ label: 'Finish', value: 'Anodized / Powder Coated' },
+			{ label: 'Use', value: 'Office interiors' },
+			{ label: 'Glazing', value: 'Clear / frosted glass' },
+			{ label: 'Configuration', value: 'Modular panels' },
+			{ label: 'Installation', value: 'Floor & ceiling track' },
+		],
+		finishes: ['Anodizing', 'Powder Coating'],
+		applications: [
+			{ title: 'Meeting Rooms', description: 'Private spaces with daylight and clean lines.', image: aluminiumOfficePartition },
+			{ title: 'Executive Offices', description: 'Glazed enclosures with premium finishes.', image: entranceDoor },
+			{ title: 'Open Offices', description: 'Flexible divisions without blocking light.', image: fixedWindow },
+		],
+		highlights: defaultHighlights,
+		performance: {
+			axes: [...facadeAxes],
+			metrics: [
+				{ label: 'Panel Height', value: 'Floor to ceiling' },
+				{ label: 'Acoustic Rating', value: 'Project sized' },
+				{ label: 'Service Life', value: '15+ Years' },
+			],
+		},
+	},
+	{
+		slug: 'aluminium-railing-system',
+		title: 'Aluminium Railing System',
+		category: 'Facades',
+		shortDescription: 'Glass and aluminium railing systems for balconies, decks, and staircases.',
+		description:
+			'Contemporary railing systems combining aluminium posts with tempered glass panels. Side-mounted or face-fixed options suit balconies, terraces, staircases, and commercial walkways with unobstructed views and durable finishes.',
+		image: aluminiumRailingSystem,
+		gallery: [aluminiumRailingSystem, pergolaSystem, curtainWallsSystem, fixedWindow],
+		features: [
+			'Glass panel infill with aluminium posts',
+			'Side-mounted or face-fixed options',
+			'Weather-resistant exterior finishes',
+			'Compliant heights for balconies and stairs',
+		],
+		specs: [
+			...baseSpecs,
+			{ label: 'Finish', value: 'Anodized / Powder Coated' },
+			{ label: 'Use', value: 'Balconies & stairs' },
+			{ label: 'Infill', value: 'Tempered glass' },
+			{ label: 'Mounting', value: 'Side / face fixed' },
+			{ label: 'Installation', value: 'Post & panel' },
+		],
+		finishes: ['Anodizing', 'Powder Coating'],
+		applications: [
+			{ title: 'Balconies', description: 'Safe barriers with clear views.', image: aluminiumRailingSystem },
+			{ title: 'Terraces', description: 'Modern deck edges for villas and hotels.', image: pergolaSystem },
+			{ title: 'Staircases', description: 'Interior and exterior stair guarding.', image: fixedWindow },
+		],
+		highlights: defaultHighlights,
+		performance: {
+			axes: [...facadeAxes],
+			metrics: [
+				{ label: 'Load Rating', value: 'Code compliant' },
+				{ label: 'Glass Type', value: 'Tempered' },
+				{ label: 'Service Life', value: '15+ Years' },
+			],
+		},
+	},
+	{
+		slug: 'pergola-system',
+		title: 'Pergola System',
+		category: 'Facades',
+		shortDescription: 'Aluminium pergola structures with glass roofing for outdoor living spaces.',
+		description:
+			'Engineered aluminium pergola systems with optional glass roofing for patios, terraces, and garden rooms. Robust posts and rafters create sheltered outdoor spaces that extend living areas with clean contemporary lines.',
+		image: pergolaSystem,
+		gallery: [pergolaSystem, aluminiumRailingSystem, solarShading, contemporaryLouverSystem],
+		features: [
+			'Structural aluminium posts and rafters',
+			'Optional glass or louvered roof panels',
+			'Integrated drainage and fixing options',
+			'Custom spans for patios and terraces',
+		],
+		specs: [
+			...baseSpecs,
+			{ label: 'Finish', value: 'Anodized / Powder Coated' },
+			{ label: 'Use', value: 'Outdoor shelter' },
+			{ label: 'Roof', value: 'Glass / louvered' },
+			{ label: 'Structure', value: 'Aluminium frame' },
+			{ label: 'Installation', value: 'Bolted / anchored' },
+		],
+		finishes: ['Anodizing', 'Powder Coating'],
+		applications: [
+			{ title: 'Residential Patios', description: 'Covered outdoor dining and lounging.', image: pergolaSystem },
+			{ title: 'Hotel Terraces', description: 'Shaded guest areas with premium finish.', image: aluminiumRailingSystem },
+			{ title: 'Restaurant Decks', description: 'All-weather seating extensions.', image: solarShading },
+		],
+		highlights: defaultHighlights,
+		performance: {
+			axes: [...facadeAxes],
+			metrics: [
+				{ label: 'Span', value: 'Project sized' },
+				{ label: 'Wind Load', value: 'Engineered' },
+				{ label: 'Service Life', value: '15+ Years' },
+			],
+		},
+	},
+	{
+		slug: 'kitchen-cabinet',
+		title: 'Kitchen Cabinet',
+		category: 'Facades',
+		shortDescription: 'Aluminium-framed kitchen cabinetry with glass doors for modern interiors.',
+		description:
+			'Modular kitchen and storage cabinetry with aluminium-framed doors and frosted or clear glass panels. Durable, easy to clean, and suited to contemporary kitchens, pantries, and office break areas.',
+		image: kitchenCabinet,
+		gallery: [kitchenCabinet, aluminiumOfficePartition, hingedDoor, fixedWindow],
+		features: [
+			'Aluminium-framed door panels',
+			'Frosted or clear glass infill options',
+			'Modular wall and base units',
+			'Easy-clean finishes for kitchens',
+		],
+		specs: [
+			...baseSpecs,
+			{ label: 'Finish', value: 'Anodized / Powder Coated' },
+			{ label: 'Use', value: 'Kitchen & storage' },
+			{ label: 'Door', value: 'Aluminium frame + glass' },
+			{ label: 'Configuration', value: 'Wall & base units' },
+			{ label: 'Installation', value: 'Modular fit-out' },
+		],
+		finishes: ['Anodizing', 'Powder Coating', 'Wood Texture'],
+		applications: [
+			{ title: 'Modern Kitchens', description: 'Sleek cabinetry for residential fit-outs.', image: kitchenCabinet },
+			{ title: 'Office Pantries', description: 'Durable storage for workplace kitchens.', image: aluminiumOfficePartition },
+			{ title: 'Retail Back-of-House', description: 'Organized storage with clean fronts.', image: hingedDoor },
+		],
+		highlights: defaultHighlights,
+		performance: {
+			axes: [...facadeAxes],
+			metrics: [
+				{ label: 'Door Cycle', value: '50k+ cycles' },
+				{ label: 'Moisture Resistance', value: 'Kitchen rated' },
+				{ label: 'Service Life', value: '15+ Years' },
+			],
+		},
+	},
+	{
+		slug: 'solar-shading',
+		title: 'Solar Shading',
+		category: 'Louvers',
+		shortDescription: 'External solar shading with aluminium louvers for facade sun control.',
+		description:
+			'External solar shading systems using aluminium louvers and slats to reduce heat gain and glare. Cantilevered canopies and integrated window screens add architectural depth while improving comfort in hot climates.',
+		image: solarShading,
+		gallery: [solarShading, contemporaryLouverSystem, pergolaSystem, curtainWallsSystem],
+		features: [
+			'Horizontal louver blades for sun control',
+			'Cantilevered canopy and screen options',
+			'Reduces glare and solar heat gain',
+			'Finish matching to facade packages',
+		],
+		specs: [
+			...baseSpecs,
+			{ label: 'Finish', value: 'Anodized / Powder Coated' },
+			{ label: 'Use', value: 'Facade sun shading' },
+			{ label: 'Blade', value: 'Fixed aluminium louvers' },
+			{ label: 'Performance', value: 'Solar & glare control' },
+			{ label: 'Installation', value: 'Bracketed facade mount' },
+		],
+		finishes: ['Anodizing', 'Powder Coating', 'Wood Texture'],
+		applications: [
+			{ title: 'West-Facing Facades', description: 'Afternoon sun control for offices.', image: solarShading },
+			{ title: 'Residential Windows', description: 'Shaded openings with privacy.', image: contemporaryLouverSystem },
+			{ title: 'Outdoor Terraces', description: 'Cantilevered shade over patios.', image: pergolaSystem },
 		],
 		highlights: defaultHighlights,
 		performance: {

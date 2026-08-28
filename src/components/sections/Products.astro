@@ -1,6 +1,8 @@
 ---
 import { products } from '../../config/products';
+import { productsMega } from '../../config/nav-mega';
 import ArrowRight from '../icons/ArrowRight.astro';
+import DownloadIcon from '../icons/DownloadIcon.astro';
 import Button from '../ui/Button.astro';
 import Container from '../layout/Container.astro';
 import MobileCarousel from '../ui/MobileCarousel.astro';
@@ -29,10 +31,21 @@ const featuredProducts = (['Doors', 'Windows', 'Facades'] as const)
 				{featuredProducts.map((item, index) => <ProductCard product={item} index={index} />)}
 			</div>
 
-			<Button href="/products" class="mt-10 !rounded-full">
-				View all systems
-				<ArrowRight class="h-3.5 w-3.5" />
-			</Button>
+			<div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+				<Button href="/products" class="!rounded-full">
+					View all systems
+					<ArrowRight class="h-3.5 w-3.5" />
+				</Button>
+				<Button
+					href={productsMega.catalogue.href}
+					download={productsMega.catalogue.filename}
+					variant="secondary"
+					class="!rounded-full"
+				>
+					<DownloadIcon class="h-4 w-4" />
+					{productsMega.catalogue.label}
+				</Button>
+			</div>
 		</div>
 	</Container>
 </section>
