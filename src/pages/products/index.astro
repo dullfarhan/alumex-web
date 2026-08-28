@@ -16,14 +16,25 @@ import { products } from '../../config/products';
 
 <Layout title={products.seoTitle} description={products.seoDescription} canonical="/products">
 	<PageHero id="products-hero" label={products.label} title={products.title} description={products.description}>
-		<Button
-			href={productsMega.catalogue.href}
-			download={productsMega.catalogue.filename}
-			class="!rounded-full !px-8 !py-4 !text-base sm:!px-10 sm:!py-5 sm:!text-lg"
-		>
-			<DownloadIcon class="h-5 w-5 sm:h-6 sm:w-6" />
-			{productsMega.catalogue.label}
-		</Button>
+		<div class="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+			<Button
+				href={productsMega.catalogue.href}
+				download={productsMega.catalogue.filename}
+				class="!rounded-full !px-8 !py-4 !text-base sm:!px-10 sm:!py-5 sm:!text-lg"
+			>
+				<DownloadIcon class="h-5 w-5 sm:h-6 sm:w-6" />
+				{productsMega.catalogue.label}
+			</Button>
+			<Button
+				href={productsMega.gradeList.href}
+				download={productsMega.gradeList.filename}
+				variant="secondary"
+				class="!rounded-full !px-8 !py-4 !text-base sm:!px-10 sm:!py-5 sm:!text-lg"
+			>
+				<DownloadIcon class="h-5 w-5 sm:h-6 sm:w-6" />
+				{productsMega.gradeList.label}
+			</Button>
+		</div>
 	</PageHero>
 	<CatalogueDownloadWidget />
 	<ProductsToolbar />
