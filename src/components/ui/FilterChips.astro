@@ -15,7 +15,7 @@ const { items, label } = Astro.props;
 				data-category-filter={item}
 				aria-pressed={index === 0 ? 'true' : 'false'}
 				class:list={[
-					'rounded-full border px-3.5 py-1.5 text-xs font-medium tracking-wide transition-colors',
+					'cursor-pointer rounded-full border px-3.5 py-1.5 text-xs font-medium tracking-wide transition-colors',
 					index === 0
 						? 'border-primary-dark bg-primary-dark text-white'
 						: 'border-border text-heading hover:border-primary hover:text-primary',
