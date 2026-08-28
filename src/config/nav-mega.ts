@@ -41,13 +41,14 @@ export const projectsMega = {
 	},
 } as const;
 
-const megaCategoryOrder = ['Doors', 'Windows', 'Facades', 'Louvers'] as const satisfies readonly ProductCategory[];
+const megaCategoryOrder = ['Doors', 'Windows', 'Facades', 'Louvers', 'Others'] as const satisfies readonly ProductCategory[];
 
 const megaCategoryCopy: Record<(typeof megaCategoryOrder)[number], string> = {
 	Doors: 'Aluminium door systems for residential and commercial entrances — swinging, sliding, bi-fold, and more.',
 	Windows: 'Precision window systems for daylight, ventilation, and weather performance across every opening type.',
 	Facades: 'Curtain wall and facade systems engineered for high-rise strength, weather sealing, and clean sightlines.',
 	Louvers: 'Architectural louver systems for solar control, screening, and facade rhythm.',
+	Others: 'Kitchen cabinetry, office partitions, railings, pergolas, solar shading, and other specialty aluminium systems.',
 };
 
 const productCategories = megaCategoryOrder
@@ -82,25 +83,6 @@ const productCategories = megaCategoryOrder
 	})
 	.filter((item): item is NonNullable<typeof item> => Boolean(item));
 
-const finishCategories = finishes.items.map((item) => ({
-	id: item.slug,
-	title: item.title,
-	description: item.description,
-	href: item.href,
-	count: 1,
-	image: item.image,
-	imageAlt: `${item.title} — surface finish`,
-	capabilities: item.highlights.slice(0, 3).map((highlight, index) => ({
-		label: highlight.label,
-		description: item.features[index] ?? item.shortDescription,
-	})),
-	finishes: finishes.items.map((finish) => ({
-		label: finish.title,
-		href: finish.href,
-	})),
-	specs: item.specs,
-}));
-
 export const productsMega = {
 	trigger: { label: 'Products', href: '/products' },
 	viewAll: { label: 'View all architectural systems', href: '/products' },
@@ -110,11 +92,11 @@ export const productsMega = {
 		filename: 'Pak-Alumex-Catalogue-Volume-4.pdf',
 	},
 	gradeList: {
-		label: 'Download Grade List',
+		label: 'Download Rate List',
 		href: '#',
-		filename: 'Pak-Alumex-Grade-List.pdf',
+		filename: 'Pak-Alumex-Rate-List.pdf',
 	},
-	categories: [...productCategories, ...finishCategories],
+	categories: productCategories,
 	footerTiles: [
 		{
 			title: 'Request a quote',

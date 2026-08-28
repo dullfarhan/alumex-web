@@ -31,7 +31,7 @@ import solarShading from '../assets/products/Solar-Shading.jpeg';
 import spiderGlazing from '../assets/products/Spider-Glazing.webp';
 import { site } from './site';
 
-export type ProductCategory = 'Doors' | 'Windows' | 'Facades' | 'Louvers';
+export type ProductCategory = 'Doors' | 'Windows' | 'Facades' | 'Louvers' | 'Others';
 
 export type ProductHighlightIcon = 'strength' | 'weather' | 'precision' | 'aesthetics';
 
@@ -1082,7 +1082,7 @@ export const productItems: Product[] = [
 	{
 		slug: 'aluminium-office-partition',
 		title: 'Aluminium Office Partition',
-		category: 'Facades',
+		category: 'Others',
 		shortDescription: 'Modular glass office partitions for meeting rooms and flexible workspaces.',
 		description:
 			'Modular aluminium and glass partition systems for modern offices. Frosted band options balance privacy with daylight, creating meeting rooms, executive offices, and flexible workspaces without sacrificing an open-plan feel.',
@@ -1121,7 +1121,7 @@ export const productItems: Product[] = [
 	{
 		slug: 'aluminium-railing-system',
 		title: 'Aluminium Railing System',
-		category: 'Facades',
+		category: 'Others',
 		shortDescription: 'Glass and aluminium railing systems for balconies, decks, and staircases.',
 		description:
 			'Contemporary railing systems combining aluminium posts with tempered glass panels. Side-mounted or face-fixed options suit balconies, terraces, staircases, and commercial walkways with unobstructed views and durable finishes.',
@@ -1160,7 +1160,7 @@ export const productItems: Product[] = [
 	{
 		slug: 'pergola-system',
 		title: 'Pergola System',
-		category: 'Facades',
+		category: 'Others',
 		shortDescription: 'Aluminium pergola structures with glass roofing for outdoor living spaces.',
 		description:
 			'Engineered aluminium pergola systems with optional glass roofing for patios, terraces, and garden rooms. Robust posts and rafters create sheltered outdoor spaces that extend living areas with clean contemporary lines.',
@@ -1199,7 +1199,7 @@ export const productItems: Product[] = [
 	{
 		slug: 'kitchen-cabinet',
 		title: 'Kitchen Cabinet',
-		category: 'Facades',
+		category: 'Others',
 		shortDescription: 'Aluminium-framed kitchen cabinetry with glass doors for modern interiors.',
 		description:
 			'Modular kitchen and storage cabinetry with aluminium-framed doors and frosted or clear glass panels. Durable, easy to clean, and suited to contemporary kitchens, pantries, and office break areas.',
@@ -1238,7 +1238,7 @@ export const productItems: Product[] = [
 	{
 		slug: 'solar-shading',
 		title: 'Solar Shading',
-		category: 'Louvers',
+		category: 'Others',
 		shortDescription: 'External solar shading with aluminium louvers for facade sun control.',
 		description:
 			'External solar shading systems using aluminium louvers and slats to reduce heat gain and glare. Cantilevered canopies and integrated window screens add architectural depth while improving comfort in hot climates.',
