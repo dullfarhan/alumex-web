@@ -646,6 +646,7 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	}
 
 	@media (max-width: 1023px) {
+		:global(html.is-scrolling) .hero__marquee-track,
 		.hero.is-hero-scrolling .hero__marquee-track {
 			animation-play-state: paused;
 		}
@@ -1740,8 +1741,9 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 						start: "top top",
 						end: "bottom bottom",
 						pin: stage,
+						pinType: "fixed",
 						pinSpacing: true,
-						scrub: true,
+						scrub: 0.25,
 						anticipatePin: 1,
 						invalidateOnRefresh: true,
 						fastScrollEnd: true,

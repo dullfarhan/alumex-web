@@ -1,6 +1,15 @@
 ---
-/* iOS Safari: one global scroll normalizer beats per-section patches */
+/* Touch: native scroll feel + pause decorative loops while scrolling */
 ---
+
+<style is:global>
+	@media (hover: none) and (pointer: coarse) {
+		html.is-scrolling .partners-track,
+		html.is-scrolling .hero__marquee-track {
+			animation-play-state: paused;
+		}
+	}
+</style>
 
 <script>
 	import gsap from "gsap";
@@ -8,7 +17,27 @@
 
 	if (matchMedia("(hover: none) and (pointer: coarse)").matches) {
 		gsap.registerPlugin(ScrollTrigger);
-		ScrollTrigger.config({ limitCallbacks: true });
-		ScrollTrigger.normalizeScroll(true);
+		/* ignoreMobileResize: stop address-bar resize from thrashing refresh */
+		ScrollTrigger.config({
+			limitCallbacks: true,
+			ignoreMobileResize: true,
+		});
+		/*
+		 * normalizeScroll hijacks ALL touch scrolling (whole page feels laggy).
+		 * pinType:"fixed" on pinned sections keeps scroll native between them.
+		 */
+
+		let scrollEndTimer = 0;
+		const markScrolling = () => {
+			document.documentElement.classList.add("is-scrolling");
+			window.clearTimeout(scrollEndTimer);
+			scrollEndTimer = window.setTimeout(() => {
+				document.documentElement.classList.remove("is-scrolling");
+			}, 140);
+		};
+
+		window.addEventListener("scroll", markScrolling, { passive: true });
+		ScrollTrigger.addEventListener("scrollStart", markScrolling);
+		ScrollTrigger.addEventListener("scrollEnd", markScrolling);
 	}
 </script>

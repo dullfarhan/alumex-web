@@ -861,6 +861,11 @@ const intro = networkScenes[0];
 			stroke-width: 2px;
 		}
 
+		.network__label,
+		.network__label-line {
+			display: none;
+		}
+
 		.network__hq-label {
 			font-size: 12px;
 			stroke-width: 2px;
@@ -1224,7 +1229,9 @@ const intro = networkScenes[0];
 					9: { xPercent: 0, yPercent: 0, scale: 0.94 },
 				};
 
-				const buildTimeline = () => {
+				const buildTimeline = ({
+					lightweight = false,
+				}: { lightweight?: boolean } = {}) => {
 					const timeline = gsap.timeline({
 						defaults: { ease: "power3.out" },
 					});
@@ -1308,16 +1315,33 @@ const intro = networkScenes[0];
 						);
 
 						if (sceneRoutes.length) {
-							timeline.to(
-								sceneRoutes,
-								{
-									opacity: 1,
-									strokeDashoffset: 0,
-									duration: Math.min(0.55, step * 1.45),
-									stagger: step,
-								},
-								start + 0.42,
-							);
+							if (lightweight) {
+								timeline.set(
+									sceneRoutes,
+									{ strokeDashoffset: 0 },
+									start + 0.42,
+								);
+								timeline.to(
+									sceneRoutes,
+									{
+										opacity: 1,
+										duration: Math.min(0.45, step * 1.2),
+										stagger: step * 0.65,
+									},
+									start + 0.42,
+								);
+							} else {
+								timeline.to(
+									sceneRoutes,
+									{
+										opacity: 1,
+										strokeDashoffset: 0,
+										duration: Math.min(0.55, step * 1.45),
+										stagger: step,
+									},
+									start + 0.42,
+								);
+							}
 						}
 						if (sceneMarks.length) {
 							timeline.to(
@@ -1325,14 +1349,14 @@ const intro = networkScenes[0];
 								{
 									opacity: 1,
 									scale: 1,
-									duration: 0.34,
+									duration: lightweight ? 0.28 : 0.34,
 									ease: "expo.out",
-									stagger: step,
+									stagger: lightweight ? step * 0.65 : step,
 								},
 								start + 0.5,
 							);
 						}
-						if (sceneLabels.length) {
+						if (sceneLabels.length && !lightweight) {
 							timeline.to(
 								sceneLabels,
 								{
@@ -1414,11 +1438,15 @@ const intro = networkScenes[0];
 				const attachScrollScrub = ({
 					pin = false,
 					animateCopy = true,
+					lightweight = false,
+					scrub = true as boolean | number,
 				}: {
 					pin?: boolean;
 					animateCopy?: boolean;
+					lightweight?: boolean;
+					scrub?: boolean | number;
 				}) => {
-					const timeline = buildTimeline();
+					const timeline = buildTimeline({ lightweight });
 					const resizeObserver = new ResizeObserver(() =>
 						ScrollTrigger.refresh(),
 					);
@@ -1431,8 +1459,9 @@ const intro = networkScenes[0];
 						end: () =>
 							`+=${Math.max(1, runway.offsetHeight - stage.offsetHeight)}`,
 						pin: pin ? stage : false,
+						pinType: pin ? "fixed" : undefined,
 						pinSpacing: pin,
-						scrub: true,
+						scrub,
 						invalidateOnRefresh: true,
 						anticipatePin: 1,
 						fastScrollEnd: true,
@@ -1469,9 +1498,14 @@ const intro = networkScenes[0];
 					attachScrollScrub({ animateCopy: true }),
 				);
 
-				/* Touch: GSAP pin beats CSS sticky; instant copy swaps avoid text tween jank */
+				/* Touch: fixed pin + lighter SVG tweens; scrub smoothing cuts frame churn */
 				media.add("(max-width: 767px)", () =>
-					attachScrollScrub({ pin: true, animateCopy: false }),
+					attachScrollScrub({
+						pin: true,
+						animateCopy: false,
+						lightweight: true,
+						scrub: 0.25,
+					}),
 				);
 
 				return () => {

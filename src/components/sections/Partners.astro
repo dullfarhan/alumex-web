@@ -43,7 +43,12 @@ import SectionHeader from '../ui/SectionHeader.astro';
 		display: flex;
 		width: max-content;
 		animation: partners-scroll 24s linear infinite;
-		will-change: transform;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.partners-track {
+			will-change: transform;
+		}
 	}
 
 	.partners-group {
