@@ -402,7 +402,13 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	}
 
 	.hero__runway {
-		height: 140vh;
+		height: 125vh;
+	}
+
+	@media (max-width: 1023px) {
+		.hero__runway {
+			height: 110vh;
+		}
 	}
 
 	.hero__stage {
@@ -412,9 +418,17 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		flex-direction: column;
 		justify-content: center;
 		height: 100vh;
+		height: 100dvh;
 		overflow: hidden;
 		gap: 0.5rem;
 		padding-bottom: 0.5rem;
+	}
+
+	@media (max-width: 1023px) {
+		/* GSAP pin handles stickiness on touch — avoids iOS sticky + 3D jank */
+		.hero__stage {
+			position: relative;
+		}
 	}
 
 	@media (min-width: 400px) {
@@ -629,6 +643,12 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		width: max-content;
 		gap: 0.75rem;
 		animation: hero-marquee 48s linear infinite;
+	}
+
+	@media (max-width: 1023px) {
+		.hero.is-hero-scrolling .hero__marquee-track {
+			animation-play-state: paused;
+		}
 	}
 
 	.hero__marquee-card {
@@ -926,7 +946,28 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		margin-inline: auto;
 		transform-style: preserve-3d;
 		overflow: visible;
-		will-change: transform;
+	}
+
+	@media (max-width: 1023px) {
+		.hero3d__scene {
+			transform: translateZ(0);
+		}
+
+		.hero3d__door,
+		.hero3d__sash--left {
+			backface-visibility: hidden;
+			-webkit-backface-visibility: hidden;
+		}
+
+		.hero3d__floor {
+			filter: none;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.hero3d__scene {
+			will-change: transform;
+		}
 	}
 
 	/* Door panel — tall aspect ratio */
@@ -1483,6 +1524,12 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
+	ScrollTrigger.config({ limitCallbacks: true });
+
+	const touchUi = matchMedia("(hover: none) and (pointer: coarse)").matches;
+	if (touchUi) {
+		ScrollTrigger.normalizeScroll(true);
+	}
 
 	const section = document.querySelector<HTMLElement>("[data-hero]");
 	const runway = section?.querySelector<HTMLElement>("[data-hero-runway]");
@@ -1528,7 +1575,57 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		gsap.set('[data-hero-door="right"]', {
 			transformOrigin: "right center",
 		});
-		gsap.set(leftSash, { xPercent: 0, x: 0, y: 0, z: 0, force3D: false });
+		gsap.set(leftSash, { xPercent: 0, x: 0, y: 0, z: 0, force3D: touchUi });
+		gsap.set([doorScene, windowScene], { rotateX: 1, rotateY: 0 });
+
+		const setHeroScrolling = (active: boolean) => {
+			section.classList.toggle("is-hero-scrolling", active);
+		};
+
+		const buildReveal = (scrollConfig: Record<string, unknown>) => {
+			const reveal = gsap.timeline({
+				defaults: { ease: "none" },
+				scrollTrigger: scrollConfig,
+			});
+
+			reveal
+				.fromTo(
+					'[data-hero-door="left"]',
+					{ rotateY: 0 },
+					{
+						rotateY: -95,
+						duration: 0.9,
+						ease: "none",
+						force3D: touchUi,
+					},
+					0.05,
+				)
+				.fromTo(
+					'[data-hero-door="right"]',
+					{ rotateY: 0 },
+					{
+						rotateY: 95,
+						duration: 0.9,
+						ease: "none",
+						force3D: touchUi,
+					},
+					0.05,
+				)
+				.fromTo(
+					leftSash,
+					{ xPercent: 0, force3D: touchUi },
+					{
+						xPercent: 94,
+						force3D: touchUi,
+						duration: 0.9,
+						ease: "none",
+					},
+					0.05,
+				)
+				.to(captions, { opacity: 1, duration: 0.4 }, 0.05);
+
+			return reveal;
+		};
 
 		if (reducedMotion) {
 			gsap.set('[data-hero-door="left"]', { rotateY: -95 });
@@ -1632,89 +1729,76 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 					"-=0.3",
 				);
 
-			/* Scrubbed act — both panels animate in parallel, finish early */
-			const reveal = gsap.timeline({
-				defaults: { ease: "none" },
-				scrollTrigger: {
-					trigger: runway,
-					start: "top top",
-					end: "bottom bottom",
-					scrub: 0.45,
+			/* Scrubbed act — scroll-driven; mobile uses GSAP pin + direct scrub */
+			const scrollHooks = {
+				onEnter: () => setHeroScrolling(true),
+				onEnterBack: () => setHeroScrolling(true),
+				onLeave: () => setHeroScrolling(false),
+				onLeaveBack: () => setHeroScrolling(false),
+			};
+
+			ScrollTrigger.matchMedia({
+				"(max-width: 1023px)": () => {
+					buildReveal({
+						trigger: runway,
+						start: "top top",
+						end: "bottom bottom",
+						pin: stage,
+						pinSpacing: true,
+						scrub: true,
+						anticipatePin: 1,
+						invalidateOnRefresh: true,
+						fastScrollEnd: true,
+						...scrollHooks,
+					});
+				},
+				"(min-width: 1024px)": () => {
+					buildReveal({
+						trigger: runway,
+						start: "top top",
+						end: "bottom bottom",
+						scrub: 0.25,
+						...scrollHooks,
+					});
 				},
 			});
 
-			reveal
-				.fromTo(
-					doorScene,
-					{ rotateX: 1, rotateY: 0 },
-					{ rotateX: 1, rotateY: 0, duration: 0.75 },
-					0,
-				)
-				.fromTo(
-					windowScene,
-					{ rotateX: 1, rotateY: 0 },
-					{ rotateX: 1, rotateY: 0, duration: 0.75 },
-					0,
-				)
-				.fromTo(
-					'[data-hero-door="left"]',
-					{ rotateY: 0 },
-					{ rotateY: -95, duration: 0.32, ease: "none" },
-					0.03,
-				)
-				.fromTo(
-					'[data-hero-door="right"]',
-					{ rotateY: 0 },
-					{ rotateY: 95, duration: 0.32, ease: "none" },
-					0.03,
-				)
-				.fromTo(
-					leftSash,
-					{ xPercent: 0, force3D: false },
-					{
-						xPercent: 94,
-						force3D: false,
-						duration: 0.38,
-						ease: "none",
-					},
-					0.03,
-				)
-				.to(captions, { opacity: 1, duration: 0.28 }, 0.03);
+			/* Pointer-driven 3D camera tilt — desktop only */
+			if (!touchUi) {
+				const doorTiltY = gsap.quickTo(doorScene, "rotateY", {
+					duration: 0.8,
+					ease: "power3",
+				});
+				const doorTiltX = gsap.quickTo(doorScene, "rotateX", {
+					duration: 0.8,
+					ease: "power3",
+				});
+				const windowTiltY = gsap.quickTo(windowScene, "rotateY", {
+					duration: 0.8,
+					ease: "power3",
+				});
+				const windowTiltX = gsap.quickTo(windowScene, "rotateX", {
+					duration: 0.8,
+					ease: "power3",
+				});
 
-			/* Pointer-driven 3D camera tilt on both scenes */
-			const doorTiltY = gsap.quickTo(doorScene, "rotateY", {
-				duration: 0.8,
-				ease: "power3",
-			});
-			const doorTiltX = gsap.quickTo(doorScene, "rotateX", {
-				duration: 0.8,
-				ease: "power3",
-			});
-			const windowTiltY = gsap.quickTo(windowScene, "rotateY", {
-				duration: 0.8,
-				ease: "power3",
-			});
-			const windowTiltX = gsap.quickTo(windowScene, "rotateX", {
-				duration: 0.8,
-				ease: "power3",
-			});
+				stage.addEventListener("pointermove", (event) => {
+					if (event.pointerType !== "mouse") return;
+					const x = event.clientX / window.innerWidth - 0.5;
+					const y = event.clientY / window.innerHeight - 0.5;
+					doorTiltY(x * 3);
+					doorTiltX(1 + y * -2);
+					windowTiltY(x * 3);
+					windowTiltX(1 + y * -2);
+				});
 
-			stage.addEventListener("pointermove", (event) => {
-				if (event.pointerType !== "mouse") return;
-				const x = event.clientX / window.innerWidth - 0.5;
-				const y = event.clientY / window.innerHeight - 0.5;
-				doorTiltY(x * 3);
-				doorTiltX(1 + y * -2);
-				windowTiltY(x * 3);
-				windowTiltX(1 + y * -2);
-			});
-
-			stage.addEventListener("pointerleave", () => {
-				doorTiltY(0);
-				doorTiltX(1);
-				windowTiltY(0);
-				windowTiltX(1);
-			});
+				stage.addEventListener("pointerleave", () => {
+					doorTiltY(0);
+					doorTiltX(1);
+					windowTiltY(0);
+					windowTiltX(1);
+				});
+			}
 		}
 	}
 </script>
