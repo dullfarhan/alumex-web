@@ -785,11 +785,12 @@ const intro = networkScenes[0];
 
 	@media (max-width: 767px) {
 		.network__runway {
-			height: 220vh;
-			height: 220dvh;
+			height: 200vh;
+			height: 200dvh;
 		}
 
 		.network__stage {
+			position: relative;
 			min-height: 560px;
 		}
 
@@ -1392,71 +1393,88 @@ const intro = networkScenes[0];
 					return timeline;
 				};
 
+				const finishNetwork = (timeline: gsap.core.Timeline) => {
+					timeline.progress(1);
+					setCopy(9, false);
+					count.textContent = formatDealerCount(dealers.length);
+					progress.style.transform = "scaleX(1)";
+					pulseTimeline.play();
+				};
+
+				const sceneAtProgress = (progressValue: number) => {
+					const time = progressValue * totalDuration;
+					let elapsed = 0;
+					for (const scene of networkScenes) {
+						elapsed += scene.duration;
+						if (time < elapsed) return scene.id;
+					}
+					return 9;
+				};
+
+				const attachScrollScrub = ({
+					pin = false,
+					animateCopy = true,
+				}: {
+					pin?: boolean;
+					animateCopy?: boolean;
+				}) => {
+					const timeline = buildTimeline();
+					const resizeObserver = new ResizeObserver(() =>
+						ScrollTrigger.refresh(),
+					);
+					resizeObserver.observe(runway);
+
+					const trigger = ScrollTrigger.create({
+						animation: timeline,
+						trigger: runway,
+						start: "top top",
+						end: () =>
+							`+=${Math.max(1, runway.offsetHeight - stage.offsetHeight)}`,
+						pin: pin ? stage : false,
+						pinSpacing: pin,
+						scrub: true,
+						invalidateOnRefresh: true,
+						anticipatePin: 1,
+						fastScrollEnd: true,
+						onLeave: () => finishNetwork(timeline),
+						onUpdate: (self) => {
+							const nextScene = sceneAtProgress(self.progress);
+							setCopy(nextScene, animateCopy);
+							progress.style.transform = `scaleX(${self.progress})`;
+
+							const finalActive = nextScene === 9;
+							if (finalActive && pulseTimeline.paused()) {
+								pulseTimeline.play();
+							} else if (
+								!finalActive &&
+								!pulseTimeline.paused()
+							) {
+								pulseTimeline.pause(0);
+							}
+						},
+					});
+					requestAnimationFrame(() => ScrollTrigger.refresh());
+					document.fonts.ready.then(() => ScrollTrigger.refresh());
+
+					return () => {
+						resizeObserver.disconnect();
+						trigger.kill();
+						timeline.kill();
+					};
+				};
+
 				const media = gsap.matchMedia();
-				const resizeObserver = new ResizeObserver(() =>
-					ScrollTrigger.refresh(),
+
+				media.add("(min-width: 768px)", () =>
+					attachScrollScrub({ animateCopy: true }),
 				);
-				resizeObserver.observe(runway);
-				media.add(
-					{
-						desktop: "(min-width: 768px)",
-						mobile: "(max-width: 767px)",
-					},
-					() => {
-						const timeline = buildTimeline();
-						const trigger = ScrollTrigger.create({
-							animation: timeline,
-							trigger: runway,
-							start: "top top",
-							end: () =>
-								`+=${Math.max(1, runway.offsetHeight - stage.offsetHeight)}`,
-							scrub: true,
-							invalidateOnRefresh: true,
-							onLeave: () => {
-								timeline.progress(1);
-								setCopy(9, false);
-								count.textContent = formatDealerCount(dealers.length);
-								progress.style.transform = "scaleX(1)";
-							},
-							onUpdate: (self) => {
-								const time = self.progress * totalDuration;
-								let elapsed = 0;
-								let nextScene = 9;
-								for (const scene of networkScenes) {
-									elapsed += scene.duration;
-									if (time < elapsed) {
-										nextScene = scene.id;
-										break;
-									}
-								}
-								setCopy(nextScene);
-								progress.style.transform = `scaleX(${self.progress})`;
 
-								const finalActive = nextScene === 9;
-								if (finalActive && pulseTimeline.paused()) {
-									pulseTimeline.play();
-								} else if (
-									!finalActive &&
-									!pulseTimeline.paused()
-								) {
-									pulseTimeline.pause(0);
-								}
-							},
-						});
-						requestAnimationFrame(() => ScrollTrigger.refresh());
-						document.fonts.ready.then(() =>
-							ScrollTrigger.refresh(),
-						);
-
-						return () => {
-							trigger.kill();
-							timeline.kill();
-						};
-					},
+				/* Touch: GSAP pin beats CSS sticky; instant copy swaps avoid text tween jank */
+				media.add("(max-width: 767px)", () =>
+					attachScrollScrub({ pin: true, animateCopy: false }),
 				);
 
 				return () => {
-					resizeObserver.disconnect();
 					media.revert();
 					pulseTimeline.kill();
 					routeLengths.clear();

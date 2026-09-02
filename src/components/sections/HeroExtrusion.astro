@@ -1524,12 +1524,8 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
-	ScrollTrigger.config({ limitCallbacks: true });
 
 	const touchUi = matchMedia("(hover: none) and (pointer: coarse)").matches;
-	if (touchUi) {
-		ScrollTrigger.normalizeScroll(true);
-	}
 
 	const section = document.querySelector<HTMLElement>("[data-hero]");
 	const runway = section?.querySelector<HTMLElement>("[data-hero-runway]");

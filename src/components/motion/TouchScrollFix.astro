@@ -1,0 +1,14 @@
+---
+/* iOS Safari: one global scroll normalizer beats per-section patches */
+---
+
+<script>
+	import gsap from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	if (matchMedia("(hover: none) and (pointer: coarse)").matches) {
+		gsap.registerPlugin(ScrollTrigger);
+		ScrollTrigger.config({ limitCallbacks: true });
+		ScrollTrigger.normalizeScroll(true);
+	}
+</script>
