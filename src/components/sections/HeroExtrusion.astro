@@ -1,15 +1,15 @@
 ---
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
-import { hero } from '../../config/hero';
-import { productItems } from '../../config/products';
-import { projectItems } from '../../config/projects';
-import logo from '../../assets/logo.png';
-import ArrowRight from '../icons/ArrowRight.astro';
-import DownloadIcon from '../icons/DownloadIcon.astro';
-import Button from '../ui/Button.astro';
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { hero } from "../../config/hero";
+import { productItems } from "../../config/products";
+import { projectItems } from "../../config/projects";
+import logo from "../../assets/logo.png";
+import ArrowRight from "../icons/ArrowRight.astro";
+import DownloadIcon from "../icons/DownloadIcon.astro";
+import Button from "../ui/Button.astro";
 
-const titleLines = ['Engineering Aluminium for Modern Architecture.'];
+const titleLines = ["Engineering Aluminium for Modern Architecture."];
 
 const galleryPool: { src: ImageMetadata; alt: string; href?: string }[] = [
 	...productItems.map((item) => ({
@@ -67,11 +67,14 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 									<path
 										id="hero-slogan-arc"
 										d="M 100 12 A 88 88 0 1 1 99.999 12"
-										fill="none"
-									/>
+										fill="none"></path>
 								</defs>
 								<text class="hero__slogan-text">
-									<textPath href="#hero-slogan-arc" startOffset="50%" text-anchor="middle">
+									<textPath
+										href="#hero-slogan-arc"
+										startOffset="50%"
+										text-anchor="middle"
+									>
 										Towards a better future
 									</textPath>
 								</text>
@@ -85,7 +88,10 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 						{
 							titleLines.map((line) => (
 								<span class="hero__line">
-									<span class="hero__line-inner" data-hero-line>
+									<span
+										class="hero__line-inner"
+										data-hero-line
+									>
 										{line}
 									</span>
 								</span>
@@ -94,10 +100,15 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 					</h1>
 
 					<div data-hero-trail>
-						<p class="hero__description" data-hero-fade>{hero.description}</p>
+						<p class="hero__description" data-hero-fade>
+							{hero.description}
+						</p>
 
 						<div class="hero__actions" data-hero-fade>
-							<Button href={hero.primaryCta.href} class="!rounded-full">
+							<Button
+								href={hero.primaryCta.href}
+								class="!rounded-full"
+							>
 								{hero.primaryCta.label}
 								<ArrowRight class="h-4 w-4" />
 							</Button>
@@ -115,88 +126,230 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 				</div>
 
 				<div class="hero__visual">
-					<div class="hero3d" data-hero3d>
-						<div class="hero3d__scene" data-hero-scene>
-							<div class="hero3d__assembly" data-hero-assembly>
-								{/* Sliding window — appears after the door clears */}
-								<div class="hero3d__window" data-hero-window>
-									<div class="hero3d__window-opening">
-										<div class="hero3d__window-track" aria-hidden="true" />
+					<div class="hero__visual-grid">
+						<div class="hero3d-panel" data-hero-panel="door">
+							<div class="hero3d" data-hero3d="door">
+								<div
+									class="hero3d__scene hero3d__scene--door"
+									data-hero-scene="door"
+								>
+									<div class="hero3d__assembly">
+										<div
+											class="hero3d__portal"
+											data-hero-portal
+										>
+											<div
+												class="hero3d__frame"
+												data-hero-frame
+											>
+												<div
+													class="hero3d__bar hero3d__bar--top"
+													data-hero-bar
+												>
+												</div>
+												<div
+													class="hero3d__bar hero3d__bar--bottom"
+													data-hero-bar
+												>
+												</div>
+												<div
+													class="hero3d__bar hero3d__bar--left"
+													data-hero-bar
+												>
+												</div>
+												<div
+													class="hero3d__bar hero3d__bar--right"
+													data-hero-bar
+												>
+												</div>
+											</div>
 
-										<div class="hero3d__sash hero3d__sash--right" data-hero-sash="right">
-											<div class="hero3d__sash-body">
-												<div class="hero3d__sash-glass" />
-												<div class="hero3d__sash-sheen" />
+											<div
+												class="hero3d__door hero3d__door--left"
+												data-hero-door="left"
+											>
+												<div class="hero3d__door-front">
+													<div class="hero3d__glass">
+													</div>
+													<div
+														class="hero3d__glass-sheen"
+													>
+													</div>
+												</div>
+												<div class="hero3d__door-edge">
+												</div>
+												<div class="hero3d__door-back">
+												</div>
+												<span
+													class="hero3d__hinge hero3d__hinge--1"
+													aria-hidden="true"></span>
+												<span
+													class="hero3d__hinge hero3d__hinge--2"
+													aria-hidden="true"></span>
+												<span
+													class="hero3d__hinge hero3d__hinge--3"
+													aria-hidden="true"></span>
+												<div
+													class="hero3d__handle"
+													data-hero-handle
+												>
+													<span
+														class="hero3d__handle-cap"
+													></span>
+												</div>
+											</div>
+
+											<div
+												class="hero3d__door hero3d__door--right"
+												data-hero-door="right"
+											>
+												<div class="hero3d__door-front">
+													<div class="hero3d__glass">
+													</div>
+													<div
+														class="hero3d__glass-sheen"
+													>
+													</div>
+												</div>
+												<div class="hero3d__door-edge">
+												</div>
+												<div class="hero3d__door-back">
+												</div>
+												<span
+													class="hero3d__hinge hero3d__hinge--1"
+													aria-hidden="true"></span>
+												<span
+													class="hero3d__hinge hero3d__hinge--2"
+													aria-hidden="true"></span>
+												<span
+													class="hero3d__hinge hero3d__hinge--3"
+													aria-hidden="true"></span>
+												<div
+													class="hero3d__handle"
+													data-hero-handle
+												>
+													<span
+														class="hero3d__handle-cap"
+													></span>
+												</div>
 											</div>
 										</div>
-
-										<div class="hero3d__sash hero3d__sash--left" data-hero-sash="left">
-											<div class="hero3d__sash-body">
-												<div class="hero3d__sash-glass" />
-												<div class="hero3d__sash-sheen" />
-											</div>
-											<span class="hero3d__sash-handle" aria-hidden="true" />
-											<span class="hero3d__sash-lock" aria-hidden="true" />
-										</div>
-									</div>
-
-									<div class="hero3d__window-frame" aria-hidden="true">
-										<span class="hero3d__window-rail hero3d__window-rail--top" />
-										<span class="hero3d__window-rail hero3d__window-rail--bottom" />
-										<span class="hero3d__window-rail hero3d__window-rail--left" />
-										<span class="hero3d__window-rail hero3d__window-rail--right" />
 									</div>
 								</div>
-
-								{/* Door unit in front until it retreats and clears */}
-								<div class="hero3d__portal" data-hero-portal>
-									<div class="hero3d__frame" data-hero-frame>
-										<div class="hero3d__bar hero3d__bar--top" data-hero-bar />
-										<div class="hero3d__bar hero3d__bar--bottom" data-hero-bar />
-										<div class="hero3d__bar hero3d__bar--left" data-hero-bar />
-										<div class="hero3d__bar hero3d__bar--right" data-hero-bar />
-									</div>
-
-									<div class="hero3d__door hero3d__door--left" data-hero-door="left">
-										<div class="hero3d__door-front">
-											<div class="hero3d__glass" />
-											<div class="hero3d__glass-sheen" />
-										</div>
-										<div class="hero3d__door-edge" />
-										<div class="hero3d__door-back" />
-										<span class="hero3d__hinge hero3d__hinge--1" aria-hidden="true" />
-										<span class="hero3d__hinge hero3d__hinge--2" aria-hidden="true" />
-										<span class="hero3d__hinge hero3d__hinge--3" aria-hidden="true" />
-										<div class="hero3d__handle" data-hero-handle>
-											<span class="hero3d__handle-cap" />
-										</div>
-									</div>
-
-									<div class="hero3d__door hero3d__door--right" data-hero-door="right">
-										<div class="hero3d__door-front">
-											<div class="hero3d__glass" />
-											<div class="hero3d__glass-sheen" />
-										</div>
-										<div class="hero3d__door-edge" />
-										<div class="hero3d__door-back" />
-										<span class="hero3d__hinge hero3d__hinge--1" aria-hidden="true" />
-										<span class="hero3d__hinge hero3d__hinge--2" aria-hidden="true" />
-										<span class="hero3d__hinge hero3d__hinge--3" aria-hidden="true" />
-										<div class="hero3d__handle" data-hero-handle>
-											<span class="hero3d__handle-cap" />
-										</div>
-									</div>
+								<div class="hero3d__floor" aria-hidden="true">
 								</div>
 							</div>
+							<p class="hero__caption" data-hero-caption="door">
+								Opening door
+							</p>
 						</div>
-						<div class="hero3d__floor" aria-hidden="true" />
-					</div>
 
-					<p class="hero__caption" data-hero-caption aria-hidden="true">Sealed system</p>
+						<div class="hero3d-panel" data-hero-panel="window">
+							<div class="hero3d" data-hero3d="window">
+								<div
+									class="hero3d__scene hero3d__scene--window"
+									data-hero-scene="window"
+								>
+									<div class="hero3d__assembly">
+										<div
+											class="hero3d__window"
+											data-hero-window
+										>
+											<div class="hero3d__window-opening">
+												<div
+													class="hero3d__window-track"
+													data-hero-window-track
+													aria-hidden="true"
+												>
+												</div>
+
+												<div
+													class="hero3d__sash hero3d__sash--right"
+													data-hero-sash="right"
+												>
+													<div
+														class="hero3d__sash-body"
+													>
+														<div
+															class="hero3d__sash-glass"
+														>
+														</div>
+														<div
+															class="hero3d__sash-sheen"
+														>
+														</div>
+													</div>
+												</div>
+
+												<div
+													class="hero3d__sash hero3d__sash--left"
+													data-hero-sash="left"
+												>
+													<div
+														class="hero3d__sash-body"
+													>
+														<div
+															class="hero3d__sash-glass"
+														>
+														</div>
+														<div
+															class="hero3d__sash-sheen"
+														>
+														</div>
+													</div>
+													<span
+														class="hero3d__sash-handle"
+														data-hero-sash-handle
+														aria-hidden="true"
+													></span>
+													<span
+														class="hero3d__sash-lock"
+														data-hero-sash-handle
+														aria-hidden="true"
+													></span>
+												</div>
+											</div>
+
+											<div
+												class="hero3d__window-frame"
+												aria-hidden="true"
+											>
+												<span
+													class="hero3d__window-rail hero3d__window-rail--top"
+													data-hero-window-rail
+												></span>
+												<span
+													class="hero3d__window-rail hero3d__window-rail--bottom"
+													data-hero-window-rail
+												></span>
+												<span
+													class="hero3d__window-rail hero3d__window-rail--left"
+													data-hero-window-rail
+												></span>
+												<span
+													class="hero3d__window-rail hero3d__window-rail--right"
+													data-hero-window-rail
+												></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="hero3d__floor" aria-hidden="true">
+								</div>
+							</div>
+							<p class="hero__caption" data-hero-caption="window">
+								Sliding sash
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 
-			<div class="hero__marquee" data-hero-marquee aria-label="Product and project gallery">
+			<div
+				class="hero__marquee"
+				data-hero-marquee
+				aria-label="Product and project gallery"
+			>
 				<div class="hero__marquee-track">
 					{
 						marqueeItems.map((item, index) => {
@@ -208,7 +361,7 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 									widths={[240, 360, 480]}
 									sizes="10rem"
 									class="hero__marquee-img"
-									loading={index < 6 ? 'eager' : 'lazy'}
+									loading={index < 6 ? "eager" : "lazy"}
 									draggable="false"
 								/>
 							);
@@ -217,14 +370,14 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 									href={item.href}
 									class="hero__marquee-card"
 									tabindex={hidden ? -1 : undefined}
-									aria-hidden={hidden ? 'true' : undefined}
+									aria-hidden={hidden ? "true" : undefined}
 								>
 									{image}
 								</a>
 							) : (
 								<div
 									class="hero__marquee-card"
-									aria-hidden={hidden ? 'true' : undefined}
+									aria-hidden={hidden ? "true" : undefined}
 								>
 									{image}
 								</div>
@@ -240,11 +393,16 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 <style>
 	.hero {
 		overflow-x: clip;
-		background: radial-gradient(ellipse at 70% 40%, #f4f8fc 0%, #eaf1f8 55%, #dde7f1 100%);
+		background: radial-gradient(
+			ellipse at 70% 40%,
+			#f4f8fc 0%,
+			#eaf1f8 55%,
+			#dde7f1 100%
+		);
 	}
 
 	.hero__runway {
-		height: 420vh;
+		height: 140vh;
 	}
 
 	.hero__stage {
@@ -255,13 +413,20 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		justify-content: center;
 		height: 100vh;
 		overflow: hidden;
-		gap: 1rem;
-		padding-bottom: 0.75rem;
+		gap: 0.5rem;
+		padding-bottom: 0.5rem;
 	}
 
 	@media (min-width: 400px) {
 		.hero__stage {
-			gap: 2rem;
+			gap: 0.85rem;
+		}
+	}
+
+	@media (min-width: 640px) {
+		.hero__stage {
+			gap: 1.25rem;
+			padding-bottom: 0.75rem;
 		}
 	}
 
@@ -272,13 +437,21 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 			linear-gradient(to right, rgb(31 78 140 / 6%) 1px, transparent 1px),
 			linear-gradient(to bottom, rgb(31 78 140 / 6%) 1px, transparent 1px);
 		background-size: 64px 64px;
-		mask-image: radial-gradient(ellipse at 68% 45%, black 8%, transparent 70%);
+		mask-image: radial-gradient(
+			ellipse at 68% 45%,
+			black 8%,
+			transparent 70%
+		);
 	}
 
 	.hero__vignette {
 		position: absolute;
 		inset: 0;
-		background: radial-gradient(ellipse at 50% 55%, transparent 50%, rgb(18 43 77 / 10%) 100%);
+		background: radial-gradient(
+			ellipse at 50% 55%,
+			transparent 50%,
+			rgb(18 43 77 / 10%) 100%
+		);
 		pointer-events: none;
 	}
 
@@ -291,14 +464,19 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		flex: 0 1 auto;
 		min-height: 0;
 		margin-inline: auto;
-		gap: 0.5rem;
-		padding: 3rem 1.25rem 0;
+		gap: 0.35rem;
+		padding: 2.5rem 1.25rem 0;
 		align-items: stretch;
 		grid-template-rows: 1fr auto;
 	}
 	@media (min-width: 400px) {
 		.hero__inner {
-			gap: 2rem;
+			gap: 0.75rem;
+		}
+	}
+	@media (min-width: 640px) {
+		.hero__inner {
+			gap: 1.25rem;
 		}
 	}
 	@media (min-width: 768px) {
@@ -314,7 +492,7 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 			padding: 4rem 3rem 0;
 			align-items: center;
 		}
-		.hero__stage{
+		.hero__stage {
 			gap: 5rem;
 		}
 	}
@@ -337,7 +515,6 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	}
 
 	.hero__eyebrow {
-		
 		font-family: var(--font-display);
 		font-size: 0.525rem;
 		font-weight: 600;
@@ -358,7 +535,6 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	}
 
 	.hero__title {
-		
 		/* max-width: 18ch; */
 		font-family: var(--font-display);
 		font-size: clamp(1.25rem, 3.5vw, 2.5rem);
@@ -439,7 +615,13 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		width: 100%;
 		flex-shrink: 0;
 		overflow: hidden;
-		mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+		mask-image: linear-gradient(
+			90deg,
+			transparent,
+			#000 4%,
+			#000 96%,
+			transparent
+		);
 	}
 
 	.hero__marquee-track {
@@ -499,7 +681,7 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 			justify-content: center;
 		}
 
-		.hero__marquee-card[aria-hidden='true'] {
+		.hero__marquee-card[aria-hidden="true"] {
 			display: none;
 		}
 	}
@@ -508,16 +690,76 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		align-items: center;
 		min-width: 0;
-		align-self: end;
+		align-self: center;
+		margin-top: 1rem;
+		width: 100%;
+	}
+
+	@media (min-width: 400px) {
+		.hero__visual {
+			margin-top: 1.15rem;
+		}
+	}
+
+	@media (min-width: 640px) {
+		.hero__visual {
+			margin-top: 1.35rem;
+		}
 	}
 
 	@media (min-width: 1024px) {
 		.hero__visual {
 			align-self: center;
 			justify-content: center;
-			gap: 0;
+			margin-top: 0;
 		}
+	}
+
+	.hero__visual-grid {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+		width: fit-content;
+		max-width: 100%;
+		margin-inline: auto;
+	}
+
+	@media (min-width: 400px) {
+		.hero__visual-grid {
+			gap: 0.85rem;
+		}
+	}
+
+	@media (min-width: 640px) {
+		.hero__visual-grid {
+			gap: 1rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.hero__visual-grid {
+			display: grid;
+			grid-template-columns: 1fr;
+			align-items: center;
+			justify-items: center;
+			gap: 0.5rem;
+			width: 100%;
+			max-width: 20rem;
+			margin-inline: auto;
+		}
+	}
+
+	.hero3d-panel {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		flex: 0 0 auto;
+		min-width: 0;
+		overflow: visible;
 	}
 
 	.hero__brand {
@@ -533,8 +775,14 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 
 	.hero__logo {
 		position: relative;
-		width: 5.5rem;
+		width: 4.25rem;
 		aspect-ratio: 1;
+	}
+
+	@media (min-width: 400px) {
+		.hero__logo {
+			width: 5rem;
+		}
 	}
 
 	@media (min-width: 768px) {
@@ -581,20 +829,35 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	}
 
 	.hero__caption {
-		display: none;
+		display: block;
 		margin-top: 0.25rem;
 		text-align: center;
 		font-family: var(--font-display);
-		font-size: 0.6875rem;
+		font-size: 0.5rem;
 		font-weight: 600;
-		letter-spacing: 0.18em;
+		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--primary);
+		opacity: 0.5;
+	}
+
+	@media (min-width: 400px) {
+		.hero__caption {
+			font-size: 0.5625rem;
+			letter-spacing: 0.16em;
+		}
+	}
+
+	@media (min-width: 640px) {
+		.hero__caption {
+			font-size: 0.625rem;
+		}
 	}
 
 	@media (min-width: 1024px) {
 		.hero__caption {
-			display: block;
+			font-size: 0.6875rem;
+			letter-spacing: 0.18em;
 		}
 	}
 
@@ -608,7 +871,10 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	:global(html.js) [data-hero-bar],
 	:global(html.js) [data-hero-door],
 	:global(html.js) [data-hero-handle],
-	:global(html.js) [data-hero-window] {
+	:global(html.js) [data-hero-window-rail],
+	:global(html.js) [data-hero-window-track],
+	:global(html.js) [data-hero-sash],
+	:global(html.js) [data-hero-sash-handle] {
 		opacity: 0;
 	}
 
@@ -623,7 +889,10 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		:global(html.js) [data-hero-bar],
 		:global(html.js) [data-hero-door],
 		:global(html.js) [data-hero-handle],
-		:global(html.js) [data-hero-window] {
+		:global(html.js) [data-hero-window-rail],
+		:global(html.js) [data-hero-window-track],
+		:global(html.js) [data-hero-sash],
+		:global(html.js) [data-hero-sash-handle] {
 			opacity: 1;
 		}
 
@@ -646,48 +915,71 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		perspective: 1800px;
 		perspective-origin: 55% 42%;
 		width: 100%;
-		max-width: 36rem;
+		max-width: none;
 		margin-inline: auto;
-		padding: 0.25rem 0.5rem 0.5rem;
+		padding: 0.25rem 0 0.5rem;
 		overflow: visible;
-	}
-
-	@media (min-width: 1024px) {
-		.hero3d {
-			padding: 0.75rem 0.25rem 0.5rem;
-			max-width: none;
-		}
 	}
 
 	.hero3d__scene {
 		position: relative;
-		width: 11.5rem;
-		height: 13.5rem;
 		margin-inline: auto;
 		transform-style: preserve-3d;
 		overflow: visible;
 		will-change: transform;
 	}
 
-	/* Narrow phones: shrink door + window so they fit the first viewport */
-	@media (max-width: 399px) {
-		.hero3d__scene {
-			width: 9.25rem;
-			height: 10.75rem;
+	/* Door panel — tall aspect ratio */
+	.hero3d__scene--door {
+		width: 7.75rem;
+		height: 9rem;
+	}
+
+	@media (min-width: 400px) {
+		.hero3d__scene--door {
+			width: 8.5rem;
+			height: 9.85rem;
 		}
 	}
 
 	@media (min-width: 640px) {
-		.hero3d__scene {
-			width: 16rem;
-			height: 19rem;
+		.hero3d__scene--door {
+			width: 11.25rem;
+			height: 13rem;
 		}
 	}
 
 	@media (min-width: 1024px) {
-		.hero3d__scene {
-			width: 22rem;
-			height: 26rem;
+		.hero3d__scene--door {
+			width: 15rem;
+			height: 17.5rem;
+		}
+	}
+
+	/* Window panel — wider / shorter for sliding sash */
+	.hero3d__scene--window {
+		width: 10.25rem;
+		height: 7rem;
+	}
+
+	@media (min-width: 400px) {
+		.hero3d__scene--window {
+			width: 11.5rem;
+			height: 7.75rem;
+		}
+	}
+
+	@media (min-width: 640px) {
+		.hero3d__scene--window {
+			width: 14rem;
+			height: 9rem;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.hero3d__scene--window {
+			width: 20rem;
+			height: 12rem;
 		}
 	}
 
@@ -698,23 +990,10 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		overflow: visible;
 	}
 
-	/* Sliding window only — wider / shorter; doors keep full tall scene */
+	/* Sliding window — self-contained in its own panel */
 	.hero3d__window {
 		position: absolute;
-		top: 50%;
-		left: 50%;
-		z-index: 10;
-		width: 148%;
-		height: 58%;
-		translate: -50% -50%;
-		opacity: 0;
-	}
-
-	@media (max-width: 399px) {
-		.hero3d__window {
-			width: 122%;
-			height: 50%;
-		}
+		inset: 0;
 	}
 
 	.hero3d__window-opening {
@@ -722,15 +1001,25 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		inset: 0.55rem;
 		z-index: 1;
 		overflow: hidden;
-		background: linear-gradient(180deg, #d8e0e8 0%, #eef2f6 50%, #c8d0db 100%);
+		background: linear-gradient(
+			180deg,
+			#d8e0e8 0%,
+			#eef2f6 50%,
+			#c8d0db 100%
+		);
 	}
 
 	.hero3d__window-track {
 		position: absolute;
 		inset: 0;
 		z-index: 0;
-		background:
-			linear-gradient(180deg, #9aa6b4 0%, #c4ccd5 20%, #eef2f6 55%, #aeb8c4 100%);
+		background: linear-gradient(
+			180deg,
+			#9aa6b4 0%,
+			#c4ccd5 20%,
+			#eef2f6 55%,
+			#aeb8c4 100%
+		);
 		box-shadow: inset 0 3px 8px rgb(18 43 77 / 22%);
 	}
 
@@ -743,7 +1032,12 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 
 	.hero3d__window-rail {
 		position: absolute;
-		background: linear-gradient(180deg, #f7f9fb 0%, #dce3eb 45%, #b8c1cc 100%);
+		background: linear-gradient(
+			180deg,
+			#f7f9fb 0%,
+			#dce3eb 45%,
+			#b8c1cc 100%
+		);
 		box-shadow:
 			inset 0 1px 0 rgb(255 255 255 / 90%),
 			inset 0 -1px 0 rgb(18 43 77 / 18%);
@@ -800,7 +1094,12 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		position: absolute;
 		inset: 0;
 		overflow: hidden;
-		background: linear-gradient(160deg, #eef2f6 0%, #f8fafc 40%, #d5dde6 100%);
+		background: linear-gradient(
+			160deg,
+			#eef2f6 0%,
+			#f8fafc 40%,
+			#d5dde6 100%
+		);
 		border: 2px solid #e8eef4;
 		outline: 2px solid #2a3f5f;
 		outline-offset: -4px;
@@ -865,14 +1164,13 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		background: radial-gradient(circle at 30% 30%, #666, #1a1a1a);
 	}
 
-	/* Whole door + frame — alone on stage until it clears, then window enters */
+	/* Door + frame unit */
 	.hero3d__portal {
 		position: absolute;
 		inset: 0;
-		z-index: 20;
 		transform-style: preserve-3d;
 		transform-origin: center center;
-		will-change: transform, opacity;
+		will-change: transform;
 	}
 
 	/* Fixed aluminium frame — four extrusion bars */
@@ -886,8 +1184,20 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	.hero3d__bar {
 		position: absolute;
 		background:
-			repeating-linear-gradient(90deg, #d6dde5 0px, #f1f4f7 1px, #b8c1cc 2px, #e4e9ef 3px),
-			linear-gradient(135deg, #c8d0db 0%, #f1f4f7 30%, #aeb8c4 60%, #d9e0e8 100%);
+			repeating-linear-gradient(
+				90deg,
+				#d6dde5 0px,
+				#f1f4f7 1px,
+				#b8c1cc 2px,
+				#e4e9ef 3px
+			),
+			linear-gradient(
+				135deg,
+				#c8d0db 0%,
+				#f1f4f7 30%,
+				#aeb8c4 60%,
+				#d9e0e8 100%
+			);
 		box-shadow:
 			0 2px 4px rgb(18 43 77 / 25%),
 			inset 0 1px 0 rgb(255 255 255 / 60%),
@@ -952,8 +1262,14 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		width: 0.55rem;
 		height: 1.05rem;
 		border-radius: 1px;
-		background:
-			linear-gradient(90deg, #5a6570 0%, #c5ccd4 35%, #8a96a6 55%, #dfe4ea 78%, #6b7580 100%);
+		background: linear-gradient(
+			90deg,
+			#5a6570 0%,
+			#c5ccd4 35%,
+			#8a96a6 55%,
+			#dfe4ea 78%,
+			#6b7580 100%
+		);
 		box-shadow:
 			0 1px 2px rgb(18 43 77 / 40%),
 			inset 0 1px 0 rgb(255 255 255 / 55%),
@@ -962,7 +1278,7 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	}
 
 	.hero3d__hinge::before {
-		content: '';
+		content: "";
 		position: absolute;
 		top: 15%;
 		bottom: 15%;
@@ -973,7 +1289,7 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	}
 
 	.hero3d__hinge::after {
-		content: '';
+		content: "";
 		position: absolute;
 		top: 0.2rem;
 		bottom: 0.2rem;
@@ -1029,7 +1345,13 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 
 	.hero3d__door-front {
 		transform: translateZ(10px);
-		background: linear-gradient(135deg, #cfd8e3 0%, #f7f9fb 28%, #aebac8 68%, #e6ecf2 100%);
+		background: linear-gradient(
+			135deg,
+			#cfd8e3 0%,
+			#f7f9fb 28%,
+			#aebac8 68%,
+			#e6ecf2 100%
+		);
 		border: 2px solid #2a3f5f;
 		border-radius: 2px;
 		box-shadow:
@@ -1127,203 +1449,272 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		box-shadow: 0 0 6px var(--accent);
 	}
 
-	/* Contact shadow on the floor */
 	.hero3d__floor {
 		position: absolute;
 		bottom: -0.35rem;
 		left: 50%;
 		transform: translateX(-50%);
-		width: 12rem;
-		height: 1.5rem;
-		background: radial-gradient(ellipse at center, rgb(18 43 77 / 35%) 0%, transparent 70%);
+		width: 80%;
+		height: 1.25rem;
+		background: radial-gradient(
+			ellipse at center,
+			rgb(18 43 77 / 35%) 0%,
+			transparent 70%
+		);
 		filter: blur(6px);
+	}
+
+	@media (min-width: 640px) {
+		.hero3d__floor {
+			height: 1.5rem;
+		}
 	}
 
 	@media (min-width: 1024px) {
 		.hero3d__floor {
-			bottom: 0.75rem;
-			width: 18rem;
+			bottom: 0.5rem;
 			height: 1.75rem;
 		}
 	}
 </style>
 
 <script>
-	import gsap from 'gsap';
-	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	import gsap from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
-	const section = document.querySelector<HTMLElement>('[data-hero]');
-	const runway = section?.querySelector<HTMLElement>('[data-hero-runway]');
-	const stage = section?.querySelector<HTMLElement>('[data-hero-stage]');
-	const scene = section?.querySelector<HTMLElement>('[data-hero-scene]');
-	const caption = section?.querySelector<HTMLElement>('[data-hero-caption]');
-	const portal = section?.querySelector<HTMLElement>('[data-hero-portal]');
-	const windowUnit = section?.querySelector<HTMLElement>('[data-hero-window]');
-	const leftSash = section?.querySelector<HTMLElement>('[data-hero-sash="left"]');
+	const section = document.querySelector<HTMLElement>("[data-hero]");
+	const runway = section?.querySelector<HTMLElement>("[data-hero-runway]");
+	const stage = section?.querySelector<HTMLElement>("[data-hero-stage]");
+	const doorScene = section?.querySelector<HTMLElement>(
+		'[data-hero-scene="door"]',
+	);
+	const windowScene = section?.querySelector<HTMLElement>(
+		'[data-hero-scene="window"]',
+	);
+	const captions = section
+		? Array.from(
+				section.querySelectorAll<HTMLElement>("[data-hero-caption]"),
+			)
+		: [];
+	const leftSash = section?.querySelector<HTMLElement>(
+		'[data-hero-sash="left"]',
+	);
+	const reducedMotion = matchMedia(
+		"(prefers-reduced-motion: reduce)",
+	).matches;
 
-	if (
-		section &&
-		runway &&
-		stage &&
-		scene &&
-		caption &&
-		portal &&
-		windowUnit &&
-		leftSash &&
-		!matchMedia('(prefers-reduced-motion: reduce)').matches
-	) {
+	if (section && runway && stage && doorScene && windowScene && leftSash) {
 		const pick = <T extends Element>(selector: string) =>
 			Array.from(section.querySelectorAll<T>(selector));
 
-		const bars = pick<HTMLElement>('[data-hero-bar]');
-		const doors = pick<HTMLElement>('[data-hero-door]');
-		const marquee = section.querySelector<HTMLElement>('[data-hero-marquee]');
-		const eyebrow = section.querySelector<HTMLElement>('[data-hero-eyebrow]');
+		const bars = pick<HTMLElement>("[data-hero-bar]");
+		const doors = pick<HTMLElement>("[data-hero-door]");
+		const windowRails = pick<HTMLElement>("[data-hero-window-rail]");
+		const windowTrack = section.querySelector<HTMLElement>(
+			"[data-hero-window-track]",
+		);
+		const sashes = pick<HTMLElement>("[data-hero-sash]");
+		const sashHandles = pick<HTMLElement>("[data-hero-sash-handle]");
+		const marquee = section.querySelector<HTMLElement>(
+			"[data-hero-marquee]",
+		);
+		const eyebrow = section.querySelector<HTMLElement>(
+			"[data-hero-eyebrow]",
+		);
 
-		gsap.set(portal, { transformOrigin: '50% 50%', autoAlpha: 1 });
-		gsap.set(windowUnit, { autoAlpha: 0 });
+		gsap.set('[data-hero-door="left"]', { transformOrigin: "left center" });
+		gsap.set('[data-hero-door="right"]', {
+			transformOrigin: "right center",
+		});
 		gsap.set(leftSash, { xPercent: 0, x: 0, y: 0, z: 0, force3D: false });
-		gsap.set('[data-hero-door="left"]', { transformOrigin: 'left center' });
-		gsap.set('[data-hero-door="right"]', { transformOrigin: 'right center' });
 
-		/* Opening act, on load */
-		const intro = gsap.timeline({ defaults: { ease: 'power3.out' } });
+		if (reducedMotion) {
+			gsap.set('[data-hero-door="left"]', { rotateY: -95 });
+			gsap.set('[data-hero-door="right"]', { rotateY: 95 });
+			gsap.set(leftSash, { xPercent: 94, force3D: false });
+			gsap.set(captions, { opacity: 1 });
+		} else {
+			/* Opening act, on load */
+			const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-		intro
-			.fromTo(
-				'[data-hero-logo]',
-				{ opacity: 0, scale: 0.85 },
-				{ opacity: 1, scale: 1, duration: 0.7 },
-			)
-			.fromTo(
-				'.hero__slogan-ring',
-				{ opacity: 0 },
-				{ opacity: 1, duration: 0.55 },
-				'-=0.35',
-			);
+			intro
+				.fromTo(
+					"[data-hero-logo]",
+					{ opacity: 0, scale: 0.85 },
+					{ opacity: 1, scale: 1, duration: 0.7 },
+				)
+				.fromTo(
+					".hero__slogan-ring",
+					{ opacity: 0 },
+					{ opacity: 1, duration: 0.55 },
+					"-=0.35",
+				);
 
-		if (eyebrow) {
-			intro.fromTo(
-				eyebrow,
-				{ opacity: 0, y: 12 },
-				{ opacity: 1, y: 0, duration: 0.45 },
-				'-=0.2',
-			);
-		}
+			if (eyebrow) {
+				intro.fromTo(
+					eyebrow,
+					{ opacity: 0, y: 12 },
+					{ opacity: 1, y: 0, duration: 0.45 },
+					"-=0.2",
+				);
+			}
 
-		intro
-			.fromTo(
-				'[data-hero-line]',
-				{ yPercent: 115, opacity: 0 },
-				{ yPercent: 0, opacity: 1, duration: 1, stagger: 0.1 },
-				'-=0.15',
-			)
-			.fromTo(
-				'[data-hero-fade]',
-				{ opacity: 0, y: 20 },
-				{ opacity: 1, y: 0, duration: 0.7, stagger: 0.12 },
-				'-=0.5',
-			)
-			.fromTo(
-				marquee,
-				{ opacity: 0, y: 16 },
-				{ opacity: 1, y: 0, duration: 0.7 },
-				'-=0.4',
-			)
-			.fromTo(bars, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.6, stagger: 0.08 }, 0.4)
-			.fromTo(doors, { opacity: 0 }, { opacity: 1, duration: 0.7, stagger: 0.12 }, '-=0.3')
-			.fromTo('[data-hero-handle]', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.5 }, '-=0.3')
-			.fromTo(caption, { opacity: 0 }, { opacity: 1, duration: 0.5 }, '-=0.3');
+			intro
+				.fromTo(
+					"[data-hero-line]",
+					{ yPercent: 115, opacity: 0 },
+					{ yPercent: 0, opacity: 1, duration: 1, stagger: 0.1 },
+					"-=0.15",
+				)
+				.fromTo(
+					"[data-hero-fade]",
+					{ opacity: 0, y: 20 },
+					{ opacity: 1, y: 0, duration: 0.7, stagger: 0.12 },
+					"-=0.5",
+				)
+				.fromTo(
+					marquee,
+					{ opacity: 0, y: 16 },
+					{ opacity: 1, y: 0, duration: 0.7 },
+					"-=0.4",
+				)
+				.fromTo(
+					bars,
+					{ opacity: 0, scale: 0.6 },
+					{ opacity: 1, scale: 1, duration: 0.6, stagger: 0.08 },
+					0.4,
+				);
 
-		/* Scrubbed act — duration 1, so positions read as progress */
-		const reveal = gsap.timeline({
-			defaults: { ease: 'none' },
-			scrollTrigger: { trigger: runway, start: 'top top', end: 'bottom bottom', scrub: 0.7 },
-		});
+			const windowFrameParts = windowTrack
+				? [...windowRails, windowTrack]
+				: windowRails;
 
-		/*
-		  Sequence:
-		  1) Doors open in place (frame stays put — no portal tilt/retreat)
-		  2) Portal fades out
-		  3) Sliding window fades in
-		  4) Left sash slides left → right
-		*/
-		reveal
-			.to('[data-hero-cue]', { opacity: 0, duration: 0.05 }, 0)
-			.fromTo(scene, { rotateX: 1, rotateY: 0 }, { rotateX: 1, rotateY: 0, duration: 1 }, 0)
-			.fromTo(
-				'[data-hero-door="left"]',
-				{ rotateY: 0 },
-				{ rotateY: -95, duration: 0.22, ease: 'none' },
-				0.03,
-			)
-			.fromTo(
-				'[data-hero-door="right"]',
-				{ rotateY: 0 },
-				{ rotateY: 95, duration: 0.22, ease: 'none' },
-				0.03,
-			)
-			.to(portal, { autoAlpha: 0, duration: 0.06, ease: 'none' }, 0.34)
-			/* Frame stays put — only opacity on the unit, then left sash travels L→R */
-			.fromTo(
-				windowUnit,
-				{ autoAlpha: 0 },
-				{ autoAlpha: 1, duration: 0.08, ease: 'none' },
-				0.36,
-			)
-			.fromTo(
-				leftSash,
-				{ xPercent: 0, force3D: false },
-				{ xPercent: 94, force3D: false, duration: 0.32, ease: 'none' },
-				0.45,
-			)
-			.to('[data-hero-trail]', { opacity: 0.35, duration: 0.18 }, 0.85);
+			if (windowFrameParts.length) {
+				intro.fromTo(
+					windowFrameParts,
+					{ opacity: 0, scale: 0.6 },
+					{ opacity: 1, scale: 1, duration: 0.6, stagger: 0.08 },
+					0.4,
+				);
+			}
 
-		/* Caption follows the scroll position */
-		const scenes: [number, string][] = [
-			[0.7, 'Open track'],
-			[0.45, 'Sliding sash'],
-			[0.36, 'Window revealed'],
-			[0.12, 'Leaves opening'],
-			[0, 'Sealed system'],
-		];
+			intro
+				.fromTo(
+					doors,
+					{ opacity: 0 },
+					{ opacity: 1, duration: 0.7, stagger: 0.12 },
+					"-=0.3",
+				)
+				.fromTo(
+					sashes,
+					{ opacity: 0 },
+					{ opacity: 1, duration: 0.7, stagger: 0.12 },
+					"-=0.3",
+				)
+				.fromTo(
+					"[data-hero-handle]",
+					{ opacity: 0, scale: 0 },
+					{ opacity: 1, scale: 1, duration: 0.5 },
+					"-=0.3",
+				)
+				.fromTo(
+					sashHandles,
+					{ opacity: 0, scale: 0 },
+					{ opacity: 1, scale: 1, duration: 0.5 },
+					"-=0.3",
+				)
+				.fromTo(
+					captions,
+					{ opacity: 0 },
+					{ opacity: 0.5, duration: 0.5 },
+					"-=0.3",
+				);
 
-		ScrollTrigger.create({
-			trigger: runway,
-			start: 'top top',
-			end: 'bottom bottom',
-			onUpdate: (self) => {
-				const next = scenes.find(([at]) => self.progress >= at)?.[1] ?? '';
-				if (caption.textContent === next) return;
-				gsap.to(caption, {
-					opacity: 0,
-					duration: 0.12,
-					onComplete: () => {
-						caption.textContent = next;
-						gsap.to(caption, { opacity: 1, duration: 0.2 });
+			/* Scrubbed act — both panels animate in parallel, finish early */
+			const reveal = gsap.timeline({
+				defaults: { ease: "none" },
+				scrollTrigger: {
+					trigger: runway,
+					start: "top top",
+					end: "bottom bottom",
+					scrub: 0.45,
+				},
+			});
+
+			reveal
+				.fromTo(
+					doorScene,
+					{ rotateX: 1, rotateY: 0 },
+					{ rotateX: 1, rotateY: 0, duration: 0.75 },
+					0,
+				)
+				.fromTo(
+					windowScene,
+					{ rotateX: 1, rotateY: 0 },
+					{ rotateX: 1, rotateY: 0, duration: 0.75 },
+					0,
+				)
+				.fromTo(
+					'[data-hero-door="left"]',
+					{ rotateY: 0 },
+					{ rotateY: -95, duration: 0.32, ease: "none" },
+					0.03,
+				)
+				.fromTo(
+					'[data-hero-door="right"]',
+					{ rotateY: 0 },
+					{ rotateY: 95, duration: 0.32, ease: "none" },
+					0.03,
+				)
+				.fromTo(
+					leftSash,
+					{ xPercent: 0, force3D: false },
+					{
+						xPercent: 94,
+						force3D: false,
+						duration: 0.38,
+						ease: "none",
 					},
-				});
-			},
-		});
+					0.03,
+				)
+				.to(captions, { opacity: 1, duration: 0.28 }, 0.03);
 
-		/* Pointer-driven 3D camera tilt, layered on top of the scrubbed scene transform */
-		const tiltY = gsap.quickTo(scene, 'rotateY', { duration: 0.8, ease: 'power3' });
-		const tiltX = gsap.quickTo(scene, 'rotateX', { duration: 0.8, ease: 'power3' });
+			/* Pointer-driven 3D camera tilt on both scenes */
+			const doorTiltY = gsap.quickTo(doorScene, "rotateY", {
+				duration: 0.8,
+				ease: "power3",
+			});
+			const doorTiltX = gsap.quickTo(doorScene, "rotateX", {
+				duration: 0.8,
+				ease: "power3",
+			});
+			const windowTiltY = gsap.quickTo(windowScene, "rotateY", {
+				duration: 0.8,
+				ease: "power3",
+			});
+			const windowTiltX = gsap.quickTo(windowScene, "rotateX", {
+				duration: 0.8,
+				ease: "power3",
+			});
 
-		stage.addEventListener('pointermove', (event) => {
-			if (event.pointerType !== 'mouse') return;
-			/* Keep pointer tilt subtle so the sliding window stays near-straight */
-			const x = event.clientX / window.innerWidth - 0.5;
-			const y = event.clientY / window.innerHeight - 0.5;
-			tiltY(x * 3);
-			tiltX(1 + y * -2);
-		});
+			stage.addEventListener("pointermove", (event) => {
+				if (event.pointerType !== "mouse") return;
+				const x = event.clientX / window.innerWidth - 0.5;
+				const y = event.clientY / window.innerHeight - 0.5;
+				doorTiltY(x * 3);
+				doorTiltX(1 + y * -2);
+				windowTiltY(x * 3);
+				windowTiltX(1 + y * -2);
+			});
 
-		stage.addEventListener('pointerleave', () => {
-			tiltY(0);
-			tiltX(1);
-		});
+			stage.addEventListener("pointerleave", () => {
+				doorTiltY(0);
+				doorTiltX(1);
+				windowTiltY(0);
+				windowTiltX(1);
+			});
+		}
 	}
 </script>
