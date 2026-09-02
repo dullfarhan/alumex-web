@@ -1,5 +1,8 @@
 ---
-/* Touch: native scroll feel + pause decorative loops while scrolling */
+/*
+ * iPhone/iPad only: WebKit scrolls off the JS thread → pin/scrub jitter.
+ * Chrome on iOS is still WebKit (Apple requirement).
+ */
 ---
 
 <style is:global>
@@ -9,24 +12,78 @@
 			animation-play-state: paused;
 		}
 	}
+
+	/* svh + --app-vh: stop address-bar resize from shifting pinned sections */
+	html.ios .hero__stage,
+	html.ios .network__stage {
+		height: calc(var(--app-vh, 1svh) * 100);
+		min-height: calc(var(--app-vh, 1svh) * 100);
+	}
+
+	html.ios .hero__runway {
+		height: calc(var(--app-vh, 1svh) * 110);
+	}
+
+	html.ios .network__runway {
+		height: calc(var(--app-vh, 1svh) * 200);
+	}
+
+	html.ios .network__stage {
+		contain: none;
+	}
+
+	html.ios .network {
+		overflow: hidden;
+	}
 </style>
 
 <script>
 	import gsap from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-	if (matchMedia("(hover: none) and (pointer: coarse)").matches) {
+	const isIOS =
+		/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+		(navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+	const isTouch = matchMedia("(hover: none) and (pointer: coarse)").matches;
+
+	if (isIOS) {
+		document.documentElement.classList.add("ios");
+	}
+
+	if (isTouch || isIOS) {
 		gsap.registerPlugin(ScrollTrigger);
-		/* ignoreMobileResize: stop address-bar resize from thrashing refresh */
 		ScrollTrigger.config({
 			limitCallbacks: true,
 			ignoreMobileResize: true,
 		});
-		/*
-		 * normalizeScroll hijacks ALL touch scrolling (whole page feels laggy).
-		 * pinType:"fixed" on pinned sections keeps scroll native between them.
-		 */
+	}
 
+	if (isIOS) {
+		/*
+		 * iOS-only: keeps scroll + pin on the same thread during hero/network scrub.
+		 * Tuned momentum feels closer to native than normalizeScroll(true) defaults.
+		 */
+		ScrollTrigger.normalizeScroll({
+			allowNestedScroll: true,
+			lockAxis: false,
+			momentum: (self) => Math.min(2.5, Math.abs(self.velocityY) / 900),
+			type: "touch,wheel,pointer",
+		});
+
+		const syncViewport = () => {
+			const height = window.visualViewport?.height ?? window.innerHeight;
+			document.documentElement.style.setProperty(
+				"--app-vh",
+				`${height * 0.01}px`,
+			);
+		};
+
+		syncViewport();
+		window.visualViewport?.addEventListener("resize", syncViewport);
+		window.visualViewport?.addEventListener("scroll", syncViewport);
+	}
+
+	if (isTouch) {
 		let scrollEndTimer = 0;
 		const markScrolling = () => {
 			document.documentElement.classList.add("is-scrolling");

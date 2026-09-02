@@ -536,9 +536,15 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		text-transform: uppercase;
 		color: var(--primary);
 	}
+
+	@media (max-width: 1023px) {
+		.hero__eyebrow {
+			display: none;
+		}
+	}
+
 	@media (min-width: 768px) {
 		.hero__eyebrow {
-			margin: 0.85rem 0 0.5rem;
 			font-size: 0.6875rem;
 		}
 	}
@@ -950,8 +956,17 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	}
 
 	@media (max-width: 1023px) {
+		.hero3d {
+			/* Flatten 3D stack — iOS pin + preserve-3d + rotateY = compositor jitter */
+			perspective: none;
+		}
+
 		.hero3d__scene {
-			transform: translateZ(0);
+			transform-style: flat;
+		}
+
+		.hero3d__assembly {
+			transform-style: flat;
 		}
 
 		.hero3d__door,
@@ -1741,8 +1756,8 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 						start: "top top",
 						end: "bottom bottom",
 						pin: stage,
-						pinType: "fixed",
 						pinSpacing: true,
+						pinReparent: touchUi,
 						scrub: 0.25,
 						anticipatePin: 1,
 						invalidateOnRefresh: true,

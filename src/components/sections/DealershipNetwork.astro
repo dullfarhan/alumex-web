@@ -1459,8 +1459,8 @@ const intro = networkScenes[0];
 						end: () =>
 							`+=${Math.max(1, runway.offsetHeight - stage.offsetHeight)}`,
 						pin: pin ? stage : false,
-						pinType: pin ? "fixed" : undefined,
 						pinSpacing: pin,
+						pinReparent: pin,
 						scrub,
 						invalidateOnRefresh: true,
 						anticipatePin: 1,
