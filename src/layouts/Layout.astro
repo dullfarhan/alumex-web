@@ -31,7 +31,7 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
 <!doctype html>
-<html lang="en" data-scroll-motion={scrollMotion ? 'on' : 'off'}>
+<html lang="en" data-scroll-motion={scrollMotion ? 'on' : 'off'} data-page={canonical === '/' ? 'home' : 'inner'}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
