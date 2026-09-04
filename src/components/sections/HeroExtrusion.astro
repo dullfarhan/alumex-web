@@ -651,13 +651,6 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		animation: hero-marquee 48s linear infinite;
 	}
 
-	@media (max-width: 1023px) {
-		:global(html.is-scrolling) .hero__marquee-track,
-		.hero.is-hero-scrolling .hero__marquee-track {
-			animation-play-state: paused;
-		}
-	}
-
 	.hero__marquee-card {
 		display: block;
 		flex: 0 0 auto;

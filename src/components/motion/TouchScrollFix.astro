@@ -6,13 +6,6 @@
 ---
 
 <style is:global>
-	@media (hover: none) and (pointer: coarse) {
-		html.is-scrolling .partners-track,
-		html.is-scrolling .hero__marquee-track {
-			animation-play-state: paused;
-		}
-	}
-
 	/* svh + --app-vh: stop address-bar resize from shifting pinned sections */
 	html.ios .hero__stage,
 	html.ios .network__stage {
@@ -81,20 +74,5 @@
 		syncViewport();
 		window.visualViewport?.addEventListener("resize", syncViewport);
 		window.visualViewport?.addEventListener("scroll", syncViewport);
-	}
-
-	if (isTouch) {
-		let scrollEndTimer = 0;
-		const markScrolling = () => {
-			document.documentElement.classList.add("is-scrolling");
-			window.clearTimeout(scrollEndTimer);
-			scrollEndTimer = window.setTimeout(() => {
-				document.documentElement.classList.remove("is-scrolling");
-			}, 140);
-		};
-
-		window.addEventListener("scroll", markScrolling, { passive: true });
-		ScrollTrigger.addEventListener("scrollStart", markScrolling);
-		ScrollTrigger.addEventListener("scrollEnd", markScrolling);
 	}
 </script>
