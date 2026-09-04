@@ -45,6 +45,11 @@ import SectionHeader from '../ui/SectionHeader.astro';
 		animation: partners-scroll 24s linear infinite;
 	}
 
+	/* Toggled by script on touch devices while the section is off-screen */
+	.partners-track.is-paused {
+		animation-play-state: paused;
+	}
+
 	@media (hover: hover) and (pointer: fine) {
 		.partners-track {
 			will-change: transform;
@@ -87,3 +92,29 @@ import SectionHeader from '../ui/SectionHeader.astro';
 		}
 	}
 </style>
+
+<script>
+	import gsap from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	/* Touch: pause the marquee while the section is off-screen */
+	if (matchMedia('(hover: none) and (pointer: coarse)').matches) {
+		const viewport = document.querySelector<HTMLElement>(
+			'.partners-viewport',
+		);
+		const track = document.querySelector<HTMLElement>('.partners-track');
+
+		if (viewport && track) {
+			ScrollTrigger.create({
+				trigger: viewport,
+				start: 'top bottom',
+				end: 'bottom top',
+				onToggle: (self) => {
+					track.classList.toggle('is-paused', !self.isActive);
+				},
+			});
+		}
+	}
+</script>

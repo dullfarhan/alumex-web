@@ -406,8 +406,9 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	}
 
 	@media (max-width: 1023px) {
+		/* One-shot reveal on touch — stage fills the runway, native scroll */
 		.hero__runway {
-			height: 110vh;
+			height: auto;
 		}
 	}
 
@@ -425,7 +426,7 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	}
 
 	@media (max-width: 1023px) {
-		/* GSAP pin handles stickiness on touch — avoids iOS sticky + 3D jank */
+		/* No pin on touch — stage stays in normal flow, iOS momentum scroll native */
 		.hero__stage {
 			position: relative;
 		}
@@ -950,7 +951,7 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 
 	@media (max-width: 1023px) {
 		.hero3d {
-			/* Flatten 3D stack — iOS pin + preserve-3d + rotateY = compositor jitter */
+			/* Flatten 3D stack — rotateY on a deep preserve-3d tree jitters on iOS */
 			perspective: none;
 		}
 
@@ -970,6 +971,23 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 
 		.hero3d__floor {
 			filter: none;
+		}
+
+		/* Permanent layer promotion is wasted GPU memory on touch */
+		.hero3d__portal,
+		.hero3d__door,
+		.hero3d__sash--left {
+			will-change: auto;
+		}
+
+		/* Same circular shadow as drop-shadow, a fraction of the paint cost */
+		.hero__logo-img {
+			filter: none;
+			box-shadow: 0 14px 32px rgb(18 43 77 / 28%);
+		}
+
+		.hero__marquee-track.is-paused {
+			animation-play-state: paused;
 		}
 	}
 
@@ -1730,21 +1748,54 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 					"-=0.3",
 				);
 
-			/* Scrubbed act — scroll-driven; mobile uses GSAP pin */
+			/* Reveal act — same sequence/easing, one-shot on touch, scrubbed on desktop */
+			const buildRevealOneShot = () => {
+				const reveal = gsap.timeline({ defaults: { ease: "power2.inOut" } });
+				reveal
+					.fromTo(
+						'[data-hero-door="left"]',
+						{ rotateY: 0 },
+						{ rotateY: -95, duration: 1.4, force3D: touchUi },
+						0.05,
+					)
+					.fromTo(
+						'[data-hero-door="right"]',
+						{ rotateY: 0 },
+						{ rotateY: 95, duration: 1.4, force3D: touchUi },
+						0.05,
+					)
+					.fromTo(
+						leftSash,
+						{ xPercent: 0, force3D: touchUi },
+						{ xPercent: 94, duration: 1.4, force3D: touchUi },
+						0.05,
+					)
+					.to(
+						captions,
+						{ opacity: 1, duration: 0.4, ease: "power2.out" },
+						0.05,
+					);
+				reveal.pause();
+				return reveal;
+			};
+
 			ScrollTrigger.matchMedia({
+				/* Touch: no pin, no scrub — plays once when the hero enters view */
 				"(max-width: 1023px)": () => {
-					buildReveal({
+					const reveal = buildRevealOneShot();
+					const play = () => intro.then(() => reveal.play());
+					ScrollTrigger.create({
 						trigger: runway,
 						start: "top top",
-						end: "bottom bottom",
-						pin: stage,
-						pinSpacing: true,
-						scrub: 0.25,
-						anticipatePin: 1,
-						invalidateOnRefresh: true,
-						fastScrollEnd: true,
+						once: true,
+						onEnter: play,
 					});
+					/* Hero sits at the document top — start even if the trigger
+					   was already active before its first refresh (idempotent) */
+					if (window.scrollY < window.innerHeight) play();
+					return () => reveal.kill();
 				},
+				/* Desktop: scrubbed against the sticky stage (unchanged) */
 				"(min-width: 1024px)": () => {
 					buildReveal({
 						trigger: runway,
@@ -1754,6 +1805,21 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 					});
 				},
 			});
+
+			/* Touch: pause the marquee while the hero is off-screen */
+			if (touchUi) {
+				const marqueeTrack = section.querySelector<HTMLElement>(
+					"[data-hero-marquee] .hero__marquee-track",
+				);
+				ScrollTrigger.create({
+					trigger: section,
+					start: "top bottom",
+					end: "bottom top",
+					onToggle: (self) => {
+						marqueeTrack?.classList.toggle("is-paused", !self.isActive);
+					},
+				});
+			}
 
 			/* Pointer-driven 3D camera tilt — desktop only */
 			if (!touchUi) {

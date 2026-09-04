@@ -784,9 +784,9 @@ const intro = networkScenes[0];
 	}
 
 	@media (max-width: 767px) {
+		/* One-shot enter animation on touch — no pin, native momentum scroll */
 		.network__runway {
-			height: 200vh;
-			height: 200dvh;
+			height: auto;
 		}
 
 		.network__stage {
@@ -1497,15 +1497,74 @@ const intro = networkScenes[0];
 					attachScrollScrub({ animateCopy: true }),
 				);
 
-				/* Touch: fixed pin + lighter SVG tweens; scrub smoothing cuts frame churn */
-				media.add("(max-width: 767px)", () =>
-					attachScrollScrub({
-						pin: true,
-						animateCopy: false,
-						lightweight: true,
-						scrub: 0.25,
-					}),
-				);
+				/* Touch: one-shot enter animation — no pin, no scrub, native scroll */
+				media.add("(max-width: 767px)", () => {
+					const timeline = buildTimeline({ lightweight: true });
+
+					/* Progress bar rides the timeline — no per-frame onUpdate work */
+					timeline.to(
+						progress,
+						{
+							scaleX: 1,
+							ease: "none",
+							duration: timeline.duration(),
+						},
+						0,
+					);
+
+					/* Copy swaps scheduled at scene boundaries (instant, no tweens) */
+					for (const scene of networkScenes) {
+						if (scene.id > 1) {
+							timeline.add(
+								() => setCopy(scene.id, false),
+								`scene-${scene.id}`,
+							);
+						}
+					}
+
+					/* Scrub compressed 42s into one viewport; keep that pace on touch */
+					timeline.timeScale(4);
+					timeline.pause();
+
+					let started = false;
+
+					/* Pause playback and the infinite pulse while off-screen */
+					const visibility = ScrollTrigger.create({
+						trigger: stage,
+						start: "top bottom",
+						end: "bottom top",
+						onToggle: (self) => {
+							if (!started) return;
+							if (self.isActive) {
+								if (timeline.progress() === 1) pulseTimeline.play();
+								else timeline.play();
+							} else {
+								timeline.pause();
+								pulseTimeline.pause();
+							}
+						},
+					});
+
+					const enter = ScrollTrigger.create({
+						trigger: stage,
+						start: "top 80%",
+						once: true,
+						onEnter: () => {
+							started = true;
+							timeline.eventCallback("onComplete", () => {
+								finishNetwork(timeline);
+								if (!visibility.isActive) pulseTimeline.pause();
+							});
+							timeline.play();
+						},
+					});
+
+					return () => {
+						enter.kill();
+						visibility.kill();
+						timeline.kill();
+					};
+				});
 
 				return () => {
 					media.revert();

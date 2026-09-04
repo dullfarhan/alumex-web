@@ -1,0 +1,19 @@
+# User Taste Preferences
+- Prefers a plan-first approach: before complex multi-step tasks, a plan should be created and reviewed. Implementation then follows the plan's to-dos sequentially, marking each as in_progress and completing all without stopping. The plan file itself must not be edited. Confidence: 0.95
+- Provides detailed plans directly and expects them to be followed exactly. Does not want to-dos re-created if they already exist. Confidence: 0.95
+- Frequently reverts code that doesn't meet expectations. When fixing one issue (e.g., mobile), do NOT change unrelated working code (e.g., desktop). Scope changes tightly to what was asked. Confidence: 0.85
+- Before approving a fix, proactively probes whether it will compromise the core purpose/functionality of the feature being fixed. Wants honest tradeoff analysis — not reassurance that "it'll be fine." Expects to be told plainly what changes and what stays. Confidence: 0.8
+- Uses Astro as the primary framework with Tailwind CSS for styling. Prefers inline Tailwind utility classes over global CSS classes. Confidence: 0.9
+- Uses GSAP (Timeline, ScrollTrigger, MotionPathPlugin) for animations. Easing preferences: `power3.out` and `expo.out`. No bounce or cartoon effects. Confidence: 0.85
+- Expects Astro `<Image>` component to be used for all images (including SVGs and logos) for optimization. Repeatedly flags blurry/slow-loading images as unacceptable. Confidence: 0.9
+- Prefers server-rendered / static output. Does NOT want unnecessary client-side JavaScript — explicitly frustrated when components hydrate on client side without reason. Confidence: 0.8
+- Brand color palette: `--primary: #1F4E8C; --primary-dark: #122B4D; --accent: #2FA8E2; --silver: #D9E0E8;`. Primary gradient: `linear-gradient(135deg, #122B4D 0%, #1F4E8C 55%, #2FA8E2 100%)`. Background white `#FFFFFF` / alt `#F7F9FC`. Confidence: 0.9
+- Aims for a premium, corporate, enterprise-grade aesthetic (references: Apple, Tesla, Schüco, Reynaers Aluminium, BMW). Minimal but premium. No cheap neon, no gaming aesthetics, no flashy effects. Confidence: 0.85
+- Buttons should be rounded (pill-shaped preferred). Primary button: solid blue with white text; secondary button: white bg with dark border. Hover styles: transparent bg with border + text color change. Confidence: 0.75
+- Mobile performance and smoothness is a top priority. Repeatedly flags jitter, lag, and stutter on mobile (especially iPhone Safari/Chrome). Expects smooth scrolling on all mobile devices. Confidence: 0.9
+- Mobile carousels should be enabled only at specific small breakpoints (e.g., below 500px or 640px), not on tablet or desktop. Above mobile breakpoints, standard grids should be used. Confidence: 0.85
+- Wants separate handling for mobile vs desktop without affecting the other. When asked to fix a mobile-only issue, must not touch desktop CSS. Confidence: 0.85
+- Strong preference for separation of concerns: separate components for separate functionality (e.g., desktop mega-menu vs mobile menu in separate components). Confidence: 0.8
+- Prefers reusable components — identifies shared UI (search bars, buttons, cards, CTA banners) and expects them extracted into reusable components used across pages. Confidence: 0.85
+- Assets organized in structured folders by purpose: `src/assets/products/`, `src/assets/projects/`, `src/assets/icons/`, `src/assets/finishes/`, etc. SVGs stored in `assets/icons` and reused. Confidence: 0.8
+- Content provided by the user (text, descriptions, company info) should be used faithfully and not paraphrased or genericized. Confidence: 0.75
