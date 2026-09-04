@@ -31,6 +31,7 @@
 
 	const motionOn = document.documentElement.dataset.scrollMotion === 'on';
 	const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const isTouch = matchMedia('(hover: none) and (pointer: coarse)').matches;
 
 	const offsets: Record<string, gsap.TweenVars> = {
 		up: { y: 44 },
@@ -97,16 +98,19 @@
 			);
 		});
 
-		document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
-			const depth = Number(el.dataset.parallax) || 0.15;
-			gsap.fromTo(
-				el,
-				{ y: () => window.innerHeight * depth * 0.5 },
-				{
-					y: () => window.innerHeight * depth * -0.5,
-					ease: 'none',
-					scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
-				},
-			);
-		});
+		/* Scrubbed parallax fights native iOS scroll — desktop only */
+		if (!isTouch) {
+			document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
+				const depth = Number(el.dataset.parallax) || 0.15;
+				gsap.fromTo(
+					el,
+					{ y: () => window.innerHeight * depth * 0.5 },
+					{
+						y: () => window.innerHeight * depth * -0.5,
+						ease: 'none',
+						scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
+					},
+				);
+			});
+		}
 	}</script>

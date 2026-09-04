@@ -1583,10 +1583,6 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		gsap.set(leftSash, { xPercent: 0, x: 0, y: 0, z: 0, force3D: touchUi });
 		gsap.set([doorScene, windowScene], { rotateX: 1, rotateY: 0 });
 
-		const setHeroScrolling = (active: boolean) => {
-			section.classList.toggle("is-hero-scrolling", active);
-		};
-
 		const buildReveal = (scrollConfig: Record<string, unknown>) => {
 			const reveal = gsap.timeline({
 				defaults: { ease: "none" },
@@ -1734,14 +1730,7 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 					"-=0.3",
 				);
 
-			/* Scrubbed act — scroll-driven; mobile uses GSAP pin + direct scrub */
-			const scrollHooks = {
-				onEnter: () => setHeroScrolling(true),
-				onEnterBack: () => setHeroScrolling(true),
-				onLeave: () => setHeroScrolling(false),
-				onLeaveBack: () => setHeroScrolling(false),
-			};
-
+			/* Scrubbed act — scroll-driven; mobile uses GSAP pin */
 			ScrollTrigger.matchMedia({
 				"(max-width: 1023px)": () => {
 					buildReveal({
@@ -1750,12 +1739,10 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 						end: "bottom bottom",
 						pin: stage,
 						pinSpacing: true,
-						pinReparent: touchUi,
 						scrub: 0.25,
 						anticipatePin: 1,
 						invalidateOnRefresh: true,
 						fastScrollEnd: true,
-						...scrollHooks,
 					});
 				},
 				"(min-width: 1024px)": () => {
@@ -1764,7 +1751,6 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 						start: "top top",
 						end: "bottom bottom",
 						scrub: 0.25,
-						...scrollHooks,
 					});
 				},
 			});
