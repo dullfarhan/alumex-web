@@ -1,0 +1,39 @@
+---
+/*
+ * Mobile ScrollTrigger config.
+ * normalizeScroll only on the homepage + iOS — keeps inner pages native.
+ */
+---
+
+<script>
+	import gsap from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	const isTouch = matchMedia("(hover: none) and (pointer: coarse)").matches;
+	const isIOS =
+		/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+		(navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+	const isHome = document.documentElement.dataset.page === "home";
+
+	if (isIOS) {
+		document.documentElement.classList.add("ios");
+	}
+
+	if (isTouch || isIOS) {
+		gsap.registerPlugin(ScrollTrigger);
+		ScrollTrigger.config({
+			limitCallbacks: true,
+			ignoreMobileResize: true,
+		});
+	}
+
+	/* Homepage-only: sync pin/scrub with scroll on iOS WebKit */
+	if (isIOS && isHome) {
+		ScrollTrigger.normalizeScroll({
+			allowNestedScroll: true,
+			lockAxis: false,
+			momentum: (self) => Math.min(2.5, Math.abs(self.velocityY) / 900),
+			type: "touch,wheel,pointer",
+		});
+	}
+</script>

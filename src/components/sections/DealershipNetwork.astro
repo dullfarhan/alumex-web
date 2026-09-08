@@ -182,18 +182,9 @@ const intro = networkScenes[0];
 							class="network__map"
 							viewBox="0 0 900 840"
 							role="img"
-							aria-labelledby="network-map-title network-map-description"
+							aria-label="Pak Alumex dealership network across Pakistan. A map of Pakistan showing authorized dealers in 44+ cities, expanding north and south from Pak Alumex headquarters near Gojra, Faisalabad."
 							preserveAspectRatio="xMidYMid meet"
 						>
-							<title id="network-map-title">
-								Pak Alumex dealership network across Pakistan
-							</title>
-							<desc id="network-map-description">
-								A map of Pakistan showing authorized dealers in 44+
-								cities, expanding north and south from Pak Alumex
-								headquarters near Gojra, Faisalabad.
-							</desc>
-
 							<defs>
 								<linearGradient
 									id="network-map-fill"
@@ -794,11 +785,13 @@ const intro = networkScenes[0];
 
 	@media (max-width: 767px) {
 		.network__runway {
-			height: 220vh;
-			height: 220dvh;
+			height: 200vh;
+			height: 200dvh;
 		}
 
 		.network__stage {
+			/* GSAP pin handles stickiness on touch */
+			position: relative;
 			min-height: 560px;
 		}
 
@@ -867,6 +860,11 @@ const intro = networkScenes[0];
 		.network__label {
 			font-size: 8.5px;
 			stroke-width: 2px;
+		}
+
+		.network__label,
+		.network__label-line {
+			display: none;
 		}
 
 		.network__hq-label {
@@ -1232,7 +1230,9 @@ const intro = networkScenes[0];
 					9: { xPercent: 0, yPercent: 0, scale: 0.94 },
 				};
 
-				const buildTimeline = () => {
+				const buildTimeline = ({
+					lightweight = false,
+				}: { lightweight?: boolean } = {}) => {
 					const timeline = gsap.timeline({
 						defaults: { ease: "power3.out" },
 					});
@@ -1316,16 +1316,33 @@ const intro = networkScenes[0];
 						);
 
 						if (sceneRoutes.length) {
-							timeline.to(
-								sceneRoutes,
-								{
-									opacity: 1,
-									strokeDashoffset: 0,
-									duration: Math.min(0.55, step * 1.45),
-									stagger: step,
-								},
-								start + 0.42,
-							);
+							if (lightweight) {
+								timeline.set(
+									sceneRoutes,
+									{ strokeDashoffset: 0 },
+									start + 0.42,
+								);
+								timeline.to(
+									sceneRoutes,
+									{
+										opacity: 1,
+										duration: Math.min(0.45, step * 1.2),
+										stagger: step * 0.65,
+									},
+									start + 0.42,
+								);
+							} else {
+								timeline.to(
+									sceneRoutes,
+									{
+										opacity: 1,
+										strokeDashoffset: 0,
+										duration: Math.min(0.55, step * 1.45),
+										stagger: step,
+									},
+									start + 0.42,
+								);
+							}
 						}
 						if (sceneMarks.length) {
 							timeline.to(
@@ -1333,14 +1350,14 @@ const intro = networkScenes[0];
 								{
 									opacity: 1,
 									scale: 1,
-									duration: 0.34,
+									duration: lightweight ? 0.28 : 0.34,
 									ease: "expo.out",
-									stagger: step,
+									stagger: lightweight ? step * 0.65 : step,
 								},
 								start + 0.5,
 							);
 						}
-						if (sceneLabels.length) {
+						if (sceneLabels.length && !lightweight) {
 							timeline.to(
 								sceneLabels,
 								{
@@ -1401,71 +1418,97 @@ const intro = networkScenes[0];
 					return timeline;
 				};
 
+				const finishNetwork = (timeline: gsap.core.Timeline) => {
+					timeline.progress(1);
+					setCopy(9, false);
+					count.textContent = formatDealerCount(dealers.length);
+					progress.style.transform = "scaleX(1)";
+					pulseTimeline.play();
+				};
+
+				const sceneAtProgress = (progressValue: number) => {
+					const time = progressValue * totalDuration;
+					let elapsed = 0;
+					for (const scene of networkScenes) {
+						elapsed += scene.duration;
+						if (time < elapsed) return scene.id;
+					}
+					return 9;
+				};
+
+				const attachScrollScrub = ({
+					pin = false,
+					animateCopy = true,
+					lightweight = false,
+					scrub = true as boolean | number,
+				}: {
+					pin?: boolean;
+					animateCopy?: boolean;
+					lightweight?: boolean;
+					scrub?: boolean | number;
+				}) => {
+					const timeline = buildTimeline({ lightweight });
+					const resizeObserver = new ResizeObserver(() =>
+						ScrollTrigger.refresh(),
+					);
+					resizeObserver.observe(runway);
+
+					const trigger = ScrollTrigger.create({
+						animation: timeline,
+						trigger: runway,
+						start: "top top",
+						end: () =>
+							`+=${Math.max(1, runway.offsetHeight - stage.offsetHeight)}`,
+						pin: pin ? stage : false,
+						pinSpacing: pin,
+						scrub,
+						invalidateOnRefresh: true,
+						anticipatePin: 1,
+						fastScrollEnd: true,
+						onLeave: () => finishNetwork(timeline),
+						onUpdate: (self) => {
+							const nextScene = sceneAtProgress(self.progress);
+							setCopy(nextScene, animateCopy);
+							progress.style.transform = `scaleX(${self.progress})`;
+
+							const finalActive = nextScene === 9;
+							if (finalActive && pulseTimeline.paused()) {
+								pulseTimeline.play();
+							} else if (
+								!finalActive &&
+								!pulseTimeline.paused()
+							) {
+								pulseTimeline.pause(0);
+							}
+						},
+					});
+					requestAnimationFrame(() => ScrollTrigger.refresh());
+					document.fonts.ready.then(() => ScrollTrigger.refresh());
+
+					return () => {
+						resizeObserver.disconnect();
+						trigger.kill();
+						timeline.kill();
+					};
+				};
+
 				const media = gsap.matchMedia();
-				const resizeObserver = new ResizeObserver(() =>
-					ScrollTrigger.refresh(),
+
+				media.add("(min-width: 768px)", () =>
+					attachScrollScrub({ animateCopy: true }),
 				);
-				resizeObserver.observe(runway);
-				media.add(
-					{
-						desktop: "(min-width: 768px)",
-						mobile: "(max-width: 767px)",
-					},
-					() => {
-						const timeline = buildTimeline();
-						const trigger = ScrollTrigger.create({
-							animation: timeline,
-							trigger: runway,
-							start: "top top",
-							end: () =>
-								`+=${Math.max(1, runway.offsetHeight - stage.offsetHeight)}`,
-							scrub: true,
-							invalidateOnRefresh: true,
-							onLeave: () => {
-								timeline.progress(1);
-								setCopy(9, false);
-								count.textContent = formatDealerCount(dealers.length);
-								progress.style.transform = "scaleX(1)";
-							},
-							onUpdate: (self) => {
-								const time = self.progress * totalDuration;
-								let elapsed = 0;
-								let nextScene = 9;
-								for (const scene of networkScenes) {
-									elapsed += scene.duration;
-									if (time < elapsed) {
-										nextScene = scene.id;
-										break;
-									}
-								}
-								setCopy(nextScene);
-								progress.style.transform = `scaleX(${self.progress})`;
 
-								const finalActive = nextScene === 9;
-								if (finalActive && pulseTimeline.paused()) {
-									pulseTimeline.play();
-								} else if (
-									!finalActive &&
-									!pulseTimeline.paused()
-								) {
-									pulseTimeline.pause(0);
-								}
-							},
-						});
-						requestAnimationFrame(() => ScrollTrigger.refresh());
-						document.fonts.ready.then(() =>
-							ScrollTrigger.refresh(),
-						);
-
-						return () => {
-							trigger.kill();
-							timeline.kill();
-						};
-					},
+				/* Mobile: pin + scroll scrub (lighter SVG, instant copy swaps) */
+				media.add("(max-width: 767px)", () =>
+					attachScrollScrub({
+						pin: true,
+						animateCopy: false,
+						lightweight: true,
+						scrub: 0.25,
+					}),
 				);
 
 				return () => {
-					resizeObserver.disconnect();
 					media.revert();
 					pulseTimeline.kill();
 					routeLengths.clear();

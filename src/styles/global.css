@@ -59,7 +59,15 @@
 
 @layer base {
 	html {
-		@apply bg-background scroll-smooth;
+		@apply bg-background;
+		scroll-behavior: auto;
+	}
+
+	/* scroll-smooth + GSAP scrub fights native momentum on touch */
+	@media (hover: hover) and (pointer: fine) {
+		html {
+			scroll-behavior: smooth;
+		}
 	}
 	body {
 		@apply bg-background-alt font-sans text-text antialiased;
