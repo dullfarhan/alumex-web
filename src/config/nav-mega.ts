@@ -1,3 +1,4 @@
+import catalogueCover from '../assets/catalouge/catalogue-cover.png';
 import cataloguePdf from '../assets/catalouge/PaK-ALUMEX-Catalogue-Volume-4.pdf?url';
 import rateListPdf from '../assets/RATE-LIST/PAK-ALUMEX-New-Rate-List-(274).pdf?url';
 import { finishes } from './finishes';
@@ -89,8 +90,11 @@ export const productsMega = {
 	viewAll: { label: 'View all architectural systems', href: '/products' },
 	catalogue: {
 		label: 'Download Catalogue',
+		previewLabel: 'Preview Catalogue',
 		href: cataloguePdf,
 		filename: 'Pak-Alumex-Catalogue-Volume-4.pdf',
+		cover: catalogueCover,
+		coverAlt: 'Pak Alumex Catalogue Volume 4 — front cover',
 	},
 	gradeList: {
 		label: 'Download Rate List',
