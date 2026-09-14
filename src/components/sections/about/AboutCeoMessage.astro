@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { about } from '../../../config/about';
 import Container from '../../layout/Container.astro';
 
@@ -7,25 +8,33 @@ const { ceoMessage } = about;
 
 <section id="ceo-message">
 	<Container class="!pt-16 md:!pt-24 !pb-0">
-		<div class="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+		<div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+			<div class="overflow-hidden rounded-xl">
+				<Image
+					src={ceoMessage.image}
+					alt={ceoMessage.imageAlt}
+					widths={[480, 720, 1086]}
+					sizes="(max-width: 1024px) 100vw, 50vw"
+					class="h-[32rem] w-full object-cover object-top sm:h-[38rem] lg:h-[46rem]"
+				/>
+			</div>
+
 			<div>
-				<span class="mb-4 block text-sm font-medium tracking-[0.08em] text-primary uppercase">{ceoMessage.label}</span>
 				<h2 class="mb-6 font-display text-[1.7rem] leading-[1.1] font-bold tracking-tight text-heading sm:text-3xl md:text-[2.75rem]">
 					{ceoMessage.title}
 				</h2>
 				{
 					(ceoMessage.name || ceoMessage.role) && (
-						<div>
+						<div class="mb-6">
 							{ceoMessage.name && <p class="font-display text-lg font-bold text-heading">{ceoMessage.name}</p>}
 							{ceoMessage.role && <p class="text-sm font-medium tracking-wide text-primary uppercase">{ceoMessage.role}</p>}
 						</div>
 					)
 				}
+				<p class="text-base leading-relaxed text-muted first-letter:float-left first-letter:mr-3 first-letter:font-display first-letter:text-5xl first-letter:leading-[0.85] first-letter:font-bold first-letter:text-heading md:text-lg md:first-letter:text-6xl">
+					{ceoMessage.text}
+				</p>
 			</div>
-
-			<p class="text-base leading-relaxed text-muted first-letter:float-left first-letter:mr-3 first-letter:font-display first-letter:text-5xl first-letter:leading-[0.85] first-letter:font-bold first-letter:text-heading md:text-lg md:first-letter:text-6xl">
-				{ceoMessage.text}
-			</p>
 		</div>
 	</Container>
 </section>
