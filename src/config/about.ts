@@ -1,3 +1,4 @@
+import ceoImage from '../assets/ceo/ceo-image.jpeg';
 import factoryA from '../assets/factory/a.png';
 import factoryB from '../assets/factory/b.png';
 import factoryC from '../assets/factory/c.png';
@@ -30,6 +31,8 @@ export const about = {
 		text: 'Welcome to Pak Alumex Aluminium Industry. Since our start, we have focused on making strong, precise, and high-quality aluminum profiles that build a better future. We use advanced technology and strict quality checks to meet global standards and serve our clients with trust.',
 		name: '',
 		role: 'Chief Executive Officer',
+		image: ceoImage,
+		imageAlt: 'Chief Executive Officer of Pak Alumex Aluminium Industry',
 	},
 	story: {
 		label: 'Why Pak Alumex',

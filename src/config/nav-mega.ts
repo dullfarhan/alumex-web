@@ -1,4 +1,5 @@
 import cataloguePdf from '../assets/catalouge/PaK-ALUMEX-Catalogue-Volume-4.pdf?url';
+import rateListPdf from '../assets/RATE-LIST/PAK-ALUMEX-New-Rate-List-(274).pdf?url';
 import { finishes } from './finishes';
 import { systems } from './home';
 import { productItems, type ProductCategory } from './products';
@@ -93,7 +94,7 @@ export const productsMega = {
 	},
 	gradeList: {
 		label: 'Download Rate List',
-		href: '#',
+		href: rateListPdf,
 		filename: 'Pak-Alumex-Rate-List.pdf',
 	},
 	categories: productCategories,
