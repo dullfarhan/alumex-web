@@ -97,7 +97,7 @@ export const productsMega = {
 		coverAlt: 'Pak Alumex Catalogue Volume 4 — front cover',
 	},
 	gradeList: {
-		label: 'Download Rate List',
+		label: 'Preview Rate List',
 		href: rateListPdf,
 		filename: 'Pak-Alumex-Rate-List.pdf',
 	},
