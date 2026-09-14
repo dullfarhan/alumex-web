@@ -10,6 +10,12 @@ import canalHospital from '../assets/projects/8-project.png';
 import themeResidency2 from '../assets/projects/9-project.png';
 import jamiaAlFurkanya from '../assets/projects/10-project.png';
 import iqbalHeights from '../assets/projects/11-project.jpeg';
+import modelBazarDeepalpur from '../assets/projects/12-project.png';
+import modelBazarCorner from '../assets/projects/13-project.png';
+import modelBazarInstall from '../assets/projects/14-project.png';
+import modelBazarStreet from '../assets/projects/15-project.png';
+import modelBazarElevation from '../assets/projects/16-project.png';
+import modelBazarShops from '../assets/projects/17-project.png';
 import { site } from './site';
 
 export type Project = {
@@ -286,6 +292,37 @@ export const projectItems: Project[] = [
 		image: iqbalHeights,
 		gallery: [iqbalHeights, signatureBahria, themeResidency2, akbarPlaza],
 		href: '/projects/iqbal-heights',
+	},
+	{
+		slug: 'model-bazar-deepalpur',
+		title: 'Model Bazar Deepalpur',
+		category: 'Commercial Facade',
+		location: 'Deepalpur',
+		year: '2026',
+		shortDescription:
+			'Wood-texture aluminium cladding and facade systems for the Model Bazar marketplace in Deepalpur.',
+		description:
+			'Model Bazar Deepalpur is a mega commercial marketplace project featuring continuous wood-texture aluminium cladding across storefront facades. Pak Alumex Industries supplied durable architectural aluminium extrusion and wood-finish powder coating, fabricated by Modern Aluminium, Deepalpur.',
+		scope: [
+			'Architectural aluminium extrusion for commercial facade cladding',
+			'Wood-texture finishes for cohesive marketplace elevations',
+			'Fabrication by Modern Aluminium, Deepalpur',
+		],
+		systems: [
+			{ label: 'Contemporary Louver System' },
+			{ label: 'Curtain Walls System' },
+			{ label: 'Casement Windows' },
+		],
+		image: modelBazarDeepalpur,
+		gallery: [
+			modelBazarDeepalpur,
+			modelBazarCorner,
+			modelBazarInstall,
+			modelBazarStreet,
+			modelBazarElevation,
+			modelBazarShops,
+		],
+		href: '/projects/model-bazar-deepalpur',
 	},
 ];
 
