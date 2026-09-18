@@ -89,8 +89,8 @@ export const productsMega = {
 	trigger: { label: 'Products', href: '/products' },
 	viewAll: { label: 'View all architectural systems', href: '/products' },
 	catalogue: {
-		label: 'Download Catalogue',
-		previewLabel: 'Preview Catalogue',
+		label: 'Preview Catalogue',
+		downloadLabel: 'Download Catalogue',
 		href: cataloguePdf,
 		filename: 'Pak-Alumex-Catalogue-Volume-4.pdf',
 		cover: catalogueCover,

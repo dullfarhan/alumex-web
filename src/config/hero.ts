@@ -13,7 +13,6 @@ export const hero = {
 	secondaryCta: {
 		href: productsMega.catalogue.href,
 		label: productsMega.catalogue.label,
-		download: productsMega.catalogue.filename,
 	},
 	stats: [
 		{ value: '10+', label: 'Years Experience', icon: yearsExperience },

@@ -67,7 +67,12 @@ import Container from '../layout/Container.astro';
 							{hero.primaryCta.label}
 							<ArrowRight class="h-4 w-4" />
 						</Button>
-						<Button href={hero.secondaryCta.href} download={hero.secondaryCta.download} variant="secondary">
+						<Button
+							href={hero.secondaryCta.href}
+							target="_blank"
+							rel="noopener noreferrer"
+							variant="secondary"
+						>
 							<DownloadIcon class="h-4 w-4" />
 							{hero.secondaryCta.label}
 						</Button>
