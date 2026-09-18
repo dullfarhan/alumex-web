@@ -11,13 +11,13 @@ const { catalogue } = productsMega;
 	aria-hidden="true"
 >
 	<span class="catalogue-download-widget__tooltip rounded-lg border border-silver/50 bg-white px-3 py-2 text-xs font-medium whitespace-nowrap text-heading shadow-lg sm:px-3.5 sm:py-2.5 sm:text-sm">
-		{catalogue.label}
+		{catalogue.downloadLabel}
 	</span>
 	<a
 		href={catalogue.href}
 		download={catalogue.filename}
 		class="catalogue-download-widget__btn flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-primary-dark bg-primary-dark text-white shadow-lg shadow-primary-dark/25 transition-[background-color,color,transform,box-shadow] duration-300 hover:bg-transparent hover:text-heading hover:shadow-xl"
-		aria-label={catalogue.label}
+		aria-label={catalogue.downloadLabel}
 		tabindex={-1}
 	>
 		<DownloadIcon class="h-6 w-6" />
