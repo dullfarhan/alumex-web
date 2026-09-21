@@ -30,7 +30,12 @@ const sent = Astro.url.searchParams.get('sent') === '1';
 					Project details
 				</h2>
 
-				<form action={contact.formAction} method="POST" class="flex flex-1 flex-col space-y-5">
+				<form
+					action={contact.formAction}
+					method="POST"
+					target="_blank"
+					class="flex flex-1 flex-col space-y-5"
+				>
 					<input type="hidden" name="_subject" value={`New inquiry — ${site.name}`} />
 					<input type="hidden" name="_next" value={`${site.url}${contact.formNext}`} />
 					<input type="hidden" name="_template" value="table" />
