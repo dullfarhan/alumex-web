@@ -9,8 +9,9 @@ export const contact = {
 	seoTitle: `Contact | ${site.name}`,
 	seoDescription:
 		'Contact Pak Alumex Industries for aluminium system quotes, facade solutions, finishes, and technical support. Based in Faisalabad, Pakistan.',
-	/** Paste your Formspree (or similar) endpoint here */
-	formAction: 'https://formspree.io/f/your-form-id',
+	/** FormSubmit delivers submissions to this inbox (confirm email on first send) */
+	formAction: 'https://formsubmit.co/pakalum84@gmail.com',
+	formNext: '/contact?sent=1',
 	hours: footer.hours,
 	inquiryTypes: [
 		'Curtain Walls',

@@ -6,10 +6,22 @@ import Container from '../../layout/Container.astro';
 
 const field =
 	'w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-heading outline-none transition-colors placeholder:text-muted/70 focus:border-primary';
+
+const sent = Astro.url.searchParams.get('sent') === '1';
 ---
 
 <section class="bg-background">
 	<Container class="!pt-16 md:!pt-24">
+		{
+			sent && (
+				<p
+					class="mb-8 rounded-lg border border-primary/30 bg-primary/5 px-4 py-3 text-sm text-heading"
+					role="status"
+				>
+					Thanks — your inquiry was sent. We’ll get back to you shortly.
+				</p>
+			)
+		}
 		<div class="grid items-stretch gap-12 lg:grid-cols-12 lg:gap-14">
 			<!-- RFQ form -->
 			<div class="flex h-full flex-col lg:col-span-7">
@@ -20,7 +32,10 @@ const field =
 
 				<form action={contact.formAction} method="POST" class="flex flex-1 flex-col space-y-5">
 					<input type="hidden" name="_subject" value={`New inquiry — ${site.name}`} />
-					<input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+					<input type="hidden" name="_next" value={`${site.url}${contact.formNext}`} />
+					<input type="hidden" name="_template" value="table" />
+					<input type="hidden" name="_captcha" value="false" />
+					<input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
 
 					<div class="grid gap-5 sm:grid-cols-2">
 						<label class="block">
