@@ -10,7 +10,7 @@ export const contact = {
 	seoDescription:
 		'Contact Pak Alumex Industries for aluminium system quotes, facade solutions, finishes, and technical support. Based in Faisalabad, Pakistan.',
 	/** FormSubmit delivers submissions to this inbox (confirm email on first send) */
-	formAction: 'https://formsubmit.co/pakalum84@gmail.com',
+	formAction: 'https://formsubmit.co/gm@pakalumex.com',
 	formNext: '/contact?sent=1',
 	hours: footer.hours,
 	inquiryTypes: [
