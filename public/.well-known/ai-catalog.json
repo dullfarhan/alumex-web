@@ -1,0 +1,52 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Pak Alumex Aluminium Industries",
+    "identifier": "pakalumex.com",
+    "documentationUrl": "https://pakalumex.com/llms.txt",
+    "logoUrl": "https://pakalumex.com/logo/logo.png"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:pakalumex.com:site:product-guide",
+      "displayName": "Pak Alumex Product Guide",
+      "type": "text/markdown",
+      "url": "https://pakalumex.com/llms.txt",
+      "description": "Architectural aluminium systems for modern buildings — curtain walls, windows, doors, sliding systems, office partitions, structural glazing, and custom profiles from Faisalabad, Pakistan.",
+      "tags": [
+        "aluminium",
+        "curtain-wall",
+        "windows",
+        "doors",
+        "facade",
+        "extrusion"
+      ],
+      "capabilities": [
+        "ProductLookup",
+        "QuoteRequest"
+      ],
+      "representativeQueries": [
+        "aluminium curtain wall systems in Pakistan",
+        "request a quote for architectural aluminium windows and doors",
+        "custom aluminium extrusion profiles from Faisalabad"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-09-22T00:00:00Z"
+    },
+    {
+      "identifier": "urn:air:pakalumex.com:site:contact",
+      "displayName": "Pak Alumex Contact",
+      "type": "text/html",
+      "url": "https://pakalumex.com/contact",
+      "description": "Request a quote or technical guidance for aluminium facade systems, finishes, and delivery timelines.",
+      "tags": ["contact", "quote", "rfq"],
+      "capabilities": ["QuoteRequest"],
+      "representativeQueries": [
+        "contact Pak Alumex for an aluminium systems quote",
+        "request technical guidance on curtain wall finishes"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-09-22T00:00:00Z"
+    }
+  ]
+}
