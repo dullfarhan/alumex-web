@@ -405,12 +405,15 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 	}
 
 	.hero__runway {
+		/* svh: stable vs URL-bar chrome (dvh/vh shift → CLS on mobile) */
 		height: 108vh;
+		height: 108svh;
 	}
 
 	@media (max-width: 1023px) {
 		.hero__runway {
 			height: 104vh;
+			height: 104svh;
 		}
 	}
 
@@ -421,17 +424,10 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 		flex-direction: column;
 		justify-content: center;
 		height: 100vh;
-		height: 100dvh;
+		height: 100svh;
 		overflow: hidden;
 		gap: 0.5rem;
 		padding-bottom: 0.5rem;
-	}
-
-	@media (max-width: 1023px) {
-		/* GSAP pin handles stickiness on touch */
-		.hero__stage {
-			position: relative;
-		}
 	}
 
 	@media (min-width: 400px) {
@@ -1924,17 +1920,14 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 					"-=0.3",
 				);
 
-			/* Scrubbed door/window — pin + scroll on mobile and desktop */
+			/* Scrubbed door/window — CSS sticky (no GSAP pin; pin-spacer = CLS) */
 			ScrollTrigger.matchMedia({
 				"(max-width: 1023px)": () => {
 					buildReveal({
 						trigger: runway,
 						start: "top top",
 						end: "bottom bottom",
-						pin: stage,
-						pinSpacing: true,
 						scrub: 0.4,
-						anticipatePin: 1,
 						invalidateOnRefresh: false,
 						fastScrollEnd: true,
 					});
