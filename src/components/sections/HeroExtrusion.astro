@@ -359,10 +359,12 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 								<Image
 									src={item.src}
 									alt={item.alt}
+									width={480}
 									widths={[240, 360, 480]}
 									sizes="10rem"
+									quality={60}
 									class="hero__marquee-img"
-									loading={index < 6 ? "eager" : "lazy"}
+									loading={index < 3 ? "eager" : "lazy"}
 									draggable="false"
 								/>
 							);
@@ -1931,9 +1933,9 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 						end: "bottom bottom",
 						pin: stage,
 						pinSpacing: true,
-						scrub: 0.25,
+						scrub: 0.4,
 						anticipatePin: 1,
-						invalidateOnRefresh: true,
+						invalidateOnRefresh: false,
 						fastScrollEnd: true,
 					});
 				},
@@ -1947,19 +1949,23 @@ const marqueeItems = [...galleryItems, ...galleryItems];
 				},
 			});
 
-			/* Touch: pause the marquee while the hero is off-screen */
+			/* Touch: pause the marquee while the hero is off-screen (IO, not ST) */
 			if (touchUi) {
 				const marqueeTrack = section.querySelector<HTMLElement>(
 					"[data-hero-marquee] .hero__marquee-track",
 				);
-				ScrollTrigger.create({
-					trigger: section,
-					start: "top bottom",
-					end: "bottom top",
-					onToggle: (self) => {
-						marqueeTrack?.classList.toggle("is-paused", !self.isActive);
-					},
-				});
+				if (marqueeTrack) {
+					const observer = new IntersectionObserver(
+						([entry]) => {
+							marqueeTrack.classList.toggle(
+								"is-paused",
+								!entry.isIntersecting,
+							);
+						},
+						{ rootMargin: "10% 0px" },
+					);
+					observer.observe(section);
+				}
 			}
 
 			/* Pointer-driven 3D camera tilt — desktop only */

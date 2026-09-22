@@ -1448,22 +1448,32 @@ const intro = networkScenes[0];
 					scrub?: boolean | number;
 				}) => {
 					const timeline = buildTimeline({ lightweight });
-					const resizeObserver = new ResizeObserver(() =>
-						ScrollTrigger.refresh(),
+					/* Cache once — end() reading offsetHeight every refresh = forced reflow */
+					const scrollDistance = Math.max(
+						1,
+						runway.offsetHeight - stage.offsetHeight,
 					);
+					let refreshTimer = 0;
+					const scheduleRefresh = () => {
+						window.clearTimeout(refreshTimer);
+						refreshTimer = window.setTimeout(
+							() => ScrollTrigger.refresh(),
+							120,
+						);
+					};
+					const resizeObserver = new ResizeObserver(scheduleRefresh);
 					resizeObserver.observe(runway);
 
 					const trigger = ScrollTrigger.create({
 						animation: timeline,
 						trigger: runway,
 						start: "top top",
-						end: () =>
-							`+=${Math.max(1, runway.offsetHeight - stage.offsetHeight)}`,
+						end: `+=${scrollDistance}`,
 						pin: pin ? stage : false,
 						pinSpacing: pin,
 						scrub,
-						invalidateOnRefresh: true,
-						anticipatePin: 1,
+						invalidateOnRefresh: !lightweight,
+						anticipatePin: pin ? 1 : 0,
 						fastScrollEnd: true,
 						onLeave: () => finishNetwork(timeline),
 						onUpdate: (self) => {
@@ -1482,10 +1492,9 @@ const intro = networkScenes[0];
 							}
 						},
 					});
-					requestAnimationFrame(() => ScrollTrigger.refresh());
-					document.fonts.ready.then(() => ScrollTrigger.refresh());
 
 					return () => {
+						window.clearTimeout(refreshTimer);
 						resizeObserver.disconnect();
 						trigger.kill();
 						timeline.kill();
@@ -1498,15 +1507,28 @@ const intro = networkScenes[0];
 					attachScrollScrub({ animateCopy: true }),
 				);
 
-				/* Mobile: pin + scroll scrub (lighter SVG, instant copy swaps) */
-				media.add("(max-width: 767px)", () =>
-					attachScrollScrub({
-						pin: true,
-						animateCopy: false,
-						lightweight: true,
-						scrub: 0.25,
-					}),
-				);
+				/* Mobile: pin + scrub, but only once the section is near the viewport */
+				media.add("(max-width: 767px)", () => {
+					let dispose: (() => void) | undefined;
+					const observer = new IntersectionObserver(
+						([entry]) => {
+							if (!entry.isIntersecting || dispose) return;
+							observer.disconnect();
+							dispose = attachScrollScrub({
+								pin: true,
+								animateCopy: false,
+								lightweight: true,
+								scrub: 0.4,
+							});
+						},
+						{ rootMargin: "40% 0px" },
+					);
+					observer.observe(runway);
+					return () => {
+						observer.disconnect();
+						dispose?.();
+					};
+				});
 
 				return () => {
 					media.revert();

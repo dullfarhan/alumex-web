@@ -24,6 +24,8 @@
 		ScrollTrigger.config({
 			limitCallbacks: true,
 			ignoreMobileResize: true,
+			/* Don't auto-refresh on every resize event — we schedule our own */
+			autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
 		});
 	}
 

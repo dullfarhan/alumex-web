@@ -94,12 +94,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 </style>
 
 <script>
-	import gsap from 'gsap';
-	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-	gsap.registerPlugin(ScrollTrigger);
-
-	/* Touch: pause the marquee while the section is off-screen */
+	/* Touch: pause the marquee while off-screen — IO avoids ScrollTrigger reflow */
 	if (matchMedia('(hover: none) and (pointer: coarse)').matches) {
 		const viewport = document.querySelector<HTMLElement>(
 			'.partners-viewport',
@@ -107,14 +102,13 @@ import SectionHeader from '../ui/SectionHeader.astro';
 		const track = document.querySelector<HTMLElement>('.partners-track');
 
 		if (viewport && track) {
-			ScrollTrigger.create({
-				trigger: viewport,
-				start: 'top bottom',
-				end: 'bottom top',
-				onToggle: (self) => {
-					track.classList.toggle('is-paused', !self.isActive);
+			const observer = new IntersectionObserver(
+				([entry]) => {
+					track.classList.toggle('is-paused', !entry.isIntersecting);
 				},
-			});
+				{ rootMargin: '10% 0px' },
+			);
+			observer.observe(viewport);
 		}
 	}
 </script>
